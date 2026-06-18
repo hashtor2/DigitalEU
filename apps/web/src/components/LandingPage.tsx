@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ALTERNATIVES, type Alternative } from "@digitaleu/shared";
 import { Button } from "@/components/ui/button";
 import { SITE, SOCIAL_LINKS } from "@/lib/site";
+import { Header } from "@/components/Header";
 
 const COUNTRY_FLAGS: Record<string, string> = {
   CH: "🇨🇭",
@@ -42,6 +43,8 @@ export function LandingPage() {
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-sky-500/20 blur-3xl" />
       </div>
+
+      <Header />
 
       <main className="mx-auto flex max-w-4xl flex-col items-center px-6 py-16 md:py-24 text-center">
         <span className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-sky-500/20 bg-sky-500/5 px-4 py-1 text-xs font-semibold text-sky-400">

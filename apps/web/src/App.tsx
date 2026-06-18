@@ -4,10 +4,33 @@ import { LandingPage } from "./components/LandingPage";
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
   {
-    // Lazy-lastet: holder Supabase ute av landingssidens bundle.
     path: "/dashboard",
     lazy: async () => ({
       Component: (await import("./pages/DashboardPage")).DashboardPage,
+    }),
+  },
+  {
+    path: "/directory",
+    lazy: async () => ({
+      Component: (await import("./pages/DirectoryPage")).DirectoryPage,
+    }),
+  },
+  {
+    path: "/news",
+    lazy: async () => ({
+      Component: (await import("./pages/NewsPage")).NewsPage,
+    }),
+  },
+  {
+    path: "/guides",
+    lazy: async () => ({
+      Component: (await import("./pages/GuidesPage")).GuidesPage,
+    }),
+  },
+  {
+    path: "/about",
+    lazy: async () => ({
+      Component: (await import("./pages/AboutPage")).AboutPage,
     }),
   },
 ]);
