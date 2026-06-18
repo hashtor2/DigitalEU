@@ -3,14 +3,15 @@
 Databaseskjema og oppsett for Profilmodus. Skjemaet er **versjonert** i
 `migrations/` og er den eneste kilden til sannhet.
 
-## 1. Opprett prosjektet (du gjør dette)
+## 1. Prosjektet (opprettet)
 
-1. Logg inn på <https://supabase.com> og opprett et nytt prosjekt.
-2. **Velg region i EU** — anbefalt **Frankfurt (eu-central-1)** (jf. CLAUDE.md §6).
-3. Noter ned fra **Settings → API**:
+Prosjektet er opprettet i **Sveits — Zürich (eu-central-2)** 🇨🇭
+(jf. CLAUDE.md beslutning #3b). Prosjekt-ref: `lttfqyrfmsgmbzvfkfij`.
+
+1. Noter ned fra **Settings → API**:
    - `Project URL` → `VITE_SUPABASE_URL`
    - `anon public`-nøkkel → `VITE_SUPABASE_ANON_KEY`
-4. Kopier `apps/web/.env.example` til `apps/web/.env` og fyll inn verdiene.
+2. Kopier `apps/web/.env.example` til `apps/web/.env` og fyll inn verdiene.
 
 ## 2. Kjør migrasjonen
 
@@ -40,7 +41,7 @@ Vi bruker den **hostede** Supabase MCP-en (HTTP + OAuth), konfigurert i
   "mcpServers": {
     "supabase": {
       "type": "http",
-      "url": "https://mcp.supabase.com/mcp?project_ref=drycxdvhxjejfsstwwub"
+      "url": "https://mcp.supabase.com/mcp?project_ref=lttfqyrfmsgmbzvfkfij"
     }
   }
 }

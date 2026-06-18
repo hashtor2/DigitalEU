@@ -12,7 +12,11 @@ export type ServiceCategory =
   | "password-manager"
   | "search"
   | "office"
-  | "messaging";
+  | "messaging"
+  | "code-hosting"
+  | "cloud-infra"
+  | "analytics"
+  | "hardware";
 
 /** Hvordan verktøyet tjener penger på et gitt alternativ. */
 export type MonetizationModel = "affiliate" | "ethical-direct";
@@ -60,4 +64,21 @@ export interface FillEmailMessage {
   ny_epost: string;
   /** Målside å navigere til / fylle inn på. */
   targetUrl: string;
+}
+
+
+/** Kobling mellom et avsenderdomene og en B2C-tjeneste, brukt av innboksskanneren og utvidelsen. */
+export interface DomainMapping {
+  id: string;
+  serviceName: string;
+  /** Primærdomene, f.eks. "netflix.com". */
+  domain: string;
+  /** Liste over alternative avsenderdomener, f.eks. ["info.netflix.com", "mail.netflix.com"]. */
+  alternativeDomains: string[];
+  /** Kategori for sortering, f.eks. "entertainment" eller "social". */
+  category: string;
+  /** URL til siden der brukeren kan endre e-postadresse. */
+  settingsUrl: string;
+  /** Standard foreslått europeisk alternativ-ID, f.eks. "proton-mail". */
+  suggestedAlternativeId?: string;
 }

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Europe — Reclaim Your Digital Sovereignty</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            950: '#030712'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+        }
+        .glow-bg {
+            pointer-events: none;
+            position: fixed;
+            top: -10rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50rem;
+            height: 30rem;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(99, 102, 241, 0.05) 50%, rgba(3, 7, 18, 0) 100%);
+            border-radius: 9999px;
+            filter: blur(80px);
+            z-index: -10;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col antialiased">
+
+    <!-- Background Glow -->
+    <div class="glow-bg"></div>
+
+    <!-- Top Banner -->
+    <div class="bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-transparent border-b border-white/5 py-2.5 text-center text-xs text-slate-400 font-medium px-4">
+        🇪🇺 <span class="text-sky-400">Digital Sovereignty For Everyone.</span> Reclaim your privacy from Big Tech, 100% client-side.
+    </div>
+
+    <!-- Header / Navigation -->
+    <header class="border-b border-white/5 sticky top-0 bg-slate-950/85 backdrop-blur-md z-50">
+        <div class="mx-auto max-w-5xl flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-2.5">
+                <span class="text-2xl" aria-hidden="true">🇪🇺</span>
+                <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+                    DigitalEU<span class="text-sky-400">.me</span>
+                </span>
+            </div>
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
+                <a href="#problem" class="hover:text-white transition">The Problem</a>
+                <a href="#how-it-works" class="hover:text-white transition">How It Works</a>
+                <a href="#simulator" class="hover:text-white transition">Scanner Simulator</a>
+                <a href="#alternatives" class="hover:text-white transition">European Directory</a>
+                <a href="#pricing" class="hover:text-white transition">Pricing</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="#simulator" class="bg-sky-500 hover:bg-sky-400 text-white font-semibold text-xs px-4 py-2 rounded-lg shadow-lg shadow-sky-500/15 transition duration-200">
+                    Try Live Demo
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 mx-auto max-w-4xl w-full px-6 py-12 md:py-20 flex flex-col items-center">
+        
+        <!-- Hero Section -->
+        <section class="text-center max-w-3xl flex flex-col items-center">
+            <span class="mb-5 inline-flex items-center gap-1.5 rounded-full border border-sky-500/20 bg-sky-500/5 px-4 py-1 text-xs font-semibold text-sky-400">
+                🔒 Zero-Knowledge & 100% Client-Side
+            </span>
+
+            <h1 class="text-balance text-4xl font-extrabold tracking-tight sm:text-6xl text-white leading-[1.1]">
+                The easiest way to <span class="bg-gradient-to-r from-red-400 to-amber-400 bg-clip-text text-transparent">dump Gmail</span> & move to privacy
+            </h1>
+
+            <p class="mt-6 text-balance text-lg text-slate-400 leading-relaxed max-w-2xl">
+                Converting from Gmail or Outlook to a secure mailbox like Proton or Tuta is a nightmare of "invisible" accounts. We find them for you, direct you to their change-email pages, and autofill your details—making deletion painless.
+            </p>
+
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                <a href="#simulator" class="w-full sm:w-auto text-center bg-sky-500 hover:bg-sky-400 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-sky-500/20 transition duration-200">
+                    Simulate Inbox Scan
+                </a>
+                <a href="#how-it-works" class="w-full sm:w-auto text-center border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-slate-200 font-semibold px-6 py-3.5 rounded-xl transition duration-200">
+                    See How It Works
+                </a>
+            </div>
+
+            <!-- Trust Signals -->
+            <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-y-4 gap-x-8 border-t border-white/5 pt-8 text-xs text-slate-400 w-full">
+                <div class="flex items-center justify-center gap-2">
+                    <span class="text-emerald-500 text-base" aria-hidden="true">🇨🇭</span>
+                    <span>Data hosted in <b>Switzerland</b></span>
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="text-sky-400 text-base">🛡️</span>
+                    <span><b>Zero-Knowledge</b> Architecture</span>
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="text-indigo-400 text-base">👁️</span>
+                    <span><b>100% Client-Side</b> — No Server Logs</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Pain Point Section -->
+        <section id="problem" class="mt-28 w-full border-t border-white/5 pt-20">
+            <div class="grid md:grid-cols-12 gap-10 items-center">
+                <div class="md:col-span-7 space-y-5">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400">The Invisible Web</h2>
+                    <h3 class="text-3xl font-extrabold tracking-tight text-white leading-tight">
+                        Why is deleting your Gmail account so terrifyingly hard?
+                    </h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        When you sign up for subscriptions, utilities, newsletters, or online shopping, you use your email address. Over the course of 5–10 years, your old mailbox accumulates an <b>invisible web</b> of accounts.
+                    </p>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        If you press "Delete Google Account" today, you lose the ability to recover passwords or verify purchases for those accounts forever. You are locked into Google because <b>tracking down 50+ registered services is an administrative nightmare.</b>
+                    </p>
+                    <div class="rounded-xl border border-red-500/10 bg-red-500/5 p-4 space-y-2">
+                        <p class="text-xs font-semibold text-red-400 flex items-center gap-1.5">
+                            ⚠️ Google's Retaliatory Deletion Friction:
+                        </p>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Google purposefully scares you when you try to leave, showing long warning sheets of lost services to ensure you remain tracked in their advertising profile.
+                        </p>
+                    </div>
+                </div>
+                <div class="md:col-span-5 bg-slate-900 border border-white/10 rounded-2xl p-6 relative">
+                    <div class="absolute -top-3 -right-3 bg-red-500/10 text-red-400 border border-red-500/20 text-[10px] font-bold px-2 py-0.5 rounded">
+                        Gmail Lock-In
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Gmail Account Audit</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-2.5 rounded bg-slate-950 border border-white/5">
+                            <span class="text-xs font-semibold text-white">Linked Netflix Subscription</span>
+                            <span class="text-[10px] font-bold text-amber-400 bg-amber-400/5 border border-amber-400/20 px-1.5 py-0.5 rounded">Locked</span>
+                        </div>
+                        <div class="flex items-center justify-between p-2.5 rounded bg-slate-950 border border-white/5">
+                            <span class="text-xs font-semibold text-white">Online Banking Address</span>
+                            <span class="text-[10px] font-bold text-amber-400 bg-amber-400/5 border border-amber-400/20 px-1.5 py-0.5 rounded">Locked</span>
+                        </div>
+                        <div class="flex items-center justify-between p-2.5 rounded bg-slate-950 border border-white/5">
+                            <span class="text-xs font-semibold text-white">Spotify Account (Premium)</span>
+                            <span class="text-[10px] font-bold text-amber-400 bg-amber-400/5 border border-amber-400/20 px-1.5 py-0.5 rounded">Locked</span>
+                        </div>
+                        <div class="flex items-center justify-between p-2.5 rounded bg-slate-950 border border-white/5">
+                            <span class="text-xs font-semibold text-white">Government Portal ID</span>
+                            <span class="text-[10px] font-bold text-amber-400 bg-amber-400/5 border border-amber-400/20 px-1.5 py-0.5 rounded">Locked</span>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-center text-slate-500 mt-4 italic">
+                        All these services must be migrated <b>before</b> deleting Gmail.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="mt-28 w-full border-t border-white/5 pt-20">
+            <div class="text-center space-y-3">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400">Our Solution</h2>
+                <h3 class="text-3xl font-extrabold tracking-tight text-white">The Pain-Free Migration Process</h3>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto">
+                    We've designed a systematic 3-step workflow that takes you from a bloated, insecure Big Tech mailbox to complete private independence.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mt-12">
+                <!-- Step 1 -->
+                <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6 space-y-4">
+                    <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-lg">
+                        1
+                    </div>
+                    <h4 class="text-base font-bold text-white">Local Inbox Scan</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Connect your Gmail/Outlook via secure OAuth. Our system pulls <b>headers only</b> and scans them <b>100% locally inside your browser</b>. Your email content never leaves your computer, and we never store your passwords.
+                    </p>
+                </div>
+                <!-- Step 2 -->
+                <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6 space-y-4">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold text-lg">
+                        2
+                    </div>
+                    <h4 class="text-base font-bold text-white">Direct-Link Navigation</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        No more looking around. For every service discovered in your inbox, we provide a <b>direct deep-link to that service's specific "Change Email" settings page</b>, saving you thousands of clicks.
+                    </p>
+                </div>
+                <!-- Step 3 -->
+                <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6 space-y-4">
+                    <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-400 flex items-center justify-center font-bold text-lg">
+                        3
+                    </div>
+                    <h4 class="text-base font-bold text-white">Autofill & Update</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Our Chrome/Firefox extension detects when you arrive on the change-email page, automatically generates a secure alias or suggests your new Proton/Tuta mail, and fills it in instantly. One click and you're done.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulator (Our Showpiece) -->
+        <section id="simulator" class="mt-28 w-full border border-sky-400/20 bg-sky-500/5 rounded-3xl p-6 md:p-8 relative overflow-hidden">
+            <!-- Absolute decoration -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10">
+                <div class="text-center max-w-lg mx-auto space-y-2 mb-8">
+                    <span class="bg-sky-400/10 text-sky-300 border border-sky-400/20 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider">
+                        Interactive Sandbox
+                    </span>
+                    <h3 class="text-2xl font-bold text-white">Simulate Your Safe Local Inbox Scan</h3>
+                    <p class="text-xs text-slate-400">
+                        Try a live preview of our scanner. Type any email (we do not store or send it anywhere!) and see how DigitalEU isolates your accounts and offers secure alternatives.
+                    </p>
+                </div>
+
+                <div class="max-w-xl mx-auto space-y-4">
+                    <!-- Input Section -->
+                    <div id="sim-input-box" class="flex flex-col sm:flex-row gap-2">
+                        <input 
+                            type="email" 
+                            id="sim-email-input" 
+                            class="flex-1 bg-slate-950 border border-white/15 focus:border-sky-500 focus:outline-none rounded-xl px-4 py-3 text-sm text-white" 
+                            placeholder="Enter email (e.g., alex@gmail.com)"
+                            value="alex.jones@gmail.com"
+                        >
+                        <button 
+                            onclick="startSimulation()" 
+                            class="bg-sky-500 hover:bg-sky-400 text-white font-bold px-5 py-3 rounded-xl shadow-lg transition duration-200 text-sm whitespace-nowrap"
+                        >
+                            Simulate Scan
+                        </button>
+                    </div>
+
+                    <!-- Progress / Scanning Screen -->
+                    <div id="sim-progress-box" class="hidden rounded-2xl border border-white/10 bg-slate-950 p-6 space-y-4">
+                        <div class="flex justify-between items-center text-xs text-slate-400">
+                            <span id="sim-step-text">Connecting to mailbox via secure token...</span>
+                            <span id="sim-percent">0%</span>
+                        </div>
+                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                            <div id="sim-progress-bar" class="bg-sky-500 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                        <p class="text-[10px] font-mono text-slate-500 italic">
+                            🔐 100% Client-side. Header scanning done locally. No data leaves your machine.
+                        </p>
+                    </div>
+
+                    <!-- Results Screen -->
+                    <div id="sim-results-box" class="hidden rounded-2xl border border-white/10 bg-slate-950 p-5 space-y-4">
+                        <div class="flex items-center justify-between border-b border-white/5 pb-3">
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Scan Complete!</h4>
+                                <p class="text-[11px] text-slate-400">We isolated 5 registered accounts linked to your old inbox.</p>
+                            </div>
+                            <button onclick="resetSimulation()" class="text-slate-500 hover:text-slate-300 text-[10px] underline">
+                                Reset Simulator
+                            </button>
+                        </div>
+
+                        <!-- Breach Warning Box -->
+                        <div class="p-3 bg-red-500/10 border border-red-500/20 rounded-xl space-y-1">
+                            <p class="text-xs font-semibold text-red-300 flex items-center gap-1.5">
+                                🚨 Privacy Alert: Old Email Leaked In 4 Breaches
+                            </p>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Our Have I Been Pwned check confirms this email address was exposed in public leaks (LinkedIn, Canva, Wattpad, MyFitnessPal). Deleting this account and moving to a secure Proton/Tuta address is highly recommended to prevent password spraying.
+                            </p>
+                        </div>
+
+                        <!-- Discovered Account List -->
+                        <div class="space-y-2.5 max-h-64 overflow-y-auto custom-scrollbar pr-1">
+                            
+                            <!-- Account 1: Gmail -->
+                            <div class="flex items-center justify-between gap-3 p-3 bg-white/5 border border-white/5 rounded-xl text-xs">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="font-semibold text-white">Gmail Account</span>
+                                        <span class="text-[9px] bg-sky-500/15 text-sky-300 border border-sky-500/10 px-1 py-0.2 rounded">Primary</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-0.5">alex.jones@gmail.com</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400">Alternative: <b class="text-sky-400">Proton Mail 🇨🇭</b></span>
+                                    <a href="https://proton.me" target="_blank" class="bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/30 text-[10px] px-2.5 py-1 rounded-md font-semibold transition">
+                                        Create Account
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Account 2: Netflix -->
+                            <div id="sim-netflix" class="flex items-center justify-between gap-3 p-3 bg-white/5 border border-white/5 rounded-xl text-xs">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="font-semibold text-white">Netflix Subscription</span>
+                                        <span id="badge-netflix" class="text-[9px] bg-red-500/15 text-red-300 border border-red-500/10 px-1 py-0.2 rounded">Old Email</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-0.5">netflix.com</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400">Suggested: <b class="text-indigo-400 font-medium">Keep Service</b></span>
+                                    <button onclick="simulateAutofill('netflix')" class="bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 text-[10px] px-2.5 py-1 rounded-md font-semibold transition">
+                                        Change Email
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Account 3: Dropbox -->
+                            <div id="sim-dropbox" class="flex items-center justify-between gap-3 p-3 bg-white/5 border border-white/5 rounded-xl text-xs">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="font-semibold text-white">Dropbox (Cloud Files)</span>
+                                        <span id="badge-dropbox" class="text-[9px] bg-red-500/15 text-red-300 border border-red-500/10 px-1 py-0.2 rounded">Old Email</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-0.5">dropbox.com</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400">Suggested: <b class="text-sky-400">Proton Drive 🇨🇭</b></span>
+                                    <button onclick="simulateAutofill('dropbox')" class="bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/30 text-[10px] px-2.5 py-1 rounded-md font-semibold transition">
+                                        Migrate Files
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Account 4: Spotify -->
+                            <div id="sim-spotify" class="flex items-center justify-between gap-3 p-3 bg-white/5 border border-white/5 rounded-xl text-xs">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="font-semibold text-white">Spotify (Music Premium)</span>
+                                        <span id="badge-spotify" class="text-[9px] bg-red-500/15 text-red-300 border border-red-500/10 px-1 py-0.2 rounded">Old Email</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-0.5">spotify.com</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400">Suggested: <b class="text-indigo-400 font-medium">Keep Service</b></span>
+                                    <button onclick="simulateAutofill('spotify')" class="bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 text-[10px] px-2.5 py-1 rounded-md font-semibold transition">
+                                        Change Email
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Account 5: LastPass -->
+                            <div id="sim-lastpass" class="flex items-center justify-between gap-3 p-3 bg-white/5 border border-white/5 rounded-xl text-xs">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="font-semibold text-white">LastPass Password Vault</span>
+                                        <span id="badge-lastpass" class="text-[9px] bg-red-500/15 text-red-300 border border-red-500/10 px-1 py-0.2 rounded">Old Email</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-0.5">lastpass.com</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400">Suggested: <b class="text-sky-400">Proton Pass 🇨🇭</b></span>
+                                    <button onclick="simulateAutofill('lastpass')" class="bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/30 text-[10px] px-2.5 py-1 rounded-md font-semibold transition">
+                                        Migrate Passwords
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Micro-interaction Log / Extension simulation -->
+                        <div id="sim-extension-overlay" class="hidden p-3 bg-sky-950 border border-sky-400/30 rounded-xl flex items-start gap-2 text-xs">
+                            <span class="text-base">🧩</span>
+                            <div class="space-y-1">
+                                <p class="font-bold text-sky-300 flex items-center gap-1.5">
+                                    DigitalEU Extension In Action
+                                </p>
+                                <p id="sim-extension-message" class="text-[11px] text-slate-300">
+                                    Extension detected change-email settings on Netflix. Filling in secure email alias...
+                                </p>
+                            </div>
+                        </div>
+
+                        <p class="text-[10px] text-slate-500 leading-relaxed pt-2">
+                            💡 <b>When you actually sign up</b>, your encrypted progress is synced to our server in Zürich. Once all items are marked "Byttet" (Switched), we'll unlock the master Google Deletion checklist to wipe your Gmail account safely.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curated Alternatives Directory -->
+        <section id="alternatives" class="mt-28 w-full border-t border-white/5 pt-20">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-2">Our Highly Vetted Recommendations</h2>
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                <div>
+                    <h3 class="text-3xl font-extrabold tracking-tight text-white">The European Privacy Catalogue</h3>
+                    <p class="text-slate-400 text-sm mt-1 max-w-lg">
+                        We don't recommend products just for commission. These are top-tier, legally compliant European privacy champions.
+                    </p>
+                </div>
+                <div class="text-xs text-slate-500 flex items-center gap-2">
+                    🛡️ Protected by Switzerland & GDPR laws
+                </div>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Proton Mail -->
+                <a href="https://proton.me/mail" target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-sky-400/40 hover:bg-white/10">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-white group-hover:text-sky-300 transition">Proton Mail</span>
+                        <span class="text-lg" aria-hidden="true">🇨🇭</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Swiss-based, zero-access encryption email, calendar, and drive.</p>
+                    <p class="mt-auto text-[10px] text-slate-500 font-semibold">Replaces Gmail, Outlook, Yahoo</p>
+                </a>
+                
+                <!-- Tuta -->
+                <a href="https://tuta.com" target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-sky-400/40 hover:bg-white/10">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-white group-hover:text-sky-300 transition">Tuta Mail</span>
+                        <span class="text-lg" aria-hidden="true">🇩🇪</span>
+                    </div>
+                    <p class="text-xs text-slate-400">German-engineered green email. Full end-to-end encrypted contacts, calendars, and mail.</p>
+                    <p class="mt-auto text-[10px] text-slate-500 font-semibold">Replaces Gmail, Hotmail</p>
+                </a>
+
+                <!-- Mullvad VPN -->
+                <a href="https://mullvad.net" target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-sky-400/40 hover:bg-white/10">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-white group-hover:text-sky-300 transition">Mullvad Browser & VPN</span>
+                        <span class="text-lg" aria-hidden="true">🇸🇪</span>
+                    </div>
+                    <p class="text-xs text-slate-400">No email or phone required to register. Sweden-based absolute anonymity champions.</p>
+                    <p class="mt-auto text-[10px] text-slate-500 font-semibold">Replaces Chrome, ExpressVPN</p>
+                </a>
+
+                <!-- Pirsch -->
+                <a href="https://pirsch.io" target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-sky-400/40 hover:bg-white/10">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-white group-hover:text-sky-300 transition">Pirsch Analytics</span>
+                        <span class="text-lg" aria-hidden="true">🇩🇪</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Clean, cookie-free privacy analytics hosted entirely on German infrastructure.</p>
+                    <p class="mt-auto text-[10px] text-slate-500 font-semibold">Replaces Google Analytics</p>
+                </a>
+
+                <!-- Brevo -->
+                <a href="https://www.brevo.com" target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-sky-400/40 hover:bg-white/10">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-white group-hover:text-sky-300 transition">Brevo CRM</span>
+                        <span class="text-lg" aria-hidden="true">🇫🇷</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Fully GDPR-compliant transactional email and marketing CRM based in France.</p>
+                    <p class="mt-auto text-[10px] text-slate-500 font-semibold">Replaces Mailchimp</p>
+                </a>
+
+                <!-- Simple Analytics -->
+                <a href="https://simpleanalytics.com" target="_blank" rel="noopener noreferrer" class="group flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-sky-400/40 hover:bg-white/10">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-white group-hover:text-sky-300 transition">Simple Analytics</span>
+                        <span class="text-lg" aria-hidden="true">🇳🇱</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Dutch-engineered cookie-free web metrics that don't collect personal IP data.</p>
+                    <p class="mt-auto text-[10px] text-slate-500 font-semibold">Replaces Google Analytics</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Pricing and Monetization Model -->
+        <section id="pricing" class="mt-28 w-full border-t border-white/5 pt-20">
+            <div class="text-center space-y-3 mb-12">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400">Our Monetization Philosophy</h2>
+                <h3 class="text-3xl font-extrabold tracking-tight text-white">How DigitalEU remains independent</h3>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto">
+                    We do not sell ads, harvest data, or charge recurring subscriptions. We offer two transparent methods to support our development.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                <!-- Option A: Free via Affiliate -->
+                <div class="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 space-y-4 flex flex-col justify-between relative">
+                    <div class="absolute -top-3 right-4 bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[9px] font-bold px-2 py-0.5 rounded">
+                        Most Popular
+                    </div>
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-sky-400">Method A: Affiliate Gate</h4>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-3xl font-extrabold text-white">Free</span>
+                            <span class="text-xs text-slate-400">/ forever</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Sign up for a paid/free tier of any of our recommended secure services (like <b>Proton Mail</b> or <b>Tuta Mail</b>) using our affiliate link inside the dashboard.
+                        </p>
+                        <ul class="text-[11px] text-slate-400 space-y-1.5 pt-2">
+                            <li class="flex items-center gap-1.5">
+                                <span class="text-sky-400">✓</span> Full access to the local Inbox Scanner
+                            </li>
+                            <li class="flex items-center gap-1.5">
+                                <span class="text-sky-400">✓</span> Chrome/Firefox autofill extension
+                            </li>
+                            <li class="flex items-center gap-1.5">
+                                <span class="text-sky-400">✓</span> Switzerland cloud-sync profile
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#simulator" class="w-full text-center bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs py-2.5 rounded-lg shadow-lg transition duration-200 mt-4">
+                        Unlock via Partner Link
+                    </a>
+                </div>
+
+                <!-- Option B: Direct One-Time Purchase -->
+                <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400">Method B: Direct Buy</h4>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-3xl font-extrabold text-white">€29</span>
+                            <span class="text-xs text-slate-400">/ one-time</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Prefer to support us directly without signing up for new services or using affiliate links? Purchase a lifetime key with a single, secure payment.
+                        </p>
+                        <ul class="text-[11px] text-slate-400 space-y-1.5 pt-2">
+                            <li class="flex items-center gap-1.5">
+                                <span class="text-emerald-500">✓</span> No tracking, no external affiliate requirement
+                            </li>
+                            <li class="flex items-center gap-1.5">
+                                <span class="text-emerald-500">✓</span> Access on unlimited personal devices
+                            </li>
+                            <li class="flex items-center gap-1.5">
+                                <span class="text-emerald-500">✓</span> One-time fee, no recurring subscriptions
+                            </li>
+                        </ul>
+                    </div>
+                    <button onclick="alert('Stripe Integration is coming soon in Phase 1!')" class="w-full text-center border border-white/10 hover:border-white/20 hover:bg-white/5 text-slate-300 font-bold text-xs py-2.5 rounded-lg transition duration-200 mt-4">
+                        Buy Access Key
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 text-center text-xs text-slate-600 bg-slate-950/40">
+        <div class="mx-auto max-w-5xl px-6 space-y-4">
+            <p class="font-bold text-slate-400">Digital Europe</p>
+            <p class="italic text-slate-500">"Who owns your data and who sees them?"</p>
+            <nav aria-label="Social connections" class="flex justify-center gap-6 text-slate-400 text-[11px]">
+                <a href="https://bsky.app/profile/digitaleu.me" target="_blank" class="hover:text-sky-400 transition">Bluesky</a>
+                <a href="https://x.com/digitaleu_me" target="_blank" class="hover:text-sky-400 transition font-medium">X (Twitter)</a>
+                <a href="https://www.reddit.com/r/digitaleu" target="_blank" class="hover:text-sky-400 transition">Reddit</a>
+            </nav>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+                digitaleu.me · Data is client-side encrypted and hosted under Switzerland jurisdiction (Zürich) 🇨🇭.<br>
+                This single-file preview contains interactive simulations to illustrate the final Phase 1 architecture of the portal.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive Simulation Scripts -->
+    <script>
+        function startSimulation() {
+            const emailInput = document.getElementById('sim-email-input').value;
+            if (!emailInput || !emailInput.includes('@')) {
+                alert('Please enter a valid email address to run the simulation.');
+                return;
+            }
+
+            document.getElementById('sim-input-box').classList.add('hidden');
+            const progressBox = document.getElementById('sim-progress-box');
+            progressBox.classList.remove('hidden');
+
+            const steps = [
+                { percent: 15, text: "🔒 Initializing local OAuth session (Read-Only metadata scope)..." },
+                { percent: 45, text: "🔍 Analyzing header metadata locally in your browser..." },
+                { percent: 75, text: "📂 Mapping sender domains to service registries..." },
+                { percent: 90, text: "🛡️ Interrogating Have I Been Pwned API for breach logs..." },
+                { percent: 100, text: "✓ Done! Generating your local migration vault..." }
+            ];
+
+            const bar = document.getElementById('sim-progress-bar');
+            const stepText = document.getElementById('sim-step-text');
+            const percentText = document.getElementById('sim-percent');
+
+            let currentStepIdx = 0;
+
+            function runStep() {
+                if (currentStepIdx >= steps.length) {
+                    setTimeout(() => {
+                        progressBox.classList.add('hidden');
+                        document.getElementById('sim-results-box').classList.remove('hidden');
+                    }, 600);
+                    return;
+                }
+
+                const step = steps[currentStepIdx];
+                bar.style.width = step.percent + '%';
+                percentText.textContent = step.percent + '%';
+                stepText.textContent = step.text;
+
+                currentStepIdx++;
+                setTimeout(runStep, 800 + Math.random() * 400);
+            }
+
+            runStep();
+        }
+
+        function resetSimulation() {
+            document.getElementById('sim-results-box').classList.add('hidden');
+            document.getElementById('sim-progress-box').classList.add('hidden');
+            document.getElementById('sim-input-box').classList.remove('hidden');
+            
+            // Reset items
+            const services = ['netflix', 'dropbox', 'spotify', 'lastpass'];
+            services.forEach(s => {
+                const el = document.getElementById('sim-' + s);
+                el.classList.remove('bg-emerald-500/10', 'border-emerald-500/30');
+                el.classList.add('bg-white/5', 'border-white/5');
+                
+                const badge = document.getElementById('badge-' + s);
+                badge.className = "text-[9px] bg-red-500/15 text-red-300 border border-red-500/10 px-1 py-0.2 rounded";
+                badge.textContent = "Old Email";
+
+                const button = el.querySelector('button');
+                if (s === 'dropbox') {
+                    button.textContent = 'Migrate Files';
+                } else if (s === 'lastpass') {
+                    button.textContent = 'Migrate Passwords';
+                } else {
+                    button.textContent = 'Change Email';
+                }
+                button.disabled = false;
+            });
+
+            document.getElementById('sim-extension-overlay').classList.add('hidden');
+        }
+
+        function simulateAutofill(serviceId) {
+            const el = document.getElementById('sim-' + serviceId);
+            const overlay = document.getElementById('sim-extension-overlay');
+            const message = document.getElementById('sim-extension-message');
+            const button = el.querySelector('button');
+
+            overlay.classList.remove('hidden');
+            message.textContent = `Extension successfully connected to ${serviceId}.com. Filling in new privacy-first email alias and auto-submitting...`;
+
+            button.disabled = true;
+            button.textContent = 'Migrating...';
+
+            setTimeout(() => {
+                el.classList.remove('bg-white/5', 'border-white/5');
+                el.classList.add('bg-emerald-500/10', 'border-emerald-500/30');
+                
+                const badge = document.getElementById('badge-' + serviceId);
+                badge.className = "text-[9px] bg-emerald-500/15 text-emerald-300 border border-emerald-500/10 px-1 py-0.2 rounded";
+                badge.textContent = "Byttet / Switched";
+                
+                button.textContent = 'Done ✓';
+                overlay.classList.add('hidden');
+            }, 1800);
+        }
+    </script>
+</body>
+</html>

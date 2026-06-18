@@ -13,25 +13,25 @@ function renderLanding() {
 }
 
 describe("LandingPage", () => {
-  it("viser hovedoverskriften", () => {
+  it("shows the main heading in English", () => {
     renderLanding();
     expect(
-      screen.getByRole("heading", { level: 1, name: /digitale livet/i }),
+      screen.getByRole("heading", { level: 1, name: /dump gmail/i }),
     ).toBeInTheDocument();
   });
 
-  it("lenker den primære call-to-action til dashbordet", () => {
+  it("links the primary call-to-action to the dashboard in English", () => {
     renderLanding();
-    const cta = screen.getByRole("link", { name: /skann innboksen min/i });
+    const cta = screen.getByRole("link", { name: /scan my inbox/i });
     expect(cta).toHaveAttribute("href", "/dashboard");
   });
 
-  it("viser tillitssignalet om datalagring i Sveits/Zürich", () => {
+  it("shows the trust signal about data hosting in Switzerland/Zürich", () => {
     renderLanding();
     expect(screen.getAllByText(/sveits|zürich/i).length).toBeGreaterThan(0);
   });
 
-  it("rendrer et kort per alternativ fra katalogen", () => {
+  it("renders one card per alternative from the catalogue", () => {
     renderLanding();
     for (const alt of ALTERNATIVES) {
       expect(screen.getByText(alt.name)).toBeInTheDocument();

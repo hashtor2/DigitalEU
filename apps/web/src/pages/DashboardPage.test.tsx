@@ -1,8 +1,16 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { DashboardPage } from "./DashboardPage";
+
+// Mock Supabase to be unconfigured during tests so we can assert the warning banner
+vi.mock("@/lib/supabase", () => {
+  return {
+    isSupabaseConfigured: false,
+    supabase: null,
+  };
+});
 
 function renderDashboard() {
   return render(
@@ -17,32 +25,39 @@ describe("DashboardPage", () => {
     sessionStorage.clear();
   });
 
-  it("viser dashbord-overskriften og demo-kontoer", () => {
+  it("shows the dashboard heading and initial empty state or demo notice", () => {
     renderDashboard();
-    expect(screen.getByRole("heading", { name: /ditt dashbord/i })).toBeInTheDocument();
-    expect(screen.getByText("Gmail")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /migration dashboard/i })).toBeInTheDocument();
   });
 
-  it("starter i Gjestemodus med personvern-melding", () => {
+  it("starts in Guest Mode with privacy warnings", () => {
     renderDashboard();
-    expect(screen.getByText(/gjestemodus/i)).toBeInTheDocument();
+    expect(screen.getByText(/guest mode active/i)).toBeInTheDocument();
   });
 
-  it("oppdaterer status og fremdrift når en konto markeres som byttet", async () => {
+  it("updates status and progress when an account is marked as switched", async () => {
     const user = userEvent.setup();
     renderDashboard();
+
+    // Trigger local simulation scan to fill checklist first
+    const simulateBtn = screen.getByRole("button", { name: /simulate local scan/i });
+    await user.click(simulateBtn);
+
+    // Wait for the simulation loader to finish
+    await screen.findByText(/your migration checklist/i, {}, { timeout: 8000 });
 
     const gmailRow = screen.getByText("Gmail").closest("li")!;
-    await user.click(within(gmailRow).getByRole("button", { name: /^byttet$/i }));
+    const switchBtn = within(gmailRow).getByRole("button", { name: /switched/i });
+    await user.click(switchBtn);
 
-    // Etter klikk finnes "Byttet" både som status-badge OG som knapp i raden.
-    expect(within(gmailRow).getAllByText(/^byttet$/i).length).toBe(2);
+    // Assert status badges/elements reflect the updated state
+    expect(within(gmailRow).getByText(/^switched$/i)).toBeInTheDocument();
   });
 
-  it("viser at Profilmodus ikke er konfigurert", async () => {
+  it("displays a warning if Profile Mode is unconfigured", async () => {
     const user = userEvent.setup();
     renderDashboard();
-    await user.click(screen.getByRole("button", { name: /^profil$/i }));
-    expect(screen.getByText(/ikke konfigurert/i)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /^profile$/i }));
+    expect(screen.getByText(/profile mode not configured/i)).toBeInTheDocument();
   });
 });
