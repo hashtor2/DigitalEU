@@ -28,17 +28,21 @@
 
 ## Fase 1 — MVP web-app 🚧
 
-| Dato | Element                                                  | Status |
-| ---- | -------------------------------------------------------- | ------ |
-| —    | Klientside-ruting + dashbord-skall (Gjest/Profil-bryter) | ⏳ |
-| —    | Supabase-prosjekt (EU-region) + Auth + RLS-skjema        | ⏳ |
-| —    | Zero-knowledge klientside-kryptering (Profilmodus)       | ⏳ |
-| —    | Innboksskanner v1 (Gmail OAuth, 100 % klientside)        | ⏳ |
-| —    | Alternativ-matching (oppdaget tjeneste → alternativ)     | ⏳ |
-| —    | Affiliate-gate + Stripe €29 engangskjøp                  | ⏳ |
-| —    | i18n-fundament (engelsk default)                         | ⏳ |
-| —    | Personvernerklæring + samtykkeflyt                       | ⏳ |
-| —    | Plausible-analyse (EU)                                   | ⏳ |
+| Dato       | Element                                                  | Status |
+| ---------- | -------------------------------------------------------- | ------ |
+| 2026-06-18 | **Zero-knowledge klientside-kryptering** (`crypto.ts`, AES-GCM + PBKDF2) — 5 tester grønne | ✅ |
+| 2026-06-18 | **Supabase-klient** (`supabase.ts`) + `.env.example` + typede env-vars | ✅ |
+| 2026-06-18 | **RLS-skjema versjonert** (`supabase/migrations/0001`): `user_vault` (zero-knowledge) + `entitlements` | ✅ (skrevet) |
+| 2026-06-18 | **Supabase MCP-connector** konfigurert (`.mcp.json`, token via env) | ✅ |
+| —          | Opprett Supabase-prosjekt (EU/Frankfurt) + kjør migrasjon | ⏳ (krever deg) |
+| —          | Klientside-ruting + dashbord-skall (Gjest/Profil-bryter) | ⏳ |
+| —          | Supabase Auth-flyt (innlogging/registrering)             | ⏳ |
+| —          | Innboksskanner v1 (Gmail OAuth, 100 % klientside)        | ⏳ |
+| —          | Alternativ-matching (oppdaget tjeneste → alternativ)     | ⏳ |
+| —          | Affiliate-gate + Stripe €29 engangskjøp                  | ⏳ |
+| —          | i18n-fundament (engelsk default)                         | ⏳ |
+| —          | Personvernerklæring + samtykkeflyt                       | ⏳ |
+| —          | Plausible-analyse (EU)                                   | ⏳ |
 
 ---
 
@@ -47,3 +51,7 @@
 - **2026-06-18:** Grunnoppsett, dokumentasjon og utviklerverktøy (shadcn/ui,
   Vitest, CI) ferdig. Klar til å starte Fase 1. Testkommando: `npm test`.
   Byggkommando: `npm run build`. Dev: `npm run dev`.
+- **2026-06-18:** Supabase-fundament lagt: zero-knowledge kryptomodul (testet),
+  Supabase-klient, versjonert RLS-skjema, og Supabase MCP-connector (`.mcp.json`).
+  **Venter på deg:** opprett Supabase-prosjekt i EU-region, sett
+  `SUPABASE_ACCESS_TOKEN`, fyll `apps/web/.env`. Da kjører vi migrasjonen via MCP.
