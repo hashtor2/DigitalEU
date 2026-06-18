@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ALTERNATIVES, type Alternative } from "@digitaleu/shared";
 import { Button } from "@/components/ui/button";
+import { SITE } from "@/lib/site";
 
 const COUNTRY_FLAGS: Record<string, string> = {
   CH: "🇨🇭",
@@ -69,6 +70,19 @@ export function LandingPage() {
           </Button>
         </div>
 
+        {/* Tillitssignaler — holdes ærlige og etterprøvbare. */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-400">
+          <span className="inline-flex items-center gap-1.5">
+            🇨🇭 Data lagret i {SITE.dataRegionLabel}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            🔒 Ende-til-ende-kryptert
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            👁️ Zero-knowledge — vi kan ikke lese dataene dine
+          </span>
+        </div>
+
         <section className="mt-24 w-full">
           <h2 className="mb-8 text-left text-sm font-medium uppercase tracking-widest text-slate-500">
             Europeiske alternativer
@@ -82,7 +96,8 @@ export function LandingPage() {
       </main>
 
       <footer className="border-t border-white/5 py-8 text-center text-sm text-slate-600">
-        digitaleu.me · Gratis med partner, eller €29 engangskjøp
+        digitaleu.me · Data hostet i {SITE.dataRegionLabel} 🇨🇭 · Gratis med
+        partner, eller €29 engangskjøp
       </footer>
     </div>
   );

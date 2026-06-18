@@ -128,7 +128,7 @@ Tabellen sporer hvor vi står, og hvor vi har en bevisst åpen vurdering.
 | Funksjon       | Nåværende valg     | Opphav         | Europeisk alternativ            | Status                         |
 | -------------- | ------------------ | -------------- | ------------------------------- | ------------------------------ |
 | Analyse        | Plausible          | 🇪🇪 Estland     | (allerede EU)                   | ✅ EU-valg                      |
-| Backend/DB     | Supabase           | 🇺🇸 USA (open source) | self-host / Nhost; **bruk EU-region (Frankfurt)** | ⚠️ Akseptabelt m/ EU-region |
+| Backend/DB     | Supabase           | 🇺🇸 USA (open source) | self-host / Nhost; **data i Sveits (Zürich, eu-central-2)** | ✅ Data i Sveits 🇨🇭 |
 | Hosting        | Vercel             | 🇺🇸 USA         | Clever Cloud 🇫🇷, Scaleway 🇫🇷, OVHcloud 🇫🇷, Hetzner 🇩🇪 | ⚠️ Åpen vurdering |
 | Kodehosting    | GitHub             | 🇺🇸 Microsoft   | Codeberg 🇩🇪, GitLab (self-host) | ⚠️ Åpen vurdering (rapporten anbefaler migrering) |
 | Betaling       | Stripe             | 🇺🇸/🇮🇪          | Mollie 🇳🇱, Paddle               | ⚠️ Åpen vurdering              |
@@ -212,7 +212,8 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | -- | ----------------------------------------------------------------- | ---------- |
 | 1  | Stack: Vite + React 19 + TS + Tailwind v4, npm workspaces monorepo | 2026-06-18 |
 | 2  | Hosting på Vercel (åpen vurdering, jf. §6)                        | 2026-06-18 |
-| 3  | Supabase som eneste backend nå; **EU-region**; utvid ved trafikk  | 2026-06-18 |
+| 3  | Supabase som eneste backend nå; utvid ved trafikk                 | 2026-06-18 |
+| 3b | Datalagring i **Sveits (Zürich, eu-central-2)** — sterkest privacy-PR + Proton-linje; EU-adekvans gir fri GDPR-flyt. EU-residens tilbys separat for B2B ved behov | 2026-06-18 |
 | 4  | Innboksskanning 100 % klientside                                  | 2026-06-18 |
 | 5  | Kun OAuth (ingen rå IMAP-passord) i v1                            | 2026-06-18 |
 | 6  | Profilmodus: zero-knowledge klientside-kryptering + informer bruker | 2026-06-18 |

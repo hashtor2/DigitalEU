@@ -26,6 +26,11 @@ describe("LandingPage", () => {
     expect(cta).toHaveAttribute("href", "/dashboard");
   });
 
+  it("viser tillitssignalet om datalagring i Sveits/Zürich", () => {
+    renderLanding();
+    expect(screen.getAllByText(/sveits|zürich/i).length).toBeGreaterThan(0);
+  });
+
   it("rendrer et kort per alternativ fra katalogen", () => {
     renderLanding();
     for (const alt of ALTERNATIVES) {
