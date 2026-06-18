@@ -1,4 +1,5 @@
 import { ALTERNATIVES, type Alternative } from "@digitaleu/shared";
+import { Button } from "@/components/ui/button";
 
 const COUNTRY_FLAGS: Record<string, string> = {
   CH: "🇨🇭",
@@ -55,12 +56,15 @@ export function LandingPage() {
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <button className="rounded-lg bg-sky-500 px-6 py-3 font-semibold text-white transition hover:bg-sky-400">
+          <Button
+            size="lg"
+            className="bg-sky-500 text-white hover:bg-sky-400"
+          >
             Skann innboksen min
-          </button>
-          <button className="rounded-lg border border-white/15 px-6 py-3 font-semibold text-slate-200 transition hover:bg-white/5">
+          </Button>
+          <Button size="lg" variant="outline">
             Se hvordan det funker
-          </button>
+          </Button>
         </div>
 
         <section className="mt-24 w-full">

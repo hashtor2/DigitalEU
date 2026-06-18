@@ -23,8 +23,10 @@
     /* Monorepo: la web importere fra @digitaleu/shared */
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@digitaleu/shared": ["../../packages/shared/src/index.ts"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/test"]
 }
