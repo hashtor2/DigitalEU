@@ -159,12 +159,13 @@ function MigrationItemRow({
         <div className="flex gap-2 items-center">
           {guide && (
             <Button
+              type="button"
               size="sm"
               variant="ghost"
               onClick={() => setIsExpanded(!isExpanded)}
               className="text-xs text-sky-400 hover:text-sky-300 font-semibold px-2 py-1"
             >
-              {isExpanded ? "Hide Guide" : "How to Migrate 📖"}
+              {isExpanded ? "Close Guide" : "How to Migrate 📖"}
             </Button>
           )}
           <Button
@@ -218,7 +219,6 @@ function MigrationItemRow({
   );
 }
 
-// Map mapping ID to guide
 const MIGRATION_GUIDES_MAP: Record<string, { title: string; steps: MigrationGuideStep[] }> = MIGRATION_GUIDES;
 
 export function DashboardPage() {
@@ -252,6 +252,11 @@ export function DashboardPage() {
   const [scanProgress, setScanProgress] = useState(0);
   const [scanStepText, setScanStepText] = useState("");
 
+  // Target secure email state (stores locally & broad-casts to browser extension)
+  const [targetEmail, setTargetEmail] = useState(() => {
+    return localStorage.getItem("digitaleu_target_email") || "";
+  });
+
   // Detect OAuth redirect hashes on mount
   useEffect(() => {
     const hash = window.location.hash;
@@ -273,6 +278,46 @@ export function DashboardPage() {
       }
     }
   }, []);
+
+  // Sync changes to target secure email
+  function handleTargetEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value;
+    setTargetEmail(val);
+    localStorage.setItem("digitaleu_target_email", val);
+    
+    // Broadcast to extension content script immediately
+    window.postMessage({ type: "DIGITALEU_SET_TARGET", targetEmail: val }, "*");
+  }
+
+  function syncTargetWithExtension() {
+    window.postMessage({ type: "DIGITALEU_SET_TARGET", targetEmail }, "*");
+    alert("Extension linked successfully! Go to any change-email settings page to test the automatic 1-click autofill.");
+  }
+
+  // Listen for automated completion messages from our extension content script
+  useEffect(() => {
+    function handleExtensionMessage(event: MessageEvent) {
+      // Security: Only accept messages from our own origin
+      if (event.origin !== window.location.origin) return;
+
+      if (event.data?.type === "DIGITALEU_AUTOFILL_COMPLETED" && event.data?.domain) {
+        const domain = event.data.domain;
+        
+        // Find matching checklist item
+        const matchedAccount = state.accounts.find(
+          (a) => a.domain === domain || domain.endsWith(a.domain)
+        );
+
+        if (matchedAccount) {
+          setStatus(matchedAccount.id, "switched");
+          console.log(`[Dashboard] Automatically checked off ${matchedAccount.serviceName} based on extension autofill!`);
+        }
+      }
+    }
+
+    window.addEventListener("message", handleExtensionMessage);
+    return () => window.removeEventListener("message", handleExtensionMessage);
+  }, [state.accounts, setStatus]);
 
   async function handleRealGmailScan(token: string) {
     setIsScanning(true);
@@ -584,8 +629,8 @@ export function DashboardPage() {
             </div>
             <h2 className="text-xl font-bold text-white mb-2">Unlock Your Encrypted Profile</h2>
             <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-              You are logged in as <span className="font-semibold text-slate-300">{user.email}</span>,
-              but your profile is locked. Enter your privacy passphrase to decrypt your data client-side.
+              Du er logget inn som <span className="font-semibold text-slate-300">{user.email}</span>,
+              men dataene dine er kryptert. Oppgi personvern-passordet ditt for å dekryptere dem klientside.
             </p>
 
             <form onSubmit={handleUnlockSubmit} className="space-y-4 text-left">
@@ -715,6 +760,29 @@ export function DashboardPage() {
                   )}
                 </div>
               )}
+            </div>
+
+            {/* EXTENSION SYNC LINK */}
+            <div className="mt-8 bg-slate-900/60 border border-white/5 rounded-2xl p-5 space-y-3">
+              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                🔗 Link Your Browser Extension
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Enter your new secure email address (e.g. your newly created Proton Mail or Tuta address) below. 
+                Our browser companion extension will instantly capture this address and use it to automatically auto-fill your fields in a single click when you launch migration guides!
+              </p>
+              <div className="flex gap-2 max-w-md">
+                <input
+                  type="email"
+                  placeholder="e.g. alex@proton.me"
+                  value={targetEmail}
+                  onChange={handleTargetEmailChange}
+                  className="flex-1 bg-slate-950 border border-white/10 focus:border-sky-500 focus:outline-none rounded-lg px-3.5 py-2 text-xs text-white"
+                />
+                <Button size="sm" onClick={syncTargetWithExtension} className="bg-sky-600 hover:bg-sky-500 font-bold text-white text-xs px-4">
+                  Sync Link ✓
+                </Button>
+              </div>
             </div>
 
             {/* MIGRATION TARGETS */}

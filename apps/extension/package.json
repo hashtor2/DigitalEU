@@ -1,0 +1,19 @@
+{
+  "name": "@digitaleu/extension",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Digital Europe — Automatic email migration and autofill companion extension.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc && vite build"
+  },
+  "dependencies": {
+    "@digitaleu/shared": "file:../../packages/shared"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "typescript": "^5.0.0",
+    "vite": "^6.0.0"
+  }
+}

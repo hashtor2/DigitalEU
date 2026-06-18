@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Digital Europe Companion",
+  "version": "1.0.0",
+  "description": "Reclaim your digital sovereignty. Automatically matches, autofills, and tracks your email migration steps.",
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "DigitalEU Companion"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
