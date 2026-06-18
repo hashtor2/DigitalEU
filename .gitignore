@@ -19,6 +19,9 @@ apps/extension/dist/
 # Claude Code local settings
 .claude/settings.local.json
 
+# Privat research — ALDRI i repoet. Lokal arbeidsmappe for kildemateriale.
+research/
+
 # Editor / OS
 .DS_Store
 .vscode/*
