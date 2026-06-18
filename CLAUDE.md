@@ -196,9 +196,10 @@ scopes, datalekkasje, avhengigheter).
 
 ### Automatisering & MCP-connectors
 Vi automatiserer mest mulig via MCP-connectors og CLI-er.
-- **Supabase MCP:** konfigurert i `.mcp.json` (token via env-var
-  `SUPABASE_ACCESS_TOKEN` — aldri i repoet). Brukes til migrasjoner og DB-ops.
-  Se `supabase/README.md`.
+- **Supabase MCP:** hosted HTTP + OAuth, låst til prosjektet via `project_ref`
+  i `.mcp.json` (ingen token i repoet — OAuth via `/mcp`). Brukes til
+  migrasjoner og DB-ops. Prosjekt-ref: `drycxdvhxjejfsstwwub`. Se
+  `supabase/README.md`.
 - **Vercel MCP:** tilgjengelig i sessionen for deploy/infra.
 - **Prinsipp:** hemmeligheter til connectors settes som miljøvariabler lokalt,
   aldri committet. Skjema/migrasjoner versjoneres i `supabase/migrations/`.

@@ -22,6 +22,12 @@ apps/extension/dist/
 # Privat research — ALDRI i repoet. Lokal arbeidsmappe for kildemateriale.
 research/
 
+# Agent skills — regenererbare via skills-lock.json (`npx skills add ...`).
+# Symlinkene under .claude/skills er plattform-skjøre; innholdet i .agents
+# pinnes av lock-filen.
+.agents/
+.claude/skills/
+
 # Editor / OS
 .DS_Store
 .vscode/*

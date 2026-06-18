@@ -32,23 +32,30 @@ npx supabase db push
 
 ## 3. Aktiver Supabase MCP-connector (for automatisering)
 
-`.mcp.json` i prosjektroten konfigurerer connectoren. Den leser tokenet fra
-miljøvariabelen `SUPABASE_ACCESS_TOKEN` — **ingen hemmeligheter i repoet**.
+Vi bruker den **hostede** Supabase MCP-en (HTTP + OAuth), konfigurert i
+`.mcp.json` og låst til ett prosjekt via `project_ref`:
 
-1. Lag en Personal Access Token: Supabase → **Account → Access Tokens**.
-2. Sett den som miljøvariabel før du starter Claude Code:
-   ```powershell
-   $env:SUPABASE_ACCESS_TOKEN = "sbp_..."
-   ```
-3. Start Claude Code på nytt og godkjenn MCP-serveren når du blir spurt.
+```json
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=drycxdvhxjejfsstwwub"
+    }
+  }
+}
+```
 
-> **Windows-merknad:** Hvis `npx` ikke starter MCP-serveren, endre `command`
-> i `.mcp.json` til `cmd` og legg `"/c", "npx"` først i `args`.
->
-> **Sikkerhet:** En access-token uten `--project-ref` gir tilgang på tvers av
-> hele Supabase-kontoen. Når prosjektet er satt opp, anbefales det å låse
-> connectoren til ett prosjekt og evt. `--read-only` for daglig bruk
-> (se docs/SECURITY.md).
+**Autentisering (du gjør dette):** kjør `/mcp` i Claude Code og fullfør
+OAuth-innloggingen mot Supabase. Ingen access-token i repoet eller miljøet —
+OAuth-tokenet håndteres av Claude Code.
+
+> **Sikkerhet:** Connectoren er låst til dette ene prosjektet (`project_ref`).
+> Vurder å legge til `&read_only=true` i URL-en for daglig bruk, og fjerne det
+> kun når en migrasjon faktisk skal kjøres (se docs/SECURITY.md).
+
+Agent-skills (`npx skills add supabase/agent-skills`) er også installert lokalt;
+de er gitignorert og gjenopprettes fra `skills-lock.json`.
 
 ## Skjema (kort)
 
