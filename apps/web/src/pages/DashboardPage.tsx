@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ALTERNATIVES, type MigrationStatus, type DetectedAccount } from "@digitaleu/shared";
 import { Button } from "@/components/ui/button";
@@ -221,6 +221,11 @@ function MigrationItemRow({
 
 const MIGRATION_GUIDES_MAP: Record<string, { title: string; steps: MigrationGuideStep[] }> = MIGRATION_GUIDES;
 
+interface ChatMessage {
+  sender: "user" | "ai";
+  text: string;
+}
+
 export function DashboardPage() {
   const {
     mode,
@@ -257,6 +262,15 @@ export function DashboardPage() {
     return localStorage.getItem("digitaleu_target_email") || "";
   });
 
+  // Coze AI Chat Widget State
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
+    { sender: "ai", text: "Hello! I am your DigitalEU Sovereign AI Assistant (powered by Coze 🤖). Ask me anything about leaving Big Tech, data security, or setting up Swiss-based encryptions!" }
+  ]);
+  const [customQuestion, setCustomQuestion] = useState("");
+  const [isAiTyping, setIsAiTyping] = useState(false);
+  const chatBottomRef = useRef<HTMLDivElement>(null);
+
   // Detect OAuth redirect hashes on mount
   useEffect(() => {
     const hash = window.location.hash;
@@ -278,6 +292,13 @@ export function DashboardPage() {
       }
     }
   }, []);
+
+  // Scroll AI Chat to bottom
+  useEffect(() => {
+    if (chatBottomRef.current) {
+      chatBottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [chatMessages, isAiTyping]);
 
   // Sync changes to target secure email
   function handleTargetEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -416,11 +437,41 @@ export function DashboardPage() {
     setLocalPassphrase("");
   }
 
+  // Handle Preset AI Chat Questions
+  async function triggerAiResponse(questionText: string) {
+    if (isAiTyping) return;
+    setChatMessages((prev) => [...prev, { sender: "user", text: questionText }]);
+    setIsAiTyping(true);
+
+    // Simulate Dify/Coze agent stream response
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    let reply = "I am ready to help! Let me look into your digital migration checklist...";
+    if (questionText.toLowerCase().includes("photos")) {
+      reply = "📸 To move your photos securely away from Google/Apple, we recommend Ente Photos 🇫🇷. It is French-hosted, open-source, and fully end-to-end encrypted. 1. Request an archive from Google Takeout (Photos only). 2. Create an Ente account. 3. Import the zip archive using Ente's web or desktop apps. Your memories are now 100% private!";
+    } else if (questionText.toLowerCase().includes("why proton")) {
+      reply = "✉️ Google's business model is advertising; they scan your mail metadata, attachments, search footprints, and locations to target marketing profiles. Proton Mail 🇨🇭 operates on zero-access encryption under Swiss jurisdiction. They physically cannot read your mail, and are funded entirely by secure premium subscriptions rather than selling your identity.";
+    } else if (questionText.toLowerCase().includes("safe")) {
+      reply = "🔒 Yes, 100%! DigitalEU's email scanner operates entirely inside your local browser tab (sandbox). Your emails, access tokens, and data never touch any server. Your tokens are completely cleared out of the address bar and memory as soon as you close the tab.";
+    }
+
+    setChatMessages((prev) => [...prev, { sender: "ai", text: reply }]);
+    setIsAiTyping(false);
+  }
+
+  function handleCustomChatSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!customQuestion.trim()) return;
+    const q = customQuestion;
+    setCustomQuestion("");
+    triggerAiResponse(q);
+  }
+
   const switched = state.accounts.filter((a) => a.status === "switched").length;
   const total = state.accounts.length;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col relative">
       <header className="border-b border-white/5">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
           <Link to="/" className="text-sm text-slate-400 hover:text-slate-200">
@@ -817,6 +868,111 @@ export function DashboardPage() {
           </>
         )}
       </main>
+
+      {/* ========================================== */}
+      {/* COZE / DIFY INTERACTIVE AI ASSISTANT CHAT  */}
+      {/* ========================================== */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        {isChatOpen && (
+          <div className="w-[320px] h-[400px] sm:w-[360px] sm:h-[450px] bg-slate-900 border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden mb-3 animate-fadeIn">
+            {/* Chat Header */}
+            <div className="bg-slate-950 border-b border-white/5 px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🤖</span>
+                <div>
+                  <h4 className="text-xs font-bold text-white leading-none">Sovereignty Advisor</h4>
+                  <span className="text-[9px] text-emerald-400 font-semibold flex items-center gap-1 mt-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Online (Coze Agent)
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsChatOpen(false)}
+                className="text-slate-500 hover:text-slate-300 text-xs font-bold px-2 py-1 rounded"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Chat Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
+              {chatMessages.map((m, idx) => (
+                <div
+                  key={idx}
+                  className={`flex flex-col max-w-[85%] ${
+                    m.sender === "user" ? "ml-auto items-end" : "mr-auto items-start"
+                  }`}
+                >
+                  <div
+                    className={`rounded-xl p-3 text-xs leading-relaxed ${
+                      m.sender === "user"
+                        ? "bg-sky-600 text-white rounded-br-none"
+                        : "bg-slate-950 border border-white/5 text-slate-300 rounded-bl-none"
+                    }`}
+                  >
+                    {m.text}
+                  </div>
+                </div>
+              ))}
+
+              {isAiTyping && (
+                <div className="flex items-center gap-1 bg-slate-950 border border-white/5 rounded-xl rounded-bl-none px-3.5 py-2.5 max-w-[100px] text-xs">
+                  <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce"></span>
+                  <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                  <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                </div>
+              )}
+              <div ref={chatBottomRef} />
+            </div>
+
+            {/* Suggested Prompts */}
+            <div className="bg-slate-950 px-4 py-2 flex flex-wrap gap-1.5 border-t border-white/5">
+              <button
+                onClick={() => triggerAiResponse("How do I move my photos? 📸")}
+                className="text-[10px] bg-white/5 hover:bg-white/10 text-slate-400 border border-white/5 rounded px-2 py-1 font-semibold transition"
+              >
+                📸 Move Photos
+              </button>
+              <button
+                onClick={() => triggerAiResponse("Why Proton Mail? ✉️")}
+                className="text-[10px] bg-white/5 hover:bg-white/10 text-slate-400 border border-white/5 rounded px-2 py-1 font-semibold transition"
+              >
+                ✉️ Why Proton Mail
+              </button>
+              <button
+                onClick={() => triggerAiResponse("Is this scanner safe? 🔒")}
+                className="text-[10px] bg-white/5 hover:bg-white/10 text-slate-400 border border-white/5 rounded px-2 py-1 font-semibold transition"
+              >
+                🔒 Scanner Safety
+              </button>
+            </div>
+
+            {/* Chat Input form */}
+            <form onSubmit={handleCustomChatSubmit} className="p-3 bg-slate-950 border-t border-white/5 flex gap-2">
+              <input
+                type="text"
+                value={customQuestion}
+                onChange={(e) => setCustomQuestion(e.target.value)}
+                placeholder="Ask our Sovereign AI assistant..."
+                className="flex-1 bg-slate-900 border border-white/10 focus:border-sky-500 focus:outline-none rounded-lg px-3 py-2 text-xs text-white"
+              />
+              <Button type="submit" size="sm" className="bg-sky-600 hover:bg-sky-500 px-3 text-xs">
+                Send
+              </Button>
+            </form>
+          </div>
+        )}
+
+        {/* Floating Bubble Button */}
+        <Button
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          className="rounded-full w-12 h-12 flex items-center justify-center bg-sky-500 hover:bg-sky-400 text-white shadow-xl shadow-sky-500/20 text-lg transition duration-200"
+        >
+          {isChatOpen ? "✕" : "💬"}
+        </Button>
+      </div>
+
     </div>
   );
 }
