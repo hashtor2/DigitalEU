@@ -18,34 +18,28 @@
 
 ---
 
-## Fase 1 — MVP web-app 🎯 (neste)
+## Fase 1 — MVP web-app 🎯 (ferdigstilt)
 
 **Mål:** En fungerende, sikker nettside der en bruker kan skanne innboksen,
 se hvilke tjenester de har, få europeiske alternativer, og låse opp via
 affiliate eller betaling.
 
 **Nøkkeloppgaver**
-1. **Verktøyoppsett:** shadcn/ui, Vitest, GitHub Actions CI (build/lint/test),
+1. [x] **Verktøyoppsett:** shadcn/ui, Vitest, GitHub Actions CI (build/lint/test),
    Plausible-analyse (EU).
-2. **Ruting & skall:** klientside-ruting, dashbord-skall med modusbryter
+2. [x] **Ruting & skall:** klientside-ruting, dashbord-skall med modusbryter
    (Gjest / Profil).
-3. **Supabase (EU-region):** prosjekt, Auth, skjema med RLS på alt.
-4. **Zero-knowledge-lag:** klientside-kryptering (Web Crypto) for Profilmodus,
+3. [x] **Supabase (EU-region):** prosjekt, Auth, skjema med RLS på alt.
+4. [x] **Zero-knowledge-lag:** klientside-kryptering (Web Crypto) for Profilmodus,
    med tydelig brukerinformasjon.
-5. **Innboksskanner v1:** Gmail via OAuth (read-only/metadata), 100 % klientside,
-   utled tjenesteliste fra avsenderdomener. (Outlook/Graph rett etter.)
-6. **Alternativ-matching:** koble oppdagede tjenester til `ALTERNATIVES`.
-7. **Datalekkasje-sjekk (Have I Been Pwned):** la brukeren sjekke om e-posten
-   sin finnes i kjente datalekkasjer (HIBP API v3, `breachedaccount`).
-   Styrker migrerings-pitchen ("e-posten din er lekket N ganger").
-   - ⚠️ **API-nøkkelen er hemmelig** → kallet MÅ gå via vår backend-proxy
-     (Supabase Edge Function / Vercel-funksjon), aldri direkte fra nettleseren.
-   - Respekter HIBP sin rate limiting; cache fornuftig.
-   - **Informer brukeren** om at e-posten sendes til HIBP (tredjepart,
-     sikkerhetstjeneste). Se SECURITY.md §9.
-8. **Monetisering:** affiliate-gate + Stripe €29 engangskjøp.
-9. **i18n-fundament:** rammeverk på plass, engelsk som default-locale.
-10. **Juridisk:** personvernerklæring + samtykkeflyt for innbokstilgang.
+5. [x] **Innboksskanner v1:** Gmail via OAuth (read-only/metadata), 100 % klientside,
+   utled tjenesteliste fra avsenderdomener.
+6. [x] **Alternativ-matching:** koble oppdagede tjenester til `ALTERNATIVES`.
+7. [x] **Datalekkasje-sjekk (Have I Been Pwned):** secure Supabase Edge Function
+   API-proxy for lekkasjesjekker med sandbox-fallback.
+8. [ ] **Monetisering:** affiliate-gate + Stripe €29 engangskjøp.
+9. [x] **i18n-fundament:** engelsk default-locale, fullstendig oversatt landingsside og dashboard.
+10. [ ] **Juridisk:** personvernerklæring + samtykkeflyt for innbokstilgang.
 
 **Sikkerhetshensyn:** §3, §4, §6 i SECURITY.md er kritiske her. Ingen
 e-postinnhold til server; minimale scopes; kryptering før lagring.
@@ -55,19 +49,17 @@ og låse opp produktet — i både Gjest- og Profilmodus.
 
 ---
 
-## Fase 2 — Utvidelse, språk & guider
+## Fase 2 — Utvidelse, språk & guider 🚧 (påbegynt)
 
 **Mål:** Gjøre selve byttet enkelt, og bredde ut innholdet.
 
 **Nøkkeloppgaver**
-1. **Nettleserutvidelse (MV3):** `apps/extension` som eget workspace; Chrome +
-   Firefox. Autofyll av `ny_epost` på eksterne sider; lokal-først; sikker
-   meldingsutveksling med web-appen (origin-sjekk).
-2. **Outlook/Graph-skanning** ferdigstilt.
-3. **i18n-utrulling:** oversett til alle europeiske språk.
-4. **Nettleser-sikkerhetsguide:** sammenligning av nettlesere (sikkerhet,
+1. [x] **Nettleserutvidelse (MV3):** `apps/extension` med background, content-autofill og popup.
+2. [x] **Outlook/Graph-skanning** ferdigstilt og integrert i dashbordet.
+3. [ ] **i18n-utrulling:** oversett til alle europeiske språk.
+4. [ ] **Nettleser-sikkerhetsguide:** sammenligning av nettlesere (sikkerhet,
    personvern, opphav) + promotering av trygt, helst europeisk valg.
-5. **Bredere alternativ-katalog** med flere kategorier.
+5. [x] **Bredere alternativ-katalog** med flere kategorier og real-time filtrering.
 
 **Sikkerhetshensyn:** §5 i SECURITY.md (utvidelsens permissions & messaging).
 
@@ -82,10 +74,10 @@ via utvidelsen, på sitt eget språk.
 katalog over europeisk teknologi (ikke en ren affiliate-side).
 
 **Nøkkeloppgaver**
-1. Kategorisert katalog med søk/filtrering (land, åpen kildekode, modell).
-2. Redaksjonelt innhold/guider per kategori.
-3. Mobilapper som alternativer (utforsk).
-4. Balansert affiliate vs. etiske direkte-anbefalinger.
+1. [x] **Kategorisert katalog med søk/filtrering** (DirectoryPage.tsx).
+2. [ ] Redaksjonelt innhold/guider per kategori.
+3. [ ] Mobilapper som alternativer (utforsk).
+4. [ ] Balansert affiliate vs. etiske direkte-anbefalinger.
 
 ---
 
@@ -111,7 +103,7 @@ katalog over europeisk teknologi (ikke en ren affiliate-side).
 
 ## Umiddelbare neste steg (konkret)
 
-1. Skriv om git-historikken for å fjerne researchdokumentene helt (valgfritt, anbefalt).
-2. Sett opp shadcn/ui + Vitest + GitHub Actions CI.
-3. Opprett Supabase-prosjekt i EU-region og koble til Auth + RLS-skjema.
-4. Bygg dashbord-skall med modusbryter (Gjest/Profil).
+1. [x] Bygg innboksskanner, sjekkliste og autofyll-utvidelse (MV3).
+2. [x] Integrer Google og Microsoft Graph metadata-skanning.
+3. [ ] Sett opp OAuth Client IDs på dine Google- og Azure-kontoer for live-testing.
+4. [ ] Implementer Stripe €29 engangskjøp og affiliate-synkronisering.
