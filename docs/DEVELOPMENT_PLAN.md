@@ -35,9 +35,17 @@ affiliate eller betaling.
 5. **Innboksskanner v1:** Gmail via OAuth (read-only/metadata), 100 % klientside,
    utled tjenesteliste fra avsenderdomener. (Outlook/Graph rett etter.)
 6. **Alternativ-matching:** koble oppdagede tjenester til `ALTERNATIVES`.
-7. **Monetisering:** affiliate-gate + Stripe €29 engangskjøp.
-8. **i18n-fundament:** rammeverk på plass, engelsk som default-locale.
-9. **Juridisk:** personvernerklæring + samtykkeflyt for innbokstilgang.
+7. **Datalekkasje-sjekk (Have I Been Pwned):** la brukeren sjekke om e-posten
+   sin finnes i kjente datalekkasjer (HIBP API v3, `breachedaccount`).
+   Styrker migrerings-pitchen ("e-posten din er lekket N ganger").
+   - ⚠️ **API-nøkkelen er hemmelig** → kallet MÅ gå via vår backend-proxy
+     (Supabase Edge Function / Vercel-funksjon), aldri direkte fra nettleseren.
+   - Respekter HIBP sin rate limiting; cache fornuftig.
+   - **Informer brukeren** om at e-posten sendes til HIBP (tredjepart,
+     sikkerhetstjeneste). Se SECURITY.md §9.
+8. **Monetisering:** affiliate-gate + Stripe €29 engangskjøp.
+9. **i18n-fundament:** rammeverk på plass, engelsk som default-locale.
+10. **Juridisk:** personvernerklæring + samtykkeflyt for innbokstilgang.
 
 **Sikkerhetshensyn:** §3, §4, §6 i SECURITY.md er kritiske her. Ingen
 e-postinnhold til server; minimale scopes; kryptering før lagring.

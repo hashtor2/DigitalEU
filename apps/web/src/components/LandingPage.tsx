@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ALTERNATIVES, type Alternative } from "@digitaleu/shared";
 import { Button } from "@/components/ui/button";
 
@@ -57,10 +58,11 @@ export function LandingPage() {
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Button
+            asChild
             size="lg"
             className="bg-sky-500 text-white hover:bg-sky-400"
           >
-            Skann innboksen min
+            <Link to="/dashboard">Skann innboksen min</Link>
           </Button>
           <Button size="lg" variant="outline">
             Se hvordan det funker

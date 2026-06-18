@@ -34,11 +34,15 @@
 | 2026-06-18 | **Supabase-klient** (`supabase.ts`) + `.env.example` + typede env-vars | ✅ |
 | 2026-06-18 | **RLS-skjema versjonert** (`supabase/migrations/0001`): `user_vault` (zero-knowledge) + `entitlements` | ✅ (skrevet) |
 | 2026-06-18 | **Supabase MCP-connector** konfigurert (`.mcp.json`, token via env) | ✅ |
+| 2026-06-18 | **Klientside-ruting** (react-router, lazy-lastet dashbord)  | ✅ |
+| 2026-06-18 | **Dashbord-skall** med Gjest/Profil-modusbryter + fremdrift | ✅ |
+| 2026-06-18 | **Gjestemodus-lagring** (`guestStorage.ts` + `useMigrationState`) — sessionStorage, 4 tester | ✅ |
+| 2026-06-18 | Datalekkasje-sjekk (HIBP) lagt inn i planen (SECURITY §9)  | ✅ (planlagt) |
 | —          | Opprett Supabase-prosjekt (EU/Frankfurt) + kjør migrasjon | ⏳ (krever deg) |
-| —          | Klientside-ruting + dashbord-skall (Gjest/Profil-bryter) | ⏳ |
-| —          | Supabase Auth-flyt (innlogging/registrering)             | ⏳ |
+| —          | Supabase Auth-flyt + Profilmodus-lagring (zero-knowledge) | ⏳ |
 | —          | Innboksskanner v1 (Gmail OAuth, 100 % klientside)        | ⏳ |
 | —          | Alternativ-matching (oppdaget tjeneste → alternativ)     | ⏳ |
+| —          | Datalekkasje-sjekk (Have I Been Pwned, via backend-proxy) | ⏳ |
 | —          | Affiliate-gate + Stripe €29 engangskjøp                  | ⏳ |
 | —          | i18n-fundament (engelsk default)                         | ⏳ |
 | —          | Personvernerklæring + samtykkeflyt                       | ⏳ |
@@ -55,3 +59,7 @@
   Supabase-klient, versjonert RLS-skjema, og Supabase MCP-connector (`.mcp.json`).
   **Venter på deg:** opprett Supabase-prosjekt i EU-region, sett
   `SUPABASE_ACCESS_TOKEN`, fyll `apps/web/.env`. Da kjører vi migrasjonen via MCP.
+- **2026-06-18:** Ruting + dashbord-skall (Gjest/Profil) implementert og
+  fungerer uten database. Gjestemodus persisterer til sessionStorage. HIBP
+  datalekkasje-sjekk lagt inn i planen. 20 tester grønne, bygg rent (Supabase
+  code-splittet ut av landingssiden).

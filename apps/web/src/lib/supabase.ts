@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 /**
  * Supabase-klient for Profilmodus (autentisering + lagring av KRYPTERT
@@ -11,7 +11,10 @@ import { createClient } from "@supabase/supabase-js";
 const url = import.meta.env.VITE_SUPABASE_URL;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!url || !anonKey) {
+/** True når miljøet er konfigurert for Profilmodus. */
+export const isSupabaseConfigured = Boolean(url && anonKey);
+
+if (!isSupabaseConfigured) {
   // Gjestemodus fungerer uten Supabase; Profilmodus krever disse satt.
   console.warn(
     "[supabase] VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY mangler — " +
@@ -19,13 +22,16 @@ if (!url || !anonKey) {
   );
 }
 
-export const supabase = createClient(url ?? "", anonKey ?? "", {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-  },
-});
-
-/** True når miljøet er konfigurert for Profilmodus. */
-export const isSupabaseConfigured = Boolean(url && anonKey);
+/**
+ * `null` når miljøet ikke er konfigurert (Gjestemodus). Konsumenter må
+ * null-sjekke, eller bruke {@link isSupabaseConfigured} først.
+ */
+export const supabase: SupabaseClient | null = isSupabaseConfigured
+  ? createClient(url, anonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+      },
+    })
+  : null;

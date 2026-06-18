@@ -112,7 +112,24 @@ Grunnregel: **datamininmering** — samle og lagre minst mulig, kortest mulig.
 
 ---
 
-## 9. Sikkerhetssjekkliste FØR HVER COMMIT (obligatorisk)
+## 9. Tredjepartsoppslag — datalekkasje-sjekk (Have I Been Pwned)
+
+Funksjonen lar brukeren sjekke om e-posten finnes i kjente datalekkasjer.
+
+- **API-nøkkel er hemmelig:** HIBP API v3 (`breachedaccount`) krever en
+  `hibp-api-key`. Den ligger KUN server-side (backend-proxy: Supabase Edge
+  Function / Vercel-funksjon), **aldri** i klientbundle eller en `VITE_`-variabel.
+- **Backend-proxy:** klienten kaller vår egen funksjon, som kaller HIBP. Slik
+  eksponeres ikke nøkkelen, og vi kan håndtere rate limiting og caching.
+- **Informert samtykke:** e-posten sendes til en tredjepart (HIBP). Forklar dette
+  tydelig før oppslaget. Logg ikke e-post eller resultat unødig.
+- **Datamininmering:** ikke persister breach-resultater i klartekst knyttet til
+  bruker; i Profilmodus følger evt. lagring zero-knowledge-modellen.
+- **EU-merknad:** HIBP er ikke-europeisk, men en anerkjent sikkerhetstjeneste
+  uten reelt europeisk ekvivalent for dette datasettet — akseptabelt unntak fra
+  europeisk-først (jf. CLAUDE.md §6), nettopp fordi det er et sikkerhetsverktøy.
+
+## 10. Sikkerhetssjekkliste FØR HVER COMMIT (obligatorisk)
 
 Gå gjennom denne før `git commit`:
 

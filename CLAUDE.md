@@ -133,6 +133,7 @@ Tabellen sporer hvor vi står, og hvor vi har en bevisst åpen vurdering.
 | Kodehosting    | GitHub             | 🇺🇸 Microsoft   | Codeberg 🇩🇪, GitLab (self-host) | ⚠️ Åpen vurdering (rapporten anbefaler migrering) |
 | Betaling       | Stripe             | 🇺🇸/🇮🇪          | Mollie 🇳🇱, Paddle               | ⚠️ Åpen vurdering              |
 | Domeneregistrar| Spaceship          | 🇺🇸 (antatt)    | Gandi 🇫🇷, INWX 🇩🇪, Netim 🇫🇷     | ⚠️ Notert (domenet er kjøpt)   |
+| Breach-sjekk   | Have I Been Pwned  | 🌍 (ikke-EU)    | (ingen reelt ekvivalent)        | ✅ Akseptabelt unntak (sikkerhetstjeneste) |
 
 > Domenet **digitaleu.me** er kjøpt og driftes via Spaceship.
 > "Åpen vurdering" = bevisst beholdt nå for utviklerhastighet, men skal revurderes
@@ -148,6 +149,9 @@ Tabellen sporer hvor vi står, og hvor vi har en bevisst åpen vurdering.
 - **Nettleserguide:** Nettsiden skal ha en egen guide som **sammenligner
   nettlesere** (sikkerhet, personvern, opphav) og promoterer en trygg, helst
   europeisk nettleser.
+- **Datalekkasje-sjekk:** Bruker kan sjekke om e-posten er i kjente lekkasjer
+  via Have I Been Pwned (API v3). Krever backend-proxy (hemmelig API-nøkkel).
+  Se docs/SECURITY.md §9 og DEVELOPMENT_PLAN.md Fase 1.
 - **Språk:** Engelsk som standard. Etter MVP skal nettsiden bygges ut til **alle
   europeiske språk** (i18n må være forberedt i koden fra start).
 - **Mobil (senere):** Ikke nå, men mange mobilapper er gode europeiske
