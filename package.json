@@ -1,0 +1,19 @@
+{
+  "name": "digitaleu",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Europeisk migrasjonsportal — flytt det digitale livet ditt til personvernvennlige, europeiske alternativer.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @digitaleu/web",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "web": "npm run dev --workspace @digitaleu/web"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
