@@ -58,7 +58,7 @@ describe("DashboardPage (privacy report)", () => {
     renderDashboard();
     expect(
       screen.getByRole("link", { name: /change selection/i }),
-    ).toHaveAttribute("href", "/select");
+    ).toHaveAttribute("href", "/");
     expect(
       screen.getByRole("link", { name: /browse eu alternatives/i }),
     ).toHaveAttribute("href", "/directory");

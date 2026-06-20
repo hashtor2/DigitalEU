@@ -6,7 +6,12 @@ Databaseskjema og oppsett for Profilmodus. Skjemaet er **versjonert** i
 ## 1. Prosjektet (opprettet)
 
 Prosjektet er opprettet i **Sveits — Zürich (eu-central-2)** 🇨🇭
-(jf. CLAUDE.md beslutning #3b). Prosjekt-ref: `lttfqyrfmsgmbzvfkfij`.
+(jf. CLAUDE.md beslutning #3b). Prosjekt-ref: `fuiebtpezpoxvkuuhaqy`
+(navn: «emailchanger»).
+
+> **Merk:** Det opprinnelige prosjektet `lttfqyrfmsgmbzvfkfij` er erstattet.
+> Den hardkodede `service_role`-nøkkelen for det gamle prosjektet (funnet i et
+> lokalt `reset-user.js`) skal roteres — se beslutning/notat i sikkerhetssjekken.
 
 1. Noter ned fra **Settings → API**:
    - `Project URL` → `VITE_SUPABASE_URL`
@@ -41,7 +46,7 @@ Vi bruker den **hostede** Supabase MCP-en (HTTP + OAuth), konfigurert i
   "mcpServers": {
     "supabase": {
       "type": "http",
-      "url": "https://mcp.supabase.com/mcp?project_ref=lttfqyrfmsgmbzvfkfij"
+      "url": "https://mcp.supabase.com/mcp?project_ref=fuiebtpezpoxvkuuhaqy"
     }
   }
 }

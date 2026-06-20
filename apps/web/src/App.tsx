@@ -4,12 +4,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     lazy: async () => ({
-      Component: (await import("./components/LandingPage")).LandingPage,
-    }),
-  },
-  {
-    path: "/select",
-    lazy: async () => ({
       Component: (await import("./pages/SelectorPage")).SelectorPage,
     }),
   },

@@ -18,34 +18,53 @@
 
 ---
 
-## Fase 1 — MVP web-app 🎯 (ferdigstilt)
+## Fase 1 — MVP web-app 🚧 (byggeklosser ferdige; live-flyt forenklet)
 
-**Mål:** En fungerende, sikker nettside der en bruker kan skanne innboksen,
-se hvilke tjenester de har, få europeiske alternativer, og låse opp via
-affiliate eller betaling.
+**Mål:** En fungerende, sikker nettside der en bruker kan se hvilke tjenester
+de har, få europeiske alternativer og en personvernscore.
+
+> **Status nå (faktisk flyt, 2026-06-20):** Den *live* brukerflyten er forenklet:
+> `/` (markedsføring) → `/select` (manuell tjenestevelger) → `/dashboard`
+> (statisk personvernrapport drevet av valget). De avanserte byggeklossene
+> nedenfor — OAuth-innboksskanning, zero-knowledge-kryptering, Gjest/Profil-modus
+> — **finnes som ferdige, testede moduler** (`apps/web/src/lib/gmailScanner.ts`,
+> `outlookScanner.ts`, `crypto.ts`, `guestStorage.ts`, `hooks/useMigrationState.ts`),
+> men er **for øyeblikket ikke koblet inn** i den nye dashbord-flyten. Se ADR #18.
 
 **Nøkkeloppgaver**
 1. [x] **Verktøyoppsett:** shadcn/ui, Vitest, GitHub Actions CI (build/lint/test),
    Plausible-analyse (EU).
-2. [x] **Ruting & skall:** klientside-ruting, dashbord-skall med modusbryter
-   (Gjest / Profil).
-3. [x] **Supabase (EU-region):** prosjekt, Auth, skjema med RLS på alt.
-4. [x] **Zero-knowledge-lag:** klientside-kryptering (Web Crypto) for Profilmodus,
-   med tydelig brukerinformasjon.
-5. [x] **Innboksskanner v1:** Gmail via OAuth (read-only/metadata), 100 % klientside,
-   utled tjenesteliste fra avsenderdomener.
-6. [x] **Alternativ-matching:** koble oppdagede tjenester til `ALTERNATIVES`.
+2. [x] **Ruting & skall:** klientside-ruting. *Modusbryter (Gjest/Profil) finnes i
+   `useMigrationState`/Header, men er ikke eksponert i den nye dashbord-flyten.*
+3. [x] **Supabase (EU-region):** prosjekt, Auth, skjema med RLS på alt
+   (nytt prosjekt `fuiebtpezpoxvkuuhaqy`, Zürich; `user_vault`-trigger i 0002).
+4. [x] **Zero-knowledge-lag:** `crypto.ts` (Web Crypto) finnes + testet.
+   *Ikke koblet inn i live-flyt nå (ingen Profilmodus-skriving i dashbordet).*
+5. [x] **Innboksskanner v1:** Gmail/Outlook via OAuth (metadata), 100 % klientside —
+   modul finnes + testet. *Ikke koblet inn i live dashbord nå.*
+6. [x] **Alternativ-matching:** `SERVICES` kobles til `ALTERNATIVES`
+   (`euAlternativeId`); brukt i den nye rapporten.
 7. [x] **Datalekkasje-sjekk (Have I Been Pwned):** secure Supabase Edge Function
-   API-proxy for lekkasjesjekker med sandbox-fallback.
-8. [ ] **Monetisering:** affiliate-gate + Stripe €29 engangskjøp.
-9. [x] **i18n-fundament:** engelsk default-locale, fullstendig oversatt landingsside og dashboard.
-10. [ ] **Juridisk:** personvernerklæring + samtykkeflyt for innbokstilgang.
+   API-proxy med sandbox-fallback. *Ikke eksponert i live UI ennå.*
+8. [~] **Monetisering:** `create-checkout` Edge Function (Stripe €29) skrevet.
+   **Utsatt** — ikke prioritert nå (UI-wiring + affiliate-gate gjenstår).
+9. [x] **i18n-fundament:** engelsk default-locale.
+10. [ ] **Juridisk:** personvernerklæring + samtykkeflyt (kreves før OAuth-skanning
+   re-eksponeres utad).
 
-**Sikkerhetshensyn:** §3, §4, §6 i SECURITY.md er kritiske her. Ingen
-e-postinnhold til server; minimale scopes; kryptering før lagring.
+**Ny, live MVP-flyt (lagt til i denne fasen)**
+- [x] **Tjenestevelger (`SelectorPage`):** søk/filtrer og velg tjenester; lagres i
+  `sessionStorage` (gjest-først, ingen server).
+- [x] **Tjenestekatalog med trusselscore (`services.ts`):** trussel-/personvern-
+  scorer, eierland, slett-/bytt-e-post-lenker per tjeneste.
+- [x] **Personvernrapport (`DashboardPage`):** tabell med scorer + EU-alternativ
+  per valgt tjeneste.
 
-**Ferdig når:** En bruker kan trygt koble Gmail, se sine tjenester + alternativer,
-og låse opp produktet — i både Gjest- og Profilmodus.
+**Sikkerhetshensyn:** §3, §4, §6 i SECURITY.md. Den nåværende live-flyten holder
+data i `sessionStorage` (gjest-først) og sender ingenting til server.
+
+**Ferdig når:** Beslutning tatt om kanonisk flyt (se ADR #18), og den valgte
+flyten er trygg og komplett ende-til-ende.
 
 ---
 

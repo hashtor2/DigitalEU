@@ -139,7 +139,7 @@ export function DashboardPage() {
             )}
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" size="sm" asChild><Link to="/select">← Change selection</Link></Button>
+            <Button variant="outline" size="sm" asChild><Link to="/">← Change selection</Link></Button>
             <Button size="sm" className="bg-sky-500 text-white hover:bg-sky-400 font-semibold" asChild>
               <Link to="/directory">Browse EU Alternatives</Link>
             </Button>
@@ -166,7 +166,7 @@ export function DashboardPage() {
         {sorted.length === 0 ? (
           <div className="rounded-xl border border-white/10 bg-white/5 py-20 text-center">
             <p className="text-slate-400">No services selected.</p>
-            <Button className="mt-4" onClick={() => navigate("/select")}>Select services</Button>
+            <Button className="mt-4" onClick={() => navigate("/")}>Select services</Button>
           </div>
         ) : (
           <div className="overflow-x-auto rounded-xl border border-white/10">
