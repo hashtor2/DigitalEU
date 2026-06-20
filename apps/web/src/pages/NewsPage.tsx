@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 interface Journalist {
   name: string;
@@ -47,9 +48,25 @@ const JOURNALISTS: Journalist[] = [
     avatar: "🎙️",
     bio: "Tech journalist and startup advocate. Lukas focuses on interviewing European privacy founders and writing unbiased, exhaustive comparative reviews of sovereign consumer tools.",
   },
+  {
+    name: "Johan Nordström",
+    role: "Senior Technology Correspondent",
+    location: "Helsinki, Finland 🇫🇮",
+    avatar: "🏆",
+    bio: "Award-winning technology journalist with 30 years of experience covering European innovation. Johan specializes in analyzing the intersection of technology, privacy, and sovereignty, bringing deep historical context to contemporary developments in the European tech landscape.",
+  },
 ];
 
 const NEWS_ARTICLES: Article[] = [
+  {
+    id: "eu-ai-act-impact",
+    title: "How the EU AI Act is Shaping a New Era of Ethical Artificial Intelligence",
+    excerpt: "As the world's first comprehensive AI regulation takes effect, European startups are pioneering privacy-preserving, transparent AI systems that could become the global benchmark for ethical technology development.",
+    category: "regulation",
+    author: "Johan Nordström",
+    date: "June 18, 2026",
+    readTime: "7 min read",
+  },
   {
     id: "andy-yen-interview",
     title: "Sovereignty at Scale: An Interview with Andy Yen, CEO of Proton",
@@ -129,26 +146,26 @@ export function NewsPage() {
           <div className="absolute top-0 right-0 w-80 h-80 bg-sky-500/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="relative z-10 max-w-2xl space-y-4">
             <span className="bg-purple-500/15 text-purple-300 border border-purple-500/20 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded">
-              Spotlight Interview 🎙️
+              Feature Analysis 🏆
             </span>
             <h2 className="text-2xl font-bold text-white tracking-tight leading-snug sm:text-3xl">
-              "We must own our digital borders." An Hour with Andy Yen of Proton Mail.
+              The EU AI Act: Europe's Bold Step Toward Ethical Artificial Intelligence
             </h2>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Geneva, Switzerland — Andy Yen outlines why relying on US ad-monopolies is a critical security vulnerability for European democracy, how Proton has grown to 100M+ users completely organically, and their roadmap for secure local files, identity vaults, and post-quantum encryptions.
+              As the world's first comprehensive AI regulation begins implementation, European startups are leading the charge in developing privacy-preserving, transparent AI systems that prioritize human rights over surveillance capitalism. This landmark legislation could establish a new global standard for responsible AI development.
             </p>
             <div className="flex items-center gap-4 text-[11px] text-slate-500 pt-2 font-medium">
-              <span className="flex items-center gap-1">🎙️ Lukas Weber</span>
+              <span className="flex items-center gap-1">🏆 Johan Nordström</span>
               <span>•</span>
-              <span>June 15, 2026</span>
+              <span>June 18, 2026</span>
               <span>•</span>
-              <span className="text-sky-400">8 min read</span>
+              <span className="text-sky-400">7 min read</span>
             </div>
             <button
-              onClick={() => alert("This full premium interview is scheduled to deploy in Phase 2!")}
+              onClick={() => alert("This full feature analysis is available now!")}
               className="bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition"
             >
-              Read Full Interview
+              Read Full Analysis
             </button>
           </div>
         </section>
@@ -223,6 +240,7 @@ export function NewsPage() {
         </section>
 
       </main>
+      <Footer />
     </div>
   );
 }

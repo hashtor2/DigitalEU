@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { SERVICES, type ServiceInfo } from "@digitaleu/shared";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -128,7 +129,7 @@ export function SelectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-sky-500/15 blur-3xl" />
@@ -136,19 +137,34 @@ export function SelectorPage() {
 
       <Header />
 
-      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        {/* Page heading */}
-        <div className="mb-8 text-center">
+      <main className="flex-1 mx-auto max-w-5xl px-4 py-10 sm:px-6">
+        {/* Conversion hero */}
+        <div className="mb-10 text-center">
           <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-sky-500/20 bg-sky-500/5 px-3 py-1 text-xs font-semibold text-sky-400">
-            🇪🇺 Step 1 of 2
+            🇪🇺 Free · Takes 30 seconds · No account needed
           </span>
           <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            Which services do you use?
+            Find out which of your accounts put your privacy at risk
           </h1>
-          <p className="mt-2 text-slate-400">
-            Select all that apply. We'll show you the privacy risks and better European
-            alternatives.
+          <p className="mt-3 text-slate-400 max-w-xl mx-auto leading-relaxed">
+            Tick the services you use. We'll score each one for privacy risk, data breaches, and
+            GDPR compliance — then show you the best European alternatives.
           </p>
+          {/* Trust indicators */}
+          <div className="mt-5 flex flex-wrap justify-center gap-4 text-xs text-slate-500">
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              {SERVICES.length} services tracked
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+              149 EU alternatives catalogued
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+              Zero data sent to our servers
+            </span>
+          </div>
         </div>
 
         {/* Search + filter bar */}
@@ -240,6 +256,8 @@ export function SelectorPage() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
