@@ -15,37 +15,29 @@ function getDomain(url: string): string {
   try { return new URL(url).hostname; } catch { return ""; }
 }
 
-function ScoreGauge({ score }: { score: number }) {
-  const color =
-    score >= 75 ? "#22c55e" :
-    score >= 50 ? "#f0c040" :
-    score >= 30 ? "#f97316" :
-    "#ef4444";
-
-  const strokeWidth = 8;
-  const r = 44;
-  const circ = 2 * Math.PI * r;
-  const offset = circ - (score / 100) * circ;
-
+function StarRating({ stars, estimated }: { stars: number; estimated?: boolean }) {
   return (
-    <div className="relative flex flex-col items-center gap-1">
-      <svg width="104" height="104" viewBox="0 0 104 104" className="-rotate-90">
-        <circle cx="52" cy="52" r={r} stroke="#1a2535" strokeWidth={strokeWidth} fill="none" />
-        <circle
-          cx="52" cy="52" r={r}
-          stroke={color} strokeWidth={strokeWidth} fill="none"
-          strokeDasharray={circ} strokeDashoffset={offset}
-          strokeLinecap="round"
-          style={{ transition: "stroke-dashoffset 0.6s ease" }}
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-bold text-white leading-none">{score}</span>
-        <span className="text-[10px] text-slate-500 font-mono mt-0.5">/ 100</span>
+    <div className="flex flex-col items-center gap-2">
+      <div className="flex gap-0.5">
+        {Array.from({ length: 10 }, (_, i) => (
+          <span
+            key={i}
+            className={`text-lg leading-none select-none ${i < stars ? "text-amber-400" : "text-slate-700"}`}
+          >
+            ★
+          </span>
+        ))}
       </div>
-      <span className="text-[11px] font-semibold uppercase tracking-wide" style={{ color }}>
-        {score >= 75 ? "Excellent" : score >= 50 ? "Good" : score >= 30 ? "Fair" : "Poor"}
-      </span>
+      <div className="flex items-baseline gap-1.5">
+        <span className="text-3xl font-bold text-white">{stars}</span>
+        <span className="text-sm text-slate-500">/10</span>
+      </div>
+      {estimated && (
+        <span className="text-[10px] text-slate-600 font-mono uppercase tracking-wide">estimated</span>
+      )}
+      {!estimated && (
+        <span className="text-[10px] text-slate-600 font-mono uppercase tracking-wide">privacy score</span>
+      )}
     </div>
   );
 }
@@ -56,6 +48,106 @@ const SEVERITY_STYLE: Record<string, string> = {
   medium:   "bg-amber-500/15 text-amber-400 border-amber-500/30",
   low:      "bg-slate-500/15 text-slate-400 border-slate-500/30",
 };
+
+const COUNTRY_JURISDICTION: Record<string, string> = {
+  CH: "Swiss nFADP — stricter than GDPR in some areas, GDPR-adequate, and not subject to the US CLOUD Act.",
+  DE: "German BDSG + GDPR. Germany has some of Europe's most rigorous data protection enforcement.",
+  SE: "Swedish IMY enforces GDPR. Strong digital rights tradition.",
+  FI: "Finnish Tietosuojavaltuutettu. Strong digital rights and GDPR enforcement.",
+  NO: "Norwegian Datatilsynet. Part of EEA — applies GDPR directly.",
+  IS: "Icelandic Persónuvernd. Part of EEA. No mass surveillance programmes.",
+  NL: "Dutch Autoriteit Persoonsgegevens. Active DPA with significant enforcement history.",
+  FR: "French CNIL. Active enforcement. Note: France has domestic intelligence laws.",
+  AT: "Austrian Datenschutzbehörde. GDPR jurisdiction.",
+  BE: "Belgian GBA/APD. Active DPA, enforces GDPR for EU institutions.",
+  DK: "Danish Datatilsynet. GDPR jurisdiction.",
+  EE: "Estonian AKI. GDPR jurisdiction. Strong e-governance tradition.",
+  LU: "Luxembourg CNPD. GDPR jurisdiction.",
+  IT: "Italian Garante. One of Europe's most active DPAs.",
+  ES: "Spanish AEPD. Active enforcement with significant fines.",
+  PT: "Portuguese CNPD. GDPR jurisdiction.",
+  PL: "Polish UODO. GDPR jurisdiction.",
+  CZ: "Czech ÚOOÚ. GDPR jurisdiction.",
+};
+
+const CATEGORY_CONTEXT: Record<string, string> = {
+  email: "Your inbox holds some of your most sensitive communications — health, finances, relationships. US providers like Gmail and Outlook operate under the CLOUD Act, meaning law enforcement can demand access without a local court order. European email runs under GDPR with no US legal backdoor.",
+  vpn: "A VPN encrypts all traffic between your device and the internet, hiding your activity from your ISP and real IP from websites. European providers fall under GDPR and typically enforce stricter no-logs policies than US or offshore alternatives.",
+  "cloud-storage": "Cloud storage providers can see everything you upload. US providers (Google Drive, Dropbox, OneDrive) fall under the CLOUD Act. European alternatives store files under GDPR — stronger access controls, right to deletion, and no US surveillance obligations.",
+  "password-manager": "Your password manager holds the keys to your entire digital life. European providers are typically audited under GDPR and offer zero-knowledge architectures, meaning even the provider cannot access your vault.",
+  browser: "Your browser sees every site you visit, every search you type, every form you fill. Chromium-based browsers from US companies ship with telemetry enabled. European and independent alternatives default to privacy-first configurations.",
+  search: "Search engines build detailed profiles of your interests, politics, and health concerns from your queries. European search tools are subject to GDPR and typically implement no-tracking policies at the architecture level.",
+  messaging: "Metadata from messaging (who you talk to, when, how often) can be as revealing as the content itself. European and open-source providers default to end-to-end encryption and minimal metadata retention.",
+  "code-hosting": "Your repository contains intellectual property, credentials, and development workflow. European hosting keeps your code under GDPR and removes US jurisdiction exposure over proprietary source code.",
+  "cloud-infra": "Infrastructure providers have root-level access to the servers your applications run on. European compute keeps customer data under GDPR and avoids CLOUD Act exposure.",
+  analytics: "Web analytics track every visitor. GDPR requires explicit consent for most analytics. Privacy-first European tools are cookieless by design and never transfer data to US servers.",
+  ai: "AI assistants process your prompts, which can include sensitive queries. European providers are subject to GDPR and the EU AI Act with clearer data deletion rights than US counterparts.",
+  fintech: "Financial services handle sensitive payment data under PSD2 and GDPR. European fintechs operate under strong consumer financial protection with clear data rights.",
+  "project-management": "Project tools store business plans, team communications, and internal docs. European providers keep this under GDPR with no US government access risk.",
+  security: "Security tools often need deep system access. European providers cannot be compelled by US authorities to install backdoors or hand over data under foreign law.",
+  social: "Social platforms collect large amounts of behavioural data. European alternatives have stronger privacy defaults and clearer data rights, though social networks inherently involve some data sharing.",
+  transport: "Transport services collect detailed location and travel data. European providers are subject to GDPR's location data protections.",
+  hardware: "European hardware is designed under EU product safety and data regulations.",
+  office: "Office suites process your most sensitive documents. European providers keep files under GDPR with no US surveillance risk.",
+};
+
+const REPLACES_CONTEXT: Record<string, string> = {
+  Gmail: "data-mines emails for ad targeting",
+  "Google Drive": "scans files for ad profiling",
+  "Google Docs": "processes documents on US servers",
+  "Google Photos": "trains AI on your photos",
+  "Google Search": "builds detailed profiles from queries",
+  "Google Chrome": "sends browsing data to Google",
+  "Google Analytics": "tracks visitors across the web",
+  "Google Meet": "records and processes meetings",
+  "Google Maps": "logs location history",
+  Outlook: "subject to US CLOUD Act",
+  OneDrive: "shares data with Microsoft advertising",
+  Office: "telemetry-heavy, US-based processing",
+  "Microsoft 365": "telemetry-heavy, US-based processing",
+  Teams: "meeting data processed in US",
+  GitHub: "US-hosted, Microsoft-owned",
+  Slack: "US-hosted, messages accessible to Slack",
+  Dropbox: "US-based, CLOUD Act exposure",
+  ChatGPT: "trains on your conversations by default",
+  "AWS": "US CLOUD Act jurisdiction",
+  "Azure": "US CLOUD Act jurisdiction",
+  "GCP": "US CLOUD Act jurisdiction",
+  "Google Cloud": "US CLOUD Act jurisdiction",
+  LastPass: "had major breach in 2022",
+  "1Password": "US-based, proprietary",
+  Zoom: "US-based, privacy incidents reported",
+  WhatsApp: "owned by Meta, metadata collected",
+  iMessage: "Apple has US jurisdiction",
+  Twitter: "US-based, sold to Musk in 2022",
+  "X": "US-based, data practices opaque post-acquisition",
+  Facebook: "extensive surveillance advertising model",
+  Instagram: "owned by Meta, cross-app tracking",
+  TikTok: "Chinese-owned, data transfer concerns",
+  Trello: "owned by Atlassian, US-based",
+  Asana: "US-based",
+  Notion: "US-based, data stored in US",
+};
+
+function getHeuristicStars(alt: Alternative): number {
+  const COUNTRY_BASE: Record<string, number> = {
+    CH: 9, IS: 9, SE: 8, FI: 8, NO: 8, EE: 8, DE: 8, NL: 8,
+    AT: 7, FR: 7, BE: 7, DK: 7, LU: 7, IE: 7,
+    IT: 7, ES: 7, PT: 7, PL: 6, CZ: 6, HU: 6, RO: 6,
+  };
+  const CATEGORY_OFFSET: Record<string, number> = {
+    vpn: 1,
+    "password-manager": 1,
+    social: -2,
+    analytics: -1,
+    fintech: -1,
+    transport: -1,
+    ai: -1,
+  };
+  const base = COUNTRY_BASE[alt.country] ?? 6;
+  const offset = CATEGORY_OFFSET[alt.category] ?? 0;
+  return Math.max(1, Math.min(10, base + offset));
+}
 
 export function ServicePage() {
   const { id } = useParams<{ id: string }>();
@@ -77,7 +169,7 @@ export function ServicePage() {
 
   if (!alt && !loading && !profile) {
     return (
-      <div className="min-h-screen bg-[#06090f] text-slate-100">
+      <div className="min-h-screen bg-[#111827] text-slate-100">
         <Header />
         <main className="mx-auto max-w-3xl px-6 py-20 text-center">
           <p className="text-slate-500 text-sm">Service not found.</p>
@@ -94,6 +186,11 @@ export function ServicePage() {
   const domain = alt ? getDomain(alt.url) : "";
   const affiliateUrl = alt?.affiliateUrl ?? alt?.url ?? "";
 
+  const stars = profile
+    ? Math.max(1, Math.round(profile.privacy_score / 10))
+    : alt ? getHeuristicStars(alt) : 6;
+  const isEstimated = !profile;
+
   const pageTitle = alt
     ? `${alt.name} — European alternative to ${alt.replaces.slice(0, 2).join(", ")} | digitaleu.me`
     : `${name} | digitaleu.me`;
@@ -101,14 +198,17 @@ export function ServicePage() {
     ? `${alt.description} Switch from ${alt.replaces.join(", ")} to ${alt.name}, a privacy-friendly service from ${alt.country} keeping your data in Europe.`
     : `Privacy-friendly European service on digitaleu.me`;
 
+  const jurisdictionNote = COUNTRY_JURISDICTION[country];
+  const categoryNote = alt ? CATEGORY_CONTEXT[alt.category] : undefined;
+
   return (
-    <div className="min-h-screen bg-[#06090f] text-slate-100">
+    <div className="min-h-screen bg-[#111827] text-slate-100">
       <title>{pageTitle}</title>
       <meta name="description" content={pageDescription} />
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
       <meta property="og:type" content="website" />
-      {alt && <link rel="canonical" href={`https://digitaleu.me/directory/${alt.id}`} />}
+      {alt && <link rel="canonical" href={`https://digitaleu.me/services/${alt.id}`} />}
       <Header />
 
       <main className="mx-auto max-w-3xl px-6 py-12">
@@ -136,14 +236,21 @@ export function ServicePage() {
             <div className="flex items-center gap-2.5 flex-wrap">
               <h1 className="text-xl font-bold text-white">{name}</h1>
               <span className="text-xl leading-none">{COUNTRY_FLAGS[country] ?? "🇪🇺"}</span>
-              {profile && (
+              {profile?.headquarters && (
                 <span className="inline-block rounded border border-white/[0.08] px-1.5 py-0.5 text-[10px] font-mono text-slate-500">
                   {profile.headquarters}
                 </span>
               )}
+              {!profile && country && (
+                <span className="inline-block rounded border border-white/[0.08] px-1.5 py-0.5 text-[10px] font-mono text-slate-500">
+                  {country}
+                </span>
+              )}
             </div>
-            {profile?.tagline && (
+            {profile?.tagline ? (
               <p className="mt-1 text-sm text-slate-400">{profile.tagline}</p>
+            ) : alt && (
+              <p className="mt-1 text-sm text-slate-400">{alt.description}</p>
             )}
             {alt && (
               <p className="mt-1 text-[11px] text-slate-600 font-mono">
@@ -151,57 +258,68 @@ export function ServicePage() {
               </p>
             )}
           </div>
-          {loading && (
+          {loading ? (
             <div className="h-5 w-5 rounded-full border-2 border-slate-700 border-t-slate-400 animate-spin flex-shrink-0" />
+          ) : (
+            <div className="flex-shrink-0">
+              <StarRating stars={stars} estimated={isEstimated} />
+            </div>
           )}
         </div>
 
-        {/* ── Score + attribute grid ── */}
+        {/* ── Score breakdown (only when profile exists) ── */}
         {profile && (
-          <div className="mb-8 rounded border border-white/[0.06] bg-white/[0.015]">
-            <div className="flex items-center gap-6 px-6 py-5 border-b border-white/[0.06]">
-              <ScoreGauge score={profile.privacy_score} />
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-slate-400 mb-3">Privacy score breakdown</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-                  {PRIVACY_ATTRIBUTES.map(attr => {
-                    const earned = profile[attr.key] as boolean;
-                    return (
-                      <div key={String(attr.key)} className="flex items-center gap-2.5">
-                        <span className={`w-4 h-4 flex-shrink-0 flex items-center justify-center rounded text-[10px] font-bold ${
-                          earned
-                            ? "bg-emerald-500/20 text-emerald-400"
-                            : "bg-white/[0.04] text-slate-600"
-                        }`}>
-                          {earned ? "✓" : "✗"}
-                        </span>
-                        <span className={`text-[12px] flex-1 ${earned ? "text-slate-300" : "text-slate-600"}`}>
-                          {attr.label}
-                        </span>
-                        <span className={`text-[10px] font-mono flex-shrink-0 ${earned ? "text-emerald-600" : "text-slate-700"}`}>
-                          {earned ? `+${attr.points}` : `+0`}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+          <div className="mb-8 rounded border border-white/[0.1] bg-white/[0.03]">
+            <div className="px-4 py-3 border-b border-white/[0.1]">
+              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Privacy score breakdown</p>
+            </div>
+            <div className="px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+              {PRIVACY_ATTRIBUTES.map(attr => {
+                const earned = profile[attr.key] as boolean;
+                return (
+                  <div key={String(attr.key)} className="flex items-center gap-2.5">
+                    <span className={`w-4 h-4 flex-shrink-0 flex items-center justify-center rounded text-[10px] font-bold ${
+                      earned
+                        ? "bg-emerald-500/20 text-emerald-400"
+                        : "bg-white/[0.04] text-slate-600"
+                    }`}>
+                      {earned ? "✓" : "✗"}
+                    </span>
+                    <span className={`text-[12px] flex-1 ${earned ? "text-slate-300" : "text-slate-600"}`}>
+                      {attr.label}
+                    </span>
+                    <span className={`text-[10px] font-mono flex-shrink-0 ${earned ? "text-emerald-600" : "text-slate-700"}`}>
+                      {earned ? `+${attr.points}` : `+0`}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
 
-        {/* ── Two column: description + company info ── */}
+        {/* ── Two column: description + company/jurisdiction info ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Description */}
+          {/* Description / About */}
           <div className="md:col-span-2">
             <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">About</h2>
             <p className="text-sm text-slate-400 leading-relaxed">
               {profile?.long_description ?? alt?.description ?? ""}
             </p>
+
+            {/* Category context — shown when no profile */}
+            {!profile && categoryNote && (
+              <div className="mt-4 rounded border border-white/[0.08] bg-white/[0.02] px-4 py-3">
+                <p className="text-[11px] text-slate-600 font-mono uppercase tracking-wide mb-1.5">
+                  Why this category matters
+                </p>
+                <p className="text-[12px] text-slate-500 leading-relaxed">{categoryNote}</p>
+              </div>
+            )}
           </div>
 
-          {/* Company info */}
-          {profile && (
+          {/* Company info (from profile) OR Jurisdiction card (fallback) */}
+          {profile ? (
             <div>
               <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">Company</h2>
               <dl className="space-y-2">
@@ -225,13 +343,60 @@ export function ServicePage() {
                 )}
               </dl>
             </div>
+          ) : (
+            <div>
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">Jurisdiction</h2>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2.5 text-[12px]">
+                  <span className="text-emerald-500 w-4 text-center flex-shrink-0">✓</span>
+                  <span className="text-slate-400">EU / EEA / Swiss GDPR coverage</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-[12px]">
+                  <span className="text-emerald-500 w-4 text-center flex-shrink-0">✓</span>
+                  <span className="text-slate-400">Data stays in Europe</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-[12px]">
+                  <span className="text-emerald-500 w-4 text-center flex-shrink-0">✓</span>
+                  <span className="text-slate-400">Not subject to US CLOUD Act</span>
+                </div>
+                {jurisdictionNote && (
+                  <p className="text-[11px] text-slate-600 leading-relaxed pt-1 border-t border-white/[0.07]">
+                    {jurisdictionNote}
+                  </p>
+                )}
+              </div>
+            </div>
           )}
         </div>
 
-        {/* ── Data handling ── */}
+        {/* ── What it replaces (enhanced, shown when no profile) ── */}
+        {!profile && alt && alt.replaces.length > 0 && (
+          <div className="mb-8 rounded border border-white/[0.1]">
+            <div className="px-4 py-3 border-b border-white/[0.1] bg-white/[0.03]">
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                What {alt.name} replaces
+              </h2>
+            </div>
+            <div className="divide-y divide-white/[0.04]">
+              {alt.replaces.map(r => {
+                const context = REPLACES_CONTEXT[r];
+                return (
+                  <div key={r} className="px-4 py-3 flex items-start gap-3">
+                    <span className="text-[11px] font-semibold text-slate-300 w-36 flex-shrink-0 pt-0.5">{r}</span>
+                    <span className="text-[11px] text-slate-600 leading-relaxed">
+                      {context ?? "US-based — data subject to US jurisdiction and legal demands."}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ── Data handling (from profile) ── */}
         {profile && (
-          <div className="mb-8 rounded border border-white/[0.06]">
-            <div className="px-4 py-3 border-b border-white/[0.06] bg-white/[0.015]">
+          <div className="mb-8 rounded border border-white/[0.1]">
+            <div className="px-4 py-3 border-b border-white/[0.1] bg-white/[0.03]">
               <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Data handling</h2>
             </div>
             <div className="divide-y divide-white/[0.04]">
@@ -240,7 +405,7 @@ export function ServicePage() {
                   <span className="text-[11px] text-slate-600 w-32 flex-shrink-0 font-mono pt-0.5">Data collected</span>
                   <div className="flex flex-wrap gap-1.5">
                     {profile.data_collected.map(item => (
-                      <span key={item} className="rounded bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 text-[11px] text-slate-400">
+                      <span key={item} className="rounded bg-white/[0.04] border border-white/[0.1] px-2 py-0.5 text-[11px] text-slate-400">
                         {item}
                       </span>
                     ))}
@@ -287,7 +452,7 @@ export function ServicePage() {
           </div>
         )}
 
-        {/* ── Audit + links ── */}
+        {/* ── Audit + links (from profile) ── */}
         {profile && (profile.has_independent_audit || profile.privacy_policy_url || profile.transparency_report_url || profile.open_source_url) && (
           <div className="mb-8 flex flex-wrap gap-2">
             {profile.open_source_url && (
@@ -317,13 +482,13 @@ export function ServicePage() {
           </div>
         )}
 
-        {/* ── Incidents ── */}
+        {/* ── Incidents (from profile) ── */}
         {incidents.length > 0 && (
           <div className="mb-8">
             <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">
               Known incidents <span className="text-slate-700 font-mono normal-case">({incidents.length})</span>
             </h2>
-            <div className="rounded border border-white/[0.06] divide-y divide-white/[0.04]">
+            <div className="rounded border border-white/[0.1] divide-y divide-white/[0.04]">
               {incidents.map(inc => (
                 <div key={inc.id} className="px-4 py-4">
                   <div className="flex items-start justify-between gap-3 mb-1.5">
@@ -362,7 +527,7 @@ export function ServicePage() {
 
         {/* ── CTA ── */}
         {affiliateUrl && (
-          <div className="rounded border border-[#1a2d4f] bg-[#0d1b33]/60 px-5 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="rounded border border-[#2d4a6e] bg-[#1e293b]/60 px-5 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1">
               <p className="text-sm font-semibold text-white">{name}</p>
               <p className="text-[12px] text-slate-500 mt-0.5">

@@ -62,7 +62,7 @@ export function DirectoryPage() {
   }, [filtered]);
 
   return (
-    <div className="min-h-screen bg-[#06090f] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#111827] text-slate-100 flex flex-col">
       <title>European Privacy Catalogue — 200+ Alternatives to Big Tech | digitaleu.me</title>
       <meta name="description" content="Browse 200+ vetted European alternatives to Gmail, Google Drive, Dropbox, Slack, and more. All services keep data within EU/EEA/Swiss jurisdiction." />
       <Header />
@@ -92,7 +92,7 @@ export function DirectoryPage() {
           <select
             value={selectedCategory}
             onChange={e => setSelectedCategory(e.target.value)}
-            className="bg-[#06090f] border border-white/[0.08] focus:border-white/[0.18] focus:outline-none rounded px-3 py-1.5 text-sm text-slate-400"
+            className="bg-[#111827] border border-white/[0.08] focus:border-white/[0.18] focus:outline-none rounded px-3 py-1.5 text-sm text-slate-400"
           >
             {categories.map(cat => (
               <option key={cat} value={cat}>
@@ -104,14 +104,14 @@ export function DirectoryPage() {
 
         {/* Results */}
         {filtered.length === 0 ? (
-          <div className="border border-white/[0.06] rounded py-16 text-center text-slate-600 text-sm">
+          <div className="border border-white/[0.1] rounded py-16 text-center text-slate-600 text-sm">
             No results for &ldquo;{search}&rdquo;.
           </div>
         ) : (
-          <div className="overflow-hidden rounded border border-white/[0.06]">
+          <div className="overflow-hidden rounded border border-white/[0.1]">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/[0.06] bg-white/[0.02]">
+                <tr className="border-b border-white/[0.1] bg-white/[0.04]">
                   <th className="px-4 py-2.5 text-left text-[11px] font-medium text-slate-600">
                     Service
                   </th>
@@ -131,7 +131,7 @@ export function DirectoryPage() {
               {Array.from(grouped.entries()).map(([category, alts]) => (
                 <tbody key={category}>
                   {/* Category header row */}
-                  <tr className="border-b border-white/[0.06] bg-white/[0.015]">
+                  <tr className="border-b border-white/[0.1] bg-white/[0.03]">
                     <td colSpan={5} className="px-4 py-2">
                       <div className="flex items-center gap-2.5">
                         <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
@@ -148,11 +148,11 @@ export function DirectoryPage() {
                     return (
                       <tr
                         key={alt.id}
-                        className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors group"
+                        className="border-b border-white/[0.07] hover:bg-white/[0.04] transition-colors group"
                       >
                         <td className="px-4 py-3">
                           <Link
-                            to={`/directory/${alt.id}`}
+                            to={`/services/${alt.id}`}
                             className="flex items-center gap-2.5"
                           >
                             {domain && (
