@@ -352,4 +352,348 @@ export const GUIDE_CONTENT: Record<string, GuideData> = {
       },
     ],
   },
+
+  "browser-wars": {
+    id: "browser-wars",
+    title: "Uncensored Web: Browser Privacy Compared in 2026",
+    metaTitle: "Best Private Browsers in 2026 — Chrome Alternatives | digitaleu.me",
+    metaDescription:
+      "Compare Brave, Mullvad Browser, Firefox, LibreWolf, and Vivaldi for privacy, fingerprinting resistance, and European sovereignty. Which browser should you use?",
+    category: "browser",
+    difficulty: "Easy",
+    intro:
+      "Google Chrome has over 60% market share — and sends detailed telemetry back to Google. Your browser sees everything: every URL, every search, every form you fill. Choosing a privacy-respecting browser is one of the highest-impact changes you can make. Here is how the best alternatives compare.",
+    whySwitch: [
+      "Chrome reports browsing activity to Google for advertising profiling",
+      "Chrome extensions can be silently updated to harvest data",
+      "Browser fingerprinting lets sites identify you without cookies",
+      "A privacy browser reduces tracking across the entire web — not just one site",
+    ],
+    services: [
+      {
+        name: "Brave",
+        country: "USA 🇺🇸",
+        tagline: "Chrome-compatible, built-in ad blocking, crypto optional",
+        pros: [
+          "Drops Google from Chromium — no Google telemetry",
+          "Built-in ad and tracker blocker (no extension needed)",
+          "Chrome extensions work natively",
+          "Fast — blocks ads before loading",
+          "Brave Search as default (independent index)",
+        ],
+        cons: [
+          "US company — subject to US law",
+          "Crypto/BAT features add noise if you don't want them",
+          "Chromium base means Google still benefits from web platform dominance",
+        ],
+        price: "Free",
+        url: "https://brave.com",
+        isAffiliate: false,
+      },
+      {
+        name: "Mullvad Browser",
+        country: "Sweden 🇸🇪",
+        tagline: "Tor Browser hardening without Tor — maximum fingerprint resistance",
+        pros: [
+          "Developed with Tor Project — maximum fingerprint protection",
+          "All users look identical — herd privacy model",
+          "No telemetry, no accounts, no sync",
+          "Built-in uBlock Origin",
+          "Swedish company with strong privacy track record",
+        ],
+        cons: [
+          "Not designed for daily convenience — strict settings break some sites",
+          "No extensions recommended (breaks fingerprint uniformity)",
+          "No built-in sync across devices",
+        ],
+        price: "Free",
+        url: "https://mullvad.net/browser",
+        isAffiliate: false,
+      },
+      {
+        name: "Firefox",
+        country: "USA 🇺🇸",
+        tagline: "The independent open-source baseline — configure it right",
+        pros: [
+          "Fully open-source, not based on Chromium",
+          "Highly customisable with strong extensions",
+          "Mozilla is a non-profit — mission-driven, not ad-driven",
+          "Excellent uBlock Origin support",
+          "European-friendly: Firefox is the dominant non-Google engine",
+        ],
+        cons: [
+          "Requires hardening out of the box (telemetry on by default)",
+          "Mozilla receives significant Google funding (search deal)",
+          "More setup effort for maximum privacy",
+        ],
+        price: "Free",
+        url: "https://firefox.com",
+        isAffiliate: false,
+      },
+      {
+        name: "LibreWolf",
+        country: "Europe 🇪🇺",
+        tagline: "Firefox, pre-hardened — privacy by default",
+        pros: [
+          "Firefox fork with all privacy settings configured out of the box",
+          "No Mozilla telemetry, no Google as default search",
+          "uBlock Origin included",
+          "European community project",
+          "No setup required — private from install",
+        ],
+        cons: [
+          "Manual updates (no auto-update in some builds)",
+          "Strict settings may break some sites initially",
+          "Smaller community than Firefox",
+        ],
+        price: "Free",
+        url: "https://librewolf.net",
+        isAffiliate: false,
+      },
+    ],
+    verdict:
+      "For most users switching from Chrome, Brave is the easiest transition — familiar interface, instant ad blocking, no setup. For maximum fingerprint resistance, Mullvad Browser is the most technically advanced option. Firefox with uBlock Origin is the best choice if you want a non-Chromium browser with strong extension support. LibreWolf is the best option for those who want Firefox's power without the configuration work.",
+    faq: [
+      {
+        q: "What is browser fingerprinting and why does it matter?",
+        a: "Fingerprinting identifies you based on your browser's unique combination of fonts, screen size, plugins, and settings — without cookies. Mullvad Browser defeats this by making all users look identical.",
+      },
+      {
+        q: "Should I use a European browser?",
+        a: "Mullvad Browser (Sweden) and LibreWolf (European community) are the strongest European options. Firefox and Brave, despite US origins, offer strong privacy through open-source transparency and independent audits.",
+      },
+      {
+        q: "Is Brave really private despite being US-based?",
+        a: "Brave's privacy protections are technically strong and auditable. The main risk is US legal jurisdiction over the company. For threat models involving nation-state surveillance, Mullvad Browser or LibreWolf with Mullvad VPN is more robust.",
+      },
+    ],
+  },
+
+  "password-manager-migration": {
+    id: "password-manager-migration",
+    title: "Dump LastPass: Migrate to a Secure Password Manager in 2026",
+    metaTitle: "Best European Password Managers in 2026 — LastPass Alternatives | digitaleu.me",
+    metaDescription:
+      "LastPass suffered multiple major breaches. Compare Proton Pass, Bitwarden, and KeePassXC — and follow our step-by-step export guide to migrate safely.",
+    category: "password",
+    difficulty: "Easy",
+    intro:
+      "In 2022 and 2023, LastPass suffered catastrophic security breaches — attackers stole encrypted vaults, and weaker master passwords are still being cracked today. If you are still using LastPass, your passwords may already be compromised. Here is how to migrate to a modern, trustworthy password manager.",
+    whySwitch: [
+      "LastPass vaults were stolen in 2022 — cracking attempts are ongoing",
+      "LastPass has a history of poor security practices and delayed disclosure",
+      "Modern alternatives use stronger encryption and zero-knowledge architecture",
+      "European-hosted options keep your vault under GDPR jurisdiction",
+    ],
+    services: [
+      {
+        name: "Proton Pass",
+        country: "Switzerland 🇨🇭",
+        tagline: "Zero-knowledge, integrated with the Proton privacy ecosystem",
+        pros: [
+          "End-to-end encrypted — Proton cannot read your vault",
+          "Swiss jurisdiction — strongest privacy laws in the world",
+          "Free tier available",
+          "Integrates with Proton Mail, VPN, and Drive",
+          "Open-source, independently audited",
+          "Encrypted aliases included",
+        ],
+        cons: [
+          "Newer product — fewer third-party integrations",
+          "Browser extension UI less polished than 1Password",
+        ],
+        price: "Free / from €1.99/mo",
+        url: "https://proton.me/pass",
+        isAffiliate: true,
+      },
+      {
+        name: "Bitwarden",
+        country: "USA 🇺🇸",
+        tagline: "Open-source, self-hostable, generous free tier",
+        pros: [
+          "Fully open-source and independently audited",
+          "Self-hostable — host your own vault in Europe",
+          "Generous free tier with sync across unlimited devices",
+          "Browser extensions and apps for all platforms",
+          "Strong business/team features",
+        ],
+        cons: [
+          "Cloud-hosted version is US-based (Bitwarden, Inc.)",
+          "Self-hosting requires technical setup",
+          "UI is functional but not the most polished",
+        ],
+        price: "Free / from €10/yr",
+        url: "https://bitwarden.com",
+        isAffiliate: false,
+      },
+      {
+        name: "KeePassXC",
+        country: "Europe 🇪🇺",
+        tagline: "Offline, local-first — zero cloud dependency",
+        pros: [
+          "Fully offline — vault never touches any server",
+          "Open-source, European community project",
+          "Free forever",
+          "Strong security record",
+          "Sync via your own cloud (Proton Drive, Nextcloud)",
+        ],
+        cons: [
+          "No native cloud sync — requires manual setup",
+          "Mobile apps (KeePassDX) are separate projects",
+          "More setup effort than cloud-based options",
+        ],
+        price: "Free",
+        url: "https://keepassxc.org",
+        isAffiliate: false,
+      },
+      {
+        name: "1Password",
+        country: "Canada 🇨🇦",
+        tagline: "Premium UX, strong security, popular in teams",
+        pros: [
+          "Best-in-class interface and browser integration",
+          "Travel Mode (hide vaults at borders)",
+          "Strong business and family plans",
+          "Independently audited",
+        ],
+        cons: [
+          "No free tier",
+          "Canadian company — outside EU jurisdiction",
+          "Closed source (though protocols are published)",
+        ],
+        price: "From €2.99/mo",
+        url: "https://1password.com",
+        isAffiliate: false,
+      },
+    ],
+    verdict:
+      "Proton Pass is the best choice for users already in the Proton ecosystem — Swiss jurisdiction, zero-knowledge, and free tier make it the natural upgrade from LastPass. Bitwarden is the best open-source option with cloud sync. For users who want absolute local control, KeePassXC is the gold standard. All three are vastly more secure than LastPass.",
+    faq: [
+      {
+        q: "How do I export from LastPass?",
+        a: "Log in to LastPass → Advanced Options → Export → LastPass CSV file. Save it securely. Import into your new manager, then delete the CSV file immediately.",
+      },
+      {
+        q: "Is my LastPass vault already compromised?",
+        a: "If you had a weak master password (under 12 characters, dictionary word, or reused), assume yes. Change your most critical passwords immediately. A strong, unique master password gives more time.",
+      },
+      {
+        q: "Why is Proton Pass better than LastPass if both are cloud-based?",
+        a: "Proton Pass uses end-to-end encryption — Proton cannot read your vault even if breached. LastPass stored some data client-side but had architectural weaknesses that allowed attackers to steal vault data in a usable form.",
+      },
+    ],
+  },
+
+  "degoogle-checklist": {
+    id: "degoogle-checklist",
+    title: "The Step-by-Step De-Google Checklist for 2026",
+    metaTitle: "How to De-Google Your Life in 2026 — Step-by-Step Guide | digitaleu.me",
+    metaDescription:
+      "A methodical, stress-free checklist for migrating your email, files, photos, calendar, and search away from Google. Replace every Google service with a private European alternative.",
+    category: "privacy",
+    difficulty: "Medium",
+    intro:
+      "Leaving Google entirely can feel overwhelming — you use Gmail, Drive, Photos, Maps, Chrome, and Search every day. But you do not have to do it all at once. This checklist gives you a methodical, low-stress sequence: start with email (the most important), then work outward. Each step takes under an hour.",
+    whySwitch: [
+      "Google builds a detailed advertising profile from your email, searches, location, and files",
+      "US law (FISA 702) allows intelligence agencies to access Google's data without your knowledge",
+      "Breaking Google dependency reduces your exposure to any single provider's breach or policy change",
+      "European alternatives offer the same functionality — often with better privacy and GDPR protection",
+    ],
+    services: [
+      {
+        name: "Proton Mail",
+        country: "Switzerland 🇨🇭",
+        tagline: "Step 1: Replace Gmail — the highest-impact change you can make",
+        pros: [
+          "End-to-end encrypted — Google cannot read your email",
+          "Free tier to get started",
+          "Swiss jurisdiction — outside US surveillance treaties",
+          "Integrated with Proton Drive, Calendar, VPN, and Pass",
+          "Import tool for migrating Gmail easily",
+        ],
+        cons: [
+          "Free plan limited to 1 GB",
+          "Migration takes time if you have years of Gmail history",
+        ],
+        price: "Free / from €3.99/mo",
+        url: "https://proton.me/mail",
+        isAffiliate: true,
+      },
+      {
+        name: "Proton Drive",
+        country: "Switzerland 🇨🇭",
+        tagline: "Step 2: Replace Google Drive and Google Photos",
+        pros: [
+          "Zero-knowledge encryption — Proton cannot see your files",
+          "Free tier with 1 GB (more with Proton plans)",
+          "Apps for desktop and mobile",
+          "Integrates with Proton ecosystem",
+        ],
+        cons: [
+          "No real-time collaborative editing (no Docs equivalent yet)",
+          "Desktop client newer than competitors",
+        ],
+        price: "Free / from €3.99/mo (bundled with Proton Mail)",
+        url: "https://proton.me/drive",
+        isAffiliate: true,
+      },
+      {
+        name: "Brave Search",
+        country: "USA 🇺🇸",
+        tagline: "Step 3: Replace Google Search",
+        pros: [
+          "Independent index — not relying on Google or Bing",
+          "No tracking, no advertising profiles",
+          "Available as default in Brave Browser",
+          "Goggles feature lets you customise ranking",
+        ],
+        cons: [
+          "Results still maturing — occasionally falls back to Google for edge cases",
+          "US-based company",
+        ],
+        price: "Free",
+        url: "https://search.brave.com",
+        isAffiliate: false,
+      },
+      {
+        name: "Proton Calendar",
+        country: "Switzerland 🇨🇭",
+        tagline: "Step 4: Replace Google Calendar",
+        pros: [
+          "End-to-end encrypted calendar events",
+          "Integrated with Proton Mail",
+          "Free with Proton account",
+          "CalDAV support for third-party clients",
+        ],
+        cons: [
+          "Fewer integrations than Google Calendar",
+          "Shared calendar features still expanding",
+        ],
+        price: "Free (included with Proton account)",
+        url: "https://proton.me/calendar",
+        isAffiliate: true,
+      },
+    ],
+    verdict:
+      "Start with email — it is the most important account you have, and everything else resets via email. Once your Proton Mail is live, enable Gmail forwarding and spend 2 weeks updating accounts. Then move Drive and Photos. Search last — it is the easiest habit to change. A full migration takes 4–6 weeks done casually, not 4–6 hours rushed.",
+    faq: [
+      {
+        q: "Do I have to do everything at once?",
+        a: "No. Start with email — it protects the most. Gmail forwarding means you will not miss messages while you update accounts. Take the rest one service per week.",
+      },
+      {
+        q: "What about Google Maps?",
+        a: "OsmAnd (Europe-based, offline maps) and Organic Maps are the best Google Maps alternatives. For transit, CityMapper covers most European cities without Google. This checklist focuses on the highest-impact services first.",
+      },
+      {
+        q: "Will I lose access to years of Gmail history?",
+        a: "No. Proton Mail's import tool can migrate your full Gmail archive. You can also keep Gmail active in read-only mode for old messages while using Proton as your active address.",
+      },
+      {
+        q: "What about Android and Google Play?",
+        a: "Android de-Googling is advanced territory — covered in a separate guide. Focus on the services in this checklist first, as they work on any device regardless of OS.",
+      },
+    ],
+  },
 };

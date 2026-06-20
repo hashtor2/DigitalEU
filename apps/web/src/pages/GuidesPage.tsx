@@ -42,7 +42,7 @@ const GUIDES: Guide[] = [
     description: "A methodical, stress-free sequence to migrate your calendar, photos, files, and email away from Google Workspace into fully private Swiss-hosted alternatives.",
     category: "privacy",
     difficulty: "Medium",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "browser-wars",
@@ -50,7 +50,7 @@ const GUIDES: Guide[] = [
     description: "We audit Google Chrome, Brave, Mullvad Browser, Safari, and LibreWolf. Which browsers prevent fingerprinting and represent safe European choices?",
     category: "browser",
     difficulty: "Easy",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "password-manager-migration",
@@ -58,7 +58,7 @@ const GUIDES: Guide[] = [
     description: "Following LastPass's security breaches, learn how to export your encrypted vault and import it into a Swiss-hosted, zero-knowledge password manager.",
     category: "password",
     difficulty: "Easy",
-    hasContent: false,
+    hasContent: true,
   },
 ];
 
