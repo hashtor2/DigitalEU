@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { COUNTRY_FLAGS } from "@/lib/flags";
 
 const CATEGORY_LABELS: Record<ServiceInfo["category"], string> = {
   social: "Social Media",
@@ -82,14 +83,19 @@ function ServiceCard({
         </span>
       </span>
 
-      {/* Name */}
+      {/* Name + flag */}
       <span
-        className={`text-sm font-semibold leading-tight transition-colors ${
+        className={`flex-1 text-sm font-semibold leading-tight transition-colors ${
           checked ? "text-[#93c5fd]" : "text-slate-200 group-hover:text-white"
         }`}
       >
         {service.name}
       </span>
+      {COUNTRY_FLAGS[service.ownerCountry] && (
+        <span className="text-base flex-shrink-0" title={service.ownerCountry} aria-hidden>
+          {COUNTRY_FLAGS[service.ownerCountry]}
+        </span>
+      )}
     </button>
   );
 }

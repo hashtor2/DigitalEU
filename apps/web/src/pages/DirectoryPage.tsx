@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { ALTERNATIVES, type ServiceCategory } from "@digitaleu/shared";
 import { Header } from "@/components/Header";
-
-const COUNTRY_FLAGS: Record<string, string> = {
-  CH: "🇨🇭",
-  SE: "🇸🇪",
-  DE: "🇩🇪",
-  FR: "🇫🇷",
-  NL: "🇳🇱",
-  EE: "🇪🇪",
-  PL: "🇵🇱",
-};
+import { COUNTRY_FLAGS } from "@/lib/flags";
 
 const CATEGORY_LABELS: Record<ServiceCategory | string, string> = {
   email: "Email & Communication",

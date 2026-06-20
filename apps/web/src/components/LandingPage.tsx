@@ -3,16 +3,7 @@ import { ALTERNATIVES, type Alternative } from "@digitaleu/shared";
 import { Button } from "@/components/ui/button";
 import { SITE, SOCIAL_LINKS } from "@/lib/site";
 import { Header } from "@/components/Header";
-
-const COUNTRY_FLAGS: Record<string, string> = {
-  CH: "🇨🇭",
-  SE: "🇸🇪",
-  DE: "🇩🇪",
-  FR: "🇫🇷",
-  NL: "🇳🇱",
-  EE: "🇪🇪",
-  PL: "🇵🇱",
-};
+import { COUNTRY_FLAGS } from "@/lib/flags";
 
 function AlternativeCard({ alt }: { alt: Alternative }) {
   return (

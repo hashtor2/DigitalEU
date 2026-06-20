@@ -4,6 +4,7 @@ import { SERVICES, ALTERNATIVES, type ServiceInfo, type ThreatLevel } from "@dig
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { COUNTRY_FLAGS } from "@/lib/flags";
 
 // --- Badges ---
 
@@ -146,7 +147,10 @@ function ServiceRow({
           </span>
           <div>
             <p className="font-semibold text-white text-sm leading-tight">{service.name}</p>
-            <p className="text-[11px] text-slate-500">{service.domain}</p>
+            <p className="text-[11px] text-slate-500">
+            {service.domain}
+            {" "}<span title={service.ownerCountry}>{COUNTRY_FLAGS[service.ownerCountry] ?? ""}</span>
+          </p>
           </div>
         </div>
       </td>
