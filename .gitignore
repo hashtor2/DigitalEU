@@ -41,3 +41,11 @@ npm-debug.log*
 
 # Supabase local
 .supabase/
+supabase/.temp/
+supabase/.branches/
+
+.vercel
+.env*.local
+
+# Lokale admin-skript som inneholder service_role-nøkkel — ALDRI i repoet
+reset-user.js

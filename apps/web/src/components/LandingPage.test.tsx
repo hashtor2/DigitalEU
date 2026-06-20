@@ -16,14 +16,14 @@ describe("LandingPage", () => {
   it("shows the main heading in English", () => {
     renderLanding();
     expect(
-      screen.getByRole("heading", { level: 1, name: /dump gmail/i }),
+      screen.getByRole("heading", { level: 1, name: /how private are your online accounts/i }),
     ).toBeInTheDocument();
   });
 
-  it("links the primary call-to-action to the dashboard in English", () => {
+  it("links the primary call-to-action to the service selector in English", () => {
     renderLanding();
-    const cta = screen.getByRole("link", { name: /scan my inbox/i });
-    expect(cta).toHaveAttribute("href", "/dashboard");
+    const cta = screen.getByRole("link", { name: /check my privacy/i });
+    expect(cta).toHaveAttribute("href", "/select");
   });
 
   it("shows the trust signal about data hosting in Switzerland/Zürich", () => {

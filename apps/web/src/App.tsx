@@ -1,8 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { LandingPage } from "./components/LandingPage";
 
 const router = createBrowserRouter([
-  { path: "/", element: <LandingPage /> },
+  {
+    path: "/",
+    lazy: async () => ({
+      Component: (await import("./components/LandingPage")).LandingPage,
+    }),
+  },
+  {
+    path: "/select",
+    lazy: async () => ({
+      Component: (await import("./pages/SelectorPage")).SelectorPage,
+    }),
+  },
   {
     path: "/dashboard",
     lazy: async () => ({

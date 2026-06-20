@@ -52,16 +52,11 @@ export function LandingPage() {
         </span>
 
         <h1 className="text-balance text-4xl font-extrabold tracking-tight sm:text-6xl text-white leading-[1.1]">
-          The easiest way to{" "}
-          <span className="bg-gradient-to-r from-red-400 to-amber-400 bg-clip-text text-transparent">
-            dump Gmail
-          </span>{" "}
-          & move to privacy
+          How private are your online accounts?
         </h1>
 
         <p className="mt-6 max-w-2xl text-balance text-lg text-slate-400 leading-relaxed">
-          Converting from Gmail to secure alternatives like Proton is a nightmare of "invisible" accounts.
-          We securely scan your inbox, map your registered services, and help you migrate them in minutes.
+          Select the services you use and get a personalized privacy score. We'll show you the risks and suggest secure, EU-based alternatives.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -70,10 +65,7 @@ export function LandingPage() {
             size="lg"
             className="bg-sky-500 text-white hover:bg-sky-400 font-bold px-6 py-3 rounded-xl shadow-lg shadow-sky-500/10"
           >
-            <Link to="/dashboard">Scan my inbox</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <a href="#features">See how it works</a>
+            <Link to="/select">Check my privacy →</Link>
           </Button>
         </div>
 

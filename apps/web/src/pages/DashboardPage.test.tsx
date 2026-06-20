@@ -1,16 +1,13 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { DashboardPage } from "./DashboardPage";
 
-// Mock Supabase to be unconfigured during tests so we can assert the warning banner
-vi.mock("@/lib/supabase", () => {
-  return {
-    isSupabaseConfigured: false,
-    supabase: null,
-  };
-});
+// Header pulls migration state from Supabase; keep it unconfigured in tests.
+vi.mock("@/lib/supabase", () => ({
+  isSupabaseConfigured: false,
+  supabase: null,
+}));
 
 function renderDashboard() {
   return render(
@@ -20,44 +17,50 @@ function renderDashboard() {
   );
 }
 
-describe("DashboardPage", () => {
+describe("DashboardPage (privacy report)", () => {
   beforeEach(() => {
     sessionStorage.clear();
   });
 
-  it("shows the dashboard heading and initial empty state or demo notice", () => {
+  it("shows the privacy-report heading and intro badge", () => {
     renderDashboard();
-    expect(screen.getByRole("heading", { name: /migration dashboard/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /these are your accounts/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/your privacy report/i)).toBeInTheDocument();
   });
 
-  it("starts in Guest Mode with privacy warnings", () => {
+  it("filters the table to the services selected on the selector page", () => {
+    sessionStorage.setItem(
+      "digitaleu_selected",
+      JSON.stringify(["facebook", "instagram"]),
+    );
     renderDashboard();
-    expect(screen.getByText(/guest mode active/i)).toBeInTheDocument();
+
+    expect(screen.getByText("Facebook")).toBeInTheDocument();
+    expect(screen.getByText("Instagram")).toBeInTheDocument();
+
+    // The "Total Services" summary card should reflect the 2-service selection.
+    const totalCard = screen.getByText(/total services/i).closest("div")!;
+    expect(totalCard).toHaveTextContent("2");
   });
 
-  it("updates status and progress when an account is marked as switched", async () => {
-    const user = userEvent.setup();
+  it("warns about services with a HIGH threat score", () => {
+    sessionStorage.setItem(
+      "digitaleu_selected",
+      JSON.stringify(["facebook", "instagram"]),
+    );
     renderDashboard();
-
-    // Trigger local simulation scan to fill checklist first
-    const simulateBtn = screen.getByRole("button", { name: /simulate local scan/i });
-    await user.click(simulateBtn);
-
-    // Wait for the simulation loader to finish
-    await screen.findByText(/your migration checklist/i, {}, { timeout: 8000 });
-
-    const gmailRow = screen.getByText("Gmail").closest("li")!;
-    const switchBtn = within(gmailRow).getByRole("button", { name: /switched/i });
-    await user.click(switchBtn);
-
-    // Assert status badges/elements reflect the updated state
-    expect(within(gmailRow).getByText(/^switched$/i)).toBeInTheDocument();
+    expect(screen.getByText(/with high threat score/i)).toBeInTheDocument();
   });
 
-  it("displays a warning if Profile Mode is unconfigured", async () => {
-    const user = userEvent.setup();
+  it("links back to the selector and over to the EU alternatives directory", () => {
     renderDashboard();
-    await user.click(screen.getByRole("button", { name: /^profile$/i }));
-    expect(screen.getByText(/profile mode not configured/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /change selection/i }),
+    ).toHaveAttribute("href", "/select");
+    expect(
+      screen.getByRole("link", { name: /browse eu alternatives/i }),
+    ).toHaveAttribute("href", "/directory");
   });
 });

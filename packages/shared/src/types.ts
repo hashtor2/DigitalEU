@@ -16,10 +16,19 @@ export type ServiceCategory =
   | "code-hosting"
   | "cloud-infra"
   | "analytics"
-  | "hardware";
+  | "hardware"
+  | "ai"
+  | "fintech"
+  | "project-management"
+  | "security"
+  | "social"
+  | "transport";
 
-/** Hvordan verktøyet tjener penger på et gitt alternativ. */
-export type MonetizationModel = "affiliate" | "ethical-direct";
+/**
+ * Hvordan verktøyet tjener penger på et gitt alternativ.
+ * "other" = ingen affiliate-relasjon ennå; rent redaksjonell oppføring.
+ */
+export type MonetizationModel = "affiliate" | "ethical-direct" | "other";
 
 /** Et personvernvennlig, europeisk alternativ til en Big Tech-tjeneste. */
 export interface Alternative {
@@ -81,4 +90,104 @@ export interface DomainMapping {
   settingsUrl: string;
   /** Standard foreslått europeisk alternativ-ID, f.eks. "proton-mail". */
   suggestedAlternativeId?: string;
+}
+
+/** Tillatte filtyper for manuell kontoopplasting i V1. */
+export type UploadedAccountFileType = "csv" | "json" | "txt";
+
+/** Hvor sikkert en opplastet konto ble matchet mot en kjent tjeneste. */
+export type MatchConfidenceLevel = "high" | "medium" | "low";
+
+/** En normalisert konto oppdaget i opplastet fil. */
+export interface UploadedAccountEntry {
+  id: string;
+  /** Rålinje eller råverdi fra filen (trimmet). */
+  rawValue: string;
+  /** Normalisert e-post, hvis funnet. */
+  email?: string;
+  /** Normalisert domene (fra e-post/URL/domeneverdi). */
+  domain?: string;
+  sourceType: UploadedAccountFileType;
+  matchedServiceId?: string;
+  matchedServiceName?: string;
+  confidence: MatchConfidenceLevel;
+}
+
+/** Ett steg i den obligatoriske sikkerhetsstigen for sletting av konto. */
+export type DeleteSafetyStep =
+  | "confirm-site-and-account"
+  | "confirm-irreversible"
+  | "confirm-backup-considered"
+  | "confirm-final-execute";
+
+/** Handlingstyper i en guide/playbook. */
+export type PlaybookActionType =
+  | "navigate"
+  | "wait-for-selector"
+  | "click"
+  | "fill"
+  | "instruction"
+  | "confirm";
+
+/** Enkelt steg i en playbook. */
+export interface PlaybookStep {
+  id: string;
+  title: string;
+  actionType: PlaybookActionType;
+  /** CSS-selector når steget trenger DOM-mål. */
+  selector?: string;
+  /** Fallback-instruks når automatisk handling ikke lykkes. */
+  fallbackInstruction?: string;
+}
+
+/** Støttede guide-typer i V1. */
+export type GuideType = "change-email" | "delete-account" | "data-export" | "login";
+
+/** Kjøringsstatus for en aktiv eller tidligere guide. */
+export type GuideRunStatus = "not-started" | "in-progress" | "blocked" | "completed";
+
+/** Sporbar status for guidet kjøring per tjeneste. */
+export interface GuideRunState {
+  serviceId: string;
+  guideType: GuideType;
+  status: GuideRunStatus;
+  currentStepId?: string;
+  startedAt?: string;
+  completedAt?: string;
+  completedByUserConfirmation: boolean;
+  deleteSafetyStepsCompleted?: DeleteSafetyStep[];
+}
+
+/** Dimensjoner i personvern-score (V1-rubrikk). */
+export type PrivacyRatingDimension =
+  | "data-collection"
+  | "third-party-sharing"
+  | "deletion-clarity"
+  | "export-portability"
+  | "security-posture"
+  | "jurisdiction";
+
+/** En detaljscore per dimensjon (0-5). */
+export interface PrivacyDimensionScore {
+  dimension: PrivacyRatingDimension;
+  score: number;
+  reason: string;
+}
+
+/** Aggregert personvernscore per tjeneste (0-100). */
+export interface PrivacyRating {
+  serviceId: string;
+  totalScore: number;
+  confidence: MatchConfidenceLevel;
+  dimensions: PrivacyDimensionScore[];
+  updatedAt: string;
+}
+
+/** Lokal tilstand for utvidelsen (lagres kun i browser storage.local). */
+export interface ExtensionLocalState {
+  targetEmail?: string;
+  switchedCount?: number;
+  uploadedEntries?: UploadedAccountEntry[];
+  guideRuns?: GuideRunState[];
+  privacyRatings?: PrivacyRating[];
 }

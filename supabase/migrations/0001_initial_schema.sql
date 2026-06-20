@@ -17,22 +17,57 @@ create table if not exists public.user_vault (
 alter table public.user_vault enable row level security;
 
 -- En bruker kan kun se og endre SIN EGEN rad.
-create policy "vault_select_own"
-  on public.user_vault for select
-  using (auth.uid() = user_id);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'user_vault'
+      AND policyname = 'vault_select_own'
+  ) THEN
+    EXECUTE 'CREATE POLICY "vault_select_own" ON public.user_vault FOR SELECT USING (auth.uid() = user_id)';
+  END IF;
+END
+$$;
 
-create policy "vault_insert_own"
-  on public.user_vault for insert
-  with check (auth.uid() = user_id);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'user_vault'
+      AND policyname = 'vault_insert_own'
+  ) THEN
+    EXECUTE 'CREATE POLICY "vault_insert_own" ON public.user_vault FOR INSERT WITH CHECK (auth.uid() = user_id)';
+  END IF;
+END
+$$;
 
-create policy "vault_update_own"
-  on public.user_vault for update
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'user_vault'
+      AND policyname = 'vault_update_own'
+  ) THEN
+    EXECUTE 'CREATE POLICY "vault_update_own" ON public.user_vault FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id)';
+  END IF;
+END
+$$;
 
-create policy "vault_delete_own"
-  on public.user_vault for delete
-  using (auth.uid() = user_id);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'user_vault'
+      AND policyname = 'vault_delete_own'
+  ) THEN
+    EXECUTE 'CREATE POLICY "vault_delete_own" ON public.user_vault FOR DELETE USING (auth.uid() = user_id)';
+  END IF;
+END
+$$;
 
 -- Hold updated_at oppdatert automatisk.
 create or replace function public.set_updated_at()
@@ -45,6 +80,7 @@ begin
 end;
 $$;
 
+drop trigger if exists user_vault_set_updated_at on public.user_vault;
 create trigger user_vault_set_updated_at
   before update on public.user_vault
   for each row execute function public.set_updated_at();
@@ -67,6 +103,15 @@ create table if not exists public.entitlements (
 
 alter table public.entitlements enable row level security;
 
-create policy "entitlements_select_own"
-  on public.entitlements for select
-  using (auth.uid() = user_id);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'entitlements'
+      AND policyname = 'entitlements_select_own'
+  ) THEN
+    EXECUTE 'CREATE POLICY "entitlements_select_own" ON public.entitlements FOR SELECT USING (auth.uid() = user_id)';
+  END IF;
+END
+$$;

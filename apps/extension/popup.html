@@ -3,93 +3,347 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DigitalEU Companion</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+  <title>DigitalEU.me</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #030712;
+      --surface: #0f172a;
+      --surface2: #1e293b;
+      --border: rgba(255,255,255,0.08);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-dim: rgba(56,189,248,0.12);
+      --green: #4ade80;
+      --green-dim: rgba(74,222,128,0.12);
+      --yellow: #fbbf24;
+      --yellow-dim: rgba(251,191,36,0.12);
+      --red: #f87171;
+      --red-dim: rgba(248,113,113,0.12);
+    }
+
     body {
-      width: 280px;
-      margin: 0;
-      padding: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #030712;
-      color: #f3f4f6;
+      width: 340px;
+      min-height: 480px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
     }
-    .container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+
+    #app { display: flex; flex-direction: column; height: 100%; }
+
     .header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 8px;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
     }
-    .title {
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      margin: 0;
+    .logo { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 13px; letter-spacing: -0.02em; }
+    .logo .accent { color: var(--accent); }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
     }
-    .logo-flag {
-      font-size: 18px;
+    .tab {
+      flex: 1;
+      padding: 8px 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      color: var(--muted);
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
     }
-    .status-card {
-      background-color: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab:hover:not(.active) { color: var(--text); }
+
+    .view { display: none; padding: 14px; overflow-y: auto; max-height: 420px; }
+    .view.active { display: block; }
+
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 28px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .upload-zone .icon { font-size: 28px; margin-bottom: 8px; }
+    .upload-zone .primary { font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .upload-zone .secondary { font-size: 11px; color: var(--muted); }
+    .upload-zone .formats { font-size: 10px; color: var(--muted); margin-top: 6px; opacity: 0.7; }
+
+    .parse-progress { margin-top: 12px; display: none; }
+    .parse-progress.visible { display: block; }
+    .progress-bar { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+    .parse-stats { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
     }
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
+    .card-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 6px; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 10px; font-weight: 700;
     }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.02);
+    .badge-high { background: var(--green-dim); color: var(--green); }
+    .badge-medium { background: var(--yellow-dim); color: var(--yellow); }
+    .badge-low { background: rgba(255,255,255,0.06); color: var(--muted); }
+
+    .account-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.1);
+    .account-item:hover { background: var(--surface2); border-color: rgba(255,255,255,0.15); }
+    .account-item.selected { border-color: var(--accent); background: var(--accent-dim); }
+    .account-name { font-weight: 600; font-size: 12px; }
+    .account-email { font-size: 10px; color: var(--muted); margin-top: 1px; font-family: monospace; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 11px; font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
     }
+    .btn:hover { opacity: 0.85; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-primary { background: var(--accent); color: #030712; }
+    .btn-ghost { background: rgba(255,255,255,0.06); color: var(--text); }
+    .btn-danger { background: var(--red-dim); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
+    .btn-sm { padding: 4px 9px; font-size: 10px; }
+
+    .guide-step {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      margin-bottom: 6px;
+    }
+    .guide-step.done { opacity: 0.5; }
+    .guide-step.current { border-color: var(--accent); background: var(--accent-dim); }
+    .step-num {
+      min-width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: var(--muted);
+    }
+    .guide-step.current .step-num { background: var(--accent); color: #030712; }
+    .guide-step.done .step-num { background: var(--green-dim); color: var(--green); }
+    .step-text { font-size: 12px; }
+    .step-instruction { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    .safety-gate { border: 1px solid rgba(248,113,113,0.2); border-radius: 8px; padding: 12px; margin-bottom: 10px; background: var(--red-dim); }
+    .safety-gate-title { font-size: 12px; font-weight: 700; color: var(--red); margin-bottom: 8px; }
+    .safety-check {
+      display: flex; align-items: flex-start; gap: 8px;
+      margin-bottom: 8px; font-size: 11px; color: var(--text);
+    }
+    .safety-check input[type="checkbox"] { margin-top: 1px; accent-color: var(--red); flex-shrink: 0; }
+
+    .empty-state { text-align: center; padding: 24px 16px; color: var(--muted); }
+    .empty-state .icon { font-size: 32px; margin-bottom: 8px; }
+    .empty-state p { font-size: 12px; }
+
+    .section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px; margin-top: 12px; }
+    .section-label:first-child { margin-top: 0; }
+
+    #notif {
+      display: none; position: sticky; top: 0; z-index: 10;
+      padding: 7px 14px;
+      font-size: 11px; font-weight: 600;
+    }
+    #notif.info { background: var(--accent-dim); color: var(--accent); border-bottom: 1px solid rgba(56,189,248,0.2); display: block; }
+    #notif.success { background: var(--green-dim); color: var(--green); border-bottom: 1px solid rgba(74,222,128,0.2); display: block; }
+    #notif.warn { background: var(--yellow-dim); color: var(--yellow); border-bottom: 1px solid rgba(251,191,36,0.2); display: block; }
+    #notif.error { background: var(--red-dim); color: var(--red); border-bottom: 1px solid rgba(248,113,113,0.2); display: block; }
+
+    .footer { padding: 8px 14px; border-top: 1px solid var(--border); background: var(--surface); font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
   </style>
 </head>
-<body class="text-slate-100 min-h-screen flex flex-col antialiased">
+<body>
+<div id="app">
+  <div class="header">
+    <div class="logo">🇪🇺 DigitalEU<span class="accent">.me</span></div>
+    <span id="header-mode" style="font-size:10px;color:var(--muted);font-weight:600;"></span>
+  </div>
 
-  <div className="p-4 space-y-4">
-    <div className="flex items-center gap-2 mb-4">
-      <span className="text-xl" aria-hidden="true">🇪🇺</span>
-      <span className="font-extrabold text-sm tracking-tight text-white">
-        DigitalEU<span className="text-sky-400">.me</span>
-      </span>
+  <div id="notif"></div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="upload">Upload</button>
+    <button class="tab" data-tab="queue">Queue</button>
+    <button class="tab" data-tab="guide">Guide</button>
+    <button class="tab" data-tab="settings">Settings</button>
+  </div>
+
+  <!-- VIEW: Upload -->
+  <div id="view-upload" class="view active">
+    <div id="upload-zone" class="upload-zone" tabindex="0" role="button" aria-label="Upload account list">
+      <div class="icon">📂</div>
+      <div class="primary">Upload your account list</div>
+      <div class="secondary">Drag &amp; drop or click to browse</div>
+      <div class="formats">Accepts: .csv .json .txt · Max 5 MB · Max 10,000 rows</div>
+    </div>
+    <input id="file-input" type="file" accept=".csv,.json,.txt" style="display:none;" aria-hidden="true">
+
+    <div id="parse-progress" class="parse-progress">
+      <div class="progress-bar"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
+      <div id="parse-stats" class="parse-stats">Parsing…</div>
     </div>
 
-    <div className="space-y-3">
-      <div className="bg-slate-900 border border-white/5 rounded-xl p-3.5 space-y-2">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">Your Active Session</h4>
-        <div id="session-info" class="text-xs space-y-1">
-          <div className="flex justify-between">
-            <span className="text-slate-500">Mode:</span>
-            <span id="session-mode" className="font-semibold text-sky-400">Guest Mode</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-slate-500">Sync:</span>
-            <span id="session-sync" className="text-slate-400 font-mono text-[10px]">Local storage</span>
-          </div>
-        </div>
+    <div id="upload-results" style="margin-top:12px;display:none;">
+      <div class="card">
+        <div class="card-title">Parse Results</div>
+        <div id="result-summary" style="font-size:12px;"></div>
       </div>
+      <div style="display:flex;gap:8px;margin-top:4px;">
+        <button id="btn-confirm-import" class="btn btn-primary btn-sm">Import &amp; Continue →</button>
+        <button id="btn-cancel-import" class="btn btn-ghost btn-sm">Cancel</button>
+      </div>
+    </div>
 
-      <div className="bg-sky-500/5 border border-sky-400/20 rounded-xl p-4 space-y-2">
-        <p className="text-xs font-bold text-sky-300 flex items-center gap-1.5">
-          🧩 Extension Active
-        </p>
-        <p className="text-[11px] text-slate-400 leading-relaxed">
-          This extension will automatically detect your registered services and help you autofill your new Proton/Tuta details on their settings pages!
-        </p>
+    <div style="margin-top:16px;">
+      <div class="card-title">Supported formats</div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.6;">
+        <strong style="color:var(--text)">CSV</strong> — one email/domain per row (first column)<br>
+        <strong style="color:var(--text)">TXT</strong> — one email, domain, or URL per line<br>
+        <strong style="color:var(--text)">JSON</strong> — array of strings or objects with an <code style="font-size:10px;">email</code> key
       </div>
     </div>
   </div>
 
-  <footer className="mt-auto border-t border-white/5 py-3 text-center text-[10px] text-slate-500">
-    Zero-Knowledge Storage 🇨🇭
-  </footer>
+  <!-- VIEW: Queue -->
+  <div id="view-queue" class="view">
+    <div id="queue-matched-section">
+      <div class="section-label">Matched services</div>
+      <div id="queue-matched"></div>
+    </div>
+    <div id="queue-review-section" style="display:none;">
+      <div class="section-label">Needs review</div>
+      <div id="queue-review"></div>
+    </div>
+    <div id="queue-empty" class="empty-state" style="display:none;">
+      <div class="icon">🔍</div>
+      <p>No accounts imported yet.<br>Use the Upload tab to get started.</p>
+    </div>
+  </div>
 
-  <script type="module" src="/src/popup.ts"></script>
+  <!-- VIEW: Guide -->
+  <div id="view-guide" class="view">
+    <div id="guide-select-prompt" class="empty-state">
+      <div class="icon">📋</div>
+      <p>Select an account from the Queue<br>to start a guide.</p>
+    </div>
+
+    <div id="guide-runner" style="display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div>
+          <div style="font-weight:700;font-size:13px;" id="guide-service-name"></div>
+          <div style="font-size:10px;color:var(--muted);" id="guide-type-label"></div>
+        </div>
+        <button id="btn-guide-back" class="btn btn-ghost btn-sm">← Back</button>
+      </div>
+
+      <div id="guide-type-selector" style="display:flex;gap:6px;margin-bottom:12px;">
+        <button class="btn btn-ghost btn-sm" data-guide="change-email">Change Email</button>
+        <button class="btn btn-ghost btn-sm" data-guide="delete-account">Delete Account</button>
+      </div>
+
+      <div id="guide-steps"></div>
+
+      <div id="delete-safety-gate" class="safety-gate" style="display:none;">
+        <div class="safety-gate-title">⚠️ Account Deletion — Please confirm</div>
+        <div class="safety-check">
+          <input type="checkbox" id="sc-1">
+          <label for="sc-1">I have downloaded my data from this service.</label>
+        </div>
+        <div class="safety-check">
+          <input type="checkbox" id="sc-2">
+          <label for="sc-2">I understand this action is permanent and irreversible.</label>
+        </div>
+        <div class="safety-check">
+          <input type="checkbox" id="sc-3">
+          <label for="sc-3">I have noted this service's data retention period.</label>
+        </div>
+        <div class="safety-check">
+          <input type="checkbox" id="sc-4">
+          <label for="sc-4">I no longer need this account for login anywhere.</label>
+        </div>
+        <button id="btn-safety-proceed" class="btn btn-danger btn-sm" disabled style="margin-top:8px;">Proceed with deletion steps</button>
+      </div>
+
+      <div id="guide-nav" style="margin-top:10px;display:flex;gap:8px;">
+        <button id="btn-step-action" class="btn btn-primary btn-sm">Open site &amp; start →</button>
+        <button id="btn-step-skip" class="btn btn-ghost btn-sm">Skip step</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Settings -->
+  <div id="view-settings" class="view">
+    <div class="section-label">Autofill Target</div>
+    <div class="card">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">Email address the extension will autofill on external sites.</div>
+      <div id="target-email-display" style="font-family:monospace;font-size:12px;color:var(--text);word-break:break-all;">Not set</div>
+    </div>
+
+    <div class="section-label">Data &amp; Privacy</div>
+    <div class="card" style="font-size:11px;color:var(--muted);line-height:1.7;">
+      All data is stored <strong style="color:var(--text)">locally on your device only</strong>.<br>
+      Nothing is sent to any server.<br>
+      Clearing extension data removes everything.
+    </div>
+    <button id="btn-clear-data" class="btn btn-danger btn-sm" style="margin-top:8px;">Clear all local data</button>
+
+    <div class="section-label" style="margin-top:16px;">Links</div>
+    <a href="https://digitaleu.me" target="_blank" rel="noopener noreferrer" style="display:block;font-size:11px;color:var(--accent);margin-bottom:4px;">digitaleu.me ↗</a>
+    <a href="https://digitaleu.me/privacy" target="_blank" rel="noopener noreferrer" style="display:block;font-size:11px;color:var(--accent);">Privacy policy ↗</a>
+  </div>
+
+  <div class="footer">
+    <span id="footer-count">0 accounts tracked</span>
+    <span style="color:var(--accent);">v1.0</span>
+  </div>
+</div>
+
+<script type="module" src="/src/popup.ts"></script>
 </body>
 </html>
