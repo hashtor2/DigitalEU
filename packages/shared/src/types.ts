@@ -44,7 +44,12 @@ export interface Alternative {
   monetization: MonetizationModel;
   /** Affiliate-lenke når monetization === "affiliate". */
   affiliateUrl?: string;
+  /** Eksplisitt markedsoverride; utledet fra kategori hvis ikke satt. */
+  market?: ('b2b' | 'b2c')[];
 }
+
+/** Målmarked for et alternativ. */
+export type MarketSegment = 'b2b' | 'b2c';
 
 /** To moduser for datahåndtering, jf. dashbordet. */
 export type StorageMode = "guest" | "profile";
