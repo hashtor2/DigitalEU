@@ -22,11 +22,11 @@ function ServiceCard({ service, rank }: { service: GuideService; rank: number })
     <div className={`rounded border ${
       isTop
         ? "border-[#f0c040]/25 bg-[#f0c040]/[0.025]"
-        : "border-white/[0.08] bg-white/[0.01]"
+        : "border-[#30363d] bg-[#0d1117]"
     }`}>
 
       {/* Card header */}
-      <div className="flex items-center gap-3 px-5 pt-5 pb-4 border-b border-white/[0.06]">
+      <div className="flex items-center gap-3 px-5 pt-5 pb-4 border-b border-[#21262d]">
         <div className="relative flex-shrink-0">
           {domain && (
             <img
@@ -46,10 +46,10 @@ function ServiceCard({ service, rank }: { service: GuideService; rank: number })
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <h3 className="text-[15px] font-bold text-white">{service.name}</h3>
-            <span className="text-[11px] text-slate-500">{service.country}</span>
+            <span className="text-[11px] text-slate-400">{service.country}</span>
             {service.isAffiliate && <AffiliateBadge />}
           </div>
-          <p className="text-[12px] text-slate-500 mt-0.5 truncate">{service.tagline}</p>
+          <p className="text-[12px] text-slate-400 mt-0.5 truncate">{service.tagline}</p>
         </div>
 
         <span className="text-[12px] text-slate-400 font-mono flex-shrink-0 hidden sm:block">{service.price}</span>
@@ -69,11 +69,11 @@ function ServiceCard({ service, rank }: { service: GuideService; rank: number })
           </ul>
         </div>
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 mb-2">Cons</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-2">Cons</p>
           <ul className="space-y-1.5">
             {service.cons.map((c) => (
-              <li key={c} className="flex gap-2 text-[12px] text-slate-500 leading-snug">
-                <span className="text-slate-600 flex-shrink-0 mt-0.5">−</span>
+              <li key={c} className="flex gap-2 text-[12px] text-slate-400 leading-snug">
+                <span className="text-slate-500 flex-shrink-0 mt-0.5">−</span>
                 {c}
               </li>
             ))}
@@ -83,7 +83,7 @@ function ServiceCard({ service, rank }: { service: GuideService; rank: number })
 
       {/* Footer */}
       <div className="px-5 pb-5 flex items-center justify-between gap-3 flex-wrap">
-        <span className="text-[12px] text-slate-500 font-mono sm:hidden">{service.price}</span>
+        <span className="text-[12px] text-slate-400 font-mono sm:hidden">{service.price}</span>
         <a
           href={service.url}
           target="_blank"
@@ -91,7 +91,7 @@ function ServiceCard({ service, rank }: { service: GuideService; rank: number })
           className={`inline-flex items-center gap-2 rounded px-4 py-2 text-[12px] font-semibold transition ${
             service.isAffiliate
               ? "bg-[#f0c040] text-[#111827] hover:bg-[#f0c040]/90"
-              : "border border-white/[0.1] text-slate-300 hover:text-white hover:border-white/20"
+              : "border border-[#30363d] text-slate-300 hover:text-white hover:border-white/20"
           }`}
         >
           {domain && (
@@ -115,11 +115,11 @@ export function GuidePage() {
 
   if (!guide) {
     return (
-      <div className="min-h-screen bg-[#111827] text-slate-100 flex flex-col">
+      <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
         <title>Guide not found | digitaleu.me</title>
         <Header />
         <main className="flex-1 mx-auto max-w-3xl w-full px-6 py-16 text-center">
-          <p className="text-slate-500 text-sm mb-4">Guide not found.</p>
+          <p className="text-slate-400 text-sm mb-4">Guide not found.</p>
           <Link to="/guides" className="text-[#f0c040] text-sm hover:underline">
             ← Back to guides
           </Link>
@@ -129,7 +129,7 @@ export function GuidePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#111827] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
       <title>{guide.metaTitle}</title>
       <meta name="description" content={guide.metaDescription} />
       <meta property="og:title" content={guide.metaTitle} />
@@ -141,12 +141,12 @@ export function GuidePage() {
       <main className="flex-1 mx-auto max-w-3xl w-full px-6 py-10">
 
         {/* Breadcrumb */}
-        <nav className="mb-8 text-[11px] font-mono text-slate-600">
+        <nav className="mb-8 text-[11px] font-mono text-slate-500">
           <Link to="/" className="hover:text-slate-400 transition">home</Link>
           <span className="mx-1.5">/</span>
           <Link to="/guides" className="hover:text-slate-400 transition">guides</Link>
           <span className="mx-1.5">/</span>
-          <span className="text-slate-500">{guide.category}</span>
+          <span className="text-slate-400">{guide.category}</span>
         </nav>
 
         {/* Hero */}
@@ -161,17 +161,17 @@ export function GuidePage() {
                   src={`https://www.google.com/s2/favicons?domain=${d}&sz=64`}
                   alt={s.name}
                   title={s.name}
-                  className="h-9 w-9 rounded-xl border border-white/[0.08]"
+                  className="h-9 w-9 rounded-xl border border-[#30363d]"
                   onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                 />
               ) : null;
             })}
-            <span className="text-[11px] text-slate-600 font-mono ml-1">
+            <span className="text-[11px] text-slate-500 font-mono ml-1">
               {guide.services.length} services compared
             </span>
           </div>
 
-          <span className="inline-block text-[10px] font-semibold uppercase tracking-wider text-slate-600 border border-white/[0.06] rounded px-2 py-0.5 mb-3">
+          <span className="inline-block text-[10px] font-semibold uppercase tracking-wider text-slate-500 border border-[#21262d] rounded px-2 py-0.5 mb-3">
             {guide.category}
           </span>
           <h1 className="text-2xl font-bold text-white leading-tight mb-3">{guide.title}</h1>
@@ -179,8 +179,8 @@ export function GuidePage() {
         </div>
 
         {/* Why switch */}
-        <div className="mb-8 rounded border border-white/[0.08] bg-white/[0.02] p-5">
-          <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">
+        <div className="mb-8 rounded border border-[#30363d] bg-[#161b22] p-5">
+          <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">
             Why switch?
           </h2>
           <ul className="space-y-2">
@@ -216,20 +216,20 @@ export function GuidePage() {
           <h2 className="text-[13px] font-semibold text-white mb-4">FAQ</h2>
           <div className="space-y-4">
             {guide.faq.map(({ q, a }) => (
-              <div key={q} className="border-l-2 border-white/[0.1] pl-4">
+              <div key={q} className="border-l-2 border-[#30363d] pl-4">
                 <p className="text-[13px] font-medium text-white mb-1">{q}</p>
-                <p className="text-[12px] text-slate-500 leading-relaxed">{a}</p>
+                <p className="text-[12px] text-slate-400 leading-relaxed">{a}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Footer nav */}
-        <div className="border-t border-white/[0.07] pt-6 flex items-center justify-between">
-          <Link to="/guides" className="text-[12px] text-slate-600 hover:text-slate-400 transition">
+        <div className="border-t border-[#30363d] pt-6 flex items-center justify-between">
+          <Link to="/guides" className="text-[12px] text-slate-500 hover:text-slate-400 transition">
             ← All guides
           </Link>
-          <Link to="/directory" className="text-[12px] text-slate-600 hover:text-slate-400 transition">
+          <Link to="/directory" className="text-[12px] text-slate-500 hover:text-slate-400 transition">
             Browse all European alternatives →
           </Link>
         </div>

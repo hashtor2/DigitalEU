@@ -163,7 +163,7 @@ export function NewsPage() {
             <p className="text-xs text-slate-400 leading-relaxed">
               A 15-month investigation reveals how Facebook, Google, Microsoft and their peers systematically harvest, inadequately protect, and monetize European user data—while promoting privacy-hostile alternatives that deepen dependency on US surveillance capitalism.
             </p>
-            <div className="flex items-center gap-4 text-[11px] text-slate-500 pt-2 font-medium">
+            <div className="flex items-center gap-4 text-[11px] text-slate-400 pt-2 font-medium">
               <span className="flex items-center gap-1">🏆 Johan Nordström</span>
               <span>•</span>
               <span>June 19, 2026</span>
@@ -198,7 +198,7 @@ export function NewsPage() {
                   >
                     {article.category}
                   </span>
-                  <span className="text-[10px] text-slate-500 font-medium">{article.readTime}</span>
+                  <span className="text-[10px] text-slate-400 font-medium">{article.readTime}</span>
                 </div>
                 <h3 className="text-base font-bold text-white leading-snug tracking-tight">
                   {article.title}
@@ -206,7 +206,7 @@ export function NewsPage() {
                 <p className="text-xs text-slate-400 leading-relaxed">
                   {article.excerpt}
                 </p>
-                <div className="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                <div className="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400 font-semibold">
                   <span>Author: {article.author}</span>
                   <span>{article.date}</span>
                 </div>
@@ -230,7 +230,7 @@ export function NewsPage() {
             {JOURNALISTS.map((j) => (
               <div
                 key={j.name}
-                className="rounded-2xl border border-white/5 bg-white/[0.01] p-5 flex gap-4 items-start hover:border-white/10 transition"
+                className="rounded-2xl border border-white/5 bg-[#0d1117] p-5 flex gap-4 items-start hover:border-white/10 transition"
               >
                 <div className="w-12 h-12 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center text-2xl shadow-sm shrink-0">
                   {j.avatar}
@@ -238,7 +238,7 @@ export function NewsPage() {
                 <div className="space-y-1">
                   <div className="flex items-baseline justify-between">
                     <h3 className="text-sm font-bold text-white">{j.name}</h3>
-                    <span className="text-[10px] text-slate-500 font-medium">{j.location}</span>
+                    <span className="text-[10px] text-slate-400 font-medium">{j.location}</span>
                   </div>
                   <p className="text-[10px] text-sky-400 font-semibold uppercase tracking-wider">{j.role}</p>
                   <p className="text-[11px] text-slate-400 leading-relaxed pt-1">{j.bio}</p>

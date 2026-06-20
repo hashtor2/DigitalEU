@@ -183,6 +183,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: true,
     deleteUrl: "https://www.linkedin.com/psettings/account",
     changeEmailUrl: "https://www.linkedin.com/psettings/email",
+    euAlternativeId: "xing",
   },
   {
     id: "youtube",
@@ -406,7 +407,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: true,
     deleteUrl: "https://www.hotels.com/account/",
     changeEmailUrl: "https://www.hotels.com/account/",
-    euAlternativeId: "booking",
+    euAlternativeId: "booking-nl",
   },
   {
     id: "booking-com",
@@ -437,6 +438,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
     deleteUrl: "https://www.airbnb.com/help/article/186",
     changeEmailUrl: "https://www.airbnb.com/account-settings",
+    euAlternativeId: "holidu",
   },
   {
     id: "ebay",
@@ -537,7 +539,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: true,
     deleteUrl: "https://faq.whatsapp.com/general/account-and-profile/how-to-delete-your-account/",
     changeEmailUrl: "https://faq.whatsapp.com/",
-    euAlternativeId: "signal",
+    euAlternativeId: "threema",
   },
   {
     id: "discord",
@@ -553,7 +555,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
     deleteUrl: "https://support.discord.com/hc/en-us/articles/212500837",
     changeEmailUrl: "https://discord.com/settings/account",
-    euAlternativeId: "matrix",
+    euAlternativeId: "element-matrix",
   },
   {
     id: "zoom",
@@ -569,7 +571,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
     deleteUrl: "https://support.zoom.us/hc/en-us/articles/201363243",
     changeEmailUrl: "https://zoom.us/profile",
-    euAlternativeId: "jitsi",
+    euAlternativeId: "jitsi-meet",
   },
   {
     id: "slack",
@@ -585,7 +587,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
     deleteUrl: "https://slack.com/help/articles/203953148",
     changeEmailUrl: "https://slack.com/help/articles/207262907",
-    euAlternativeId: "element",
+    euAlternativeId: "element-matrix",
   },
   {
     id: "telegram",
@@ -601,7 +603,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
     deleteUrl: "https://my.telegram.org/",
     changeEmailUrl: "https://my.telegram.org/",
-    euAlternativeId: "signal",
+    euAlternativeId: "threema",
   },
 
   // ─── PASSWORD MANAGERS ────────────────────────────────────────────────────
@@ -657,6 +659,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: true,
     deleteUrl: "https://www.paypal.com/myaccount/closeAccount/",
     changeEmailUrl: "https://www.paypal.com/myaccount/settings/",
+    euAlternativeId: "adyen-mollie",
   },
 
   // ─── TECH / DEV ───────────────────────────────────────────────────────────
@@ -690,6 +693,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
     deleteUrl: "https://account.adobe.com/",
     changeEmailUrl: "https://account.adobe.com/",
+    euAlternativeId: "penpot",
   },
   {
     id: "twitch",
@@ -705,6 +709,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
     deleteUrl: "https://www.twitch.tv/settings/profile",
     changeEmailUrl: "https://www.twitch.tv/settings/profile",
+    euAlternativeId: "peertube",
   },
 
   // ─── VPN ──────────────────────────────────────────────────────────────────
@@ -760,6 +765,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: true,
     deleteUrl: "https://help.uber.com/driving-and-delivering/article/delete-your-uber-account",
     changeEmailUrl: "https://account.uber.com/",
+    euAlternativeId: "bolt",
   },
   {
     id: "twitter-ads",
@@ -786,6 +792,7 @@ export const SERVICES: ServiceInfo[] = [
       "In 2017, Cloudflare had a memory leak (Cloudbleed) that exposed sensitive data from websites using the service, including passwords and tokens. Cloudflare fixed this quickly and is generally considered a responsible actor.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "bunny-cdn",
   },
   {
     id: "microsoft-account",
@@ -816,6 +823,7 @@ export const SERVICES: ServiceInfo[] = [
       "Kraken is a major US-based cryptocurrency exchange. While it has a decent security track record, user accounts are frequent targets of phishing and social engineering attacks. Data is subject to US jurisdiction.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "bitpanda",
   },
   {
     id: "coinbase",
@@ -829,6 +837,7 @@ export const SERVICES: ServiceInfo[] = [
       "In 2021, at least 6,000 Coinbase customers had funds stolen from their accounts after falling victim to a phishing campaign that bypassed SMS-based multi-factor authentication. Coinbase is a publicly-traded US company.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "bitpanda",
   },
   {
     id: "nexo",
@@ -855,6 +864,7 @@ export const SERVICES: ServiceInfo[] = [
       "In 2019, BitMEX accidentally leaked a large number of its users' email addresses by using the 'To' field instead of 'Bcc' in a mass email. The platform has also faced regulatory scrutiny in several countries.",
     ownerCountry: "SC", // Seychelles
     sellsData: false,
+    euAlternativeId: "bitpanda",
   },
   {
     id: "tradingview",
@@ -907,6 +917,7 @@ export const SERVICES: ServiceInfo[] = [
       "In January 2022, Crypto.com was hacked, leading to unauthorised withdrawals of about $15 million in ETH and $19 million in BTC from 483 user accounts. The company reimbursed the users.",
     ownerCountry: "SG", // Singapore
     sellsData: false,
+    euAlternativeId: "bitpanda",
   },
   {
     id: "okx",
@@ -920,6 +931,7 @@ export const SERVICES: ServiceInfo[] = [
       "OKX is a global cryptocurrency exchange. While the platform itself has not reported major breaches, its users are frequently targeted by advanced phishing and social engineering attacks.",
     ownerCountry: "SC", // Seychelles
     sellsData: false,
+    euAlternativeId: "bitpanda",
   },
   {
     id: "bybit",
@@ -933,6 +945,7 @@ export const SERVICES: ServiceInfo[] = [
       "Bybit is a cryptocurrency derivatives exchange. It has avoided major public hacks but operates in a high-risk sector and has faced regulatory warnings in some jurisdictions.",
     ownerCountry: "AE", // UAE (Dubai)
     sellsData: false,
+    euAlternativeId: "bitpanda",
   },
 
   // ─── TRAVEL / LIFESTYLE ───────────────────────────────────────────────────
@@ -948,6 +961,7 @@ export const SERVICES: ServiceInfo[] = [
       "Lime, the scooter and bike rental service, collects detailed location and travel history data. While not breached, this data provides a comprehensive picture of user movements. US-based company.",
     ownerCountry: "US",
     sellsData: true,
+    euAlternativeId: "tier",
   },
   {
     id: "finn",
@@ -961,6 +975,7 @@ export const SERVICES: ServiceInfo[] = [
       "FINN.no is Norway's largest online marketplace. Owned by Schibsted, it is subject to Norwegian law and GDPR. It has a strong security record.",
     ownerCountry: "NO",
     sellsData: false,
+    euAlternativeId: "finn-no",
   },
 
   // ─── DEV / HOSTING ────────────────────────────────────────────────────────
@@ -989,6 +1004,7 @@ export const SERVICES: ServiceInfo[] = [
       "Netlify is a popular platform for hosting modern web applications. It has a strong security focus but is a high-value target due to its central role for many businesses. US-based.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "scaleway",
   },
   {
     id: "vercel",
@@ -1002,6 +1018,7 @@ export const SERVICES: ServiceInfo[] = [
       "Vercel, the company behind Next.js, is a leading platform for frontend development and hosting. Like Netlify, it's a critical infrastructure provider with a strong security posture. US-based.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "scaleway",
   },
   {
     id: "sentry",
@@ -1028,6 +1045,7 @@ export const SERVICES: ServiceInfo[] = [
       "In February 2023, Namecheap's third-party email system was compromised, leading to phishing emails being sent to its customers. The core domain registration system was not affected. US-based.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "ionos",
   },
   {
     id: "godaddy",
@@ -1041,6 +1059,7 @@ export const SERVICES: ServiceInfo[] = [
       "GoDaddy has suffered a series of breaches. In 2020, 28,000 hosting accounts were compromised. In 2021, 1.2 million WordPress customers had data exposed. In 2023, they revealed a multi-year breach where malware was installed on their servers.",
     ownerCountry: "US",
     sellsData: true,
+    euAlternativeId: "ionos",
   },
   {
     id: "replit",
@@ -1054,6 +1073,7 @@ export const SERVICES: ServiceInfo[] = [
       "Replit is an online IDE. It has a good security track record but hosts user code and secrets, making it a potential target. US-based.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "gitpod",
   },
   {
     id: "hugging-face",
@@ -1080,6 +1100,7 @@ export const SERVICES: ServiceInfo[] = [
       "While AWS itself is generally secure, misconfigured S3 buckets and other services by customers have led to countless data breaches. AWS is owned by Amazon and subject to the US CLOUD Act.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "hetzner-online",
   },
 
   // --- Gaming ---
@@ -1092,10 +1113,11 @@ export const SERVICES: ServiceInfo[] = [
     dataProtection: "MEDIUM",
     breachSummary: "2011 breach exposed 35M accounts including encrypted passwords.",
     details:
-      "Valve's Steam suffered a major breach in 2011 exposing usernames, hashed passwords, and credit card data. Steam collects extensive playtime, purchase, and behavioural data. Subject to US CLOUD Act.",
+      "Steam (Valve) suffered a major breach in 2011 exposing usernames, hashed passwords, and credit card data. Steam collects extensive playtime, purchase, and behavioural data. Subject to US CLOUD Act.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://help.steampowered.com/en/wizard/HelpDeleteAccount",
+    euAlternativeId: "gog",
   },
   {
     id: "epic-games",
@@ -1110,6 +1132,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://www.epicgames.com/help/en-US/c-Category_TechnicalSupport/c-TechnicalSupport_AccountSupport/how-do-i-delete-my-epic-games-account-a000084416",
+    euAlternativeId: "gog",
   },
   {
     id: "playstation",
@@ -1235,6 +1258,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://account.gotinder.com/delete",
+    euAlternativeId: "happn",
   },
   {
     id: "bumble",
@@ -1249,6 +1273,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://bumble.com/en-us/help/how-do-i-delete-my-account",
+    euAlternativeId: "happn",
   },
   {
     id: "grindr",
@@ -1277,6 +1302,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://hinge.co/help/articles/delete-account",
+    euAlternativeId: "happn",
   },
   {
     id: "badoo",
@@ -1319,6 +1345,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://help.uber.com/riders/article/delete-your-uber-account",
+    euAlternativeId: "wolt",
   },
   {
     id: "deliveroo",
@@ -1333,6 +1360,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "GB",
     sellsData: false,
     deleteUrl: "https://help.deliveroo.com/en/articles/2536036-delete-your-account",
+    euAlternativeId: "wolt",
   },
   {
     id: "just-eat",
@@ -1392,6 +1420,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "GB",
     sellsData: false,
     deleteUrl: "https://www.revolut.com/legal/privacy/",
+    euAlternativeId: "n26",
   },
   {
     id: "n26",
@@ -1419,6 +1448,7 @@ export const SERVICES: ServiceInfo[] = [
       "Wise (formerly TransferWise) is UK-regulated. In 2023, a breach at US partner Evolve Bank exposed personal data for some Wise customers. Wise is generally GDPR-compliant but US operations create data sovereignty concerns.",
     ownerCountry: "GB",
     sellsData: false,
+    euAlternativeId: "bunq",
   },
   {
     id: "klarna",
@@ -1447,6 +1477,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.paypal.com/us/cshelp/article/how-do-i-close-my-paypal-account-help246",
+    euAlternativeId: "adyen-mollie",
   },
   {
     id: "monzo",
@@ -1460,6 +1491,7 @@ export const SERVICES: ServiceInfo[] = [
       "Monzo is a UK-regulated digital bank with strong security practices including real-time fraud detection and instant card freezing. Post-Brexit UK regulation means it is outside GDPR, but Monzo maintains strong data practices.",
     ownerCountry: "GB",
     sellsData: false,
+    euAlternativeId: "n26",
   },
   {
     id: "coinbase",
@@ -1474,6 +1506,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://help.coinbase.com/en/coinbase/privacy-and-security/data-privacy/how-can-i-delete-my-personal-data",
+    euAlternativeId: "bitpanda",
   },
 
   // --- Additional Streaming ---
@@ -1530,6 +1563,7 @@ export const SERVICES: ServiceInfo[] = [
       "Tidal is a US-based music streaming service owned by Block (Jack Dorsey's company). No significant data breaches reported, but US ownership means it is subject to the CLOUD Act. Focuses on lossless audio quality.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "deezer",
   },
   {
     id: "crunchyroll",
@@ -1627,6 +1661,7 @@ export const SERVICES: ServiceInfo[] = [
       "ASOS (UK) experienced a data exposure in 2020 via a third-party contractor. Post-Brexit UK regulation means no direct GDPR enforcement. Collects extensive browsing, purchase, and size data for personalisation.",
     ownerCountry: "GB",
     sellsData: false,
+    euAlternativeId: "zalando",
   },
   {
     id: "vinted",
@@ -1657,6 +1692,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://www.notion.so/help/delete-account",
+    euAlternativeId: "cryptpad",
   },
   {
     id: "trello",
@@ -1671,6 +1707,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://support.atlassian.com/trello/docs/deleting-your-atlassian-account/",
+    euAlternativeId: "meistertask",
   },
   {
     id: "canva",
@@ -1685,6 +1722,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "AU",
     sellsData: false,
     deleteUrl: "https://www.canva.com/help/delete-account/",
+    euAlternativeId: "penpot",
   },
   {
     id: "figma",
@@ -1699,6 +1737,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://help.figma.com/hc/en-us/articles/360040328773",
+    euAlternativeId: "penpot",
   },
   {
     id: "asana",
@@ -1712,6 +1751,7 @@ export const SERVICES: ServiceInfo[] = [
       "Asana (US) stores all project and task data on US servers. No major data breaches reported, but as a US company it is subject to the CLOUD Act. Collects extensive team activity and project data.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "openproject",
   },
 
   // --- Fitness & Health ---
@@ -1728,6 +1768,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://support.strava.com/hc/en-us/articles/216919327-Deleting-your-Strava-account",
+    euAlternativeId: "komoot",
   },
   {
     id: "myfitnesspal",
@@ -1798,6 +1839,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://support.duolingo.com/hc/en-us/articles/360043890132",
+    euAlternativeId: "babbel",
   },
   {
     id: "coursera",
@@ -1968,6 +2010,7 @@ export const SERVICES: ServiceInfo[] = [
       "DigitalOcean had customer billing information exposed in 2020 via a breach at their email provider Mailchimp. US-based cloud provider subject to the CLOUD Act, but offers EU datacenter regions.",
     ownerCountry: "US",
     sellsData: false,
+    euAlternativeId: "hetzner-online",
   },
 
   // --- Travel ---
@@ -2055,6 +2098,7 @@ export const SERVICES: ServiceInfo[] = [
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://support.lastpass.com/s/article/how-do-i-delete-my-account",
+    euAlternativeId: "proton-pass",
   },
   {
     id: "norton",
@@ -2110,7 +2154,7 @@ export const SERVICES: ServiceInfo[] = [
       "Proton VPN is operated by Proton AG in Switzerland under some of the world's strongest privacy laws. Open-source clients, verified no-log policy, and independent audits. Swiss law means no mandatory data retention or government backdoors.",
     ownerCountry: "CH",
     sellsData: false,
-    euAlternativeId: "protonvpn",
+    euAlternativeId: "proton-vpn",
   },
   {
     id: "mullvad",

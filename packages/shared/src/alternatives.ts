@@ -1621,5 +1621,298 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://www.blablacar.com/",
       "description": "French long-distance carpooling marketplace.",
       "monetization": "other"
+    },
+    {
+      "id": "peertube",
+      "name": "PeerTube",
+      "country": "FR",
+      "category": "social",
+      "replaces": ["YouTube", "Twitch"],
+      "url": "https://joinpeertube.org/",
+      "description": "French federated video hosting — self-host or join an instance. No ads, no tracking.",
+      "monetization": "other"
+    },
+    {
+      "id": "lemmy",
+      "name": "Lemmy",
+      "country": "DE",
+      "category": "social",
+      "replaces": ["Reddit"],
+      "url": "https://join-lemmy.org/",
+      "description": "German-developed federated link aggregator and discussion platform. Open-source, self-hostable.",
+      "monetization": "other"
+    },
+    {
+      "id": "xing",
+      "name": "XING",
+      "country": "DE",
+      "category": "social",
+      "replaces": ["LinkedIn"],
+      "url": "https://www.xing.com/",
+      "description": "German professional network, strong in DACH region. GDPR-native alternative to LinkedIn.",
+      "monetization": "other"
+    },
+    {
+      "id": "bolt",
+      "name": "Bolt",
+      "country": "EE",
+      "category": "transport",
+      "replaces": ["Uber"],
+      "url": "https://bolt.eu/",
+      "description": "Estonian ride-hailing, e-scooters and food delivery — Europe's challenger to Uber.",
+      "monetization": "other"
+    },
+    {
+      "id": "happn",
+      "name": "happn",
+      "country": "FR",
+      "category": "social",
+      "replaces": ["Tinder", "Bumble", "Hinge"],
+      "url": "https://www.happn.com/",
+      "description": "French proximity-based dating app — GDPR-native, no data sold to third parties.",
+      "monetization": "other"
+    },
+    {
+      "id": "penpot",
+      "name": "Penpot",
+      "country": "ES",
+      "category": "office",
+      "replaces": ["Figma", "Adobe XD", "Canva"],
+      "url": "https://penpot.app/",
+      "description": "Spanish open-source design tool — self-hostable Figma alternative with open SVG-based files.",
+      "monetization": "other"
+    },
+    {
+      "id": "babbel",
+      "name": "Babbel",
+      "country": "DE",
+      "category": "analytics",
+      "replaces": ["Duolingo"],
+      "url": "https://www.babbel.com/",
+      "description": "German language-learning app — subscription-based, no ads, linguist-designed, GDPR-compliant.",
+      "monetization": "other"
+    },
+    {
+      "id": "komoot",
+      "name": "Komoot",
+      "country": "DE",
+      "category": "transport",
+      "replaces": ["Strava"],
+      "url": "https://www.komoot.com/",
+      "description": "German outdoor route planning and GPS navigation — privacy-respecting Strava alternative.",
+      "monetization": "other"
+    },
+    {
+      "id": "bitpanda",
+      "name": "Bitpanda",
+      "country": "AT",
+      "category": "fintech",
+      "replaces": ["Coinbase", "Kraken", "Binance"],
+      "url": "https://www.bitpanda.com/",
+      "description": "Austrian regulated crypto and investment platform — EU MiCA-compliant, GDPR-native.",
+      "monetization": "affiliate",
+      "affiliateUrl": "https://www.bitpanda.com/"
+    },
+    {
+      "id": "gitpod",
+      "name": "Gitpod",
+      "country": "DE",
+      "category": "code-hosting",
+      "replaces": ["Replit", "GitHub Codespaces"],
+      "url": "https://www.gitpod.io/",
+      "description": "German cloud development environment — open-source, self-hostable browser IDE.",
+      "monetization": "other"
+    },
+    {
+      "id": "tier",
+      "name": "TIER Mobility",
+      "country": "DE",
+      "category": "transport",
+      "replaces": ["Lime", "Bird"],
+      "url": "https://www.tier.app/",
+      "description": "German micro-mobility operator — e-scooters and e-bikes across European cities.",
+      "monetization": "other"
+    },
+    {
+      "id": "cryptpad",
+      "name": "CryptPad",
+      "country": "FR",
+      "category": "office",
+      "replaces": ["Notion", "Google Docs"],
+      "url": "https://cryptpad.fr/",
+      "description": "French zero-knowledge encrypted collaboration suite — open-source, self-hostable.",
+      "monetization": "other"
+    },
+    {
+      "id": "bunny-cdn",
+      "name": "BunnyCDN",
+      "country": "SI",
+      "category": "cloud-infra",
+      "replaces": ["Cloudflare"],
+      "url": "https://bunny.net/",
+      "description": "Slovenian CDN and edge infrastructure provider — privacy-respecting Cloudflare alternative.",
+      "monetization": "affiliate",
+      "affiliateUrl": "https://bunny.net/"
+    },
+    {
+      "id": "vaultwarden",
+      "name": "Vaultwarden",
+      "country": "EU",
+      "category": "password-manager",
+      "replaces": ["Bitwarden (cloud)", "LastPass"],
+      "url": "https://github.com/dani-garcia/vaultwarden",
+      "description": "Open-source self-hosted Bitwarden-compatible server — full sovereignty over your password vault.",
+      "monetization": "other"
+    },
+    {
+      "id": "mullvad",
+      "name": "Mullvad VPN",
+      "country": "SE",
+      "category": "vpn",
+      "replaces": ["NordVPN", "ExpressVPN"],
+      "url": "https://mullvad.net/",
+      "description": "Swedish no-logs VPN — no email required, cash/crypto accepted, 2023 police raid proved zero data.",
+      "monetization": "other"
+    },
+    {
+      "id": "holidu",
+      "name": "Holidu",
+      "country": "DE",
+      "category": "social",
+      "replaces": ["Airbnb", "Vrbo"],
+      "url": "https://www.holidu.com/",
+      "description": "German holiday rental search engine — aggregates EU properties, GDPR-native.",
+      "monetization": "affiliate",
+      "affiliateUrl": "https://www.holidu.com/"
+    },
+    {
+      "id": "booking-nl",
+      "name": "Booking.com",
+      "country": "NL",
+      "category": "social",
+      "replaces": ["Hotels.com", "Expedia"],
+      "url": "https://www.booking.com/",
+      "description": "Dutch-headquartered accommodation platform — Amsterdam HQ, GDPR-compliant.",
+      "monetization": "other"
+    },
+    {
+      "id": "gog",
+      "name": "GOG.com",
+      "country": "PL",
+      "category": "social",
+      "replaces": ["Steam", "Epic Games Store"],
+      "url": "https://www.gog.com/",
+      "description": "Polish DRM-free game store by CD Projekt — European-owned gaming marketplace.",
+      "monetization": "other"
+    },
+    {
+      "id": "wolt",
+      "name": "Wolt",
+      "country": "FI",
+      "category": "social",
+      "replaces": ["Uber Eats", "DoorDash"],
+      "url": "https://wolt.com/",
+      "description": "Finnish food delivery platform — European-founded, strong GDPR practices.",
+      "monetization": "other"
+    },
+    {
+      "id": "hellofresh",
+      "name": "HelloFresh",
+      "country": "DE",
+      "category": "social",
+      "replaces": ["Blue Apron"],
+      "url": "https://www.hellofresh.com/",
+      "description": "German meal-kit delivery company — Berlin-listed, EU-regulated.",
+      "monetization": "other"
+    },
+    {
+      "id": "deezer",
+      "name": "Deezer",
+      "country": "FR",
+      "category": "social",
+      "replaces": ["Spotify", "Apple Music", "Tidal"],
+      "url": "https://www.deezer.com/",
+      "description": "French music streaming platform — EU-based alternative to US streaming services.",
+      "monetization": "other"
+    },
+    {
+      "id": "vinted",
+      "name": "Vinted",
+      "country": "LT",
+      "category": "social",
+      "replaces": ["Poshmark", "ThredUp"],
+      "url": "https://www.vinted.com/",
+      "description": "Lithuanian fashion resale marketplace — Europe's largest secondhand clothing platform.",
+      "monetization": "other"
+    },
+    {
+      "id": "zalando",
+      "name": "Zalando",
+      "country": "DE",
+      "category": "social",
+      "replaces": ["ASOS", "Boohoo"],
+      "url": "https://www.zalando.com/",
+      "description": "German fashion e-commerce platform — EU-regulated, GDPR-compliant.",
+      "monetization": "other"
+    },
+    {
+      "id": "norwegian-air",
+      "name": "Norwegian Air",
+      "country": "NO",
+      "category": "transport",
+      "replaces": ["Ryanair (non-EU)"],
+      "url": "https://www.norwegian.com/",
+      "description": "Norwegian low-cost airline — EEA-regulated, GDPR-compliant, strong privacy practices.",
+      "monetization": "other"
+    },
+    {
+      "id": "vipps",
+      "name": "Vipps",
+      "country": "NO",
+      "category": "fintech",
+      "replaces": ["PayPal", "Venmo"],
+      "url": "https://vipps.no/",
+      "description": "Norwegian mobile payment platform — bank-consortium owned, strict EEA financial regulation.",
+      "monetization": "other"
+    },
+    {
+      "id": "finn-no",
+      "name": "FINN.no",
+      "country": "NO",
+      "category": "social",
+      "replaces": ["Craigslist", "Facebook Marketplace"],
+      "url": "https://www.finn.no/",
+      "description": "Norway's largest online marketplace — Schibsted-owned, GDPR-compliant.",
+      "monetization": "other"
+    },
+    {
+      "id": "dnb",
+      "name": "DNB Bank",
+      "country": "NO",
+      "category": "fintech",
+      "replaces": ["HSBC", "Barclays"],
+      "url": "https://www.dnb.no/",
+      "description": "Norway's largest bank — state-partially-owned, strictly regulated under EEA/GDPR.",
+      "monetization": "other"
+    },
+    {
+      "id": "elkjop",
+      "name": "Elkjøp",
+      "country": "NO",
+      "category": "social",
+      "replaces": ["Best Buy"],
+      "url": "https://www.elkjop.no/",
+      "description": "Leading Nordic consumer electronics retailer across Scandinavia.",
+      "monetization": "other"
+    },
+    {
+      "id": "just-eat",
+      "name": "Just Eat Takeaway",
+      "country": "NL",
+      "category": "social",
+      "replaces": ["Uber Eats", "DoorDash"],
+      "url": "https://www.justeattakeaway.com/",
+      "description": "Dutch-headquartered food delivery platform — EU-registered, GDPR-compliant.",
+      "monetization": "other"
     }
   ];

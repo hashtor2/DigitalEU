@@ -22,7 +22,7 @@ function StarRating({ stars, estimated }: { stars: number; estimated?: boolean }
         {Array.from({ length: 10 }, (_, i) => (
           <span
             key={i}
-            className={`text-lg leading-none select-none ${i < stars ? "text-amber-400" : "text-slate-700"}`}
+            className={`text-lg leading-none select-none ${i < stars ? "text-amber-400" : "text-slate-600"}`}
           >
             ★
           </span>
@@ -30,13 +30,13 @@ function StarRating({ stars, estimated }: { stars: number; estimated?: boolean }
       </div>
       <div className="flex items-baseline gap-1.5">
         <span className="text-3xl font-bold text-white">{stars}</span>
-        <span className="text-sm text-slate-500">/10</span>
+        <span className="text-sm text-slate-400">/10</span>
       </div>
       {estimated && (
-        <span className="text-[10px] text-slate-600 font-mono uppercase tracking-wide">estimated</span>
+        <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wide">estimated</span>
       )}
       {!estimated && (
-        <span className="text-[10px] text-slate-600 font-mono uppercase tracking-wide">privacy score</span>
+        <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wide">privacy score</span>
       )}
     </div>
   );
@@ -261,10 +261,10 @@ export function ServicePage() {
 
   if (!alt && !loading && !profile) {
     return (
-      <div className="min-h-screen bg-[#111827] text-slate-100">
+      <div className="min-h-screen bg-[#0d1117] text-slate-100">
         <Header />
         <main className="mx-auto max-w-3xl px-6 py-20 text-center">
-          <p className="text-slate-500 text-sm">Service not found.</p>
+          <p className="text-slate-400 text-sm">Service not found.</p>
           <Link to="/directory" className="mt-4 inline-block text-xs text-blue-500 hover:text-blue-400">
             ← Back to directory
           </Link>
@@ -294,7 +294,7 @@ export function ServicePage() {
   const categoryNote = alt ? CATEGORY_CONTEXT[alt.category] : undefined;
 
   return (
-    <div className="min-h-screen bg-[#111827] text-slate-100">
+    <div className="min-h-screen bg-[#0d1117] text-slate-100">
       <title>{pageTitle}</title>
       <meta name="description" content={pageDescription} />
       <meta property="og:title" content={pageTitle} />
@@ -306,12 +306,12 @@ export function ServicePage() {
       <main className="mx-auto max-w-3xl px-6 py-12">
 
         {/* ── Breadcrumb ── */}
-        <nav className="mb-6 text-[11px] font-mono text-slate-600">
+        <nav className="mb-6 text-[11px] font-mono text-slate-500">
           <Link to="/" className="hover:text-slate-400 transition">home</Link>
           <span className="mx-1.5">/</span>
           <Link to="/directory" className="hover:text-slate-400 transition">directory</Link>
           <span className="mx-1.5">/</span>
-          <span className="text-slate-500">{name.toLowerCase()}</span>
+          <span className="text-slate-400">{name.toLowerCase()}</span>
         </nav>
 
         {/* ── Hero / identity ── */}
@@ -329,12 +329,12 @@ export function ServicePage() {
               <h1 className="text-xl font-bold text-white">{name}</h1>
               <span className="text-xl leading-none">{COUNTRY_FLAGS[country] ?? "🇪🇺"}</span>
               {profile?.headquarters && (
-                <span className="inline-block rounded border border-white/[0.08] px-1.5 py-0.5 text-[10px] font-mono text-slate-500">
+                <span className="inline-block rounded border border-[#30363d] px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
                   {profile.headquarters}
                 </span>
               )}
               {!profile && country && (
-                <span className="inline-block rounded border border-white/[0.08] px-1.5 py-0.5 text-[10px] font-mono text-slate-500">
+                <span className="inline-block rounded border border-[#30363d] px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
                   {country}
                 </span>
               )}
@@ -345,7 +345,7 @@ export function ServicePage() {
               <p className="mt-1 text-sm text-slate-400">{alt.description}</p>
             )}
             {alt && (
-              <p className="mt-1 text-[11px] text-slate-600 font-mono">
+              <p className="mt-1 text-[11px] text-slate-500 font-mono">
                 replaces {alt.replaces.slice(0, 4).join(", ")}
               </p>
             )}
@@ -361,9 +361,9 @@ export function ServicePage() {
 
         {/* ── Score breakdown (only when profile exists) ── */}
         {profile && (
-          <div className="mb-8 rounded border border-white/[0.1] bg-white/[0.03]">
-            <div className="px-4 py-3 border-b border-white/[0.1]">
-              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Privacy score breakdown</p>
+          <div className="mb-8 rounded border border-[#30363d] bg-[#21262d]">
+            <div className="px-4 py-3 border-b border-[#30363d]">
+              <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Privacy score breakdown</p>
             </div>
             <div className="px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
               {PRIVACY_ATTRIBUTES.map(attr => {
@@ -373,14 +373,14 @@ export function ServicePage() {
                     <span className={`w-4 h-4 flex-shrink-0 flex items-center justify-center rounded text-[10px] font-bold ${
                       earned
                         ? "bg-emerald-500/20 text-emerald-400"
-                        : "bg-white/[0.04] text-slate-600"
+                        : "bg-[#21262d] text-slate-500"
                     }`}>
                       {earned ? "✓" : "✗"}
                     </span>
-                    <span className={`text-[12px] flex-1 ${earned ? "text-slate-300" : "text-slate-600"}`}>
+                    <span className={`text-[12px] flex-1 ${earned ? "text-slate-300" : "text-slate-500"}`}>
                       {attr.label}
                     </span>
-                    <span className={`text-[10px] font-mono flex-shrink-0 ${earned ? "text-emerald-600" : "text-slate-700"}`}>
+                    <span className={`text-[10px] font-mono flex-shrink-0 ${earned ? "text-emerald-600" : "text-slate-600"}`}>
                       {earned ? `+${attr.points}` : `+0`}
                     </span>
                   </div>
@@ -394,18 +394,18 @@ export function ServicePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Description / About */}
           <div className="md:col-span-2">
-            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">About</h2>
+            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">About</h2>
             <p className="text-sm text-slate-400 leading-relaxed">
               {profile?.long_description ?? alt?.description ?? ""}
             </p>
 
             {/* Category context — shown when no profile */}
             {!profile && categoryNote && (
-              <div className="mt-4 rounded border border-white/[0.08] bg-white/[0.02] px-4 py-3">
-                <p className="text-[11px] text-slate-600 font-mono uppercase tracking-wide mb-1.5">
+              <div className="mt-4 rounded border border-[#30363d] bg-[#161b22] px-4 py-3">
+                <p className="text-[11px] text-slate-500 font-mono uppercase tracking-wide mb-1.5">
                   Why this category matters
                 </p>
-                <p className="text-[12px] text-slate-500 leading-relaxed">{categoryNote}</p>
+                <p className="text-[12px] text-slate-400 leading-relaxed">{categoryNote}</p>
               </div>
             )}
           </div>
@@ -413,7 +413,7 @@ export function ServicePage() {
           {/* Company info (from profile) OR Jurisdiction card (fallback) */}
           {profile ? (
             <div>
-              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">Company</h2>
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">Company</h2>
               <dl className="space-y-2">
                 {[
                   { label: "Legal entity", value: profile.legal_entity },
@@ -423,13 +423,13 @@ export function ServicePage() {
                   { label: "Pricing", value: profile.pricing_notes },
                 ].map(({ label, value }) => value ? (
                   <div key={label}>
-                    <dt className="text-[10px] text-slate-600 font-mono">{label}</dt>
+                    <dt className="text-[10px] text-slate-500 font-mono">{label}</dt>
                     <dd className="text-[12px] text-slate-300 mt-0.5">{value}</dd>
                   </div>
                 ) : null)}
                 {profile.data_center_locations && profile.data_center_locations.length > 0 && (
                   <div>
-                    <dt className="text-[10px] text-slate-600 font-mono">Data centers</dt>
+                    <dt className="text-[10px] text-slate-500 font-mono">Data centers</dt>
                     <dd className="text-[12px] text-slate-300 mt-0.5">{profile.data_center_locations.join(" · ")}</dd>
                   </div>
                 )}
@@ -437,7 +437,7 @@ export function ServicePage() {
             </div>
           ) : (
             <div>
-              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">Jurisdiction</h2>
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">Jurisdiction</h2>
               <div className="space-y-3">
                 <div className="flex items-center gap-2.5 text-[12px]">
                   <span className="text-emerald-500 w-4 text-center flex-shrink-0">✓</span>
@@ -452,7 +452,7 @@ export function ServicePage() {
                   <span className="text-slate-400">Not subject to US CLOUD Act</span>
                 </div>
                 {jurisdictionNote && (
-                  <p className="text-[11px] text-slate-600 leading-relaxed pt-1 border-t border-white/[0.07]">
+                  <p className="text-[11px] text-slate-500 leading-relaxed pt-1 border-t border-[#30363d]">
                     {jurisdictionNote}
                   </p>
                 )}
@@ -464,7 +464,7 @@ export function ServicePage() {
         {/* ── What it replaces ── */}
         {alt && alt.replaces.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">
+            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">
               What {alt.name} replaces
             </h2>
             <div className="space-y-2">
@@ -473,7 +473,7 @@ export function ServicePage() {
                 const domain = REPLACES_DOMAINS[r];
                 return (
                   <div key={r} className="flex items-center gap-4 rounded border border-orange-500/[0.12] bg-orange-500/[0.04] px-4 py-3">
-                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center overflow-hidden">
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center justify-center overflow-hidden">
                       {domain ? (
                         <img
                           src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
@@ -482,16 +482,16 @@ export function ServicePage() {
                           onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = "0"; }}
                         />
                       ) : (
-                        <span className="text-slate-600 text-xs font-bold">{r[0]}</span>
+                        <span className="text-slate-500 text-xs font-bold">{r[0]}</span>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <span className="text-[13px] font-semibold text-slate-200">{r}</span>
                       {context && (
-                        <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">{context}</p>
+                        <p className="text-[11px] text-slate-400 mt-0.5 leading-relaxed">{context}</p>
                       )}
                       {!context && (
-                        <p className="text-[11px] text-slate-600 mt-0.5">US-based — data subject to US jurisdiction and legal demands.</p>
+                        <p className="text-[11px] text-slate-500 mt-0.5">US-based — data subject to US jurisdiction and legal demands.</p>
                       )}
                     </div>
                   </div>
@@ -503,17 +503,17 @@ export function ServicePage() {
 
         {/* ── Data handling (from profile) ── */}
         {profile && (
-          <div className="mb-8 rounded border border-white/[0.1]">
-            <div className="px-4 py-3 border-b border-white/[0.1] bg-white/[0.03]">
-              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Data handling</h2>
+          <div className="mb-8 rounded border border-[#30363d]">
+            <div className="px-4 py-3 border-b border-[#30363d] bg-[#21262d]">
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Data handling</h2>
             </div>
-            <div className="divide-y divide-white/[0.04]">
+            <div className="divide-y divide-[#21262d]">
               {profile.data_collected && profile.data_collected.length > 0 && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-600 w-32 flex-shrink-0 font-mono pt-0.5">Data collected</span>
+                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Data collected</span>
                   <div className="flex flex-wrap gap-1.5">
                     {profile.data_collected.map(item => (
-                      <span key={item} className="rounded bg-white/[0.04] border border-white/[0.1] px-2 py-0.5 text-[11px] text-slate-400">
+                      <span key={item} className="rounded bg-[#21262d] border border-[#30363d] px-2 py-0.5 text-[11px] text-slate-400">
                         {item}
                       </span>
                     ))}
@@ -522,37 +522,37 @@ export function ServicePage() {
               )}
               {profile.data_retention_policy && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-600 w-32 flex-shrink-0 font-mono pt-0.5">Retention</span>
+                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Retention</span>
                   <span className="text-[12px] text-slate-400">{profile.data_retention_policy}</span>
                 </div>
               )}
               {profile.jurisdiction_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-600 w-32 flex-shrink-0 font-mono pt-0.5">Jurisdiction</span>
+                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Jurisdiction</span>
                   <span className="text-[12px] text-slate-400">{profile.jurisdiction_notes}</span>
                 </div>
               )}
               {profile.zero_knowledge_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-600 w-32 flex-shrink-0 font-mono pt-0.5">Encryption</span>
+                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Encryption</span>
                   <span className="text-[12px] text-slate-400">{profile.zero_knowledge_notes}</span>
                 </div>
               )}
               {profile.no_logs_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-600 w-32 flex-shrink-0 font-mono pt-0.5">Logging</span>
+                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Logging</span>
                   <span className="text-[12px] text-slate-400">{profile.no_logs_notes}</span>
                 </div>
               )}
               {profile.anonymous_payment_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-600 w-32 flex-shrink-0 font-mono pt-0.5">Payment</span>
+                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Payment</span>
                   <span className="text-[12px] text-slate-400">{profile.anonymous_payment_notes}</span>
                 </div>
               )}
               {profile.tor_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-600 w-32 flex-shrink-0 font-mono pt-0.5">Tor / onion</span>
+                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Tor / onion</span>
                   <span className="text-[12px] text-slate-400">{profile.tor_notes}</span>
                 </div>
               )}
@@ -565,25 +565,25 @@ export function ServicePage() {
           <div className="mb-8 flex flex-wrap gap-2">
             {profile.open_source_url && (
               <a href={profile.open_source_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-white/[0.08] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-white/[0.16] transition">
+                className="inline-flex items-center gap-1.5 rounded border border-[#30363d] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-[#484f58] transition">
                 <span className="text-emerald-500">⌥</span> Source code
               </a>
             )}
             {profile.audit_url && (
               <a href={profile.audit_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-white/[0.08] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-white/[0.16] transition">
+                className="inline-flex items-center gap-1.5 rounded border border-[#30363d] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-[#484f58] transition">
                 <span className="text-blue-500">✦</span> Security audit {profile.audit_year ? `(${profile.audit_year})` : ""}
               </a>
             )}
             {profile.privacy_policy_url && (
               <a href={profile.privacy_policy_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-white/[0.08] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-white/[0.16] transition">
+                className="inline-flex items-center gap-1.5 rounded border border-[#30363d] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-[#484f58] transition">
                 Privacy policy
               </a>
             )}
             {profile.transparency_report_url && (
               <a href={profile.transparency_report_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-white/[0.08] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-white/[0.16] transition">
+                className="inline-flex items-center gap-1.5 rounded border border-[#30363d] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-[#484f58] transition">
                 Transparency report
               </a>
             )}
@@ -593,10 +593,10 @@ export function ServicePage() {
         {/* ── Incidents (from profile) ── */}
         {incidents.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">
-              Known incidents <span className="text-slate-700 font-mono normal-case">({incidents.length})</span>
+            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">
+              Known incidents <span className="text-slate-600 font-mono normal-case">({incidents.length})</span>
             </h2>
-            <div className="rounded border border-white/[0.1] divide-y divide-white/[0.04]">
+            <div className="rounded border border-[#30363d] divide-y divide-[#21262d]">
               {incidents.map(inc => (
                 <div key={inc.id} className="px-4 py-4">
                   <div className="flex items-start justify-between gap-3 mb-1.5">
@@ -610,16 +610,16 @@ export function ServicePage() {
                       )}
                     </div>
                     {inc.incident_date && (
-                      <span className="text-[10px] text-slate-600 font-mono flex-shrink-0">
+                      <span className="text-[10px] text-slate-500 font-mono flex-shrink-0">
                         {new Date(inc.incident_date).toLocaleDateString("en-GB", { year: "numeric", month: "short" })}
                       </span>
                     )}
                   </div>
                   {inc.description && (
-                    <p className="text-[12px] text-slate-500 leading-relaxed">{inc.description}</p>
+                    <p className="text-[12px] text-slate-400 leading-relaxed">{inc.description}</p>
                   )}
                   {inc.resolution_notes && (
-                    <p className="mt-2 text-[11px] text-slate-600 italic">{inc.resolution_notes}</p>
+                    <p className="mt-2 text-[11px] text-slate-500 italic">{inc.resolution_notes}</p>
                   )}
                   {inc.source_url && (
                     <a href={inc.source_url} target="_blank" rel="noopener noreferrer"
@@ -638,7 +638,7 @@ export function ServicePage() {
           <div className="rounded border border-[#2d4a6e] bg-[#1e293b]/60 px-5 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1">
               <p className="text-sm font-semibold text-white">{name}</p>
-              <p className="text-[12px] text-slate-500 mt-0.5">
+              <p className="text-[12px] text-slate-400 mt-0.5">
                 {profile?.pricing_notes ?? "Visit the official site for plans and pricing."}
               </p>
             </div>
@@ -652,7 +652,7 @@ export function ServicePage() {
                 Get started →
               </a>
               {alt?.affiliateUrl && (
-                <span className="text-[10px] text-slate-700">affiliate link</span>
+                <span className="text-[10px] text-slate-600">affiliate link</span>
               )}
             </div>
           </div>

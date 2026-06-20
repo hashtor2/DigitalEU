@@ -32,7 +32,7 @@ export function AudienceSelectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a1628] text-slate-100 flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col items-center justify-center px-4">
       {/* Logo */}
       <div className="mb-14 flex flex-col items-center gap-3">
         <EuStarRing size={52} />
@@ -54,7 +54,7 @@ export function AudienceSelectorPage() {
         {/* Private */}
         <button
           onClick={() => choose("b2c")}
-          className="group flex flex-col items-start gap-5 rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-6 text-left transition-all hover:border-[#1a56db]/50 hover:bg-[#0f2040]"
+          className="group flex flex-col items-start gap-5 rounded-lg border border-[#2d4a6e] bg-[#1e293b] p-6 text-left transition-all hover:border-[#1a56db]/50 hover:bg-[#0f2040]"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#1a56db]/10 border border-[#1a56db]/20">
             <svg
@@ -86,7 +86,7 @@ export function AudienceSelectorPage() {
         {/* Business */}
         <button
           onClick={() => choose("b2b")}
-          className="group flex flex-col items-start gap-5 rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-6 text-left transition-all hover:border-[#f0c040]/30 hover:bg-[#121b2e]"
+          className="group flex flex-col items-start gap-5 rounded-lg border border-[#2d4a6e] bg-[#1e293b] p-6 text-left transition-all hover:border-[#f0c040]/30 hover:bg-[#121b2e]"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#f0c040]/10 border border-[#f0c040]/20">
             <svg
@@ -116,7 +116,7 @@ export function AudienceSelectorPage() {
         </button>
       </div>
 
-      <p className="mt-10 text-xs text-slate-600">
+      <p className="mt-10 text-xs text-slate-500">
         We remember your choice — switch anytime from the menu.
       </p>
     </div>

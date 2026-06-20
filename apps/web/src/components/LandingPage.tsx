@@ -56,7 +56,7 @@ export function LandingPage() {
   const grouped = groupByCategory(ALTERNATIVES);
 
   return (
-    <div className="min-h-full bg-[#06090f] text-slate-100">
+    <div className="min-h-full bg-[#0d1117] text-slate-100">
       <Header />
 
       <main className="mx-auto max-w-[52rem] px-6 py-16 md:py-24">
@@ -66,7 +66,7 @@ export function LandingPage() {
           <h1 className="text-[2rem] font-bold leading-[1.2] tracking-tight text-white sm:text-[2.375rem]">
             Your data is in the wrong hands.
             <br />
-            <span className="text-slate-500">Here's a plan to get it back.</span>
+            <span className="text-slate-400">Here's a plan to get it back.</span>
           </h1>
 
           <p className="mt-4 text-sm text-slate-400 leading-relaxed">
@@ -77,14 +77,14 @@ export function LandingPage() {
           <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
             <Link
               to="/b2c"
-              className="inline-flex items-center gap-1.5 rounded bg-white px-4 py-2 text-sm font-semibold text-[#06090f] transition hover:bg-slate-200 active:bg-slate-300"
+              className="inline-flex items-center gap-1.5 rounded bg-white px-4 py-2 text-sm font-semibold text-[#111827] transition hover:bg-slate-200 active:bg-slate-300"
             >
               Check my accounts
             </Link>
-            <span className="text-xs text-slate-600 font-mono">no account · runs in browser</span>
+            <span className="text-xs text-slate-500 font-mono">no account · runs in browser</span>
           </div>
 
-          <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-mono text-slate-700">
+          <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-mono text-slate-400">
             <span>data stored in Switzerland 🇨🇭</span>
             <span>·</span>
             <span>zero-knowledge</span>
@@ -96,31 +96,31 @@ export function LandingPage() {
         {/* ── Preview table ── */}
         <div className="mt-14">
           <div className="mb-2.5 flex items-baseline justify-between">
-            <span className="text-[11px] text-slate-600 font-mono">
+            <span className="text-[11px] text-slate-500 font-mono">
               Sample report — {SERVICES.length} services tracked
             </span>
             <Link
               to="/b2c"
-              className="text-[11px] text-slate-500 hover:text-slate-300 transition"
+              className="text-[11px] text-slate-400 hover:text-slate-300 transition"
             >
               Run for your accounts →
             </Link>
           </div>
 
-          <div className="overflow-hidden rounded border border-white/[0.06]">
+          <div className="overflow-hidden rounded border border-[#30363d]">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/[0.06] bg-white/[0.02]">
-                  <th className="px-4 py-2.5 text-left text-[11px] font-medium text-slate-600">
+                <tr className="border-b border-[#30363d] bg-[#21262d]">
+                  <th className="px-4 py-2.5 text-left text-[11px] font-medium text-slate-500">
                     Service
                   </th>
-                  <th className="py-2.5 text-left text-[11px] font-medium text-slate-600 w-20">
+                  <th className="py-2.5 text-left text-[11px] font-medium text-slate-500 w-20">
                     Risk
                   </th>
-                  <th className="py-2.5 pr-4 text-left text-[11px] font-medium text-slate-600 hidden sm:table-cell">
+                  <th className="py-2.5 pr-4 text-left text-[11px] font-medium text-slate-500 hidden sm:table-cell">
                     Known issue
                   </th>
-                  <th className="py-2.5 pr-4 text-left text-[11px] font-medium text-slate-600">
+                  <th className="py-2.5 pr-4 text-left text-[11px] font-medium text-slate-500">
                     EU alternative
                   </th>
                 </tr>
@@ -133,8 +133,8 @@ export function LandingPage() {
                   return (
                     <tr
                       key={s.id}
-                      className={`transition-colors hover:bg-white/[0.02] ${
-                        i < PREVIEW.length - 1 ? "border-b border-white/[0.04]" : ""
+                      className={`transition-colors hover:bg-[#21262d] ${
+                        i < PREVIEW.length - 1 ? "border-b border-[#30363d]" : ""
                       }`}
                     >
                       <td className="px-4 py-3 w-40">
@@ -148,7 +148,7 @@ export function LandingPage() {
                             }}
                           />
                           <span className="text-[13px] font-medium text-slate-200">{s.name}</span>
-                          <span className="text-slate-700">{COUNTRY_FLAGS[s.ownerCountry]}</span>
+                          <span className="text-slate-400">{COUNTRY_FLAGS[s.ownerCountry]}</span>
                         </div>
                       </td>
                       <td className="py-3">
@@ -162,7 +162,7 @@ export function LandingPage() {
                         </span>
                       </td>
                       <td className="py-3 pr-4 hidden sm:table-cell max-w-[200px]">
-                        <span className="text-[11px] text-slate-600 line-clamp-1">
+                        <span className="text-[11px] text-slate-500 line-clamp-1">
                           {s.breachSummary}
                         </span>
                       </td>
@@ -170,10 +170,10 @@ export function LandingPage() {
                         {alt ? (
                           <span className="text-[12px] text-blue-400 font-medium">
                             {alt.name}{" "}
-                            <span className="text-slate-600">{COUNTRY_FLAGS[alt.country]}</span>
+                            <span className="text-slate-500">{COUNTRY_FLAGS[alt.country]}</span>
                           </span>
                         ) : (
-                          <span className="text-slate-700">—</span>
+                          <span className="text-slate-400">—</span>
                         )}
                       </td>
                     </tr>
@@ -181,8 +181,8 @@ export function LandingPage() {
                 })}
               </tbody>
             </table>
-            <div className="border-t border-white/[0.05] bg-white/[0.01] px-4 py-2 flex items-center justify-between">
-              <span className="text-[10px] text-slate-700 font-mono">
+            <div className="border-t border-[#30363d] bg-[#161b22] px-4 py-2 flex items-center justify-between">
+              <span className="text-[10px] text-slate-400 font-mono">
                 scores based on public breach data & GDPR enforcement records
               </span>
               <Link
@@ -197,11 +197,11 @@ export function LandingPage() {
 
         {/* ── Alternatives grouped list ── */}
         <section className="mt-20">
-          <div className="mb-4 flex items-baseline justify-between border-b border-white/[0.06] pb-3">
+          <div className="mb-4 flex items-baseline justify-between border-b border-[#30363d] pb-3">
             <h2 className="text-sm font-semibold text-white">European Privacy Alternatives</h2>
             <Link
               to="/directory"
-              className="text-[11px] text-slate-600 hover:text-slate-400 transition"
+              className="text-[11px] text-slate-500 hover:text-slate-400 transition"
             >
               Browse all {ALTERNATIVES.length} →
             </Link>
@@ -209,8 +209,8 @@ export function LandingPage() {
 
           {grouped.slice(0, 8).map(([category, alts]) => (
             <div key={category}>
-              <div className="flex items-center gap-3 py-2 border-b border-white/[0.04]">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 w-28 flex-shrink-0">
+              <div className="flex items-center gap-3 py-2 border-b border-[#30363d]">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 w-28 flex-shrink-0">
                   {CATEGORY_LABELS[category] ?? category}
                 </span>
                 <span className="text-[10px] text-slate-800 font-mono">{alts.length}</span>
@@ -222,7 +222,7 @@ export function LandingPage() {
                   <Link
                     key={alt.id}
                     to={`/services/${alt.id}`}
-                    className="group flex items-center gap-3 py-2.5 pl-4 border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors"
+                    className="group flex items-center gap-3 py-2.5 pl-4 border-b border-[#21262d] hover:bg-[#21262d] transition-colors"
                   >
                     {domain && (
                       <img
@@ -240,10 +240,10 @@ export function LandingPage() {
                     <span className="flex-shrink-0 text-base leading-none">
                       {COUNTRY_FLAGS[alt.country] ?? "🇪🇺"}
                     </span>
-                    <span className="text-[11px] text-slate-600 hidden sm:block truncate">
+                    <span className="text-[11px] text-slate-500 hidden sm:block truncate">
                       replaces {alt.replaces.slice(0, 2).join(", ")}
                     </span>
-                    <span className="ml-auto text-[10px] text-slate-700 hidden lg:block pr-4 truncate max-w-[200px]">
+                    <span className="ml-auto text-[10px] text-slate-400 hidden lg:block pr-4 truncate max-w-[200px]">
                       {alt.description}
                     </span>
                   </Link>
@@ -251,10 +251,10 @@ export function LandingPage() {
               })}
 
               {alts.length > 3 && (
-                <div className="py-2 pl-4 border-b border-white/[0.03]">
+                <div className="py-2 pl-4 border-b border-[#21262d]">
                   <Link
                     to="/directory"
-                    className="text-[10px] text-slate-700 hover:text-slate-500 transition pl-7"
+                    className="text-[10px] text-slate-400 hover:text-slate-400 transition pl-7"
                   >
                     +{alts.length - 3} more →
                   </Link>
@@ -264,10 +264,10 @@ export function LandingPage() {
           ))}
 
           {grouped.length > 8 && (
-            <div className="mt-4 pt-4 border-t border-white/[0.04] text-center">
+            <div className="mt-4 pt-4 border-t border-[#30363d] text-center">
               <Link
                 to="/directory"
-                className="text-xs text-slate-600 hover:text-slate-400 transition"
+                className="text-xs text-slate-500 hover:text-slate-400 transition"
               >
                 View all {grouped.length} categories and {ALTERNATIVES.length} alternatives →
               </Link>
@@ -276,11 +276,11 @@ export function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t border-white/[0.06] py-8 mt-12">
+      <footer className="border-t border-[#30363d] py-8 mt-12">
         <div className="mx-auto max-w-[52rem] px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <p className="text-xs font-semibold text-slate-400">{SITE.brand}</p>
-            <p className="text-[11px] text-slate-700 mt-0.5 font-mono">
+            <p className="text-[11px] text-slate-400 mt-0.5 font-mono">
               {SITE.domain} · {SITE.dataRegionCountry} 🇨🇭 · free with partner sign-up or €29
               one-time
             </p>
@@ -292,7 +292,7 @@ export function LandingPage() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] text-slate-700 hover:text-slate-500 transition"
+                className="text-[11px] text-slate-400 hover:text-slate-400 transition"
               >
                 {s.label}
               </a>

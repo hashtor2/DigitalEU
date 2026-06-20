@@ -244,14 +244,14 @@ export function B2BPage() {
                 <span className="font-semibold text-sm text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
                   {alt.name}
                 </span>
-                <span className="shrink-0 rounded-full border border-white/10 px-1.5 py-0.5 text-xs text-slate-500 font-mono">
+                <span className="shrink-0 rounded-full border border-white/10 px-1.5 py-0.5 text-xs text-slate-400 font-mono">
                   {alt.country}
                 </span>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed line-clamp-2">
                 {alt.description}
               </p>
-              <p className="text-xs text-slate-600 mt-auto">
+              <p className="text-xs text-slate-500 mt-auto">
                 Replaces: {alt.replaces.join(", ")}
               </p>
             </a>
@@ -288,7 +288,7 @@ export function B2BPage() {
                     value={form.name}
                     onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                     placeholder="Anna Eriksson"
-                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus:border-emerald-400"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-emerald-400"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -298,7 +298,7 @@ export function B2BPage() {
                     value={form.company}
                     onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
                     placeholder="Acme AB"
-                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus:border-emerald-400"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-emerald-400"
                   />
                 </div>
               </div>
@@ -313,7 +313,7 @@ export function B2BPage() {
                     value={form.email}
                     onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                     placeholder="anna@acme.se"
-                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus:border-emerald-400"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-emerald-400"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -324,7 +324,7 @@ export function B2BPage() {
                     value={form.phone}
                     onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                     placeholder="+46 70 000 00 00"
-                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus:border-emerald-400"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-emerald-400"
                   />
                 </div>
               </div>
@@ -337,7 +337,7 @@ export function B2BPage() {
                   value={form.message}
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                   placeholder="Tell us which tools you currently use (e.g. Google Workspace, AWS, Slack) and what you're looking to achieve…"
-                  className="bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus:border-emerald-400 resize-none"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-emerald-400 resize-none"
                 />
               </div>
 
@@ -355,7 +355,7 @@ export function B2BPage() {
                 {formState === "submitting" ? "Sending…" : "Send message →"}
               </Button>
 
-              <p className="text-xs text-slate-600 text-center">
+              <p className="text-xs text-slate-500 text-center">
                 No spam. We'll only use your details to follow up on this inquiry.
               </p>
             </form>

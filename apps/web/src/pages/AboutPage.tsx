@@ -15,7 +15,7 @@ export function AboutPage() {
             <h1 className="text-4xl font-extrabold tracking-tight text-white leading-tight">
               Who owns your data, and who sees them?
             </h1>
-            <p className="text-xs text-slate-500 font-mono">Published June 18, 2026</p>
+            <p className="text-xs text-slate-400 font-mono">Published June 18, 2026</p>
           </div>
 
           <div className="text-slate-300 text-sm leading-relaxed space-y-4 pt-4 border-t border-white/5">
@@ -71,10 +71,10 @@ export function AboutPage() {
                 >
                   ✉️ info@digitaleu.me
                 </a>
-                <span className="text-xs text-slate-500">We typically reply within 24 hours.</span>
+                <span className="text-xs text-slate-400">We typically reply within 24 hours.</span>
               </div>
-              <p className="text-xs text-slate-600">
-                For vulnerability disclosures or security issues, please use the same address and mark the subject line <strong className="text-slate-500">SECURITY</strong>.
+              <p className="text-xs text-slate-500">
+                For vulnerability disclosures or security issues, please use the same address and mark the subject line <strong className="text-slate-400">SECURITY</strong>.
               </p>
             </div>
           </div>

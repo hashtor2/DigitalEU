@@ -63,7 +63,7 @@ const PROTON_AFFILIATE = "https://go.getproton.me/SH1mR";
 function ProtonBanner({ hasEmail, hasCloud }: { hasEmail: boolean; hasCloud: boolean }) {
   if (!hasEmail && !hasCloud) return null;
   return (
-    <div className="relative overflow-hidden rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-6 sm:p-8">
+    <div className="relative overflow-hidden rounded-lg border border-[#2d4a6e] bg-[#1e293b] p-6 sm:p-8">
       <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-widest text-[#f0c040]">
@@ -99,7 +99,7 @@ function ProtonBanner({ hasEmail, hasCloud }: { hasEmail: boolean; hasCloud: boo
               Get Proton Drive free →
             </a>
           )}
-          <p className="text-[10px] text-slate-600">Affiliate link — supports DigitalEU.me 🇪🇺</p>
+          <p className="text-[10px] text-slate-500">Affiliate link — supports DigitalEU.me 🇪🇺</p>
         </div>
       </div>
     </div>
@@ -124,8 +124,8 @@ function ServiceRow({
   const fallbackUrl = `https://${service.domain}/favicon.ico`;
 
   return (
-    <tr className={`border-b border-[#1a2d4f] transition-colors hover:bg-[#0f2040]/50 ${migrated ? "opacity-50" : ""}`}>
-      <td className="py-4 pl-4 pr-2 text-xs text-slate-500 font-mono w-8">{index + 1}</td>
+    <tr className={`border-b border-[#2d4a6e] transition-colors hover:bg-[#0f2040]/50 ${migrated ? "opacity-50" : ""}`}>
+      <td className="py-4 pl-4 pr-2 text-xs text-slate-400 font-mono w-8">{index + 1}</td>
       <td className="py-4 pr-4 min-w-[160px]">
         <div className="flex items-center gap-3">
           <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white">
@@ -141,13 +141,13 @@ function ServiceRow({
                 if (sib) sib.style.display = "flex";
               }}
             />
-            <span className="hidden h-full w-full items-center justify-center text-xs font-bold text-slate-700" aria-hidden>
+            <span className="hidden h-full w-full items-center justify-center text-xs font-bold text-slate-600" aria-hidden>
               {service.name.charAt(0)}
             </span>
           </span>
           <div>
             <p className="font-semibold text-white text-sm leading-tight">{service.name}</p>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-slate-400">
             {service.domain}
             {" "}<span title={service.ownerCountry}>{COUNTRY_FLAGS[service.ownerCountry] ?? ""}</span>
           </p>
@@ -194,14 +194,14 @@ function ServiceRow({
             <span className="text-base" aria-hidden>🇪🇺</span>
             <div>
               <p className="text-xs font-bold text-[#93c5fd] group-hover:text-[#bfdbfe] leading-tight">{alt.name}</p>
-              <p className="text-[10px] text-slate-500">{alt.country}</p>
+              <p className="text-[10px] text-slate-400">{alt.country}</p>
             </div>
             {service.affiliateUrl && (
               <span className="ml-auto rounded bg-[#1a56db]/20 px-1 py-0.5 text-[9px] font-bold text-[#93c5fd] uppercase">Deal</span>
             )}
           </a>
         ) : (
-          <span className="text-xs text-slate-600">—</span>
+          <span className="text-xs text-slate-500">—</span>
         )}
       </td>
       <td className="py-4 pr-4">
@@ -210,7 +210,7 @@ function ServiceRow({
           className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-semibold transition active:scale-95 ${
             migrated
               ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/10"
-              : "border-[#1a2d4f] bg-[#0d1b33] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
+              : "border-[#2d4a6e] bg-[#1e293b] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
           }`}
         >
           {migrated ? "✓ Migrated" : "Mark done"}
@@ -253,7 +253,7 @@ export function DashboardPage() {
   const progressPct = sorted.length > 0 ? Math.round((migratedCount / sorted.length) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[#0a1628] text-slate-100">
+    <div className="min-h-screen bg-[#0d1117] text-slate-100">
       <Header />
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 space-y-8">
 
@@ -286,30 +286,30 @@ export function DashboardPage() {
             const count = sorted.filter((s) => s.threatScore === level).length;
             const colors = { HIGH: "text-red-400", MEDIUM: "text-amber-400", LOW: "text-emerald-400" };
             return (
-              <div key={level} className="rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-4 text-center">
+              <div key={level} className="rounded-lg border border-[#2d4a6e] bg-[#1e293b] p-4 text-center">
                 <p className={`text-2xl font-bold ${colors[level]}`}>{count}</p>
-                <p className="mt-1 text-xs font-semibold text-slate-500 uppercase tracking-wide">{level} Threat</p>
+                <p className="mt-1 text-xs font-semibold text-slate-400 uppercase tracking-wide">{level} Threat</p>
               </div>
             );
           })}
-          <div className="rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-4 text-center">
+          <div className="rounded-lg border border-[#2d4a6e] bg-[#1e293b] p-4 text-center">
             <p className="text-2xl font-bold text-[#93c5fd]">{sorted.length}</p>
-            <p className="mt-1 text-xs font-semibold text-slate-500 uppercase tracking-wide">Total Services</p>
+            <p className="mt-1 text-xs font-semibold text-slate-400 uppercase tracking-wide">Total Services</p>
           </div>
           <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 text-center col-span-2 sm:col-span-1">
             <p className="text-2xl font-bold text-emerald-400">{migratedCount}/{sorted.length}</p>
-            <p className="mt-1 text-xs font-semibold text-slate-500 uppercase tracking-wide">Migrated</p>
+            <p className="mt-1 text-xs font-semibold text-slate-400 uppercase tracking-wide">Migrated</p>
           </div>
         </div>
 
         {/* Migration progress bar */}
         {sorted.length > 0 && (
           <div className="space-y-1.5">
-            <div className="flex justify-between text-xs text-slate-500">
+            <div className="flex justify-between text-xs text-slate-400">
               <span>Migration progress</span>
               <span className="font-semibold text-emerald-400">{progressPct}%</span>
             </div>
-            <div className="h-2 w-full rounded-full bg-[#1a2d4f] overflow-hidden">
+            <div className="h-2 w-full rounded-full bg-[#2d4a6e] overflow-hidden">
               <div
                 className="h-full rounded-full bg-emerald-500 transition-all duration-500"
                 style={{ width: `${progressPct}%` }}
@@ -326,23 +326,23 @@ export function DashboardPage() {
 
         {/* Table or empty state */}
         {sorted.length === 0 ? (
-          <div className="rounded-lg border border-[#1a2d4f] bg-[#0d1b33] py-20 text-center">
+          <div className="rounded-lg border border-[#2d4a6e] bg-[#1e293b] py-20 text-center">
             <p className="text-slate-400">No services selected.</p>
             <Button className="mt-4 bg-[#1a56db] hover:bg-[#2563eb] rounded-md" onClick={() => navigate("/")}>Select services</Button>
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-lg border border-[#1a2d4f]">
+          <div className="overflow-x-auto rounded-lg border border-[#2d4a6e]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#1a2d4f] bg-[#0d1b33] text-left">
-                  <th className="py-3 pl-4 pr-2 text-xs font-semibold text-slate-500 w-8">#</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-500">Service</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-500">Threat Score</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-500">Data Protection</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-500">Known Issues</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-500">Actions</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-500">EU Alternative</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-500">Status</th>
+                <tr className="border-b border-[#2d4a6e] bg-[#1e293b] text-left">
+                  <th className="py-3 pl-4 pr-2 text-xs font-semibold text-slate-400 w-8">#</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Service</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Threat Score</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Data Protection</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Known Issues</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Actions</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">EU Alternative</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -360,7 +360,7 @@ export function DashboardPage() {
           </div>
         )}
 
-        <p className="text-center text-xs text-slate-600">
+        <p className="text-center text-xs text-slate-500">
           Scores are based on publicly documented data breaches, GDPR enforcement actions, and ownership analysis. Updated regularly by the Digital Europe team.
         </p>
       </main>

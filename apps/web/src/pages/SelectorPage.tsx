@@ -47,7 +47,7 @@ function ServiceCard({
       className={`group relative flex items-center gap-3 rounded-lg border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a56db] ${
         checked
           ? "border-[#1a56db] bg-[#1a56db]/10"
-          : "border-[#1a2d4f] bg-[#0d1b33] hover:border-[#2a3d5f] hover:bg-[#0f2040]"
+          : "border-[#2d4a6e] bg-[#1e293b] hover:border-[#2a3d5f] hover:bg-[#0f2040]"
       }`}
     >
       {/* Checkbox indicator */}
@@ -81,7 +81,7 @@ function ServiceCard({
           }}
         />
         <span
-          className="hidden h-full w-full items-center justify-center text-sm font-bold text-slate-700"
+          className="hidden h-full w-full items-center justify-center text-sm font-bold text-slate-600"
           aria-hidden
         >
           {fallbackIcon}
@@ -142,7 +142,7 @@ export function SelectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a1628] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
       <Header />
 
       <main className="flex-1 mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -159,7 +159,7 @@ export function SelectorPage() {
             GDPR compliance — then show you the best European alternatives.
           </p>
           {/* Trust indicators */}
-          <div className="mt-5 flex flex-wrap justify-center gap-4 text-xs text-slate-500">
+          <div className="mt-5 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
               {SERVICES.length} services tracked
@@ -179,7 +179,7 @@ export function SelectorPage() {
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
             <svg
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -192,7 +192,7 @@ export function SelectorPage() {
               placeholder="Search services…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="pl-9 bg-[#0d1b33] border-[#1a2d4f] text-white placeholder:text-slate-500 focus:border-[#1a56db]"
+              className="pl-9 bg-[#1e293b] border-[#2d4a6e] text-white placeholder:text-slate-400 focus:border-[#1a56db]"
             />
           </div>
         </div>
@@ -204,7 +204,7 @@ export function SelectorPage() {
             className={`rounded border px-3 py-1 text-xs font-medium transition ${
               activeCategory === "all"
                 ? "border-[#1a56db] bg-[#1a56db]/15 text-[#93c5fd]"
-                : "border-[#1a2d4f] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
+                : "border-[#2d4a6e] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
             }`}
           >
             All
@@ -216,7 +216,7 @@ export function SelectorPage() {
               className={`rounded border px-3 py-1 text-xs font-medium transition ${
                 activeCategory === cat
                   ? "border-[#1a56db] bg-[#1a56db]/15 text-[#93c5fd]"
-                  : "border-[#1a2d4f] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
+                  : "border-[#2d4a6e] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
               }`}
             >
               {CATEGORY_LABELS[cat]}
@@ -226,7 +226,7 @@ export function SelectorPage() {
 
         {/* Service grid */}
         {filtered.length === 0 ? (
-          <p className="py-12 text-center text-slate-500">No services match your search.</p>
+          <p className="py-12 text-center text-slate-400">No services match your search.</p>
         ) : (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
             {filtered.map((service) => (
@@ -241,7 +241,7 @@ export function SelectorPage() {
         )}
 
         {/* Sticky bottom bar */}
-        <div className="sticky bottom-0 mt-10 -mx-4 border-t border-[#1a2d4f] bg-[#0a1628]/95 backdrop-blur px-4 py-4 sm:-mx-6 sm:px-6">
+        <div className="sticky bottom-0 mt-10 -mx-4 border-t border-[#2d4a6e] bg-[#0d1117]/95 backdrop-blur px-4 py-4 sm:-mx-6 sm:px-6">
           <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
             <p className="text-sm text-slate-400">
               {selected.size === 0 ? (

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-[#1a2d4f] bg-[#080e1c] py-10 text-xs text-slate-500">
+    <footer className="mt-auto border-t border-[#2d4a6e] bg-[#080e1c] py-10 text-xs text-slate-400">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex flex-col gap-8 sm:flex-row sm:justify-between">
 
@@ -14,12 +14,12 @@ export function Footer() {
             <p className="leading-relaxed text-slate-400">
               Helping Europeans reclaim their digital lives. Privacy-first, built in Europe, open by design.
             </p>
-            <p className="text-slate-600">🇪🇺 Data hosted in Switzerland (Zürich)</p>
+            <p className="text-slate-500">🇪🇺 Data hosted in Switzerland (Zürich)</p>
             <a
               href="https://mastodon.social/@digitaleu"
               target="_blank"
               rel="noopener noreferrer me"
-              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-200 transition"
+              className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 transition"
               aria-label="Follow us on Mastodon"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
@@ -32,14 +32,14 @@ export function Footer() {
           {/* Nav links */}
           <div className="grid grid-cols-2 gap-x-12 gap-y-2 sm:gap-x-16">
             <div className="space-y-2">
-              <p className="font-semibold text-slate-500 uppercase tracking-wider text-[10px]">Product</p>
+              <p className="font-semibold text-slate-400 uppercase tracking-wider text-[10px]">Product</p>
               <Link to="/" className="block hover:text-slate-200 transition">Privacy Check</Link>
               <Link to="/dashboard" className="block hover:text-slate-200 transition">Dashboard</Link>
               <Link to="/directory" className="block hover:text-slate-200 transition">EU Alternatives</Link>
               <Link to="/guides" className="block hover:text-slate-200 transition">Guides</Link>
             </div>
             <div className="space-y-2">
-              <p className="font-semibold text-slate-500 uppercase tracking-wider text-[10px]">Company</p>
+              <p className="font-semibold text-slate-400 uppercase tracking-wider text-[10px]">Company</p>
               <Link to="/about" className="block hover:text-slate-200 transition">About & Manifesto</Link>
               <Link to="/news" className="block hover:text-slate-200 transition">EU Tech News</Link>
               <a href="mailto:info@digitaleu.me" className="block hover:text-slate-200 transition">
@@ -49,7 +49,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-2 border-t border-[#1a2d4f] pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-2 border-t border-[#2d4a6e] pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} DigitalEU.me — All rights reserved.</p>
           <p>
             Some links are affiliate links and support our independent journalism.{" "}

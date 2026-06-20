@@ -70,7 +70,7 @@ const DIFFICULTY_STYLE: Record<string, string> = {
 
 export function GuidesPage() {
   return (
-    <div className="min-h-screen bg-[#111827] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
       <title>Privacy & Migration Guides — European Alternatives | digitaleu.me</title>
       <meta name="description" content="Step-by-step guides for switching from Big Tech to privacy-friendly European alternatives. Email, VPN, cloud storage, browsers, and more." />
       <Header />
@@ -78,7 +78,7 @@ export function GuidesPage() {
       <main className="flex-1 mx-auto max-w-4xl w-full px-6 py-10">
         <div className="mb-10">
           <h1 className="text-2xl font-bold text-white mb-2">Privacy & Migration Guides</h1>
-          <p className="text-sm text-slate-500 max-w-xl">
+          <p className="text-sm text-slate-400 max-w-xl">
             Objective comparisons and step-by-step guides for switching from Big Tech to European alternatives.
           </p>
         </div>
@@ -87,24 +87,24 @@ export function GuidesPage() {
           {GUIDES.map((guide) => (
             <div
               key={guide.id}
-              className="group flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center rounded border border-white/[0.07] bg-white/[0.01] p-5 hover:border-white/[0.12] hover:bg-white/[0.025] transition"
+              className="group flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center rounded border border-[#30363d] bg-[#0d1117] p-5 hover:border-[#484f58] hover:bg-[#161b22] transition"
             >
               <div className="flex-1 pr-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 border border-white/[0.06] rounded px-2 py-0.5">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 border border-[#21262d] rounded px-2 py-0.5">
                     {guide.category}
                   </span>
                   <span className={`text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border ${DIFFICULTY_STYLE[guide.difficulty]}`}>
                     {guide.difficulty}
                   </span>
                   {!guide.hasContent && (
-                    <span className="text-[9px] text-slate-700 font-mono">coming soon</span>
+                    <span className="text-[9px] text-slate-600 font-mono">coming soon</span>
                   )}
                 </div>
                 <h2 className="text-[14px] font-semibold text-white group-hover:text-slate-100 leading-snug mb-1">
                   {guide.title}
                 </h2>
-                <p className="text-[12px] text-slate-500 leading-relaxed">{guide.description}</p>
+                <p className="text-[12px] text-slate-400 leading-relaxed">{guide.description}</p>
               </div>
               {guide.hasContent ? (
                 <Link
@@ -114,7 +114,7 @@ export function GuidesPage() {
                   Read guide →
                 </Link>
               ) : (
-                <span className="flex-shrink-0 inline-flex items-center rounded border border-white/[0.05] px-4 py-2 text-[12px] text-slate-700">
+                <span className="flex-shrink-0 inline-flex items-center rounded border border-white/[0.05] px-4 py-2 text-[12px] text-slate-600">
                   Coming soon
                 </span>
               )}

@@ -69,7 +69,7 @@ export function DirectoryPage() {
   }, [search, selectedCategories]);
 
   return (
-    <div className="min-h-screen bg-[#111827] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
       <title>European Privacy Catalogue — {ALTERNATIVES.length}+ Alternatives to Big Tech | digitaleu.me</title>
       <meta name="description" content="Browse vetted European alternatives to Gmail, Google Drive, Dropbox, Slack, and more. All services keep data within EU/EEA/Swiss jurisdiction." />
       <link rel="canonical" href="https://digitaleu.me/directory" />
@@ -79,17 +79,17 @@ export function DirectoryPage() {
 
         {/* ── Sidebar ── */}
         <aside className="w-48 flex-shrink-0 hidden md:block">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-3">Filters</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-3">Filters</p>
 
           <input
             type="search"
             placeholder="Search…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full bg-transparent border border-white/[0.08] focus:border-white/20 focus:outline-none rounded px-3 py-1.5 text-[12px] text-white placeholder:text-slate-600 mb-4"
+            className="w-full bg-transparent border border-[#30363d] focus:border-[#6e7681] focus:outline-none rounded px-3 py-1.5 text-[12px] text-white placeholder:text-slate-500 mb-4"
           />
 
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-2">Category</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">Category</p>
           <div className="space-y-0.5">
             {allCategories.map(cat => {
               const active = selectedCategories.has(cat);
@@ -111,10 +111,10 @@ export function DirectoryPage() {
                   }`}>
                     {active && <span className="text-[#f0c040] text-[8px] leading-none">✓</span>}
                   </span>
-                  <span className={`text-[11px] flex-1 transition ${active ? "text-slate-200" : "text-slate-500 group-hover:text-slate-400"}`}>
+                  <span className={`text-[11px] flex-1 transition ${active ? "text-slate-200" : "text-slate-400 group-hover:text-slate-400"}`}>
                     {CATEGORY_LABELS[cat] ?? cat}
                   </span>
-                  <span className="text-[10px] text-slate-700 font-mono">{categoryCounts[cat]}</span>
+                  <span className="text-[10px] text-slate-600 font-mono">{categoryCounts[cat]}</span>
                 </label>
               );
             })}
@@ -123,7 +123,7 @@ export function DirectoryPage() {
           {selectedCategories.size > 0 && (
             <button
               onClick={() => setSelectedCategories(new Set())}
-              className="mt-3 text-[10px] text-slate-600 hover:text-slate-400 transition"
+              className="mt-3 text-[10px] text-slate-500 hover:text-slate-400 transition"
             >
               × Clear filters
             </button>
@@ -136,9 +136,9 @@ export function DirectoryPage() {
           {/* Header row */}
           <div className="flex items-baseline justify-between mb-1">
             <h1 className="text-lg font-bold text-white">European Privacy Catalogue</h1>
-            <span className="text-[11px] text-slate-600 font-mono">{filtered.length} services</span>
+            <span className="text-[11px] text-slate-500 font-mono">{filtered.length} services</span>
           </div>
-          <p className="text-[12px] text-slate-500 mb-5">
+          <p className="text-[12px] text-slate-400 mb-5">
             Vetted alternatives keeping data within EU/EEA/Swiss jurisdiction.
           </p>
 
@@ -149,13 +149,13 @@ export function DirectoryPage() {
               placeholder="Search services or what you want to replace…"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full bg-transparent border border-white/[0.08] focus:border-white/20 focus:outline-none rounded px-3 py-2 text-sm text-white placeholder:text-slate-600"
+              className="w-full bg-transparent border border-[#30363d] focus:border-[#6e7681] focus:outline-none rounded px-3 py-2 text-sm text-white placeholder:text-slate-500"
             />
           </div>
 
           {/* No results */}
           {filtered.length === 0 ? (
-            <div className="border border-white/[0.08] rounded py-16 text-center text-slate-600 text-sm">
+            <div className="border border-[#30363d] rounded py-16 text-center text-slate-500 text-sm">
               No results for &ldquo;{search}&rdquo;.
             </div>
           ) : (
@@ -166,11 +166,11 @@ export function DirectoryPage() {
                   <Link
                     key={alt.id}
                     to={`/services/${alt.id}`}
-                    className="group flex flex-col rounded border border-white/[0.07] bg-white/[0.02] hover:border-white/[0.16] hover:bg-white/[0.04] transition-all p-4"
+                    className="group flex flex-col rounded border border-[#30363d] bg-[#161b22] hover:border-[#484f58] hover:bg-[#21262d] transition-all p-4"
                   >
                     {/* Logo + name */}
                     <div className="flex items-start gap-3 mb-3">
-                      <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[#1a2235] border border-white/[0.08] flex items-center justify-center overflow-hidden">
+                      <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[#21262d] border border-[#30363d] flex items-center justify-center overflow-hidden">
                         {domain && (
                           <img
                             src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
@@ -192,11 +192,11 @@ export function DirectoryPage() {
                           )}
                         </div>
                         <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="text-[11px] text-slate-600 leading-none">
+                          <span className="text-[11px] text-slate-500 leading-none">
                             {COUNTRY_FLAGS[alt.country] ?? "🇪🇺"} {alt.country}
                           </span>
-                          <span className="text-slate-700 text-[10px]">·</span>
-                          <span className="text-[10px] font-medium text-slate-600 border border-white/[0.06] rounded px-1.5 py-0.5 leading-none">
+                          <span className="text-slate-600 text-[10px]">·</span>
+                          <span className="text-[10px] font-medium text-slate-500 border border-[#21262d] rounded px-1.5 py-0.5 leading-none">
                             {CATEGORY_LABELS[alt.category] ?? alt.category}
                           </span>
                         </div>
@@ -204,7 +204,7 @@ export function DirectoryPage() {
                     </div>
 
                     {/* Description */}
-                    <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 mb-3 flex-1">
+                    <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-2 mb-3 flex-1">
                       {alt.description}
                     </p>
 
@@ -214,13 +214,13 @@ export function DirectoryPage() {
                         {alt.replaces.slice(0, 3).map(r => (
                           <span
                             key={r}
-                            className="inline-block rounded border border-white/[0.06] bg-white/[0.02] px-1.5 py-0.5 text-[9px] text-slate-600"
+                            className="inline-block rounded border border-[#21262d] bg-[#161b22] px-1.5 py-0.5 text-[9px] text-slate-500"
                           >
                             {r}
                           </span>
                         ))}
                         {alt.replaces.length > 3 && (
-                          <span className="text-[9px] text-slate-700 py-0.5 pl-0.5">
+                          <span className="text-[9px] text-slate-600 py-0.5 pl-0.5">
                             +{alt.replaces.length - 3}
                           </span>
                         )}

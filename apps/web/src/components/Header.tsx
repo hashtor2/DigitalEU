@@ -19,7 +19,7 @@ export function Header() {
     }`;
 
   return (
-    <header className="border-b border-white/[0.06] sticky top-0 bg-[#06090f]/95 backdrop-blur-sm z-50">
+    <header className="border-b border-[#30363d] sticky top-0 bg-[#0d1117]/95 backdrop-blur-sm z-50">
       <a rel="me" href="https://mastodon.social/@digitaleu" className="sr-only">Mastodon</a>
       <div className="mx-auto max-w-5xl flex items-center justify-between px-6 py-3.5">
         {/* Logo */}
@@ -51,7 +51,7 @@ export function Header() {
         {/* Right side */}
         <div className="flex items-center gap-3">
           {mode === "profile" && user && (
-            <span className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500">
+            <span className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
               <span className="font-mono text-slate-400 max-w-[100px] truncate">{user.email}</span>
             </span>
