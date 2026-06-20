@@ -94,40 +94,68 @@ export function DirectoryPage() {
           </div>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((alt) => (
-              <a
-                key={alt.id}
-                href={alt.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col gap-2.5 rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-5 transition hover:border-[#1a56db]/40 hover:bg-[#0f2040]"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="font-semibold text-white group-hover:text-[#93c5fd] transition text-sm">
-                      {alt.name}
+            {filtered.map((alt) => {
+              const domain = (() => { try { return new URL(alt.url).hostname; } catch { return ""; } })();
+              const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+              const fallbackUrl = `https://${domain}/favicon.ico`;
+              return (
+                <a
+                  key={alt.id}
+                  href={alt.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col gap-3 rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-5 transition hover:border-[#1a56db]/40 hover:bg-[#0f2040]"
+                >
+                  {/* Header: icon + name + flag */}
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white">
+                      <img
+                        src={faviconUrl}
+                        alt=""
+                        className="h-7 w-7 object-contain"
+                        onError={(e) => {
+                          const t = e.currentTarget as HTMLImageElement;
+                          if (t.src !== fallbackUrl) { t.src = fallbackUrl; return; }
+                          t.style.display = "none";
+                          const sib = t.nextElementSibling as HTMLElement | null;
+                          if (sib) sib.style.display = "flex";
+                        }}
+                      />
+                      <span
+                        className="hidden h-full w-full items-center justify-center text-xs font-bold text-slate-700"
+                        aria-hidden
+                      >
+                        {alt.name.charAt(0)}
+                      </span>
                     </span>
-                    <span className="text-[10px] text-slate-500 mt-0.5 uppercase tracking-wider">
-                      {CATEGORY_LABELS[alt.category] || alt.category}
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-white group-hover:text-[#93c5fd] transition text-sm leading-tight">
+                        {alt.name}
+                      </p>
+                      <p className="text-[10px] text-slate-500 mt-0.5 uppercase tracking-wider">
+                        {CATEGORY_LABELS[alt.category] || alt.category}
+                      </p>
+                    </div>
+                    <span className="text-lg flex-shrink-0" aria-hidden="true" title={`Hosted in ${alt.country}`}>
+                      {COUNTRY_FLAGS[alt.country] ?? "🇪🇺"}
                     </span>
                   </div>
-                  <span className="text-xl" aria-hidden="true" title={`Hosted in ${alt.country}`}>
-                    {COUNTRY_FLAGS[alt.country] ?? "🇪🇺"}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-400 leading-relaxed">{alt.description}</p>
-                <div className="mt-auto pt-3 flex items-center justify-between border-t border-[#1a2d4f] text-[10px] text-slate-500">
-                  <span>Replaces: {alt.replaces.join(", ")}</span>
-                  <span className={`px-1.5 py-0.5 rounded uppercase tracking-wide text-[9px] font-semibold ${
-                    alt.monetization === "affiliate"
-                      ? "bg-[#f0c040]/10 text-[#f0c040]/70 border border-[#f0c040]/20"
-                      : "bg-[#1a2d4f] text-slate-400"
-                  }`}>
-                    {alt.monetization === "affiliate" ? "Partner" : "Independent Pick"}
-                  </span>
-                </div>
-              </a>
-            ))}
+
+                  <p className="text-xs text-slate-400 leading-relaxed">{alt.description}</p>
+
+                  <div className="mt-auto pt-3 flex items-center justify-between border-t border-[#1a2d4f] text-[10px] text-slate-500">
+                    <span>Replaces: {alt.replaces.join(", ")}</span>
+                    <span className={`px-1.5 py-0.5 rounded uppercase tracking-wide text-[9px] font-semibold ${
+                      alt.monetization === "affiliate"
+                        ? "bg-[#f0c040]/10 text-[#f0c040]/70 border border-[#f0c040]/20"
+                        : "bg-[#1a2d4f] text-slate-400"
+                    }`}>
+                      {alt.monetization === "affiliate" ? "Partner" : "Independent Pick"}
+                    </span>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         )}
       </main>
