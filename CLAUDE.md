@@ -130,7 +130,7 @@ Tabellen sporer hvor vi står, og hvor vi har en bevisst åpen vurdering.
 | Analyse        | Plausible          | 🇪🇪 Estland     | (allerede EU)                   | ✅ EU-valg                      |
 | Backend/DB     | Supabase           | 🇺🇸 USA (open source) | self-host / Nhost; **data i Sveits (Zürich, eu-central-2)** | ✅ Data i Sveits 🇨🇭 |
 | Hosting        | Vercel             | 🇺🇸 USA         | Clever Cloud 🇫🇷, Scaleway 🇫🇷, OVHcloud 🇫🇷, Hetzner 🇩🇪 | ⚠️ Åpen vurdering |
-| Kodehosting    | GitHub             | 🇺🇸 Microsoft   | Codeberg 🇩🇪, GitLab (self-host) | ⚠️ Åpen vurdering (rapporten anbefaler migrering) |
+| Kodehosting    | Codeberg           | 🇩🇪 Non-profit  | (allerede EU)                   | ✅ EU-valg (migrert 2026-06-20) |
 | Betaling       | Stripe             | 🇺🇸/🇮🇪          | Mollie 🇳🇱, Paddle               | ⚠️ Åpen vurdering              |
 | Domeneregistrar| Spaceship          | 🇺🇸 (antatt)    | Gandi 🇫🇷, INWX 🇩🇪, Netim 🇫🇷     | ⚠️ Notert (domenet er kjøpt)   |
 | Breach-sjekk   | Have I Been Pwned  | 🌍 (ikke-EU)    | (ingen reelt ekvivalent)        | ✅ Akseptabelt unntak (sikkerhetstjeneste) |
@@ -235,7 +235,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 
 - **Hosting (Vercel = USA):** spenning mot suverenitets-budskapet. Vurder
   europeisk PaaS (Clever Cloud, Scaleway) før vi profilerer dette tungt utad.
-- **Kodehosting (GitHub):** vurder Codeberg/GitLab — rapporten anbefaler migrering.
+- **Kodehosting:** migrert til Codeberg 🇩🇪 — ferdig.
 - **Betaling (Stripe vs Mollie):** Mollie 🇳🇱 er mer "on-brand".
 - **Domeneregistrar (Spaceship):** notert; europeisk registrar ved fornyelse.
 - **Git-historikk:** researchdokumentene finnes i første commit-historikk — kan
