@@ -11,8 +11,8 @@ export const SITE = {
 
   /** Region der brukerdata lagres (Profilmodus, Supabase). */
   dataRegion: "Zürich",
-  dataRegionCountry: "Sveits",
-  dataRegionLabel: "Sveits (Zürich)",
+  dataRegionCountry: "Switzerland",
+  dataRegionLabel: "Switzerland (Zürich)",
 } as const;
 
 /**
@@ -29,6 +29,11 @@ export type SocialLink = {
 };
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [
+  {
+    id: "mastodon",
+    label: "Mastodon",
+    url: "https://mastodon.social/@digitaleu",
+  },
   {
     id: "bluesky",
     label: "Bluesky",

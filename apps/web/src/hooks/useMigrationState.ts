@@ -118,12 +118,12 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
           }
         }
       } catch (err) {
-        console.error("Feil ved lasting eller dekryptering av profil:", err);
+        console.error("Error loading or decrypting profile:", err);
         if (!isCancelled) {
           if (err instanceof DecryptionError) {
-            setError("Feil personvern-passord (passphrase). Klarte ikke å dekryptere dine data.");
+            setError("Wrong privacy passphrase. Could not decrypt your data.");
           } else {
-            setError("Klarte ikke å hente dine lagrede profildata fra skyen.");
+            setError("Could not load your saved profile data from the cloud.");
           }
         }
       } finally {
@@ -168,8 +168,8 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
 
           if (dbError) throw dbError;
         } catch (err) {
-          console.error("Klarte ikke å lagre profil til Supabase:", err);
-          setError("Feil: Klarte ikke å synkronisere endringer til skyen.");
+          console.error("Could not save profile to Supabase:", err);
+          setError("Error: Could not sync changes to the cloud.");
         }
       }
 
@@ -219,7 +219,7 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
   }
 
   async function registerProfile(email: string, pass: string, passphr: string) {
-    if (!supabase) throw new Error("Supabase er ikke konfigurert.");
+    if (!supabase) throw new Error("Supabase is not configured.");
     setLoading(true);
     setError(null);
     try {
@@ -254,7 +254,7 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
         throw new Error(friendlyMsg);
       }
 
-      setError(err.message || "Registrering feilet.");
+      setError(err.message || "Registration failed.");
       throw err;
     } finally {
       setLoading(false);
@@ -262,7 +262,7 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
   }
 
   async function loginProfile(email: string, pass: string, passphr: string) {
-    if (!supabase) throw new Error("Supabase er ikke konfigurert.");
+    if (!supabase) throw new Error("Supabase is not configured.");
     setLoading(true);
     setError(null);
     try {
@@ -301,9 +301,9 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
       }
     } catch (err: any) {
       if (err instanceof DecryptionError) {
-        setError("Feil personvern-passord (passphrase). Klarte ikke å dekryptere.");
+        setError("Wrong privacy passphrase. Could not decrypt your data.");
       } else {
-        setError(err.message || "Innlogging feilet.");
+        setError(err.message || "Login failed.");
       }
       throw err;
     } finally {
@@ -342,7 +342,7 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
       setMode("guest");
       setState({ accounts: DEMO_ACCOUNTS });
     } catch (err: any) {
-      setError(err.message || "Utlogging feilet.");
+      setError(err.message || "Logout failed.");
     } finally {
       setLoading(false);
     }

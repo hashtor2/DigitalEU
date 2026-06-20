@@ -23,7 +23,7 @@ const ENVELOPE_VERSION = 1;
 /** Kastes når dekryptering feiler (feil passphrase eller tuklet data). */
 export class DecryptionError extends Error {
   constructor() {
-    super("Dekryptering feilet: feil passphrase eller korrupte data.");
+    super("Decryption failed: wrong passphrase or corrupted data.");
     this.name = "DecryptionError";
   }
 }

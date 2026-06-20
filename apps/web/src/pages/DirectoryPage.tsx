@@ -45,36 +45,39 @@ export function DirectoryPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#0a1628] text-slate-100 flex flex-col">
       <Header />
 
       <main className="flex-1 mx-auto max-w-5xl w-full px-6 py-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight">European Privacy Catalogue</h1>
-            <p className="text-sm text-slate-400 mt-1 max-w-xl">
-              We vet every service ourselves. These are high-performance, legally compliant alternatives that keep your personal files, notes, and emails strictly under European data jurisdictions.
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#f0c040] mb-3">
+              EU Catalogue
+            </p>
+            <h1 className="text-3xl font-bold text-white">European Privacy Catalogue</h1>
+            <p className="text-sm text-slate-400 mt-2 max-w-xl leading-relaxed">
+              We vet every service ourselves. High-performance, legally compliant alternatives that keep your data under European data jurisdictions.
             </p>
           </div>
           <div className="text-xs text-slate-500 font-mono">
-            Vetted alternatives: {ALTERNATIVES.length}
+            {ALTERNATIVES.length} alternatives vetted
           </div>
         </div>
 
         {/* Filter Controls */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8 bg-slate-900/40 p-4 rounded-xl border border-white/5">
+        <div className="flex flex-col sm:flex-row gap-3 mb-8">
           <input
             type="text"
-            placeholder="Search alternative (e.g. 'Proton', 'Mailchimp')..."
+            placeholder="Search (e.g. 'Proton', 'Gmail')..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 bg-slate-950 border border-white/10 focus:border-sky-500 focus:outline-none rounded-lg px-4 py-2 text-sm text-white"
+            className="flex-1 bg-[#0d1b33] border border-[#1a2d4f] focus:border-[#1a56db] focus:outline-none rounded-lg px-4 py-2 text-sm text-white placeholder:text-slate-500"
           />
 
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="bg-slate-950 border border-white/10 focus:border-sky-500 focus:outline-none rounded-lg px-4 py-2 text-sm text-white"
+            className="bg-[#0d1b33] border border-[#1a2d4f] focus:border-[#1a56db] focus:outline-none rounded-lg px-4 py-2 text-sm text-white"
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>
@@ -86,25 +89,25 @@ export function DirectoryPage() {
 
         {/* Grid List */}
         {filtered.length === 0 ? (
-          <div className="border border-dashed border-white/10 rounded-2xl p-12 text-center text-slate-500 text-sm">
+          <div className="border border-dashed border-[#1a2d4f] rounded-lg p-12 text-center text-slate-500 text-sm">
             No European alternatives found matching "{search}".
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((alt) => (
               <a
                 key={alt.id}
                 href={alt.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col gap-2.5 rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-sky-400/40 hover:bg-white/10"
+                className="group flex flex-col gap-2.5 rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-5 transition hover:border-[#1a56db]/40 hover:bg-[#0f2040]"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="font-bold text-white group-hover:text-sky-300 transition text-base">
+                    <span className="font-semibold text-white group-hover:text-[#93c5fd] transition text-sm">
                       {alt.name}
                     </span>
-                    <span className="text-[10px] text-slate-500 font-semibold uppercase mt-0.5 tracking-wider">
+                    <span className="text-[10px] text-slate-500 mt-0.5 uppercase tracking-wider">
                       {CATEGORY_LABELS[alt.category] || alt.category}
                     </span>
                   </div>
@@ -113,10 +116,14 @@ export function DirectoryPage() {
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">{alt.description}</p>
-                <div className="mt-auto pt-4 flex items-center justify-between border-t border-white/5 text-[10px] text-slate-500 font-semibold">
+                <div className="mt-auto pt-3 flex items-center justify-between border-t border-[#1a2d4f] text-[10px] text-slate-500">
                   <span>Replaces: {alt.replaces.join(", ")}</span>
-                  <span className="bg-sky-500/10 text-sky-400 px-1.5 py-0.5 rounded border border-sky-500/10 uppercase tracking-wide text-[9px]">
-                    {alt.monetization === "affiliate" ? "Partner" : "Direct Anbefalt"}
+                  <span className={`px-1.5 py-0.5 rounded uppercase tracking-wide text-[9px] font-semibold ${
+                    alt.monetization === "affiliate"
+                      ? "bg-[#f0c040]/10 text-[#f0c040]/70 border border-[#f0c040]/20"
+                      : "bg-[#1a2d4f] text-slate-400"
+                  }`}>
+                    {alt.monetization === "affiliate" ? "Partner" : "Independent Pick"}
                   </span>
                 </div>
               </a>

@@ -1,16 +1,16 @@
 /**
- * Kuratert database over de 45 vanligste forbrukertjenestene, med sikkerhetsscorer,
- * databehandlingspraksis og EU-alternativer.
+ * Curated database of the 45 most common consumer services, with security scores,
+ * data handling practices, and EU alternatives.
  *
- * Threat Score metodikk:
- *  HIGH   = bekreftet databrudd med brukerdata eksponert, og/eller aktivt salg av data
- *  MEDIUM = ingen store brudd men samler/deler mye data, eller bekreftet lekket metadata
- *  LOW    = relativt god historikk, begrenset datainnsamling
+ * Threat Score methodology:
+ *  HIGH   = confirmed data breach with user data exposed, and/or active data selling
+ *  MEDIUM = no major breaches but collects/shares significant data, or confirmed metadata leak
+ *  LOW    = relatively good track record, limited data collection
  *
- * Data Protection metodikk:
- *  HIGH   = sterk kryptering, GDPR-samsvar, minimal datainnsamling
- *  MEDIUM = rimelig praksis, men med forbedringspotensial
- *  LOW    = selger brukerdata, liten transparens, utenfor EU-jurisdiksjon
+ * Data Protection methodology:
+ *  HIGH   = strong encryption, GDPR-compliant, minimal data collection
+ *  MEDIUM = reasonable practices, but with room for improvement
+ *  LOW    = sells user data, limited transparency, outside EU jurisdiction
  */
 
 export type ThreatLevel = "HIGH" | "MEDIUM" | "LOW";
@@ -19,7 +19,7 @@ export interface ServiceInfo {
   id: string;
   name: string;
   domain: string;
-  /** Kategori for visning og filtrering */
+  /** Category for display and filtering */
   category:
     | "social"
     | "email"
@@ -35,21 +35,21 @@ export interface ServiceInfo {
     | "tech";
   threatScore: ThreatLevel;
   dataProtection: ThreatLevel;
-  /** Korte faktapunkter vist i dashbord-rad */
+  /** Short facts shown in dashboard row */
   breachSummary: string;
-  /** Mer detaljert forklaring for utvidet visning */
+  /** More detailed explanation for expanded view */
   details: string;
-  /** Land der selskapet er registrert */
+  /** Country where the company is registered */
   ownerCountry: string;
-  /** Selger eller deler data med tredjeparter */
+  /** Sells or shares data with third parties */
   sellsData: boolean;
-  /** URL for å slette konto */
+  /** URL for deleting account */
   deleteUrl?: string;
-  /** URL for å endre e-postadresse */
+  /** URL for changing email address */
   changeEmailUrl?: string;
-  /** ID til EU-alternativ i ALTERNATIVES-katalogen */
+  /** ID of EU alternative in ALTERNATIVES catalogue */
   euAlternativeId?: string;
-  /** Direkte affiliate-lenke til anbefalt alternativ */
+  /** Direct affiliate link to recommended alternative */
   affiliateUrl?: string;
 }
 
@@ -62,9 +62,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "533M brukere lekket (2021), Cambridge Analytica (2018)",
+    breachSummary: "533M users leaked (2021), Cambridge Analytica (2018)",
     details:
-      "Facebook ble avslørt i Cambridge Analytica-skandalen (2018) der 87 millioner profildata ble brukt til politisk manipulasjon uten samtykke. I 2021 ble telefonummer og personopplysninger til 533 millioner brukere publisert på et hackerforum. Facebook er kjent for å selge annonseprofiler basert på detaljert atferd.",
+      "Facebook was exposed in the Cambridge Analytica scandal (2018), where 87 million user profiles were used for political manipulation without consent. In 2021, phone numbers and personal data of 533 million users were published on a hacker forum. Facebook is known for selling ad profiles based on detailed user behaviour.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.facebook.com/help/delete_account",
@@ -78,9 +78,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "Eies av Meta, deler data med Facebook",
+    breachSummary: "Owned by Meta, shares data with Facebook",
     details:
-      "Instagram er eid av Meta og deler all innsamlet data med Facebook. I 2019 ble 49 millioner brukerprofiler eksponert via usikret database. Meta ble bøtelagt €405 millioner av irsk DPC (2022) for brudd på barns personvern på Instagram.",
+      "Instagram is owned by Meta and shares all collected data with Facebook. In 2019, 49 million user profiles were exposed via an unsecured database. Meta was fined €405 million by the Irish DPC (2022) for violating children's privacy on Instagram.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.instagram.com/accounts/remove/request/permanent/",
@@ -94,9 +94,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "200M e-poster lekket (2022), svekket sikkerhetskultur",
+    breachSummary: "200M email addresses leaked (2022), weakened security culture",
     details:
-      "I desember 2022 ble e-postadresser til over 200 millioner Twitter-brukere publisert på hackerforum. Etter Elon Musks oppkjøp i 2022 ble store deler av sikkerhetsteamet sparket, og nøkkelansatte i GDPR-samsvar forlot selskapet. EU har åpnet etterforskning.",
+      "In December 2022, email addresses of over 200 million Twitter users were published on hacker forums. After Elon Musk's acquisition in 2022, much of the security team was fired, and key GDPR compliance staff left the company. The EU has opened an investigation.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://twitter.com/settings/account/confirm_deactivation",
@@ -110,9 +110,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "Kinesisk eierskap, EU-bøter (2023), dataoverføring til Kina",
+    breachSummary: "Chinese ownership, EU fines (2023), data transfers to China",
     details:
-      "TikTok er eid av ByteDance med hovedkvarter i Kina. EU bøtelagt TikTok €345 millioner (2023) for brudd på barns personvern. Irsk DPC bekreftet at ansatte i Kina hadde tilgang til europeiske brukerdata. TikTok forbud innført for ansatte i EU-institusjoner og flere nasjonale regjeringer.",
+      "TikTok is owned by ByteDance, headquartered in China. The EU fined TikTok €345 million (2023) for violations of children's privacy. The Irish DPC confirmed that employees in China had access to European user data. TikTok bans have been imposed for staff at EU institutions and several national governments.",
     ownerCountry: "CN",
     sellsData: true,
     deleteUrl: "https://www.tiktok.com/setting/delete-account",
@@ -125,9 +125,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "4.6M brukere eksponert (2014), insider data-misbruk",
+    breachSummary: "4.6M users exposed (2014), insider data abuse",
     details:
-      "I 2014 ble 4.6 millioner brukertelefonnummer og brukernavn publisert offentlig. Snaplion var en tredjeparts app som lagret bilder som skulle forsvinne. I 2019 ble det avdekket at Snap-ansatte misbrukte et internt verktøy (SnapLion) til å spionere på brukere.",
+      "In 2014, 4.6 million user phone numbers and usernames were published publicly. Snaplion was a third-party app that stored images that were supposed to disappear. In 2019, it was revealed that Snap employees misused an internal tool (SnapLion) to spy on users.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://accounts.snapchat.com/accounts/delete_account",
@@ -140,9 +140,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "2018 database-kompromittering, API-salg til AI-selskaper",
+    breachSummary: "2018 database compromise, API data sold to AI companies",
     details:
-      "I 2018 ble Reddit hacket via SMS-basert 2FA. Reddit selger nå API-tilgang til AI-selskaper (Google, OpenAI) for brukerutsagn, noe mange brukere protesterte mot. Brukere uten samtykke har dermed bidratt til å trene kommersielle AI-modeller.",
+      "In 2018, Reddit was hacked via SMS-based 2FA. Reddit now sells API access to AI companies (Google, OpenAI) for user content, which many users protested. Users have thus contributed to training commercial AI models without consent.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.reddit.com/settings/",
@@ -156,9 +156,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "LOW",
     dataProtection: "MEDIUM",
-    breachSummary: "Ingen store brudd – men brukerdataanalyse til annonser",
+    breachSummary: "No major breaches – but user data analysed for ads",
     details:
-      "Pinterest har ikke hatt store offentlige databrudd, men samler detaljert informasjon om interesser og adferd for annonseformål. De er underlagt US-jurisdiksjon og deler data med annonseringspartnere.",
+      "Pinterest has not had major public data breaches, but collects detailed information about interests and behaviour for advertising purposes. They are subject to US jurisdiction and share data with advertising partners.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.pinterest.com/settings/",
@@ -171,9 +171,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "700M brukere scraped (2021), 117M passord lekket (2012/2016)",
+    breachSummary: "700M users scraped (2021), 117M passwords leaked (2012/2016)",
     details:
-      "I 2012 ble 6.5 millioner hashede passord lekket – i 2016 ble det klart at det egentlig var 117 millioner. I 2021 ble data fra 700 millioner LinkedIn-profiler scraped og solgt. LinkedIn, eid av Microsoft, bruker profildata til annonseringsformål.",
+      "In 2012, 6.5 million hashed passwords were leaked — in 2016 it became clear it was actually 117 million. In 2021, data from 700 million LinkedIn profiles was scraped and sold. LinkedIn, owned by Microsoft, uses profile data for advertising purposes.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.linkedin.com/psettings/account",
@@ -186,9 +186,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "social",
     threatScore: "MEDIUM",
     dataProtection: "LOW",
-    breachSummary: "Eies av Google, massiv atferdsprofiling",
+    breachSummary: "Owned by Google, massive behavioural profiling",
     details:
-      "YouTube er eid av Google og bygger detaljerte atferdsprofiler basert på seerhistorikk. Google ble bøtelagt $170 millioner (2019) av FTC for ulovlig innsamling av barns data på YouTube. All seerhistorikk deles med Google Ads.",
+      "YouTube is owned by Google and builds detailed behavioural profiles based on viewing history. Google was fined $170 million (2019) by the FTC for illegally collecting children's data on YouTube. All viewing history is shared with Google Ads.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://myaccount.google.com/deleteaccount",
@@ -196,7 +196,7 @@ export const SERVICES: ServiceInfo[] = [
     euAlternativeId: "peertube",
   },
 
-  // ─── E-POST ───────────────────────────────────────────────────────────────
+  // ─── EMAIL ────────────────────────────────────────────────────────────────
   {
     id: "gmail",
     name: "Gmail",
@@ -204,9 +204,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "email",
     threatScore: "MEDIUM",
     dataProtection: "LOW",
-    breachSummary: "Innholdsskanning for annonseprofiler, Google-dataøkosystem",
+    breachSummary: "Content scanning for ad profiles, Google data ecosystem",
     details:
-      "Google skannet Gmail-innhold for annonseformål frem til 2017. Selv om direkteskanning stoppet, bruker Google metadata og knytter Gmail-aktivitet til annonseprofiler. Alle data er underlagt US-jurisdiksjon og CLOUD Act, som gir amerikanske myndigheter tilgang.",
+      "Google scanned Gmail content for advertising purposes until 2017. Although direct scanning stopped, Google uses metadata and links Gmail activity to ad profiles. All data is subject to US jurisdiction and the CLOUD Act, which gives US authorities access.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://myaccount.google.com/deleteaccount",
@@ -222,9 +222,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "email",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "Microsoft-datadeling, CLOUD Act-eksponering",
+    breachSummary: "Microsoft data sharing, CLOUD Act exposure",
     details:
-      "Microsoft Exchange og Outlook ble kompromittert av Hafnium (2021) og Storm-0558 (2023), sistnevnte berørte offentlige e-postkontoer. Microsoft er underlagt CLOUD Act og kan utlevere data til US-myndigheter uten europeisk rettsordre.",
+      "Microsoft Exchange and Outlook were compromised by Hafnium (2021) and Storm-0558 (2023), the latter affecting government email accounts. Microsoft is subject to the CLOUD Act and can hand over data to US authorities without a European court order.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://account.live.com/closeAccount.aspx",
@@ -238,9 +238,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "email",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "3 MILLIARDER kontoer lekket (2013–2016)",
+    breachSummary: "3 BILLION accounts leaked (2013–2016)",
     details:
-      "Yahoo hadde det største databryddet i historien: 3 milliarder kontoer kompromittert mellom 2013 og 2016. Yahoo var også i 2016 tvunget av NSA til å masseovervåke bruker-e-poster. Selskapet ble kjøpt av Verizon og er nå en del av Apollo Global.",
+      "Yahoo had the largest data breach in history: 3 billion accounts compromised between 2013 and 2016. In 2016, Yahoo was also compelled by the NSA to mass-surveil user emails. The company was acquired by Verizon and is now part of Apollo Global.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://login.yahoo.com/account/delete-account",
@@ -258,9 +258,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "cloud",
     threatScore: "MEDIUM",
     dataProtection: "LOW",
-    breachSummary: "Google kan lese filer, US-jurisdiksjon",
+    breachSummary: "Google can read files, US jurisdiction",
     details:
-      "Google Drive-filer er kryptert, men Google besitter nøklene og kan lese innholdet. Google har utlevert brukerdata til US-myndigheter via CLOUD Act. Drive er koblet til Google Workspace-profileringen.",
+      "Google Drive files are encrypted, but Google holds the keys and can read the content. Google has handed over user data to US authorities via the CLOUD Act. Drive is linked to Google Workspace profiling.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://myaccount.google.com/deleteaccount",
@@ -276,9 +276,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "cloud",
     threatScore: "HIGH",
     dataProtection: "MEDIUM",
-    breachSummary: "68M passord lekket (2012), avslørte i 2016",
+    breachSummary: "68M passwords leaked (2012), disclosed in 2016",
     details:
-      "I 2012 ble 68 millioner Dropbox-kontoer kompromittert, men det ble ikke offentliggjort før i 2016. Dropbox fikk kritikk for å tilby Condoleezza Rice (styremedlem, NSA-tilknytning) plass i styret. Filene er kryptert, men Dropbox besitter nøklene.",
+      "In 2012, 68 million Dropbox accounts were compromised, but it was not publicly disclosed until 2016. Dropbox received criticism for offering Condoleezza Rice (board member with NSA ties) a seat on its board. Files are encrypted, but Dropbox holds the keys.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://www.dropbox.com/account/delete_account_email",
@@ -296,7 +296,7 @@ export const SERVICES: ServiceInfo[] = [
     dataProtection: "MEDIUM",
     breachSummary: "Microsoft Storm-0558 (2023), CLOUD Act",
     details:
-      "Microsoft ble rammet av Storm-0558-angrepet (2023) der kinesiske hackere fikk tilgang til e-post og skydokumenter hos statlige kunder. OneDrive er underlagt CLOUD Act.",
+      "Microsoft was hit by the Storm-0558 attack (2023) where Chinese hackers gained access to emails and cloud documents at government customers. OneDrive is subject to the CLOUD Act.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://account.microsoft.com/account/",
@@ -312,9 +312,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "cloud",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "The Fappening (2014), Apple/Kina-server-kompromiss",
+    breachSummary: "The Fappening (2014), Apple/China server compromise",
     details:
-      "I 2014 ble celebrity-bilder lekket fra iCloud via phishing og bruteforce (The Fappening). Apple lagrer kinesiske brukerdata på servere i Kina eid av statskontrollert GCBD, noe som gir kinesiske myndigheter tilgang. Apple er underlagt US CLOUD Act for andre regioner.",
+      "In 2014, celebrity photos were leaked from iCloud via phishing and brute force (The Fappening). Apple stores Chinese user data on servers in China owned by state-controlled GCBD, giving Chinese authorities access. Apple is subject to the US CLOUD Act for other regions.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://appleid.apple.com/account/manage",
@@ -332,9 +332,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "streaming",
     threatScore: "LOW",
     dataProtection: "MEDIUM",
-    breachSummary: "Ingen store brudd – men detaljert adferdsprofil",
+    breachSummary: "No major breaches – but detailed behavioural profiling",
     details:
-      "Netflix har ikke hatt store databrudd, men bygger svært detaljerte atferdsprofiler: hva du ser, når du pauser, hva du hopper over. Disse brukes til innholds-anbefalinger og deles delvis med annonseringspartnere (ad-tier).",
+      "Netflix has not had major data breaches, but builds extremely detailed behavioural profiles: what you watch, when you pause, what you skip. These are used for content recommendations and partially shared with advertising partners (ad tier).",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://www.netflix.com/cancelplan",
@@ -347,9 +347,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "streaming",
     threatScore: "LOW",
     dataProtection: "MEDIUM",
-    breachSummary: "Ingen store brudd – men stemme- og lyddata innsamles",
+    breachSummary: "No major breaches – but voice and audio data collected",
     details:
-      "Spotify samler inn stemmeopptakene dine (via mikrofontilgang) og plasserer deg i reklameprofiler. De deler data med Facebook om du har koblet kontoene. Spotify er imidlertid et svensk selskap og underlagt EU/GDPR.",
+      "Spotify collects your voice recordings (via microphone access) and places you in advertising profiles. They share data with Facebook if you have linked the accounts. However, Spotify is a Swedish company subject to EU/GDPR.",
     ownerCountry: "SE",
     sellsData: true,
     deleteUrl: "https://support.spotify.com/article/close-account/",
@@ -362,9 +362,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "streaming",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "Tusenvis av kontoer solgt etter kompromittering (2019)",
+    breachSummary: "Thousands of accounts sold after compromise (2019)",
     details:
-      "Timer etter Disney+ lansering i 2019 ble tusenvis av kontoer hacket og solgt på dark web. Disney delte brukerdata med annonsepartnere uten tilstrekkelig samtykke, noe som resulterte i rettsak i California.",
+      "Hours after Disney+ launched in 2019, thousands of accounts were hacked and sold on the dark web. Disney shared user data with advertising partners without adequate consent, resulting in a lawsuit in California.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.disneyplus.com/account",
@@ -379,9 +379,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "shopping",
     threatScore: "MEDIUM",
     dataProtection: "LOW",
-    breachSummary: "Intern datalekkasje (2018), Alexa-avlytting, AWS-brudd",
+    breachSummary: "Internal data leak (2018), Alexa eavesdropping, AWS breaches",
     details:
-      "I 2018 lekket en Amazon-ansatt kundedata til tredjepartsleverandører. Alexa-stemmeopptak har blitt lyttet til av menneskelige ansatte uten brukerens viten. AWS har vært involvert i flere høyprofilerte databrudd hos kunder.",
+      "In 2018, an Amazon employee leaked customer data to third-party vendors. Alexa voice recordings have been listened to by human employees without users' knowledge. AWS has been involved in several high-profile data breaches at customer organisations.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.amazon.com/gp/help/customer/display.html?nodeId=GDK92DNLSGWTV6MP",
@@ -394,9 +394,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "travel",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "Expedia Group-brudd, Marriott-brudd (500M gjester)",
+    breachSummary: "Expedia Group breach, Marriott breach (500M guests)",
     details:
-      "Hotels.com er eid av Expedia Group. Marriott-bryddet (2018) eksponerte 500 millioner gjesteposter inkludert passinformasjon – en av historiens største. Hotels.com har egen deling av bestillingsdata med annonseringsnettverk. Expedia-gruppen har mottatt GDPR-bot.",
+      "Hotels.com is owned by Expedia Group. The Marriott breach (2018) exposed 500 million guest records including passport information — one of the largest in history. Hotels.com shares booking data with advertising networks. The Expedia Group has received a GDPR fine.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.hotels.com/account/",
@@ -410,9 +410,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "travel",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "Phishing-kampanje rammet hoteller (2024)",
+    breachSummary: "Phishing campaign targeted hotels (2024)",
     details:
-      "I 2024 ble mange Booking.com-hoteller rammet av phishing som ga hackere tilgang til hotellets systemer og kundekommunikasjon. Booking er eid av nederlandske Booking Holdings, men deler data med annonseringspartnere globalt.",
+      "In 2024, many Booking.com hotels were targeted by phishing that gave hackers access to hotel systems and customer communications. Booking is owned by Dutch Booking Holdings but shares data with advertising partners globally.",
     ownerCountry: "NL",
     sellsData: true,
     deleteUrl: "https://account.booking.com/mysettings/",
@@ -425,9 +425,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "travel",
     threatScore: "LOW",
     dataProtection: "MEDIUM",
-    breachSummary: "Ingen store brudd – men biometrisk ID-innsamling",
+    breachSummary: "No major breaches – but biometric ID collection",
     details:
-      "Airbnb krever i mange tilfeller biometrisk ID-bekreftelse. De samler inn og lagrer identitetsdokumenter. Airbnb deler data med utleiere og annonseringspartnere. Ingen store databrudd dokumentert, men ID-lagring er et personvernproblem.",
+      "Airbnb in many cases requires biometric ID verification. They collect and store identity documents. Airbnb shares data with hosts and advertising partners. No major data breaches documented, but ID storage is a privacy concern.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://www.airbnb.com/help/article/186",
@@ -440,16 +440,16 @@ export const SERVICES: ServiceInfo[] = [
     category: "shopping",
     threatScore: "HIGH",
     dataProtection: "MEDIUM",
-    breachSummary: "145M brukere eksponert (2014)",
+    breachSummary: "145M users exposed (2014)",
     details:
-      "I 2014 ble eBay hacket og data fra 145 millioner brukere eksponert, inkludert krypterte passord, navn, adresser og fødselsdatoer. eBay ventet to måneder med å varsle brukerne. De er nå del av ett større datadelings-nettverk.",
+      "In 2014, eBay was hacked and data from 145 million users was exposed, including encrypted passwords, names, addresses and dates of birth. eBay waited two months before notifying users. They are now part of a larger data-sharing network.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.ebay.com/help/account/articles/closing-account",
     changeEmailUrl: "https://accountsettings.ebay.com/",
   },
 
-  // ─── SØK ──────────────────────────────────────────────────────────────────
+  // ─── SEARCH ───────────────────────────────────────────────────────────────
   {
     id: "google-search",
     name: "Google Search",
@@ -457,9 +457,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "search",
     threatScore: "MEDIUM",
     dataProtection: "LOW",
-    breachSummary: "Massiv søkeprofiling, EU-bot €8.25 mrd",
+    breachSummary: "Massive search profiling, EU fine €8.25bn",
     details:
-      "Google ble bøtelagt €8.25 milliarder av EU (2017–2019) for misbruk av dominerende markedsposisjon via søk. Google bygger detaljerte profiler basert på søkehistorikk, koblet til annonseprofilen din på tvers av alle Google-tjenester.",
+      "Google was fined €8.25 billion by the EU (2017–2019) for abuse of its dominant market position via search. Google builds detailed profiles based on search history, linked to your ad profile across all Google services.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://myaccount.google.com/deleteaccount",
@@ -473,9 +473,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "search",
     threatScore: "MEDIUM",
     dataProtection: "LOW",
-    breachSummary: "Microsoft datadeling, CLOUD Act-eksponering",
+    breachSummary: "Microsoft data sharing, CLOUD Act exposure",
     details:
-      "Bing er Microsofts søkemotor. Microsoft ble i 2023 avslørt for å ha eksponert 38 terabyte intern data ved en feilkonfigurasjon. Søkedata brukes til Microsoft Advertising.",
+      "Bing is Microsoft's search engine. In 2023, Microsoft was found to have exposed 38 terabytes of internal data through a misconfiguration. Search data is used for Microsoft Advertising.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://account.microsoft.com/account/",
@@ -483,7 +483,7 @@ export const SERVICES: ServiceInfo[] = [
     euAlternativeId: "qwant",
   },
 
-  // ─── PRODUKTIVITET ────────────────────────────────────────────────────────
+  // ─── PRODUCTIVITY ─────────────────────────────────────────────────────────
   {
     id: "google-docs",
     name: "Google Docs / Workspace",
@@ -491,9 +491,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "productivity",
     threatScore: "MEDIUM",
     dataProtection: "LOW",
-    breachSummary: "Google kan lese dokumenter, US-jurisdiksjon",
+    breachSummary: "Google can read documents, US jurisdiction",
     details:
-      "Google Workspace-dokumenter er ikke ende-til-ende-kryptert. Google kan lese innholdet og har gjort det på forespørsel fra US-myndigheter. Bedriftsdata er underlagt CLOUD Act.",
+      "Google Workspace documents are not end-to-end encrypted. Google can read the content and has done so at the request of US authorities. Business data is subject to the CLOUD Act.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://myaccount.google.com/deleteaccount",
@@ -507,9 +507,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "productivity",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "Storm-0558 (2023), statlig data eksponert",
+    breachSummary: "Storm-0558 (2023), government data exposed",
     details:
-      "Storm-0558 (kinesiske hackere) fikk i 2023 tilgang til e-post hos amerikanske myndigheter via Microsoft. Microsoft 365 bruker metadata til å forbedre AI-tjenester. Underlagt CLOUD Act.",
+      "Storm-0558 (Chinese hackers) gained access in 2023 to emails at US government agencies via Microsoft. Microsoft 365 uses metadata to improve AI services. Subject to the CLOUD Act.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://account.microsoft.com/account/",
@@ -517,7 +517,7 @@ export const SERVICES: ServiceInfo[] = [
     euAlternativeId: "nextcloud",
   },
 
-  // ─── KOMMUNIKASJON ────────────────────────────────────────────────────────
+  // ─── COMMUNICATION ────────────────────────────────────────────────────────
   {
     id: "whatsapp",
     name: "WhatsApp",
@@ -525,9 +525,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "communication",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "500M brukere eksponert (2022), Meta-datadeling",
+    breachSummary: "500M users exposed (2022), Meta data sharing",
     details:
-      "I 2022 ble metadata fra 500 millioner WhatsApp-brukere lagt ut for salg. Meldinger er ende-til-ende-kryptert, men metadata (hvem du snakker med, hvor ofte, din lokasjon) deles med Meta/Facebook for annonseformål. WhatsApp i EU mottok €225 millioner GDPR-bot (2021).",
+      "In 2022, metadata from 500 million WhatsApp users was put up for sale. Messages are end-to-end encrypted, but metadata (who you talk to, how often, your location) is shared with Meta/Facebook for advertising purposes. WhatsApp in the EU received a €225 million GDPR fine (2021).",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://faq.whatsapp.com/general/account-and-profile/how-to-delete-your-account/",
@@ -541,9 +541,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "communication",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "Spoonbot-brudd (2023), innholdsmoderatoreksponering",
+    breachSummary: "Spoonbot breach (2023), content moderator exposure",
     details:
-      "En Discord-bot-plattform (Spoonbot) ble hacket i 2023 og eksponerte 760 millioner meldinger. Discord lagrer alle meldinger på sine servere (ikke E2E), og ansatte har tilgang til meldingsinnhold for moderering.",
+      "A Discord bot platform (Spoonbot) was hacked in 2023, exposing 760 million messages. Discord stores all messages on its servers (not E2E encrypted), and employees have access to message content for moderation.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://support.discord.com/hc/en-us/articles/212500837",
@@ -557,9 +557,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "communication",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "500K kontoer solgt (2020), Zoomboming-periode",
+    breachSummary: "500K accounts sold (2020), Zoomboming period",
     details:
-      "I 2020 ble 500 000 Zoom-kontoer solgt på dark web. Zoom ble kritisert for å rute europeiske samtaler via kinesiske servere. Zoom ble også bøtelagt av FTC (2020) for løgn om end-to-end kryptering.",
+      "In 2020, 500,000 Zoom accounts were sold on the dark web. Zoom was criticised for routing European calls through Chinese servers. Zoom was also fined by the FTC (2020) for lying about end-to-end encryption.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://support.zoom.us/hc/en-us/articles/201363243",
@@ -573,9 +573,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "communication",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "Brudd med passordlekkasje (2015), Salesforce-eierskap",
+    breachSummary: "Breach with password leak (2015), Salesforce ownership",
     details:
-      "I 2015 ble Slack hacket og brukerprofildata inkludert hashede passord eksponert. Slack brukes av Salesforce til AI-opplæring. Arbeidsgivers meldinger er tilgjengelig for administrator, og Slack-ansatte kan få tilgang til innhold ved behov.",
+      "In 2015, Slack was hacked and user profile data including hashed passwords was exposed. Slack is used by Salesforce for AI training. Employer messages are accessible to administrators, and Slack employees can access content when needed.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://slack.com/help/articles/203953148",
@@ -589,9 +589,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "communication",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "Ikke E2E som standard, Pavel Durov arrestert (2024)",
+    breachSummary: "Not E2E encrypted by default, Pavel Durov arrested (2024)",
     details:
-      "Telegrams vanlige chatter er IKKE ende-til-ende-kryptert – kun Secret Chats er det. Pavel Durov ble arrestert i Frankrike (2024) for manglende samarbeid med myndigheter om innholdskontroll. Telegram delte brukerdata med myndigheter etterpå.",
+      "Telegram's regular chats are NOT end-to-end encrypted — only Secret Chats are. Pavel Durov was arrested in France (2024) for failing to cooperate with authorities on content control. Telegram subsequently shared user data with authorities.",
     ownerCountry: "AE",
     sellsData: false,
     deleteUrl: "https://my.telegram.org/",
@@ -599,7 +599,7 @@ export const SERVICES: ServiceInfo[] = [
     euAlternativeId: "signal",
   },
 
-  // ─── PASSORDBEHANDLER ─────────────────────────────────────────────────────
+  // ─── PASSWORD MANAGERS ────────────────────────────────────────────────────
   {
     id: "lastpass",
     name: "LastPass",
@@ -607,9 +607,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "security",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "Hele vault-databasen stjålet (2022) – passord i risiko",
+    breachSummary: "Entire vault database stolen (2022) – passwords at risk",
     details:
-      "I august og desember 2022 ble LastPass hacket. Angriperne stjal krypterte vault-data for alle brukere. Med svake master-passord kan alle lagrede passord dekrypteres. Millioner av brukere anbefales å endre alle passord umiddelbart. LastPass løy initielt om omfanget.",
+      "In August and December 2022, LastPass was hacked. Attackers stole encrypted vault data for all users. With weak master passwords, all stored passwords can be decrypted. Millions of users are advised to change all their passwords immediately. LastPass initially lied about the extent of the breach.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://lastpass.com/my.php",
@@ -625,9 +625,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "security",
     threatScore: "LOW",
     dataProtection: "HIGH",
-    breachSummary: "Okta-brudd berørte intern IT (2023) – ingen brukervaults",
+    breachSummary: "Okta breach affected internal IT (2023) – no user vaults",
     details:
-      "1Password hadde i 2023 en hendelse knyttet til Okta-bryddet der en angriper fikk tilgang til IT-systemer, men ingen brukervaults ble kompromittert. 1Password bruker zero-knowledge kryptering der de ikke kan lese dine passord.",
+      "1Password had an incident in 2023 related to the Okta breach where an attacker gained access to IT systems, but no user vaults were compromised. 1Password uses zero-knowledge encryption where they cannot read your passwords.",
     ownerCountry: "CA",
     sellsData: false,
     deleteUrl: "https://support.1password.com/delete-account/",
@@ -637,7 +637,7 @@ export const SERVICES: ServiceInfo[] = [
       "https://go.getproton.me/SH1mP?redirect_url=https%3A%2F%2Fproton.me%2Fl%2Fpass%2Fshorter-flow-pricing",
   },
 
-  // ─── FINANS ───────────────────────────────────────────────────────────────
+  // ─── FINANCE ──────────────────────────────────────────────────────────────
   {
     id: "paypal",
     name: "PayPal",
@@ -645,9 +645,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "finance",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "35K kontoer credential-stuffing (2023)",
+    breachSummary: "35K accounts credential-stuffed (2023)",
     details:
-      "I 2023 ble 35 000 PayPal-kontoer kompromittert via credential-stuffing (gjenbruk av passord fra andre lekkasjer). PayPal deler transaksjonsinformasjon med annonsepartnere og har blitt kritisert for vide datadelingsklausuler.",
+      "In 2023, 35,000 PayPal accounts were compromised via credential stuffing (reuse of passwords from other leaks). PayPal shares transaction information with advertising partners and has been criticised for broad data-sharing clauses.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://www.paypal.com/myaccount/closeAccount/",
@@ -662,9 +662,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "tech",
     threatScore: "LOW",
     dataProtection: "MEDIUM",
-    breachSummary: "Eid av Microsoft, Copilot trener på kode uten samtykke",
+    breachSummary: "Owned by Microsoft, Copilot trains on code without consent",
     details:
-      "GitHub er eid av Microsoft. GitHub Copilot ble trent på offentlig kode uten eksplisitt samtykke fra utviklere, noe som resulterte i rettsak. Microsoft/GitHub er underlagt CLOUD Act.",
+      "GitHub is owned by Microsoft. GitHub Copilot was trained on public code without explicit consent from developers, resulting in a lawsuit. Microsoft/GitHub is subject to the CLOUD Act.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://github.com/settings/admin",
@@ -678,9 +678,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "tech",
     threatScore: "HIGH",
     dataProtection: "MEDIUM",
-    breachSummary: "153M kontoer lekket (2013), AI-opplærings-kontrovers (2024)",
+    breachSummary: "153M accounts leaked (2013), AI training controversy (2024)",
     details:
-      "I 2013 ble 153 millioner Adobe-kontoer kompromittert inkludert krypterte passord og betalingsinformasjon. I 2024 oppdaterte Adobe brukervilkårene til å gi seg selv rett til å bruke brukerinnhold til AI-opplæring, noe som skapte stor motstand og kontraktsoppsigelser.",
+      "In 2013, 153 million Adobe accounts were compromised including encrypted passwords and payment information. In 2024, Adobe updated its terms of service to give itself the right to use user content for AI training, which caused significant backlash and contract cancellations.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://account.adobe.com/",
@@ -693,9 +693,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "streaming",
     threatScore: "HIGH",
     dataProtection: "MEDIUM",
-    breachSummary: "Hele plattform-kildekode lekket (2021), Amazon-eierskap",
+    breachSummary: "Entire platform source code leaked (2021), Amazon ownership",
     details:
-      "I 2021 ble Twitch hacket og hele kildekoden, utbetalingsdata for streamers og interne verktøy publisert. Twitch er eid av Amazon. Amazon bruker data på tvers av tjenestene sine til annonseformål.",
+      "In 2021, Twitch was hacked and the entire source code, streamer payout data and internal tools were published. Twitch is owned by Amazon. Amazon uses data across its services for advertising purposes.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://www.twitch.tv/settings/profile",
@@ -710,9 +710,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "security",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
-    breachSummary: "En server hacket (2018), avslørt 2019",
+    breachSummary: "One server hacked (2018), disclosed in 2019",
     details:
-      "En av NordVPNs servere i Finland ble kompromittert i 2018 via en usikret remote management-system. NordVPN avslørte ikke dette offentlig før i 2019. NordVPN er registrert i Panama men drives fra Litauen.",
+      "One of NordVPN's servers in Finland was compromised in 2018 via an unsecured remote management system. NordVPN did not publicly disclose this until 2019. NordVPN is registered in Panama but operated from Lithuania.",
     ownerCountry: "PA",
     sellsData: false,
     deleteUrl: "https://my.nordaccount.com/dashboard/",
@@ -728,9 +728,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "security",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "Kjøpt av Kzen (israelske overvåkningseksperter, 2021)",
+    breachSummary: "Acquired by Kape (Israeli surveillance experts, 2021)",
     details:
-      "ExpressVPN ble i 2021 kjøpt av Kape Technologies (tidligere Crossrider), et selskap med tilknytning til adware og israelske overvåkningsspesialister. En av de ansvarlige for VPN-tjenestene ble i 2022 siktet for å ha hjulpet UAE-myndighetene med å overvåke dissidenter.",
+      "ExpressVPN was acquired in 2021 by Kape Technologies (formerly Crossrider), a company with ties to adware and Israeli surveillance specialists. One executive was charged in 2022 for having helped UAE authorities surveil dissidents.",
     ownerCountry: "BVI",
     sellsData: true,
     deleteUrl: "https://www.expressvpn.com/support/",
@@ -740,7 +740,7 @@ export const SERVICES: ServiceInfo[] = [
       "https://go.getproton.me/SH1mQ?redirect_url=https%3A%2F%2Fget.protonvpn.com%2Fl%2Fspecial-partner-offer-summerdeal",
   },
 
-  // ─── ANNET ────────────────────────────────────────────────────────────────
+  // ─── OTHER ────────────────────────────────────────────────────────────────
   {
     id: "uber",
     name: "Uber",
@@ -748,9 +748,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "tech",
     threatScore: "HIGH",
     dataProtection: "LOW",
-    breachSummary: "57M brukere lekket (2016), Uber skjulte bruddet i 1 år",
+    breachSummary: "57M users leaked (2016), Uber concealed breach for 1 year",
     details:
-      "I 2016 ble 57 millioner Uber-brukere og sjåfører kompromittert. Uber valgte å betale hackerne $100 000 for å slette dataene og holde tause – og skjulte bruddet fra offentligheten i over ett år. Uber ble bøtelagt $148 millioner. Lyft-konkurrenten rapporterte bruddet innen 72 timer som GDPR krever.",
+      "In 2016, 57 million Uber users and drivers were compromised. Uber chose to pay the hackers $100,000 to delete the data and stay silent — and concealed the breach from the public for over a year. Uber was fined $148 million. Competitor Lyft reported its breach within 72 hours as required by GDPR.",
     ownerCountry: "US",
     sellsData: true,
     deleteUrl: "https://help.uber.com/driving-and-delivering/article/delete-your-uber-account",
@@ -758,14 +758,14 @@ export const SERVICES: ServiceInfo[] = [
   },
   {
     id: "twitter-ads",
-    name: "Google Ads / Ad Sense",
+    name: "Google Ads / AdSense",
     domain: "google.com",
     category: "tech",
     threatScore: "MEDIUM",
     dataProtection: "LOW",
-    breachSummary: "Pervasiv sporing på tvers av alle nettsteder",
+    breachSummary: "Pervasive cross-site tracking",
     details:
-      "Googles annonsenettverk sporer deg på tvers av millioner av nettsteder via cookies, fingerprinting og konverteringssporing. EU-kommisjonen har innledet multiple antitrust-undersøkelser mot Google Ads.",
+      "Google's ad network tracks you across millions of websites via cookies, fingerprinting and conversion tracking. The European Commission has launched multiple antitrust investigations against Google Ads.",
     ownerCountry: "US",
     sellsData: true,
   },
@@ -776,29 +776,29 @@ export const SERVICES: ServiceInfo[] = [
     category: "tech",
     threatScore: "LOW",
     dataProtection: "MEDIUM",
-    breachSummary: "Cloudbleed (2017) – minnelekkasje i mellomvare",
+    breachSummary: "Cloudbleed (2017) – memory leak in middleware",
     details:
-      "I 2017 hadde Cloudflare en minnelekkasje (Cloudbleed) som eksponerte sensitiv data fra nettsteder som brukte tjenesten, inkludert passord og tokens. Cloudflare fikset dette raskt og er generelt ansett som en ansvarlig aktør.",
+      "In 2017, Cloudflare had a memory leak (Cloudbleed) that exposed sensitive data from websites using the service, including passwords and tokens. Cloudflare fixed this quickly and is generally considered a responsible actor.",
     ownerCountry: "US",
     sellsData: false,
   },
   {
     id: "microsoft-account",
-    name: "Microsoft-konto",
+    name: "Microsoft Account",
     domain: "microsoft.com",
     category: "productivity",
     threatScore: "MEDIUM",
     dataProtection: "MEDIUM",
     breachSummary: "Storm-0558 (2023), CLOUD Act",
     details:
-      "Microsoft-kontoen er kjernen i Microsoft-tjenestene. Underlagt CLOUD Act. Storm-0558-angrepet (2023) kompromitterte e-postkontoer til sentrale US-myndighetspersoner via falske autentiseringstoken.",
+      "The Microsoft account is the core of Microsoft services. Subject to the CLOUD Act. The Storm-0558 attack (2023) compromised email accounts of senior US government officials via forged authentication tokens.",
     ownerCountry: "US",
     sellsData: false,
     deleteUrl: "https://account.microsoft.com/account/",
     changeEmailUrl: "https://account.live.com/names/Manage",
   },
 
-  // ─── CRYPTO / TRADING (FROM EKSEMPELKONTOER.TXT) ──────────────────────────
+  // ─── CRYPTO / TRADING ─────────────────────────────────────────────────────
   {
     id: "kraken",
     name: "Kraken",
@@ -821,7 +821,7 @@ export const SERVICES: ServiceInfo[] = [
     dataProtection: "MEDIUM",
     breachSummary: "Credential stuffing attack affected 6,000 users (2021).",
     details:
-      "In 2021, at least 6,000 Coinbase customers had funds stolen from their accounts after falling victim to a phishing campaign that bypassed the SMS-based multi-factor authentication. Coinbase is a publicly-traded US company.",
+      "In 2021, at least 6,000 Coinbase customers had funds stolen from their accounts after falling victim to a phishing campaign that bypassed SMS-based multi-factor authentication. Coinbase is a publicly-traded US company.",
     ownerCountry: "US",
     sellsData: false,
   },
@@ -860,7 +860,7 @@ export const SERVICES: ServiceInfo[] = [
     dataProtection: "MEDIUM",
     breachSummary: "No major public breaches reported.",
     details:
-      "TradingView is a popular charting and social networking platform for traders. It has a good security record but collects user data for analytics and personalization. It's a US-based company.",
+      "TradingView is a popular charting and social networking platform for traders. It has a good security record but collects user data for analytics and personalisation. It's a US-based company.",
     ownerCountry: "US",
     sellsData: false,
   },
@@ -873,7 +873,7 @@ export const SERVICES: ServiceInfo[] = [
     dataProtection: "MEDIUM",
     breachSummary: "No major public breaches reported.",
     details:
-      "Provides blockchain-based domain names. As a decentralized service, the security model is different, but the central company is based in the US.",
+      "Provides blockchain-based domain names. As a decentralised service, the security model is different, but the central company is based in the US.",
     ownerCountry: "US",
     sellsData: false,
   },
@@ -897,9 +897,9 @@ export const SERVICES: ServiceInfo[] = [
     category: "finance",
     threatScore: "HIGH",
     dataProtection: "MEDIUM",
-    breachSummary: "Unauthorized withdrawals of $34M (2022).",
+    breachSummary: "Unauthorised withdrawals of $34M (2022).",
     details:
-      "In January 2022, Crypto.com was hacked, leading to unauthorized withdrawals of about $15 million in ETH and $19 million in BTC from 483 user accounts. The company reimbursed the users.",
+      "In January 2022, Crypto.com was hacked, leading to unauthorised withdrawals of about $15 million in ETH and $19 million in BTC from 483 user accounts. The company reimbursed the users.",
     ownerCountry: "SG", // Singapore
     sellsData: false,
   },
@@ -930,7 +930,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
   },
 
-  // ─── TRAVEL / LIFESTYLE (FROM EKSEMPELKONTOER.TXT) ───────────────────────
+  // ─── TRAVEL / LIFESTYLE ───────────────────────────────────────────────────
   {
     id: "lime",
     name: "Lime",
@@ -958,7 +958,7 @@ export const SERVICES: ServiceInfo[] = [
     sellsData: false,
   },
 
-  // ─── DEV / HOSTING (FROM EKSEMPELKONTOER.TXT) ─────────────────────────────
+  // ─── DEV / HOSTING ────────────────────────────────────────────────────────
   {
     id: "supabase",
     name: "Supabase",
@@ -1059,7 +1059,7 @@ export const SERVICES: ServiceInfo[] = [
     dataProtection: "MEDIUM",
     breachSummary: "API tokens for Spaces secrets were compromised (2024).",
     details:
-      "In April 2024, Hugging Face detected a security incident where unauthorized users gained access to secrets within their Spaces platform, potentially exposing API tokens and other credentials.",
+      "In April 2024, Hugging Face detected a security incident where unauthorised users gained access to secrets within their Spaces platform, potentially exposing API tokens and other credentials.",
     ownerCountry: "US",
     sellsData: false,
   },
@@ -1072,7 +1072,7 @@ export const SERVICES: ServiceInfo[] = [
     dataProtection: "MEDIUM",
     breachSummary: "Customer misconfigurations are a major source of leaks.",
     details:
-      "While AWS itself is generally secure, misconfigured S3 buckets and other services by customers have led to countless data breaches. AWS is owned by Amazon and subject to US CLOUD Act.",
+      "While AWS itself is generally secure, misconfigured S3 buckets and other services by customers have led to countless data breaches. AWS is owned by Amazon and subject to the US CLOUD Act.",
     ownerCountry: "US",
     sellsData: false,
   },

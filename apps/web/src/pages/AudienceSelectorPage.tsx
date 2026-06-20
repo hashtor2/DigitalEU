@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { EuStarRing } from "@/components/Logo";
 
 const STORAGE_KEY = "digitaleu_market";
 
@@ -31,46 +32,53 @@ export function AudienceSelectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center px-4">
-      {/* Background glow */}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-96 w-[52rem] -translate-x-1/2 rounded-full bg-sky-500/10 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-64 w-96 rounded-full bg-emerald-500/5 blur-3xl" />
-      </div>
-
+    <div className="min-h-screen bg-[#0a1628] text-slate-100 flex flex-col items-center justify-center px-4">
       {/* Logo */}
-      <div className="mb-12 flex items-center gap-2">
-        <span className="text-2xl" aria-hidden>🇪🇺</span>
-        <span className="text-xl font-extrabold tracking-tight text-white">
-          DigitalEU<span className="text-sky-400">.me</span>
+      <div className="mb-14 flex flex-col items-center gap-3">
+        <EuStarRing size={52} />
+        <span className="text-lg font-semibold text-white tracking-wide">
+          DigitalEU<span className="text-[#f0c040]">.me</span>
         </span>
       </div>
 
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+      <div className="mb-10 text-center">
+        <h1 className="text-3xl font-bold text-white sm:text-4xl">
           Who are you here for?
         </h1>
-        <p className="mt-3 text-slate-400 max-w-sm mx-auto">
+        <p className="mt-3 text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
           We'll show you the most relevant European alternatives and tools for your situation.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 w-full max-w-2xl">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 w-full max-w-lg">
         {/* Private */}
         <button
           onClick={() => choose("b2c")}
-          className="group flex flex-col items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 text-left transition-all hover:border-sky-400/50 hover:bg-sky-500/5 hover:shadow-lg hover:shadow-sky-500/5"
+          className="group flex flex-col items-start gap-5 rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-6 text-left transition-all hover:border-[#1a56db]/50 hover:bg-[#0f2040]"
         >
-          <span className="text-4xl">👤</span>
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#1a56db]/10 border border-[#1a56db]/20">
+            <svg
+              className="h-5 w-5 text-[#5b8ff9]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+              />
+            </svg>
+          </div>
           <div>
-            <p className="text-lg font-bold text-white group-hover:text-sky-300 transition-colors">
-              Private Person
-            </p>
-            <p className="mt-1 text-sm text-slate-400 leading-relaxed">
-              Protect your personal data. Find European alternatives to Gmail, Google Drive, WhatsApp, and more.
+            <p className="text-base font-semibold text-white">Private Person</p>
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Protect your personal data. Find European alternatives to Gmail, Google Drive,
+              WhatsApp, and more.
             </p>
           </div>
-          <span className="mt-auto inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400">
+          <span className="mt-auto text-xs font-medium text-[#5b8ff9] group-hover:text-white transition-colors">
             Get started free →
           </span>
         </button>
@@ -78,25 +86,38 @@ export function AudienceSelectorPage() {
         {/* Business */}
         <button
           onClick={() => choose("b2b")}
-          className="group flex flex-col items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 text-left transition-all hover:border-emerald-400/50 hover:bg-emerald-500/5 hover:shadow-lg hover:shadow-emerald-500/5"
+          className="group flex flex-col items-start gap-5 rounded-lg border border-[#1a2d4f] bg-[#0d1b33] p-6 text-left transition-all hover:border-[#f0c040]/30 hover:bg-[#121b2e]"
         >
-          <span className="text-4xl">🏢</span>
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#f0c040]/10 border border-[#f0c040]/20">
+            <svg
+              className="h-5 w-5 text-[#f0c040]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"
+              />
+            </svg>
+          </div>
           <div>
-            <p className="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">
-              Business
-            </p>
-            <p className="mt-1 text-sm text-slate-400 leading-relaxed">
-              Reduce US cloud dependency, achieve GDPR compliance, and build on sovereign European infrastructure.
+            <p className="text-base font-semibold text-white">Business</p>
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Reduce US cloud dependency, achieve GDPR compliance, and build on sovereign
+              European infrastructure.
             </p>
           </div>
-          <span className="mt-auto inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
+          <span className="mt-auto text-xs font-medium text-[#f0c040]/70 group-hover:text-[#f0c040] transition-colors">
             See migration services →
           </span>
         </button>
       </div>
 
-      <p className="mt-8 text-xs text-slate-600">
-        We remember your choice — you can switch anytime from the menu.
+      <p className="mt-10 text-xs text-slate-600">
+        We remember your choice — switch anytime from the menu.
       </p>
     </div>
   );
