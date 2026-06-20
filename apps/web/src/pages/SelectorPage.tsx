@@ -20,6 +20,11 @@ const CATEGORY_LABELS: Record<ServiceInfo["category"], string> = {
   finance: "Finance",
   security: "Security",
   tech: "Tech",
+  gaming: "Gaming",
+  dating: "Dating",
+  food: "Food & Delivery",
+  fitness: "Fitness & Health",
+  education: "Education",
 };
 
 function ServiceCard({
