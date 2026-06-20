@@ -116,7 +116,6 @@ const REPLACES_CONTEXT: Record<string, string> = {
   "Google Cloud": "US CLOUD Act jurisdiction",
   LastPass: "had major breach in 2022",
   "1Password": "US-based, proprietary",
-  Zoom: "US-based, privacy incidents reported",
   WhatsApp: "owned by Meta, metadata collected",
   iMessage: "Apple has US jurisdiction",
   Twitter: "US-based, sold to Musk in 2022",
@@ -127,6 +126,99 @@ const REPLACES_CONTEXT: Record<string, string> = {
   Trello: "owned by Atlassian, US-based",
   Asana: "US-based",
   Notion: "US-based, data stored in US",
+  Stripe: "US-based, data under US CLOUD Act",
+  PayPal: "US-based, sold data to advertisers, credential stuffing breach (2023)",
+  "PayPal Credit": "US-based, financial data under US jurisdiction",
+  Venmo: "owned by PayPal, US-based",
+  Affirm: "US-based buy-now-pay-later",
+  "Stripe (Poland)": "US-owned processor",
+  Mailchimp: "owned by Intuit (US), email data mined for targeting",
+  HubSpot: "US-based, broad data collection",
+  Salesforce: "US-based, extensive customer data harvesting",
+  Shopify: "Canadian, but US-aligned data practices",
+  Greyhound: "US-based, location and travel data collected",
+  Zoom: "US-based, privacy incidents; video content scanned",
+  Figma: "acquired by Adobe (US), design data on US servers",
+  Adobe: "US-based, subscription model with telemetry",
+  Canva: "Australian but US-aligned data practices",
+  Spotify: "Swedish origin but US HQ, extensive behavioral tracking",
+  Netflix: "US-based, viewing habits sold to advertisers",
+  Revolut: "UK-based, not EU-regulated bank",
+  Cloudflare: "US-based, sits in front of your traffic",
+  Datadog: "US-based, cloud infrastructure telemetry",
+  Zendesk: "US-based, customer support data on US servers",
+  Jira: "owned by Atlassian (US-Australian), project data in US",
+  Confluence: "owned by Atlassian (US-Australian)",
+  SendGrid: "owned by Twilio (US), email infrastructure in US",
+  Twilio: "US-based, communications data in US",
+  "GitLab (SaaS)": "US-based SaaS, code data in US",
+  GitLab: "US-based SaaS, code data in US",
+  Bitbucket: "owned by Atlassian (US-Australian)",
+};
+
+const REPLACES_DOMAINS: Record<string, string> = {
+  Gmail: "gmail.com",
+  "Google Drive": "drive.google.com",
+  "Google Docs": "docs.google.com",
+  "Google Photos": "photos.google.com",
+  "Google Search": "google.com",
+  "Google Chrome": "google.com",
+  "Google Analytics": "analytics.google.com",
+  "Google Meet": "meet.google.com",
+  "Google Maps": "maps.google.com",
+  "Google Cloud": "cloud.google.com",
+  GCP: "cloud.google.com",
+  Outlook: "outlook.com",
+  OneDrive: "onedrive.live.com",
+  Office: "office.com",
+  "Microsoft 365": "microsoft.com",
+  Teams: "teams.microsoft.com",
+  Azure: "azure.microsoft.com",
+  GitHub: "github.com",
+  Slack: "slack.com",
+  Zoom: "zoom.us",
+  Dropbox: "dropbox.com",
+  ChatGPT: "openai.com",
+  AWS: "aws.amazon.com",
+  LastPass: "lastpass.com",
+  "1Password": "1password.com",
+  WhatsApp: "whatsapp.com",
+  iMessage: "apple.com",
+  Twitter: "twitter.com",
+  X: "x.com",
+  Facebook: "facebook.com",
+  Instagram: "instagram.com",
+  TikTok: "tiktok.com",
+  Trello: "trello.com",
+  Asana: "asana.com",
+  Notion: "notion.so",
+  Stripe: "stripe.com",
+  "Stripe (Poland)": "stripe.com",
+  PayPal: "paypal.com",
+  "PayPal Credit": "paypal.com",
+  Venmo: "venmo.com",
+  Affirm: "affirm.com",
+  Greyhound: "greyhound.com",
+  Mailchimp: "mailchimp.com",
+  HubSpot: "hubspot.com",
+  Salesforce: "salesforce.com",
+  Shopify: "shopify.com",
+  Cloudflare: "cloudflare.com",
+  Figma: "figma.com",
+  Adobe: "adobe.com",
+  Canva: "canva.com",
+  Spotify: "spotify.com",
+  Netflix: "netflix.com",
+  Revolut: "revolut.com",
+  Zendesk: "zendesk.com",
+  Jira: "atlassian.com",
+  Confluence: "atlassian.com",
+  Datadog: "datadoghq.com",
+  SendGrid: "sendgrid.com",
+  Twilio: "twilio.com",
+  "GitLab (SaaS)": "gitlab.com",
+  GitLab: "gitlab.com",
+  Bitbucket: "bitbucket.org",
 };
 
 function getHeuristicStars(alt: Alternative): number {
@@ -369,23 +461,39 @@ export function ServicePage() {
           )}
         </div>
 
-        {/* ── What it replaces (enhanced, shown when no profile) ── */}
-        {!profile && alt && alt.replaces.length > 0 && (
-          <div className="mb-8 rounded border border-white/[0.1]">
-            <div className="px-4 py-3 border-b border-white/[0.1] bg-white/[0.03]">
-              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                What {alt.name} replaces
-              </h2>
-            </div>
-            <div className="divide-y divide-white/[0.04]">
+        {/* ── What it replaces ── */}
+        {alt && alt.replaces.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-3">
+              What {alt.name} replaces
+            </h2>
+            <div className="space-y-2">
               {alt.replaces.map(r => {
                 const context = REPLACES_CONTEXT[r];
+                const domain = REPLACES_DOMAINS[r];
                 return (
-                  <div key={r} className="px-4 py-3 flex items-start gap-3">
-                    <span className="text-[11px] font-semibold text-slate-300 w-36 flex-shrink-0 pt-0.5">{r}</span>
-                    <span className="text-[11px] text-slate-600 leading-relaxed">
-                      {context ?? "US-based — data subject to US jurisdiction and legal demands."}
-                    </span>
+                  <div key={r} className="flex items-center gap-4 rounded border border-orange-500/[0.12] bg-orange-500/[0.04] px-4 py-3">
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center overflow-hidden">
+                      {domain ? (
+                        <img
+                          src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+                          alt={r}
+                          className="h-5 w-5"
+                          onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = "0"; }}
+                        />
+                      ) : (
+                        <span className="text-slate-600 text-xs font-bold">{r[0]}</span>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-[13px] font-semibold text-slate-200">{r}</span>
+                      {context && (
+                        <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">{context}</p>
+                      )}
+                      {!context && (
+                        <p className="text-[11px] text-slate-600 mt-0.5">US-based — data subject to US jurisdiction and legal demands.</p>
+                      )}
+                    </div>
                   </div>
                 );
               })}
