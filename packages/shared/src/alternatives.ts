@@ -244,6 +244,36 @@ export const ALTERNATIVES: Alternative[] = [
       "affiliateUrl": "https://go.getproton.me/SH1mR"
     },
     {
+      "id": "proton-vpn",
+      "name": "Proton VPN",
+      "country": "CH",
+      "category": "vpn",
+      "replaces": [
+        "NordVPN",
+        "ExpressVPN",
+        "Surfshark"
+      ],
+      "url": "https://protonvpn.com",
+      "description": "No-logs VPN from Switzerland. Free tier available, 70% off with World Cup promo.",
+      "monetization": "affiliate",
+      "affiliateUrl": "https://go.getproton.me/SH2jp"
+    },
+    {
+      "id": "proton-pass",
+      "name": "Proton Pass",
+      "country": "CH",
+      "category": "password-manager",
+      "replaces": [
+        "LastPass",
+        "1Password",
+        "Dashlane"
+      ],
+      "url": "https://proton.me/pass",
+      "description": "End-to-end encrypted password manager with built-in 2FA. 50% off.",
+      "monetization": "affiliate",
+      "affiliateUrl": "https://go.getproton.me/SH1mP"
+    },
+    {
       "id": "tuta",
       "name": "Tuta",
       "country": "DE",
@@ -894,12 +924,13 @@ export const ALTERNATIVES: Alternative[] = [
     {
       "id": "proton-drive",
       "name": "Proton Drive",
-      "country": "EU",
+      "country": "CH",
       "category": "cloud-storage",
       "replaces": ["Google Drive", "Dropbox"],
       "url": "https://proton.me/drive",
-      "description": "*(CH)",
-      "monetization": "other"
+      "description": "200 GB end-to-end encrypted cloud storage for €1. Swiss privacy.",
+      "monetization": "affiliate",
+      "affiliateUrl": "https://go.getproton.me/SH1mO"
     },
     {
       "id": "internxt",

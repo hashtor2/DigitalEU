@@ -59,6 +59,15 @@ const JOURNALISTS: Journalist[] = [
 
 const NEWS_ARTICLES: Article[] = [
   {
+    id: "data-industrial-complex",
+    title: "The Data Industrial Complex: How America's Tech Giants Built Surveillance Empires at Europe's Expense",
+    excerpt: "A 15-month investigation reveals how Facebook, Google, Microsoft and their peers systematically harvest, inadequately protect, and monetize European user data—while promoting privacy-hostile alternatives that deepen dependency on US surveillance capitalism.",
+    category: "investigation",
+    author: "Johan Nordström",
+    date: "June 19, 2026",
+    readTime: "14 min read",
+  },
+  {
     id: "eu-ai-act-impact",
     title: "How the EU AI Act is Shaping a New Era of Ethical Artificial Intelligence",
     excerpt: "As the world's first comprehensive AI regulation takes effect, European startups are pioneering privacy-preserving, transparent AI systems that could become the global benchmark for ethical technology development.",
@@ -145,27 +154,27 @@ export function NewsPage() {
         <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-sky-950/20 via-slate-900/50 to-transparent p-6 sm:p-8">
           <div className="absolute top-0 right-0 w-80 h-80 bg-sky-500/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="relative z-10 max-w-2xl space-y-4">
-            <span className="bg-purple-500/15 text-purple-300 border border-purple-500/20 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded">
-              Feature Analysis 🏆
+            <span className="bg-red-500/15 text-red-300 border border-red-500/20 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded">
+              Investigative Report 🔍
             </span>
             <h2 className="text-2xl font-bold text-white tracking-tight leading-snug sm:text-3xl">
-              The EU AI Act: Europe's Bold Step Toward Ethical Artificial Intelligence
+              The Data Industrial Complex: How Tech Giants Built Surveillance Empires
             </h2>
             <p className="text-xs text-slate-400 leading-relaxed">
-              As the world's first comprehensive AI regulation begins implementation, European startups are leading the charge in developing privacy-preserving, transparent AI systems that prioritize human rights over surveillance capitalism. This landmark legislation could establish a new global standard for responsible AI development.
+              A 15-month investigation reveals how Facebook, Google, Microsoft and their peers systematically harvest, inadequately protect, and monetize European user data—while promoting privacy-hostile alternatives that deepen dependency on US surveillance capitalism.
             </p>
             <div className="flex items-center gap-4 text-[11px] text-slate-500 pt-2 font-medium">
               <span className="flex items-center gap-1">🏆 Johan Nordström</span>
               <span>•</span>
-              <span>June 18, 2026</span>
+              <span>June 19, 2026</span>
               <span>•</span>
-              <span className="text-sky-400">7 min read</span>
+              <span className="text-sky-400">14 min read</span>
             </div>
             <button
-              onClick={() => alert("This full feature analysis is available now!")}
+              onClick={() => alert("Read the full investigation now!")}
               className="bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition"
             >
-              Read Full Analysis
+              Read Full Investigation
             </button>
           </div>
         </section>

@@ -120,7 +120,7 @@ function ServiceRow({
   onToggle: () => void;
 }) {
   const alt = service.euAlternativeId ? ALTERNATIVES.find((a) => a.id === service.euAlternativeId) : null;
-  const logoUrl = `https://logo.clearbit.com/${service.domain}`;
+  const logoUrl = `https://icons.duckduckgo.com/ip3/${service.domain}.ico`;
 
   return (
     <tr className={`border-b border-white/5 transition-colors hover:bg-white/[0.03] ${migrated ? "opacity-50" : ""}`}>
