@@ -50,13 +50,19 @@ const router = createBrowserRouter([
     }),
   },
   {
+    path: "/guides/:id",
+    lazy: async () => ({
+      Component: (await import("./pages/GuidePage")).GuidePage,
+    }),
+  },
+  {
     path: "/about",
     lazy: async () => ({
       Component: (await import("./pages/AboutPage")).AboutPage,
     }),
   },
   {
-    path: "/directory/:id",
+    path: "/services/:id",
     lazy: async () => ({
       Component: (await import("./pages/ServicePage")).ServicePage,
     }),
