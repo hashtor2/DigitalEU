@@ -6,6 +6,18 @@ function getDomain(url: string): string {
   try { return new URL(url).hostname; } catch { return ""; }
 }
 
+function CountryFlag({ country }: { country: string }) {
+  const parts = country.split(" ");
+  const flag = parts[parts.length - 1];
+  const name = parts.slice(0, -1).join(" ");
+  return (
+    <span className="flex items-center gap-1">
+      <span className="text-base leading-none">{flag}</span>
+      <span className="text-[11px] text-slate-500">{name}</span>
+    </span>
+  );
+}
+
 function AffiliateBadge() {
   return (
     <span className="inline-block rounded border border-[#f0c040]/20 bg-[#f0c040]/5 px-1.5 py-0.5 text-[9px] font-semibold uppercase text-[#f0c040]/60 tracking-wide">
@@ -46,7 +58,7 @@ function ServiceCard({ service, rank }: { service: GuideService; rank: number })
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <h3 className="text-[15px] font-bold text-white">{service.name}</h3>
-            <span className="text-[11px] text-slate-400">{service.country}</span>
+            <CountryFlag country={service.country} />
             {service.isAffiliate && <AffiliateBadge />}
           </div>
           <p className="text-[12px] text-slate-400 mt-0.5 truncate">{service.tagline}</p>
@@ -152,23 +164,23 @@ export function GuidePage() {
         {/* Hero */}
         <div className="mb-8">
           {/* Service logo strip */}
-          <div className="flex items-center gap-2 mb-5">
-            {guide.services.slice(0, 4).map(s => {
+          <div className="flex items-center gap-2 flex-wrap mb-5">
+            {guide.services.map(s => {
               const d = getDomain(s.url);
+              const flag = s.country.split(" ").at(-1);
               return d ? (
-                <img
-                  key={s.name}
-                  src={`https://www.google.com/s2/favicons?domain=${d}&sz=64`}
-                  alt={s.name}
-                  title={s.name}
-                  className="h-9 w-9 rounded-xl border border-[#30363d]"
-                  onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                />
+                <div key={s.name} className="flex items-center gap-2 rounded-lg border border-[#30363d] bg-[#161b22] px-3 py-1.5">
+                  <img
+                    src={`https://www.google.com/s2/favicons?domain=${d}&sz=32`}
+                    alt={s.name}
+                    className="h-4 w-4 rounded"
+                    onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                  />
+                  <span className="text-[12px] font-medium text-slate-300">{s.name}</span>
+                  <span className="text-sm leading-none">{flag}</span>
+                </div>
               ) : null;
             })}
-            <span className="text-[11px] text-slate-500 font-mono ml-1">
-              {guide.services.length} services compared
-            </span>
           </div>
 
           <span className="inline-block text-[10px] font-semibold uppercase tracking-wider text-slate-500 border border-[#21262d] rounded px-2 py-0.5 mb-3">
