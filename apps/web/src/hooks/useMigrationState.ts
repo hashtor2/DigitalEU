@@ -226,6 +226,9 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
       const { data, error: authError } = await supabase.auth.signUp({
         email,
         password: pass,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+        },
       });
       if (authError) throw authError;
       if (data.user) {
@@ -239,6 +242,18 @@ export function useMigrationState(initialMode: StorageMode = "guest") {
         setMode("profile");
       }
     } catch (err: any) {
+      const msg = String(err?.message || "");
+      const isRateLimited =
+        err?.status === 429 ||
+        /rate\s*limit|too many requests|over_email_send_rate_limit/i.test(msg);
+
+      if (isRateLimited) {
+        const friendlyMsg =
+          "Email sending is temporarily rate-limited. Please wait about 60 seconds, then try again. Also check your inbox/spam for the previous confirmation email.";
+        setError(friendlyMsg);
+        throw new Error(friendlyMsg);
+      }
+
       setError(err.message || "Registrering feilet.");
       throw err;
     } finally {
