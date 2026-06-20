@@ -19,7 +19,8 @@ export function Header() {
     }`;
 
   return (
-    <header className="border-b border-[#1a2d4f] sticky top-0 bg-[#0a1628]/95 backdrop-blur-sm z-50">
+    <header className="border-b border-white/[0.06] sticky top-0 bg-[#06090f]/95 backdrop-blur-sm z-50">
+      <a rel="me" href="https://mastodon.social/@digitaleu" className="sr-only">Mastodon</a>
       <div className="mx-auto max-w-5xl flex items-center justify-between px-6 py-3.5">
         {/* Logo */}
         <Link
