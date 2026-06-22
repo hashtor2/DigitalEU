@@ -4,6 +4,7 @@ import { ALTERNATIVES, isB2B } from "@digitaleu/shared";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -360,6 +361,17 @@ export function B2BPage() {
               </p>
             </form>
           )}
+        </div>
+      </section>
+
+      {/* Newsletter CTA */}
+      <section className="border-t border-emerald-500/10 bg-emerald-500/5 py-12 mt-12">
+        <div className="mx-auto max-w-3xl px-6 text-center space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-2">Keep up with EU digital sovereignty</h2>
+            <p className="text-slate-400 text-sm">Subscribe to our newsletter for the latest updates on regulations, infrastructure news, and European tech innovation.</p>
+          </div>
+          <NewsletterSignup compact={true} showName={false} />
         </div>
       </section>
 

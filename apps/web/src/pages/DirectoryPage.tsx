@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ALTERNATIVES, type ServiceCategory } from "@digitaleu/shared";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { COUNTRY_FLAGS } from "@/lib/flags";
 
 const CATEGORY_LABELS: Record<ServiceCategory | string, string> = {
@@ -233,6 +234,17 @@ export function DirectoryPage() {
           )}
         </main>
       </div>
+
+      {/* Newsletter CTA */}
+      <section className="border-t border-[#2d4a6e] bg-[#080e1c] py-12">
+        <div className="mx-auto max-w-5xl px-6 text-center space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-2">Stay informed on EU tech sovereignty</h2>
+            <p className="text-slate-400 text-sm max-w-2xl mx-auto">Get weekly updates on privacy regulations, new European alternatives, and digital sovereignty trends.</p>
+          </div>
+          <NewsletterSignup compact={true} showName={false} />
+        </div>
+      </section>
 
       <Footer />
     </div>

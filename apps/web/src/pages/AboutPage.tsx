@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 export function AboutPage() {
   return (
@@ -79,6 +80,15 @@ export function AboutPage() {
             </div>
           </div>
         </article>
+
+        {/* Newsletter CTA */}
+        <section className="mt-16 border-t border-white/10 pt-12 space-y-6 text-center">
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-2">Join the sovereign digital movement</h2>
+            <p className="text-slate-400 text-sm max-w-2xl mx-auto">Get our latest investigations, interviews with European tech founders, and updates on digital sovereignty regulations.</p>
+          </div>
+          <NewsletterSignup compact={true} showName={false} />
+        </section>
       </main>
 
       <Footer />
