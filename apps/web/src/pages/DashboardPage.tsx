@@ -208,7 +208,6 @@ export function DashboardPage() {
   const { status, toggle, migratedCount } = useMigrationStatus(serviceIds);
 
   const highCount = sorted.filter((s) => s.threatScore === "HIGH").length;
-  const hasEmail = sorted.some((s) => s.category === "email");
   const progressPct = sorted.length > 0 ? Math.round((migratedCount / sorted.length) * 100) : 0;
 
   return (
