@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import { useMigrationState } from "@/hooks/useMigrationState";
-import { Button } from "@/components/ui/button";
 import { storeMarket } from "@/pages/AudienceSelectorPage";
 import { EuStarRing } from "@/components/Logo";
 
@@ -57,22 +56,13 @@ export function Header() {
             </span>
           )}
 
-          {isB2B ? (
-            <Button
-              asChild
-              size="sm"
-              className="bg-[#1a56db] hover:bg-[#2563eb] text-white text-xs px-4 rounded-md font-medium h-8"
+          {isB2B && (
+            <a
+              href="/b2b#contact"
+              className="inline-flex items-center bg-[#1a56db] hover:bg-[#2563eb] text-white text-xs px-4 rounded-md font-medium h-8"
             >
-              <a href="/b2b#contact">Contact Us</a>
-            </Button>
-          ) : (
-            <Button
-              asChild
-              size="sm"
-              className="bg-[#1a56db] hover:bg-[#2563eb] text-white text-xs px-4 rounded-md font-medium h-8"
-            >
-              <Link to="/dashboard">Scan Inbox</Link>
-            </Button>
+              Contact Us
+            </a>
           )}
         </div>
       </div>

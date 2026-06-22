@@ -6,8 +6,6 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { COUNTRY_FLAGS } from "@/lib/flags";
 
-// --- Badges ---
-
 const THREAT_BADGE: Record<ThreatLevel, { label: string; className: string; dot: string }> = {
   HIGH:   { label: "HIGH",   className: "bg-red-500/15 text-red-400 border-red-500/20",       dot: "bg-red-400" },
   MEDIUM: { label: "MEDIUM", className: "bg-amber-500/15 text-amber-400 border-amber-500/20", dot: "bg-amber-400" },
@@ -29,8 +27,6 @@ function ScoreBadge({ level, type }: { level: ThreatLevel; type: "threat" | "dat
     </span>
   );
 }
-
-// --- Migration tracker ---
 
 type MigrationStatus = Record<string, "pending" | "migrated">;
 
@@ -56,58 +52,6 @@ function useMigrationStatus(serviceIds: string[]) {
   return { status, toggle, migratedCount };
 }
 
-// --- Proton affiliate banner ---
-
-const PROTON_AFFILIATE = "https://go.getproton.me/SH1mR";
-
-function ProtonBanner({ hasEmail, hasCloud }: { hasEmail: boolean; hasCloud: boolean }) {
-  if (!hasEmail && !hasCloud) return null;
-  return (
-    <div className="relative overflow-hidden rounded-lg border border-[#2d4a6e] bg-[#1e293b] p-6 sm:p-8">
-      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#f0c040]">
-            🇨🇭 Recommended upgrade
-          </p>
-          <h3 className="text-lg font-bold text-white leading-snug">
-            Your data deserves Swiss-grade protection.
-          </h3>
-          <p className="max-w-lg text-xs text-slate-400 leading-relaxed">
-            Proton is built in Switzerland under the world's strictest privacy laws. Zero-knowledge encryption means{" "}
-            <strong className="text-white">nobody — not even Proton — can read your data.</strong>{" "}
-            Used by 100M+ journalists, activists, and privacy-conscious people worldwide.
-          </p>
-        </div>
-        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
-          {hasEmail && (
-            <a
-              href={PROTON_AFFILIATE}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-[#1a56db] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2563eb]"
-            >
-              Get Proton Mail free →
-            </a>
-          )}
-          {hasCloud && (
-            <a
-              href={PROTON_AFFILIATE}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-[#1a56db]/40 bg-[#1a56db]/10 px-5 py-2.5 text-sm font-semibold text-[#93c5fd] transition hover:bg-[#1a56db]/20"
-            >
-              Get Proton Drive free →
-            </a>
-          )}
-          <p className="text-[10px] text-slate-500">Affiliate link — supports DigitalEU.me 🇪🇺</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// --- Service row ---
-
 function ServiceRow({
   service,
   index,
@@ -122,11 +66,12 @@ function ServiceRow({
   const alt = service.euAlternativeId ? ALTERNATIVES.find((a) => a.id === service.euAlternativeId) : null;
   const logoUrl = `https://www.google.com/s2/favicons?domain=${service.domain}&sz=64`;
   const fallbackUrl = `https://${service.domain}/favicon.ico`;
+  const altLogoUrl = alt ? `https://www.google.com/s2/favicons?domain=${new URL(alt.url).hostname}&sz=64` : "";
 
   return (
     <tr className={`border-b border-[#2d4a6e] transition-colors hover:bg-[#0f2040]/50 ${migrated ? "opacity-50" : ""}`}>
       <td className="py-4 pl-4 pr-2 text-xs text-slate-400 font-mono w-8">{index + 1}</td>
-      <td className="py-4 pr-4 min-w-[160px]">
+      <td className="py-4 pr-4">
         <div className="flex items-center gap-3">
           <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white">
             <img
@@ -146,11 +91,13 @@ function ServiceRow({
             </span>
           </span>
           <div>
-            <p className="font-semibold text-white text-sm leading-tight">{service.name}</p>
-            <p className="text-[11px] text-slate-400">
-            {service.domain}
-            {" "}<span title={service.ownerCountry}>{COUNTRY_FLAGS[service.ownerCountry] ?? ""}</span>
-          </p>
+            <div className="flex items-center gap-2">
+              <p className="font-semibold text-white text-sm leading-tight">{service.name}</p>
+              {COUNTRY_FLAGS[service.ownerCountry] && (
+                <span title={service.ownerCountry} className="text-sm" aria-hidden>{COUNTRY_FLAGS[service.ownerCountry]}</span>
+              )}
+            </div>
+            <p className="text-[11px] text-slate-400">{service.domain}</p>
           </div>
         </div>
       </td>
@@ -166,9 +113,10 @@ function ServiceRow({
               href={service.deleteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-lg border border-red-500/30 bg-red-500/10 px-2.5 py-1 text-[11px] font-semibold text-red-400 transition hover:bg-red-500/20"
+              className="inline-flex items-center gap-1 rounded-lg border border-red-500/50 bg-red-500/20 px-3 py-1.5 text-[11px] font-semibold text-red-300 transition hover:bg-red-500/30 hover:border-red-500/70"
+              title="Delete your account"
             >
-              Delete
+              🗑️ Delete
             </a>
           )}
           {service.changeEmailUrl && (
@@ -176,32 +124,44 @@ function ServiceRow({
               href={service.changeEmailUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-400 transition hover:bg-amber-500/20"
+              className="inline-flex items-center gap-1 rounded-lg border border-amber-500/50 bg-amber-500/20 px-3 py-1.5 text-[11px] font-semibold text-amber-300 transition hover:bg-amber-500/30 hover:border-amber-500/70"
+              title="Change email address"
             >
-              Change Email
+              ✉️ Change Email
             </a>
+          )}
+          {!service.deleteUrl && !service.changeEmailUrl && (
+            <span className="text-[10px] text-slate-500 italic">No direct links</span>
           )}
         </div>
       </td>
-      <td className="py-4 pr-4 min-w-[150px]">
+      <td className="py-4 pr-4">
         {alt ? (
           <a
-            href={service.affiliateUrl ?? alt.url}
+            href={service.affiliateUrl ?? alt.affiliateUrl ?? alt.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2 rounded-lg border border-[#1a56db]/20 bg-[#1a56db]/5 px-3 py-2 transition hover:border-[#1a56db]/40 hover:bg-[#1a56db]/10"
+            className="group flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 transition hover:border-emerald-500/60 hover:bg-emerald-500/20"
+            title={`Switch to ${alt.name} (${alt.country})`}
           >
-            <span className="text-base" aria-hidden>🇪🇺</span>
-            <div>
-              <p className="text-xs font-bold text-[#93c5fd] group-hover:text-[#bfdbfe] leading-tight">{alt.name}</p>
-              <p className="text-[10px] text-slate-400">{alt.country}</p>
+            {altLogoUrl && (
+              <img
+                src={altLogoUrl}
+                alt=""
+                className="h-4 w-4 rounded flex-shrink-0"
+                onError={(e) => (e.currentTarget as HTMLImageElement).style.display = "none"}
+              />
+            )}
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-emerald-300 group-hover:text-emerald-200 leading-tight truncate">{alt.name}</p>
+              <p className="text-[9px] text-slate-500">{alt.country}</p>
             </div>
-            {service.affiliateUrl && (
-              <span className="ml-auto rounded bg-[#1a56db]/20 px-1 py-0.5 text-[9px] font-bold text-[#93c5fd] uppercase">Deal</span>
+            {(service.affiliateUrl ?? alt.affiliateUrl) && (
+              <span className="ml-auto rounded bg-emerald-500/30 px-1.5 py-0.5 text-[8px] font-bold text-emerald-300 uppercase flex-shrink-0">Deal</span>
             )}
           </a>
         ) : (
-          <span className="text-xs text-slate-500">—</span>
+          <span className="text-xs text-slate-500 italic">—</span>
         )}
       </td>
       <td className="py-4 pr-4">
@@ -209,7 +169,7 @@ function ServiceRow({
           onClick={onToggle}
           className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-semibold transition active:scale-95 ${
             migrated
-              ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/10"
+              ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/20"
               : "border-[#2d4a6e] bg-[#1e293b] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
           }`}
         >
@@ -249,7 +209,6 @@ export function DashboardPage() {
 
   const highCount = sorted.filter((s) => s.threatScore === "HIGH").length;
   const hasEmail = sorted.some((s) => s.category === "email");
-  const hasCloud = sorted.some((s) => s.category === "cloud");
   const progressPct = sorted.length > 0 ? Math.round((migratedCount / sorted.length) * 100) : 0;
 
   return (
@@ -321,9 +280,6 @@ export function DashboardPage() {
           </div>
         )}
 
-        {/* Proton affiliate banner */}
-        <ProtonBanner hasEmail={hasEmail} hasCloud={hasCloud} />
-
         {/* Table or empty state */}
         {sorted.length === 0 ? (
           <div className="rounded-lg border border-[#2d4a6e] bg-[#1e293b] py-20 text-center">
@@ -337,8 +293,8 @@ export function DashboardPage() {
                 <tr className="border-b border-[#2d4a6e] bg-[#1e293b] text-left">
                   <th className="py-3 pl-4 pr-2 text-xs font-semibold text-slate-400 w-8">#</th>
                   <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Service</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Threat Score</th>
-                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Data Protection</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Threat</th>
+                  <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Protection</th>
                   <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Known Issues</th>
                   <th className="py-3 pr-4 text-xs font-semibold text-slate-400">Actions</th>
                   <th className="py-3 pr-4 text-xs font-semibold text-slate-400">EU Alternative</th>
@@ -361,7 +317,7 @@ export function DashboardPage() {
         )}
 
         <p className="text-center text-xs text-slate-500">
-          Scores are based on publicly documented data breaches, GDPR enforcement actions, and ownership analysis. Updated regularly by the Digital Europe team.
+          Scores based on public breach data, GDPR enforcement actions, and ownership analysis. Updated regularly by the Digital Europe team.
         </p>
       </main>
       <Footer />

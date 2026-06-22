@@ -826,20 +826,6 @@ export const SERVICES: ServiceInfo[] = [
     euAlternativeId: "bitpanda",
   },
   {
-    id: "coinbase",
-    name: "Coinbase",
-    domain: "coinbase.com",
-    category: "finance",
-    threatScore: "MEDIUM",
-    dataProtection: "MEDIUM",
-    breachSummary: "Credential stuffing attack affected 6,000 users (2021).",
-    details:
-      "In 2021, at least 6,000 Coinbase customers had funds stolen from their accounts after falling victim to a phishing campaign that bypassed SMS-based multi-factor authentication. Coinbase is a publicly-traded US company.",
-    ownerCountry: "US",
-    sellsData: false,
-    euAlternativeId: "bitpanda",
-  },
-  {
     id: "nexo",
     name: "Nexo",
     domain: "nexo.io",
@@ -1465,21 +1451,6 @@ export const SERVICES: ServiceInfo[] = [
     euAlternativeId: "klarna",
   },
   {
-    id: "paypal",
-    name: "PayPal",
-    domain: "paypal.com",
-    category: "finance",
-    threatScore: "HIGH",
-    dataProtection: "LOW",
-    breachSummary: "2023 credential stuffing attack exposed 35,000 accounts.",
-    details:
-      "In January 2023, a credential stuffing attack compromised approximately 35,000 PayPal accounts, exposing names, addresses, Social Security numbers, and transaction history. PayPal is US-based and a frequent target for fraud.",
-    ownerCountry: "US",
-    sellsData: true,
-    deleteUrl: "https://www.paypal.com/us/cshelp/article/how-do-i-close-my-paypal-account-help246",
-    euAlternativeId: "adyen-mollie",
-  },
-  {
     id: "monzo",
     name: "Monzo",
     domain: "monzo.com",
@@ -2085,21 +2056,6 @@ export const SERVICES: ServiceInfo[] = [
   },
 
   // --- Security Tools ---
-  {
-    id: "lastpass",
-    name: "LastPass",
-    domain: "lastpass.com",
-    category: "security",
-    threatScore: "HIGH",
-    dataProtection: "LOW",
-    breachSummary: "2022: entire password vault database stolen.",
-    details:
-      "In August 2022, attackers stole LastPass's entire encrypted password vault database along with customer metadata. The breach is considered catastrophic for a password manager. US-based (LogMeIn/GoTo). Millions of customers affected.",
-    ownerCountry: "US",
-    sellsData: false,
-    deleteUrl: "https://support.lastpass.com/s/article/how-do-i-delete-my-account",
-    euAlternativeId: "proton-pass",
-  },
   {
     id: "norton",
     name: "Norton / NortonLifeLock",

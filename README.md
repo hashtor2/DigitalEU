@@ -8,6 +8,8 @@ digitaleu.me helps you move out. We map your digital footprint, show you the ris
 
 🌍 **Live at [digitaleu.me](https://digitaleu.me)**
 
+If you want to contribute to this project, please contact: torisor@pm.me
+
 ---
 
 ## What it does
@@ -100,4 +102,4 @@ Source-available. All rights reserved for now — open licensing under considera
 
 ---
 
-*Built in Europe. Hosted in Europe. For Europe.*
+*Built in Norway. Hosted in Switzerland. For Europe.*
