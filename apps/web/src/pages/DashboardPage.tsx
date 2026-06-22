@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { SERVICES, ALTERNATIVES, type ServiceInfo, type ThreatLevel } from "@digitaleu/shared";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { NewsletterGate } from "@/components/NewsletterGate";
 import { Button } from "@/components/ui/button";
 import { COUNTRY_FLAGS } from "@/lib/flags";
+import { prepareReportData, generateCSV, downloadCSV, requestPDFGeneration } from "@/lib/reportGenerator";
 
 const THREAT_BADGE: Record<ThreatLevel, { label: string; className: string; dot: string }> = {
   HIGH:   { label: "HIGH",   className: "bg-red-500/15 text-red-400 border-red-500/20",       dot: "bg-red-400" },
@@ -184,6 +186,9 @@ const THREAT_ORDER: ThreatLevel[] = ["HIGH", "MEDIUM", "LOW"];
 
 export function DashboardPage() {
   const navigate = useNavigate();
+  const [showNewsletterGate, setShowNewsletterGate] = useState(false);
+  const [downloadFormat, setDownloadFormat] = useState<"csv" | "pdf" | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const selectedIds = useMemo<string[]>(() => {
     try {
@@ -210,6 +215,38 @@ export function DashboardPage() {
   const highCount = sorted.filter((s) => s.threatScore === "HIGH").length;
   const progressPct = sorted.length > 0 ? Math.round((migratedCount / sorted.length) * 100) : 0;
 
+  const handleDownloadClick = (format: "csv" | "pdf") => {
+    setDownloadFormat(format);
+    setShowNewsletterGate(true);
+  };
+
+  const handleNewsletterSuccess = useCallback(async () => {
+    if (!downloadFormat) return;
+    setShowNewsletterGate(false);
+    setIsDownloading(true);
+
+    try {
+      const reportData = prepareReportData(sorted, status);
+
+      if (downloadFormat === "csv") {
+        const csv = generateCSV(reportData);
+        downloadCSV(`privacy-report-${new Date().toISOString().split("T")[0]}.csv`, csv);
+      } else if (downloadFormat === "pdf") {
+        const result = await requestPDFGeneration(reportData);
+        if (result.success && result.url) {
+          window.open(result.url, "_blank");
+        } else {
+          alert(`Failed to generate PDF: ${result.error}`);
+        }
+      }
+    } catch (err) {
+      alert(`Download failed: ${err instanceof Error ? err.message : "Unknown error"}`);
+    } finally {
+      setIsDownloading(false);
+      setDownloadFormat(null);
+    }
+  }, [downloadFormat, sorted, status]);
+
   return (
     <div className="min-h-screen bg-[#0d1117] text-slate-100">
       <Header />
@@ -228,13 +265,37 @@ export function DashboardPage() {
               </p>
             )}
           </div>
-          <div className="flex gap-3">
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/">← Change selection</Link>
-            </Button>
-            <Button size="sm" className="bg-[#1a56db] text-white hover:bg-[#2563eb] font-medium rounded-md" asChild>
-              <Link to="/directory">Browse EU Alternatives</Link>
-            </Button>
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-3">
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/">← Change selection</Link>
+              </Button>
+              <Button size="sm" className="bg-[#1a56db] text-white hover:bg-[#2563eb] font-medium rounded-md" asChild>
+                <Link to="/directory">Browse EU Alternatives</Link>
+              </Button>
+            </div>
+            {sorted.length > 0 && (
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleDownloadClick("csv")}
+                  disabled={isDownloading}
+                  className="text-xs"
+                >
+                  📥 Download CSV
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleDownloadClick("pdf")}
+                  disabled={isDownloading}
+                  className="text-xs"
+                >
+                  📄 Download PDF
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -320,6 +381,9 @@ export function DashboardPage() {
         </p>
       </main>
       <Footer />
+
+      {/* Newsletter gate modal */}
+      <NewsletterGate isOpen={showNewsletterGate} onSuccess={handleNewsletterSuccess} />
     </div>
   );
 }

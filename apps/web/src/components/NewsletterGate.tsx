@@ -2,7 +2,7 @@ import { NewsletterSignup } from "./NewsletterSignup";
 
 interface NewsletterGateProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   onSuccess?: () => void;
   title?: string;
   subtitle?: string;
@@ -17,12 +17,23 @@ export function NewsletterGate({
 }: NewsletterGateProps) {
   if (!isOpen) return null;
 
+  const handleClose = () => {
+    if (onClose) onClose();
+  };
+
+  const handleSuccess = () => {
+    if (onSuccess) {
+      onSuccess();
+    }
+    handleClose();
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-slate-800 border border-slate-700 rounded-lg max-w-md w-full p-6 relative">
         {/* Close button */}
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-4 right-4 text-slate-400 hover:text-slate-200 transition"
           aria-label="Close"
         >
@@ -51,16 +62,13 @@ export function NewsletterGate({
         <NewsletterSignup
           showName={false}
           compact={false}
-          onSuccess={() => {
-            onSuccess?.();
-            onClose();
-          }}
+          onSuccess={handleSuccess}
           className="mb-4"
         />
 
         {/* Skip option */}
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="w-full py-2 text-slate-400 hover:text-slate-200 font-medium text-sm transition"
         >
           Skip for now
