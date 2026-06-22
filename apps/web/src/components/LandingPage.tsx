@@ -174,6 +174,22 @@ export function LandingPage() {
               GDPR compliance — then show you the best European alternatives.
             </p>
 
+            {/* Quick Email Scanner CTA */}
+            <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3 mb-6">
+              <Link
+                to="/emailscanner"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#1a56db] to-[#2563eb] text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-[#1a56db]/50 transition transform hover:scale-105"
+              >
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Scan Your Email
+              </Link>
+              <span className="text-xs text-slate-400 self-center">
+                or manually select below →
+              </span>
+            </div>
+
             {/* Trust indicators */}
             <div className="mt-5 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
               <span className="flex items-center gap-1.5">

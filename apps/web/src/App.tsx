@@ -38,6 +38,12 @@ const router = createBrowserRouter([
     }),
   },
   {
+    path: "/emailscanner",
+    lazy: async () => ({
+      Component: (await import("./pages/EmailScannerPage")).EmailScannerPage,
+    }),
+  },
+  {
     path: "/directory",
     lazy: async () => ({
       Component: (await import("./pages/DirectoryPage")).DirectoryPage,

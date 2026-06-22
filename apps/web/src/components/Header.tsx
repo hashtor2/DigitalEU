@@ -42,6 +42,7 @@ export function Header() {
             For Business
           </Link>
           <Link to="/dashboard" className={linkClass("/dashboard")}>Dashboard</Link>
+          <Link to="/emailscanner" className={linkClass("/emailscanner")}>Email Scanner</Link>
           <Link to="/directory" className={linkClass("/directory")}>Alternatives</Link>
           <Link to="/guides" className={linkClass("/guides")}>Guides</Link>
           <Link to="/about" className={linkClass("/about")}>Manifesto</Link>
