@@ -1,6 +1,9 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { NewsArticleCard } from "@/components/NewsArticleCard";
 
 interface Guide {
   id: string;
@@ -9,6 +12,16 @@ interface Guide {
   category: string;
   difficulty: "Easy" | "Medium" | "Advanced";
   hasContent: boolean;
+}
+
+interface NewsArticle {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  image_url?: string;
+  source: "TechCrunch" | "Euractiv" | "Politico";
+  scraped_at: string;
 }
 
 const GUIDES: Guide[] = [
@@ -69,6 +82,42 @@ const DIFFICULTY_STYLE: Record<string, string> = {
 };
 
 export function GuidesPage() {
+  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedSource, setSelectedSource] = useState<"all" | "TechCrunch" | "Euractiv" | "Politico">("all");
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        // For demo, fetch from Supabase public endpoint
+        // In production, use a proper Supabase client
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/daily_news_articles?order=scraped_at.desc&limit=12`,
+          {
+            headers: {
+              apikey: import.meta.env.VITE_SUPABASE_ANON_KEY || "",
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setArticles(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch news articles:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  const filteredArticles = selectedSource === "all" 
+    ? articles 
+    : articles.filter((a) => a.source === selectedSource);
+
   return (
     <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
       <title>Privacy & Migration Guides — European Alternatives | digitaleu.me</title>
@@ -122,6 +171,66 @@ export function GuidesPage() {
           ))}
         </div>
       </main>
+
+      {/* Daily EU Tech News Section */}
+      <div className="bg-[#161b22] border-t border-[#2d4a6e]">
+        <div className="mx-auto max-w-4xl w-full px-6 py-12">
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-2">📰 Daily EU Tech News</h2>
+            <p className="text-sm text-slate-400">Latest articles from TechCrunch EU, Euractiv, and Politico</p>
+          </div>
+
+          {/* Filter tabs */}
+          <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+            {(["all", "TechCrunch", "Euractiv", "Politico"] as const).map((source) => (
+              <button
+                key={source}
+                onClick={() => setSelectedSource(source)}
+                className={`whitespace-nowrap px-4 py-2 rounded font-medium text-sm transition ${
+                  selectedSource === source
+                    ? "bg-[#f0c040] text-[#0d1117] font-bold"
+                    : "bg-[#2d4a6e] text-slate-300 hover:bg-[#3d5a7e]"
+                }`}
+              >
+                {source === "all" ? "All Sources" : source}
+              </button>
+            ))}
+          </div>
+
+          {/* News grid */}
+          {loading ? (
+            <div className="text-center py-12 text-slate-400">Loading news articles...</div>
+          ) : filteredArticles.length === 0 ? (
+            <div className="text-center py-12 text-slate-400">
+              No articles found. Check back soon!
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredArticles.map((article) => (
+                <NewsArticleCard
+                  key={article.id}
+                  title={article.title}
+                  description={article.description}
+                  url={article.url}
+                  imageUrl={article.image_url}
+                  source={article.source}
+                  publishedAt={article.scraped_at}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Newsletter signup */}
+          <div className="mt-12 pt-8 border-t border-[#2d4a6e]">
+            <div className="max-w-md mx-auto">
+              <h3 className="text-lg font-bold text-white mb-3">Subscribe to Our Newsletter</h3>
+              <p className="text-sm text-slate-400 mb-4">Get weekly updates on EU tech news and privacy guides</p>
+              <NewsletterSignup showName={false} compact={false} />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Footer />
     </div>
   );
