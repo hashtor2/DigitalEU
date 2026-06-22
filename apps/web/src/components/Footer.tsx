@@ -18,6 +18,28 @@ export function Footer() {
             <p className="text-slate-500">🇪🇺 Data hosted in Switzerland (Zürich)</p>
             <div className="flex flex-col gap-3">
               <a
+                href="https://digitaleu.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 transition"
+                aria-label="Visit DigitalEU.me"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+                  <path d="M19.54 5.23l-1.39-1.39c-.78-.78-2.05-.78-2.84 0l-1.83 1.83.76.76c.39.39.39 1.02 0 1.41-.39.39-1.02.39-1.41 0l-.76-.76-2.69 2.69.76.76c.39.39.39 1.02 0 1.41-.39.39-1.02.39-1.41 0l-.76-.76-1.83 1.83c-.78.78-.78 2.05 0 2.84l1.39 1.39c.78.78 2.05.78 2.84 0l1.83-1.83-.76-.76c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l.76.76 2.69-2.69-.76-.76c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l.76.76 1.83-1.83c.78-.78.78-2.05 0-2.84z" />
+                </svg>
+                digitaleu.me
+              </a>
+              <a
+                href="mailto:info@digitaleu.me"
+                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 transition"
+                aria-label="Email us"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+                  <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
+                info@digitaleu.me
+              </a>
+              <a
                 href="https://x.com/digitaleume"
                 target="_blank"
                 rel="noopener noreferrer me"
@@ -27,10 +49,10 @@ export function Footer() {
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.207-6.807-5.974 6.807H2.882l7.432-8.489L1.766 2.25h6.837l4.716 6.231 5.43-6.231zM17.009 18.875h1.829L6.875 3.541H4.956l12.053 15.334z" />
                 </svg>
-                @digitaleume (X)
+                @digitaleume
               </a>
               <a
-                href="https://reddit.com/u/Digitaleume"
+                href="https://www.reddit.com/user/DigitalEUme/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 transition"
@@ -39,7 +61,7 @@ export function Footer() {
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
                   <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6-2c1.657 0 3 1.343 3 3 0 1.4-1.028 2.578-2.365 2.922.13.866.130 1.538.130 2.078 0 2.289-1.953 4.5-4.765 4.5-2.812 0-4.765-2.211-4.765-4.5 0-.54 0-1.212.13-2.078C6.028 11.578 5 10.4 5 9c0-1.657 1.343-3 3-3h6z" />
                 </svg>
-                u/Digitaleume (Reddit)
+                u/DigitalEUme
               </a>
               <a
                 href="https://substack.com/@digitaleurope"
@@ -51,7 +73,7 @@ export function Footer() {
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
                   <path d="M22.539 8.242H1.46V4h21.079v4.242zM1.46 10.042V21h21.079v-10.958H1.46zM4.017 13.524h3.073v4.303H4.017z" />
                 </svg>
-                @digitaleurope (Substack)
+                @digitaleurope
               </a>
               <a
                 href="https://bsky.app/profile/digitaleu.me"
@@ -63,7 +85,7 @@ export function Footer() {
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
                   <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.828 0 1.5-.672 1.5-1.5S16.328 8 15.5 8 14 8.672 14 9.5s.672 1.5 1.5 1.5zm-7 0c.828 0 1.5-.672 1.5-1.5S9.828 8 9 8 7.5 8.672 7.5 9.5 8.172 11 9 11z" />
                 </svg>
-                digitaleu.me (Bluesky)
+                digitaleu.me
               </a>
               <a
                 href="https://mastodon.social/@digitaleu"
@@ -94,9 +116,6 @@ export function Footer() {
               <p className="font-semibold text-slate-400 uppercase tracking-wider text-[10px]">Company</p>
               <Link to="/about" className="block hover:text-slate-200 transition">About & Manifesto</Link>
               <Link to="/news" className="block hover:text-slate-200 transition">EU Tech News</Link>
-              <a href="mailto:info@digitaleu.me" className="block hover:text-slate-200 transition">
-                info@digitaleu.me
-              </a>
             </div>
           </div>
 
