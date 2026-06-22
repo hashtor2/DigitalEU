@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { NewsletterSignup } from "./NewsletterSignup";
 
 export function Footer() {
   return (
@@ -26,7 +27,43 @@ export function Footer() {
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.207-6.807-5.974 6.807H2.882l7.432-8.489L1.766 2.25h6.837l4.716 6.231 5.43-6.231zM17.009 18.875h1.829L6.875 3.541H4.956l12.053 15.334z" />
                 </svg>
-                @digitaleume
+                @digitaleume (X)
+              </a>
+              <a
+                href="https://reddit.com/u/Digitaleume"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 transition"
+                aria-label="Follow us on Reddit"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6-2c1.657 0 3 1.343 3 3 0 1.4-1.028 2.578-2.365 2.922.13.866.130 1.538.130 2.078 0 2.289-1.953 4.5-4.765 4.5-2.812 0-4.765-2.211-4.765-4.5 0-.54 0-1.212.13-2.078C6.028 11.578 5 10.4 5 9c0-1.657 1.343-3 3-3h6z" />
+                </svg>
+                u/Digitaleume (Reddit)
+              </a>
+              <a
+                href="https://substack.com/@digitaleurope"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 transition"
+                aria-label="Subscribe on Substack"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+                  <path d="M22.539 8.242H1.46V4h21.079v4.242zM1.46 10.042V21h21.079v-10.958H1.46zM4.017 13.524h3.073v4.303H4.017z" />
+                </svg>
+                @digitaleurope (Substack)
+              </a>
+              <a
+                href="https://bsky.app/profile/digitaleu.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 transition"
+                aria-label="Follow us on Bluesky"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+                  <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.828 0 1.5-.672 1.5-1.5S16.328 8 15.5 8 14 8.672 14 9.5s.672 1.5 1.5 1.5zm-7 0c.828 0 1.5-.672 1.5-1.5S9.828 8 9 8 7.5 8.672 7.5 9.5 8.172 11 9 11z" />
+                </svg>
+                digitaleu.me (Bluesky)
               </a>
               <a
                 href="https://mastodon.social/@digitaleu"
@@ -61,6 +98,11 @@ export function Footer() {
                 info@digitaleu.me
               </a>
             </div>
+          </div>
+
+          {/* Newsletter signup */}
+          <div className="max-w-xs">
+            <NewsletterSignup showName={false} compact={true} />
           </div>
         </div>
 

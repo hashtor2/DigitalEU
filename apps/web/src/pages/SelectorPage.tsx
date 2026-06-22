@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SERVICES, type ServiceInfo } from "@digitaleu/shared";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { SocialLinks } from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { COUNTRY_FLAGS } from "@/lib/flags";
@@ -144,33 +145,34 @@ export function SelectorPage() {
   return (
     <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
       <Header />
+      <SocialLinks />
 
       <main className="flex-1 mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        {/* Conversion hero */}
-        <div className="mb-10 text-center">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#f0c040]">
+        {/* Hero section */}
+        <div className="mb-12 text-center">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#f0c040]">
             Free · Takes 30 seconds · No account needed
           </p>
-          <h1 className="text-3xl font-bold text-white sm:text-4xl">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Find out which of your accounts put your privacy at risk
           </h1>
-          <p className="mt-3 text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+          <p className="mb-4 text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-semibold">
             Tick the services you use. We'll score each one for privacy risk, data breaches, and
             GDPR compliance — then show you the best European alternatives.
           </p>
           {/* Trust indicators */}
-          <div className="mt-5 flex flex-wrap justify-center gap-4 text-xs text-slate-400">
-            <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              {SERVICES.length} services tracked
+          <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm text-slate-300">
+            <span className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="font-medium">{SERVICES.length} services tracked</span>
             </span>
-            <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#5b8ff9]" />
-              149 EU alternatives catalogued
+            <span className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[#5b8ff9]" />
+              <span className="font-medium">149 EU alternatives catalogued</span>
             </span>
-            <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-              Zero data sent to our servers
+            <span className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-purple-400" />
+              <span className="font-medium">Zero data sent to our servers</span>
             </span>
           </div>
         </div>

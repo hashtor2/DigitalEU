@@ -1,14 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useTheme } from "./hooks/useTheme";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    lazy: async () => ({
-      Component: (await import("./pages/SelectorPage")).SelectorPage,
-    }),
-  },
-  {
-    path: "/b2c",
     lazy: async () => ({
       Component: (await import("./pages/SelectorPage")).SelectorPage,
     }),
@@ -88,5 +83,8 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  // Initialize theme on mount
+  useTheme();
+  
   return <RouterProvider router={router} />;
 }
