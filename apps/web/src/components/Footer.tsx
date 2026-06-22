@@ -13,7 +13,7 @@ export function Footer() {
               DigitalEU<span className="text-[#f0c040]">.me</span>
             </p>
             <p className="leading-relaxed text-slate-400">
-              Helping Europeans reclaim their digital lives. Privacy-first, built in Europe, open by design.
+              Helping Europeans reclaim their digital lives. Privacy-first, built in Europe, open by design. TEST BUILD v2.
             </p>
             <p className="text-slate-500">🇪🇺 Data hosted in Switzerland (Zürich)</p>
             <div className="flex flex-col gap-3">
