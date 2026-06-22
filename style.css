@@ -1,0 +1,238 @@
+/* DigitalEU – main stylesheet */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f5f7fa;
+  color: #1a1a2e;
+  line-height: 1.6;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+header {
+  background: #003399;
+  color: #fff;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header .logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+header .tagline {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+  color: #fff;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  max-width: 640px;
+  margin: 0 auto 1.8rem;
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background: #ffcc00;
+  color: #1a1a2e;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-block;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #e6b800;
+}
+
+/* ── Sections ─────────────────────────────────────────── */
+section {
+  padding: 3rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #003399;
+}
+
+.section-lead {
+  font-size: 1.05rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* ── Proton promotional cards ─────────────────────────── */
+.proton-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem 2rem;
+  margin: 2rem auto;
+  max-width: 1100px;
+}
+
+.proton-section .proton-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.proton-section .proton-logo-text {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #6d4aff;
+}
+
+.proton-section .proton-tagline {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.proton-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.proton-card {
+  background: #f3f0ff;
+  border: 2px solid #d8ceff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.proton-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(109, 74, 255, 0.18);
+}
+
+.proton-card .icon {
+  font-size: 2.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.proton-card h3 {
+  font-size: 1.15rem;
+  color: #6d4aff;
+  margin-bottom: 0.5rem;
+}
+
+.proton-card p {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.proton-card a {
+  display: inline-block;
+  background: #6d4aff;
+  color: #fff;
+  padding: 0.45rem 1.2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.proton-card a:hover {
+  background: #5535e0;
+}
+
+.proton-why {
+  margin-top: 2rem;
+  background: #ede9ff;
+  border-left: 4px solid #6d4aff;
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+}
+
+.proton-why h3 {
+  color: #6d4aff;
+  margin-bottom: 0.5rem;
+}
+
+.proton-why ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+/* ── Why EU Tech section ──────────────────────────────── */
+.why-eu {
+  background: #e8f0fe;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1100px;
+}
+
+.why-eu h2 {
+  color: #003399;
+  margin-bottom: 1rem;
+}
+
+.why-eu ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.why-eu ul li {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+  color: #333;
+  border-left: 4px solid #003399;
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+footer {
+  background: #1a1a2e;
+  color: #ccc;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.88rem;
+}
+
+footer a {
+  color: #88aaff;
+  text-decoration: none;
+}
