@@ -70,9 +70,9 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
 
 #### 1.4 Service Display Components
-- [ ] ServiceCard (logo + name + country flag + description)
-- [ ] ServiceGrid (responsive grid layout)
-- [ ] ServiceBadge (tag-like display)
+- [x] ServiceCard (logo + name + country flag + description)
+- [x] ServiceGrid (responsive grid layout)
+- [x] ServiceBadge (tag-like display)
 
 **Commit when done:**
 ```bash
@@ -144,7 +144,7 @@ Before committing any design changes, verify:
 | 1. Foundation (tokens + config) | 2026-06-22 | 🟢 Done | 8ea8f0b — Base config + BRAND.md |
 | 2. Component overrides | 2026-06-22 | 🟢 Done | fa7cdb4 — shadcn/ui theme |
 | 3. Header + Footer | 2026-06-22 | 🟢 Done | 4161035 — Layout structure |
-| 4. Service display | (TBD) | ⏳ | Logos + flags |
+| 4. Service display | 2026-06-22 | 🟢 Done | e7b8810 — Service card/grid/badge + flag icons |
 | (merge to main) | (TBD) | ⏳ | Design system ready |
 
 ---
@@ -156,9 +156,9 @@ Before committing any design changes, verify:
 - [x] Tailwind config working (no errors)
 - [x] Core components (button, input, card) built + tested
 - [x] Header + Footer built
-- [ ] Dark mode fully functional
+- [x] Dark mode fully functional
 - [ ] Accessibility audit passed
-- [ ] All colors verified (WCAG AAA)
-- [ ] No console errors
+- [x] All colors verified (WCAG AAA)
+- [x] No console errors
 
 Then: **Create PR, link to issue, merge to main.**
