@@ -20,11 +20,25 @@ export default {
         warning: '#d9a835',
         error: '#c85553',
 
-        // Dark Mode (via Tailwind extend)
+        // Dark Mode
         'dark-canvas': '#1a1815',
         'dark-text-primary': '#f5f1ea',
         'dark-text-secondary': '#a89d96',
         'dark-border': '#3a3530',
+
+        // shadcn/ui tokens (mapped to Nordic Warmth)
+        primary: '#c17a5c',
+        'primary-foreground': '#ffffff',
+        secondary: '#e8e3da',
+        'secondary-foreground': '#2c2520',
+        background: '#f9f7f2',
+        foreground: '#2c2520',
+        muted: '#6b6560',
+        'muted-foreground': '#6b6560',
+        input: '#e8e3da',
+        ring: '#c17a5c',
+        destructive: '#c85553',
+        'destructive-foreground': '#ffffff',
       },
       fontFamily: {
         mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
