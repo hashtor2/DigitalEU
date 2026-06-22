@@ -194,6 +194,19 @@ git add -A && git commit -m "..." && git push
 **Før commit:** kjør sikkerhetssjekklisten i `docs/SECURITY.md` (hemmeligheter,
 scopes, datalekkasje, avhengigheter).
 
+### Design System Workflow (`feat/brand-identity` branch)
+
+Designarbeid gjøres på dedikert `feat/brand-identity`-branch. **Prosessen:**
+
+1. **Åpne** `docs/DESIGN_CHECKLIST.md` for å se neste fase.
+2. **Implementer** komponenter/layout per fase (A: component overrides → B: Header/Footer → C: Service display).
+3. **Sjekk** designkvalitet: farger korrekte, typografi tydelig, dark mode fungerer, WCAG AAA kontrast.
+4. **Commit:** kopier commit-meldingen fra `DESIGN_CHECKLIST.md`, kjør `git commit -m "..."`.
+5. **Oppdater** `DESIGN_CHECKLIST.md`: marker fase som ferdig, legg inn commit-hash og dato.
+6. **Merge til main** når alle 4 faser er klare (se merkekriteria i checklist).
+
+**Commit-maler** er allerede i filen — bare bruk dem direkte.
+
 ### Automatisering & MCP-connectors
 Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 - **Supabase MCP:** hosted HTTP + OAuth, låst til prosjektet via `project_ref`
@@ -228,6 +241,11 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 14 | UI-komponenter: shadcn/ui                                         | 2026-06-18 |
 | 15 | Testing: Vitest. CI: GitHub Actions                               | 2026-06-18 |
 | 16 | Strategi: ikke ren affiliate — utvid til EU-katalog, så B2B       | 2026-06-18 |
+| 17 | **Brand:** Nordic Warmth — warm cream (#f9f7f2) + terracotta accent (#c17a5c), IBM Plex Mono headlines | 2026-06-22 |
+| 18 | **Branding:** Text-only for now; logo/wordmark etter MVP           | 2026-06-22 |
+| 19 | **Design:** Dark mode + light mode, WCAG AAA, desktop-first, open-source fonts | 2026-06-22 |
+| 20 | **Services:** Logo for hver tjeneste + landsflagg ved navn         | 2026-06-22 |
+| 21 | **Footer:** Links til EU tech websites, newsletter, copyright      | 2026-06-22 |
 
 ---
 
@@ -245,6 +263,8 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 
 ## 12. Pekere
 
+- `docs/BRAND.md` — design system (colors, typography, components, tone).
+- `docs/DESIGN_CHECKLIST.md` — design implementation roadmap + commit templates.
 - `docs/DEVELOPMENT_PLAN.md` — faseinndelt roadmap.
 - `docs/SECURITY.md` — sikkerhets- og personverndoktrine + commit-sjekkliste.
 - `research/` — privat, lokal forskningsmappe (gitignorert). Kildemateriale for utvikling.
