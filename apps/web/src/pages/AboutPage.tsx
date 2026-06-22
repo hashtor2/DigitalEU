@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { TallyFeedbackForm } from "@/components/TallyFeedbackForm";
 
 export function AboutPage() {
   return (
@@ -90,6 +91,8 @@ export function AboutPage() {
           <NewsletterSignup compact={true} showName={false} />
         </section>
       </main>
+
+      <TallyFeedbackForm />
 
       <Footer />
     </div>

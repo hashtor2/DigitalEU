@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { COUNTRY_FLAGS } from "@/lib/flags";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { TallyFeedbackForm } from "@/components/TallyFeedbackForm";
 
 const CATEGORY_LABELS: Record<ServiceInfo["category"], string> = {
   email: "Email",
@@ -377,6 +378,8 @@ export function LandingPage() {
           )}
         </section>
       </main>
+
+      <TallyFeedbackForm />
 
       <footer className="border-t border-[#30363d] py-8 mt-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
