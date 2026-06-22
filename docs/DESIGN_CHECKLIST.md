@@ -52,10 +52,10 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
 
 #### 1.3 Layout Components
-- [ ] Header (logo/nav, theme toggle)
-- [ ] Footer (EU tech links + newsletter + copyright)
-- [ ] Container (max-width 1200px, gutter)
-- [ ] Grid system for sections
+- [x] Header (logo/nav, theme toggle)
+- [x] Footer (EU tech links + newsletter + copyright)
+- [x] Container (max-width 1200px, gutter)
+- [x] Grid system for sections
 
 **Commit when done:**
 ```bash
@@ -143,7 +143,7 @@ Before committing any design changes, verify:
 |--------|-----------|--------|-------|
 | 1. Foundation (tokens + config) | 2026-06-22 | 🟢 Done | 8ea8f0b — Base config + BRAND.md |
 | 2. Component overrides | 2026-06-22 | 🟢 Done | fa7cdb4 — shadcn/ui theme |
-| 3. Header + Footer | (TBD) | ⏳ | Layout structure |
+| 3. Header + Footer | 2026-06-22 | 🟢 Done | 4161035 — Layout structure |
 | 4. Service display | (TBD) | ⏳ | Logos + flags |
 | (merge to main) | (TBD) | ⏳ | Design system ready |
 
@@ -155,7 +155,7 @@ Before committing any design changes, verify:
 - [x] BRAND.md complete
 - [x] Tailwind config working (no errors)
 - [x] Core components (button, input, card) built + tested
-- [ ] Header + Footer built
+- [x] Header + Footer built
 - [ ] Dark mode fully functional
 - [ ] Accessibility audit passed
 - [ ] All colors verified (WCAG AAA)
