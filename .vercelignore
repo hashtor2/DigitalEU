@@ -1,0 +1,12 @@
+research/
+.git/
+.vscode/
+.idea/
+*.log
+.DS_Store
+.playwright-mcp/
+.claude/
+node_modules/
+.supabase/
+.env.local
+.env*.local
