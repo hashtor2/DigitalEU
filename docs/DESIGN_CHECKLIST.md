@@ -32,11 +32,11 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
 
 #### 1.2 Core Components (shadcn/ui overrides)
-- [ ] Button (primary + secondary variants)
-- [ ] Input (text + text area)
-- [ ] Label (above inputs)
-- [ ] Card (minimal style)
-- [ ] Checkbox (dark mode)
+- [x] Button (primary + secondary variants)
+- [x] Input (text + text area)
+- [x] Label (above inputs)
+- [x] Card (minimal style)
+- [x] Checkbox (dark mode)
 
 **Commit when done:**
 ```bash
@@ -141,8 +141,8 @@ Before committing any design changes, verify:
 
 | Commit | Date       | Status | Notes |
 |--------|-----------|--------|-------|
-| 1. Foundation (tokens + config) | 2026-06-22 | 🟢 Done | Base config + BRAND.md |
-| 2. Component overrides | (TBD) | ⏳ | shadcn/ui theme |
+| 1. Foundation (tokens + config) | 2026-06-22 | 🟢 Done | 8ea8f0b — Base config + BRAND.md |
+| 2. Component overrides | 2026-06-22 | 🟢 Done | fa7cdb4 — shadcn/ui theme |
 | 3. Header + Footer | (TBD) | ⏳ | Layout structure |
 | 4. Service display | (TBD) | ⏳ | Logos + flags |
 | (merge to main) | (TBD) | ⏳ | Design system ready |
@@ -153,8 +153,8 @@ Before committing any design changes, verify:
 
 `feat/brand-identity` is ready to merge when:
 - [x] BRAND.md complete
-- [ ] Tailwind config working (no errors)
-- [ ] Core components (button, input, card) built + tested
+- [x] Tailwind config working (no errors)
+- [x] Core components (button, input, card) built + tested
 - [ ] Header + Footer built
 - [ ] Dark mode fully functional
 - [ ] Accessibility audit passed
