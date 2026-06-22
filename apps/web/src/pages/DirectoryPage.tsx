@@ -165,7 +165,7 @@ export function DirectoryPage() {
                 return (
                   <Link
                     key={alt.id}
-                    to={`/services/${alt.id}`}
+                    to={`/alternative/${alt.id}`}
                     className="group flex flex-col rounded border border-[#30363d] bg-[#161b22] hover:border-[#484f58] hover:bg-[#21262d] transition-all p-4"
                   >
                     {/* Logo + name */}

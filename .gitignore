@@ -49,3 +49,5 @@ supabase/.branches/
 
 # Lokale admin-skript som inneholder service_role-nøkkel — ALDRI i repoet
 reset-user.js
+
+.env*

@@ -46,6 +46,20 @@ export interface Alternative {
   affiliateUrl?: string;
   /** Eksplisitt markedsoverride; utledet fra kategori hvis ikke satt. */
   market?: ('b2b' | 'b2c')[];
+
+  // NEW: Detail page fields
+  /** Detailed summary for /alternative/:id page (2-4 paragraphs) */
+  longDescription?: string;
+  /** Key features/benefits of this alternative */
+  features?: string[];
+  /** Pricing tier (e.g., "Free or €5.99/month", "Lifetime €99") */
+  pricing?: string;
+  /** Where data is stored: EU, US, etc. */
+  dataLocation?: string;
+  /** Related guide IDs to link from detail page */
+  relatedGuides?: string[];
+  /** Whether this is a "tested by us" recommendation with affiliate link */
+  verifiedAffiliate?: boolean;
 }
 
 /** Målmarked for et alternativ. */

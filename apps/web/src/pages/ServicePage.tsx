@@ -276,7 +276,6 @@ export function ServicePage() {
   const name = alt?.name ?? id ?? "";
   const country = alt?.country ?? "";
   const domain = alt ? getDomain(alt.url) : "";
-  const affiliateUrl = alt?.affiliateUrl ?? alt?.url ?? "";
 
   const stars = profile
     ? Math.max(1, Math.round(profile.privacy_score / 10))
@@ -634,26 +633,21 @@ export function ServicePage() {
         )}
 
         {/* ── CTA ── */}
-        {affiliateUrl && (
+        {alt && (
           <div className="rounded border border-[#2d4a6e] bg-[#1e293b]/60 px-5 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-sm font-semibold text-white">{name}</p>
+              <p className="text-sm font-semibold text-white">Learn more about {name}</p>
               <p className="text-[12px] text-slate-400 mt-0.5">
-                {profile?.pricing_notes ?? "Visit the official site for plans and pricing."}
+                View detailed information about this service and our verified affiliate link.
               </p>
             </div>
-            <div className="flex items-center gap-3 flex-shrink-0">
-              <a
-                href={affiliateUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+            <div className="flex-shrink-0">
+              <Link
+                to={`/alternative/${alt.id}`}
                 className="inline-flex items-center gap-2 rounded bg-[#1a56db] hover:bg-[#2563eb] px-5 py-2 text-sm font-semibold text-white transition"
               >
-                Get started →
-              </a>
-              {alt?.affiliateUrl && (
-                <span className="text-[10px] text-slate-600">affiliate link</span>
-              )}
+                View Details →
+              </Link>
             </div>
           </div>
         )}

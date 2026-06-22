@@ -73,6 +73,12 @@ const router = createBrowserRouter([
       Component: (await import("./pages/ServicePage")).ServicePage,
     }),
   },
+  {
+    path: "/alternative/:id",
+    lazy: async () => ({
+      Component: (await import("./pages/AlternativePage")).AlternativePage,
+    }),
+  },
 ]);
 
 export default function App() {

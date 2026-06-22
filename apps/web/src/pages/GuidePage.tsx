@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { ALTERNATIVES } from "@digitaleu/shared";
 import { Header } from "@/components/Header";
 import { GUIDE_CONTENT, type GuideService } from "@/data/guide-content";
 
@@ -29,6 +30,11 @@ function AffiliateBadge() {
 function ServiceCard({ service, rank }: { service: GuideService; rank: number }) {
   const domain = getDomain(service.url);
   const isTop = rank === 1;
+
+  // Try to find matching alternative by name
+  const matchingAlternative = ALTERNATIVES.find(
+    (alt) => alt.name.toLowerCase() === service.name.toLowerCase()
+  );
 
   return (
     <div className={`rounded border ${
@@ -96,26 +102,47 @@ function ServiceCard({ service, rank }: { service: GuideService; rank: number })
       {/* Footer */}
       <div className="px-5 pb-5 flex items-center justify-between gap-3 flex-wrap">
         <span className="text-[12px] text-slate-400 font-mono sm:hidden">{service.price}</span>
-        <a
-          href={service.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`inline-flex items-center gap-2 rounded px-4 py-2 text-[12px] font-semibold transition ${
-            service.isAffiliate
-              ? "bg-[#f0c040] text-[#111827] hover:bg-[#f0c040]/90"
-              : "border border-[#30363d] text-slate-300 hover:text-white hover:border-white/20"
-          }`}
-        >
-          {domain && (
-            <img
-              src={`https://www.google.com/s2/favicons?domain=${domain}&sz=16`}
-              alt=""
-              className="h-3.5 w-3.5 rounded"
-              onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = "0"; }}
-            />
-          )}
-          Visit {service.name} ↗
-        </a>
+        {matchingAlternative ? (
+          <Link
+            to={`/alternative/${matchingAlternative.id}`}
+            className={`inline-flex items-center gap-2 rounded px-4 py-2 text-[12px] font-semibold transition ${
+              service.isAffiliate
+                ? "bg-[#f0c040] text-[#111827] hover:bg-[#f0c040]/90"
+                : "border border-[#30363d] text-slate-300 hover:text-white hover:border-white/20"
+            }`}
+          >
+            {domain && (
+              <img
+                src={`https://www.google.com/s2/favicons?domain=${domain}&sz=16`}
+                alt=""
+                className="h-3.5 w-3.5 rounded"
+                onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = "0"; }}
+              />
+            )}
+            Learn More ↗
+          </Link>
+        ) : (
+          <a
+            href={service.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-2 rounded px-4 py-2 text-[12px] font-semibold transition ${
+              service.isAffiliate
+                ? "bg-[#f0c040] text-[#111827] hover:bg-[#f0c040]/90"
+                : "border border-[#30363d] text-slate-300 hover:text-white hover:border-white/20"
+            }`}
+          >
+            {domain && (
+              <img
+                src={`https://www.google.com/s2/favicons?domain=${domain}&sz=16`}
+                alt=""
+                className="h-3.5 w-3.5 rounded"
+                onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = "0"; }}
+              />
+            )}
+            Visit {service.name} ↗
+          </a>
+        )}
       </div>
     </div>
   );
