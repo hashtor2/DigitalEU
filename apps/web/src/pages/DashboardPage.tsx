@@ -297,6 +297,32 @@ export function DashboardPage() {
           </div>
         </div>
 
+        {/* Export Report Section */}
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 className="text-lg font-bold text-white mb-1">📥 Export Your Privacy Report</h3>
+            <p className="text-sm text-slate-300">Download your personalized report in CSV or PDF format</p>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              size="sm"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium"
+              onClick={() => handleDownloadClick("csv")}
+              disabled={isDownloading || sorted.length === 0}
+            >
+              📥 CSV
+            </Button>
+            <Button
+              size="sm"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium"
+              onClick={() => handleDownloadClick("pdf")}
+              disabled={isDownloading || sorted.length === 0}
+            >
+              📄 PDF
+            </Button>
+          </div>
+        </div>
+
         {/* Summary cards */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
           {(["HIGH", "MEDIUM", "LOW"] as ThreatLevel[]).map((level) => {
