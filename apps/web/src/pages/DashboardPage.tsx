@@ -274,28 +274,26 @@ export function DashboardPage() {
                 <Link to="/directory">Browse EU Alternatives</Link>
               </Button>
             </div>
-            {sorted.length > 0 && (
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => handleDownloadClick("csv")}
-                  disabled={isDownloading}
-                  className="text-xs"
-                >
-                  📥 Download CSV
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => handleDownloadClick("pdf")}
-                  disabled={isDownloading}
-                  className="text-xs"
-                >
-                  📄 Download PDF
-                </Button>
-              </div>
-            )}
+            <div className="flex gap-2 flex-wrap">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => handleDownloadClick("csv")}
+                disabled={isDownloading || sorted.length === 0}
+                className="text-xs"
+              >
+                📥 Download CSV
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => handleDownloadClick("pdf")}
+                disabled={isDownloading || sorted.length === 0}
+                className="text-xs"
+              >
+                📄 Download PDF
+              </Button>
+            </div>
           </div>
         </div>
 
