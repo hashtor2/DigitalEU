@@ -8,6 +8,7 @@ import DashboardPage from './routes/dashboard'
 import ResultsPage from './routes/results/$scanId'
 import CancellationIndexPage from './routes/cancel/index'
 import CancellationGuidePage from './routes/cancel/$id'
+import ReportPage from './routes/report/$sessionId'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="auth/callback" element={<CallbackPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="results/:scanId" element={<ResultsPage />} />
+          <Route path="report/:sessionId" element={<ReportPage />} />
           <Route path="cancel" element={<CancellationIndexPage />} />
           <Route path="cancel/:id" element={<CancellationGuidePage />} />
         </Route>
