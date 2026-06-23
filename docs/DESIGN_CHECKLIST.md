@@ -86,18 +86,19 @@ git commit -m "feat: Add Service display components with country flags
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
 
-### **Phase 2: Forms & Flows (Next)**
+### **Phase 2: Pages (CURRENT)**
+- [x] Landing page (hero + dual CTA + trust signals)
+- [x] Report page (breach alert + services + alternatives + next steps)
+- [x] How it works page (4-step explainer, zero-knowledge focus)
+- [ ] Dashboard page
+- [ ] Settings/profile page
+- [ ] Success/confirmation page
+
+### **Phase 3: Forms & Flows (Next)**
 - [ ] Multi-column form layout (name + email side-by-side)
 - [ ] Consent flow UI (clear, plain language)
 - [ ] Payment form (with Service selection)
 - [ ] Inbox Scanner onboarding
-- [ ] Dashboard layout
-
-### **Phase 3: Pages (After Forms)**
-- [ ] Landing page (hero + benefits + footer)
-- [ ] Dashboard page
-- [ ] Settings/profile page
-- [ ] Success/confirmation page
 
 ### **Phase 4: Polish (End)**
 - [ ] Extension UI (popover 300–400px)
@@ -142,10 +143,13 @@ Before committing any design changes, verify:
 | Commit | Date       | Status | Notes |
 |--------|-----------|--------|-------|
 | 1. Foundation (tokens + config) | 2026-06-22 | 🟢 Done | Base config + BRAND.md |
-| 2. Component overrides | (TBD) | ⏳ | shadcn/ui theme |
-| 3. Header + Footer | (TBD) | ⏳ | Layout structure |
-| 4. Service display | (TBD) | ⏳ | Logos + flags |
-| (merge to main) | (TBD) | ⏳ | Design system ready |
+| 2. Component overrides | 2026-06-22 | 🟢 Done | shadcn/ui theme |
+| 3. Header + Footer | 2026-06-22 | 🟢 Done | Layout structure |
+| 4. Service display | 2026-06-22 | 🟢 Done | Logos + flags |
+| 5. Landing redesign | 2026-06-23 | 🟢 Done | Hero + dual CTA + Nordic Warmth |
+| 6. Report + How it works | 2026-06-23 | 🟢 Done | Breach alert, 4-step explainer |
+| 7. Routing update | 2026-06-23 | 🟢 Done | / → landing, /selector, /report, /how |
+| (merge to main) | (TBD) | ⏳ | Design system + landing pages ready |
 
 ---
 
