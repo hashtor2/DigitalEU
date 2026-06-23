@@ -98,7 +98,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 - [x] Multi-column form layout (name + email side-by-side)
 - [x] Consent flow UI (clear, plain language)
 - [x] Payment form (with Service selection)
-- [ ] Inbox Scanner onboarding
+- [x] Inbox Scanner onboarding (3-step: intro → scanning → results)
 
 ### **Phase 4: Polish (Next)**
 - [ ] Extension UI (popover 300–400px)
@@ -150,7 +150,8 @@ Before committing any design changes, verify:
 | 6. Report + How it works | 2026-06-23 | 🟢 Done | Breach alert, 4-step explainer |
 | 7. Routing update | 2026-06-23 | 🟢 Done | / → landing, /selector, /report, /how |
 | 8. Phase 3 forms | 2026-06-23 | 🟢 Done | Profile, consent modal, payment forms |
-| (merge to main) | (TBD) | ⏳ | Design system + pages + forms ready |
+| 9. Inbox Scanner onboarding | 2026-06-23 | 🟢 Done | 3-step: intro → scanning → results |
+| (merge to main) | (TBD) | ⏳ | Design system + all pages + forms ready |
 
 ---
 
