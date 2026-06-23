@@ -1,0 +1,50 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: E
+      - generic [ref=e6]: Europa
+    - link "Sign in" [ref=e7] [cursor=pointer]:
+      - /url: /auth
+  - generic [ref=e8]:
+    - paragraph [ref=e9]: Closed beta · invite only
+    - heading "Find European alternatives to the services you already use." [level=1] [ref=e10]
+    - paragraph [ref=e11]: Connect your Gmail (read-only) and we'll look at sender names to recognise services like Netflix, Dropbox or Spotify — and suggest a privacy-first European alternative for each one.
+  - generic [ref=e13]:
+    - heading "How your data is handled" [level=2] [ref=e14]
+    - list [ref=e15]:
+      - listitem [ref=e16]:
+        - generic [ref=e17]: ✓
+        - generic [ref=e18]:
+          - paragraph [ref=e19]: Read-only metadata
+          - paragraph [ref=e20]: Only sender address and subject line. Never email bodies, attachments, or contacts.
+      - listitem [ref=e21]:
+        - generic [ref=e22]: ✓
+        - generic [ref=e23]:
+          - paragraph [ref=e24]: Stored in your account
+          - paragraph [ref=e25]: Results live in your Europa account so you can come back to them. Auto-deleted after 30 days.
+      - listitem [ref=e26]:
+        - generic [ref=e27]: ✕
+        - generic [ref=e28]:
+          - paragraph [ref=e29]: Never sold or shared
+          - paragraph [ref=e30]: Inbox data is never sold, shared, or used to train models.
+      - listitem [ref=e31]:
+        - generic [ref=e32]: ✕
+        - generic [ref=e33]:
+          - paragraph [ref=e34]: Disconnect anytime
+          - paragraph [ref=e35]: One click to revoke access and delete everything we have.
+  - generic [ref=e36]:
+    - generic [ref=e37]:
+      - link "Sign in to scan your Gmail →" [ref=e38] [cursor=pointer]:
+        - /url: /auth
+      - link "Try the demo" [ref=e39] [cursor=pointer]:
+        - /url: /scan?mode=demo
+    - paragraph [ref=e40]: During closed beta, Gmail scanning is invite-only. You can sign up and we'll add you to the waitlist.
+  - generic [ref=e41]:
+    - generic [ref=e42]:
+      - link "Privacy" [ref=e43] [cursor=pointer]:
+        - /url: /privacy
+      - link "Terms" [ref=e44] [cursor=pointer]:
+        - /url: /terms
+      - link "Security & data" [ref=e45] [cursor=pointer]:
+        - /url: /security
+    - paragraph [ref=e46]: 🇪🇺 Built for people who'd rather keep their data on this continent.

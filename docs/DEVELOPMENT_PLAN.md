@@ -40,8 +40,9 @@ de har, få europeiske alternativer og en personvernscore.
    (nytt prosjekt `fuiebtpezpoxvkuuhaqy`, Zürich; `user_vault`-trigger i 0002).
 4. [x] **Zero-knowledge-lag:** `crypto.ts` (Web Crypto) finnes + testet.
    *Ikke koblet inn i live-flyt nå (ingen Profilmodus-skriving i dashbordet).*
-5. [x] **Innboksskanner v1:** Gmail/Outlook via OAuth (metadata), 100 % klientside —
-   modul finnes + testet. *Ikke koblet inn i live dashbord nå.*
+5. [~] **Innboksskanner v1 — multi-candidate testing:** Gmail/Outlook via OAuth (metadata), 100 % klientside.
+   **Lovable-prototype** (React) integrert i `/emailscanner` (2026-06-23) med OAuth + Nordic Warmth styling.
+   Testing multiple scanner implementations before locking canonical version for live dashboard. See memory: `scanner-testing-strategy.md`.
 6. [x] **Alternativ-matching:** `SERVICES` kobles til `ALTERNATIVES`
    (`euAlternativeId`); brukt i den nye rapporten.
 7. [x] **Datalekkasje-sjekk (Have I Been Pwned):** secure Supabase Edge Function

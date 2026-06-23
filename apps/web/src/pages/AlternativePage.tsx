@@ -40,6 +40,29 @@ export function AlternativePage() {
 
   return (
     <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
+      <title>{alternative.name} — European Alternative to {replacesServices.join(", ")} | digitaleu.me</title>
+      <meta name="description" content={`Read about ${alternative.name}, a secure European alternative to ${replacesServices.join(" and ")} hosted in ${alternative.dataLocation || alternative.country}.`} />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": alternative.name,
+          "applicationCategory": alternative.category,
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": alternative.pricing?.includes("Free") ? "0" : "custom",
+            "priceCurrency": "EUR"
+          },
+          "description": alternative.description,
+          "publisher": {
+            "@type": "Organization",
+            "name": "DigitalEU",
+            "url": "https://digitaleu.me"
+          }
+        })}
+      </script>
+
       <Header />
 
       <main className="flex-1 mx-auto max-w-3xl px-4 py-10 sm:px-6">
@@ -69,7 +92,12 @@ export function AlternativePage() {
 
             {/* Name + metadata */}
             <div className="flex-1">
-              <h1 className="text-4xl font-bold mb-2">{alternative.name}</h1>
+              <div className="flex items-center gap-2 flex-wrap mb-1">
+                <h1 className="text-4xl font-bold">{alternative.name}</h1>
+                <span className="rounded-full border border-emerald-500/25 bg-emerald-500/5 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                  Sovereign EU Tech
+                </span>
+              </div>
               <div className="flex items-center gap-3 text-sm text-slate-400">
                 <span>{COUNTRY_FLAGS[alternative.country] || ""} {alternative.country}</span>
                 {alternative.dataLocation && (
@@ -87,21 +115,21 @@ export function AlternativePage() {
             {alternative.pricing && (
               <div className="rounded border border-[#30363d] bg-[#161b22] p-4">
                 <p className="text-[11px] text-slate-500 uppercase font-mono mb-1">Pricing</p>
-                <p className="text-sm text-slate-200">{alternative.pricing}</p>
+                <p className="text-sm text-slate-200 font-semibold">{alternative.pricing}</p>
               </div>
             )}
             {alternative.category && (
               <div className="rounded border border-[#30363d] bg-[#161b22] p-4">
                 <p className="text-[11px] text-slate-500 uppercase font-mono mb-1">Category</p>
-                <p className="text-sm text-slate-200 capitalize">
+                <p className="text-sm text-slate-200 capitalize font-semibold">
                   {alternative.category.replace("-", " ")}
                 </p>
               </div>
             )}
-            {alternative.dataLocation && (
+            {(alternative.dataLocation || alternative.country) && (
               <div className="rounded border border-[#30363d] bg-[#161b22] p-4">
-                <p className="text-[11px] text-slate-500 uppercase font-mono mb-1">Data Location</p>
-                <p className="text-sm text-slate-200">{alternative.dataLocation}</p>
+                <p className="text-[11px] text-slate-500 uppercase font-mono mb-1">Jurisdiction</p>
+                <p className="text-sm text-slate-200 font-semibold">{alternative.country} (GDPR / EU-Residency)</p>
               </div>
             )}
           </div>
@@ -110,7 +138,7 @@ export function AlternativePage() {
         {/* Main Description */}
         <div className="mb-10">
           <div className="prose prose-invert max-w-none">
-            <p className="text-sm leading-relaxed text-slate-300">
+            <p className="text-sm leading-relaxed text-slate-300 font-normal">
               {alternative.longDescription || alternative.description}
             </p>
           </div>
@@ -119,12 +147,12 @@ export function AlternativePage() {
         {/* Features */}
         {alternative.features && alternative.features.length > 0 && (
           <div className="mb-10">
-            <h2 className="text-lg font-semibold mb-4 text-slate-200">Key Features</h2>
+            <h2 className="text-lg font-semibold mb-4 text-slate-200">Key Privacy & Operational Features</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {alternative.features.map((feature, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 rounded border border-[#30363d] bg-[#161b22] p-4"
+                  className="flex items-start gap-3 rounded border border-[#30363d] bg-[#161b22] p-4 hover:border-emerald-500/20 transition"
                 >
                   <span className="text-emerald-500 flex-shrink-0 mt-0.5">✓</span>
                   <span className="text-sm text-slate-300">{feature}</span>

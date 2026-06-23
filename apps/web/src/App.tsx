@@ -1,5 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useTheme } from "./hooks/useTheme";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const router = createBrowserRouter([
   {
@@ -86,11 +90,33 @@ const router = createBrowserRouter([
       Component: (await import("./pages/AlternativePage")).AlternativePage,
     }),
   },
+  {
+    path: "/scanner",
+    lazy: async () => ({
+      Component: (await import("./pages/ScannerPage")).ScannerPage,
+    }),
+  },
+  {
+    path: "/scanner/results/:scanId",
+    lazy: async () => ({
+      Component: (await import("./pages/ScannerResultsPage")).ScannerResultsPage,
+    }),
+  },
+  {
+    path: "/verify",
+    lazy: async () => ({
+      Component: (await import("./pages/VerifyEmailPage")).VerifyEmailPage,
+    }),
+  },
 ]);
 
 export default function App() {
   // Initialize theme on mount
   useTheme();
-  
-  return <RouterProvider router={router} />;
+
+  return (
+    <Elements stripe={stripePromise}>
+      <RouterProvider router={router} />
+    </Elements>
+  );
 }

@@ -71,7 +71,17 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://plausible.io",
       "description": "Cookie-less, 2.5 KB script, processed on EU infrastructure.",
       "monetization": "affiliate",
-      "affiliateUrl": "https://plausible.io"
+      "affiliateUrl": "https://plausible.io",
+      "longDescription": "Plausible Analytics is an Estonia-based, lightweight, and open-source web analytics tool. It is built to be cookie-less and fully GDPR/CCPA compliant out-of-the-box, meaning you do not need to display intrusive cookie consent banners to visitors. Operating on EU-owned cloud infrastructure, Plausible collects zero personal data, anonymizes IP addresses, and has a footprint under 3 KB—making your website load significantly faster than with Google Analytics.",
+      "features": [
+        "Cookie-less tracking out-of-the-box",
+        "Lightweight script under 3 KB (17x smaller than GA)",
+        "Fully GDPR, CCPA, and PECR compliant",
+        "All data processed on sovereign EU servers",
+        "No cookie banners required for analytics"
+      ],
+      "pricing": "Free trial, then from €9.00/month",
+      "dataLocation": "Estonia / Germany (EU)"
     },
     {
       "id": "simple-analytics",
@@ -97,7 +107,18 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://mullvad.net/browser",
       "description": "Developed with Tor Project, advanced fingerprinting blocks.",
       "monetization": "affiliate",
-      "affiliateUrl": "https://mullvad.net/browser"
+      "affiliateUrl": "https://mullvad.net/browser",
+      "longDescription": "The Mullvad Browser is a privacy-focused web browser developed in collaboration with the Tor Project. Operating on the philosophy of 'hiding in the crowd,' it creates a standardized digital fingerprint for all users, making individual tracking and browser fingerprinting mathematically impractical. It strips away all telemetry, blocks third-party cookies and trackers by default, and operates permanently in private browsing mode. Designed to be paired with a trustworthy VPN rather than the high-latency Tor network, it delivers rapid, secure, tracker-free web access.",
+      "features": [
+        "Developed in collaboration with Tor Project",
+        "Aggressive anti-fingerprinting defaults",
+        "No browser telemetry or trackers",
+        "Defaults to private browsing mode",
+        "Optimized for VPN usage"
+      ],
+      "pricing": "Free (Open-source)",
+      "dataLocation": "Local (Sweden)",
+      "verifiedAffiliate": true
     },
     {
       "id": "vivaldi",
@@ -213,7 +234,17 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://codeberg.org",
       "description": "Fully Open Source (Forgejo)",
       "monetization": "affiliate",
-      "affiliateUrl": "https://codeberg.org"
+      "affiliateUrl": "https://codeberg.org",
+      "longDescription": "Codeberg is a non-profit, community-driven platform for hosting software source code. Headquartered in Berlin, Germany, it operates on the open-source Forgejo forge (a community fork of Gitea). Codeberg is hosted on sovereign European server infrastructure and governed strictly by EU privacy regulations. Unlike commercial code repositories owned by US corporate conglomerates, Codeberg does not claim rights to your code, forces no telemetry, and maintains full commitment to software freedom.",
+      "features": [
+        "Non-profit, member-supported association",
+        "Built on 100% open-source Forgejo",
+        "Hosted on German servers under GDPR",
+        "No hidden telemetry or copyright waivers",
+        "Compatible with GitHub Actions CI workflows"
+      ],
+      "pricing": "Free (Donation-based model)",
+      "dataLocation": "Germany (Berlin)"
     },
     {
       "id": "rhodecode",
@@ -241,7 +272,18 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://proton.me/mail",
       "description": "Zero-access encryption, comprehensive privacy suite.",
       "monetization": "affiliate",
-      "affiliateUrl": "https://go.getproton.me/SH1mR"
+      "affiliateUrl": "https://go.getproton.me/SH1mR",
+      "longDescription": "Proton Mail is a secure email service based in Geneva, Switzerland, that utilizes open-source OpenPGP end-to-end encryption. Because it operates under strict Swiss privacy laws, user data remains insulated from mass surveillance networks and foreign intelligence requests. Unlike ad-supported mainstream email services, Proton Mail cannot read your messages or mine your metadata for profit. All messages sent between Proton accounts are encrypted automatically, and unencrypted mail sent to other hosts is encrypted on disk at rest. Proton has built a comprehensive privacy ecosystem, integrating Calendar, Drive, and Pass to replace US tech giants entirely.",
+      "features": [
+        "Zero-access encryption on disk",
+        "E2EE auto-encryption for Proton users",
+        "Protected by Swiss Federal Act on Data Protection",
+        "Completely open-source and audited",
+        "Integrated Calendar, Drive, and Password Manager"
+      ],
+      "pricing": "Free or €3.99/month",
+      "dataLocation": "Switzerland (Geneva)",
+      "verifiedAffiliate": true
     },
     {
       "id": "proton-vpn",
@@ -256,7 +298,18 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://protonvpn.com",
       "description": "No-logs VPN from Switzerland. Free tier available, 70% off with World Cup promo.",
       "monetization": "affiliate",
-      "affiliateUrl": "https://go.getproton.me/SH2jp"
+      "affiliateUrl": "https://go.getproton.me/SH2jp",
+      "longDescription": "Proton VPN is a Swiss-based, privacy-focused virtual private network that channels your traffic through secure, encrypted tunnels. Born from the same team that created Proton Mail, it operates under strict Swiss jurisdiction. Proton VPN maintains a strict no-logs policy, meaning they cannot record your browsing history or track your connection metadata. The service features unique Secure Core architecture, which routes traffic through multiple servers in privacy-friendly nations like Switzerland, Iceland, and Sweden before exiting to prevent network-level snooping.",
+      "features": [
+        "Strict Swiss no-logs policy",
+        "Secure Core server architecture",
+        "NetShield Ad-blocker & Malware filter",
+        "Tor over VPN integration",
+        "Fully open-source and independently audited"
+      ],
+      "pricing": "Free or €4.99/month",
+      "dataLocation": "Switzerland, Iceland, Sweden",
+      "verifiedAffiliate": true
     },
     {
       "id": "proton-pass",
@@ -271,7 +324,18 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://proton.me/pass",
       "description": "End-to-end encrypted password manager with built-in 2FA. 50% off.",
       "monetization": "affiliate",
-      "affiliateUrl": "https://go.getproton.me/SH1mP"
+      "affiliateUrl": "https://go.getproton.me/SH1mP",
+      "longDescription": "Proton Pass is a zero-knowledge password manager designed to secure your passwords, notes, credit card credentials, and two-factor authentication (2FA) codes. Built with end-to-end encryption in Switzerland, Proton Pass encrypts all fields—including usernames, URLs, and passwords—before leaving your device. It integrates with Proton's aliasing engine, allowing you to generate unique, random email addresses for every site you register, keeping your true identity completely shielded from data breaches and cross-site tracking.",
+      "features": [
+        "Zero-knowledge end-to-end encryption",
+        "Encrypts all metadata (including URLs)",
+        "Integrated email aliasing (SimpleLogin)",
+        "Built-in 2FA authenticator",
+        "Syncs securely across all devices"
+      ],
+      "pricing": "Free or €1.99/month",
+      "dataLocation": "Switzerland (Geneva)",
+      "verifiedAffiliate": true
     },
     {
       "id": "tuta",
@@ -285,7 +349,18 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://tuta.com",
       "description": "Quantum-resistant encryption, 100% green energy.",
       "monetization": "affiliate",
-      "affiliateUrl": "https://tuta.com"
+      "affiliateUrl": "https://tuta.com",
+      "longDescription": "Tuta (formerly Tutanota) is a German secure email and calendar provider based in Hanover. It represents a major advancement in email security by implementing hybrid post-quantum cryptography under its TutaCrypt protocol (combining AES-256 and Kyber-1024). Unlike standard PGP-based email which leaves email headers and subject lines unencrypted during transport, Tuta encrypts your entire mailbox at rest—including calendars, address books, and subject lines. Operating strictly under German BDSG and EU GDPR laws, Tuta supports fully anonymous registration with zero tracker scripts, and operates on 100% renewable energy.",
+      "features": [
+        "Post-quantum hybrid encryption (Kyber)",
+        "Fully encrypted subject lines & metadata",
+        "100% open-source and self-funded",
+        "Zero third-party trackers or ads",
+        "Hosted on green-energy German servers"
+      ],
+      "pricing": "Free or €3.00/month",
+      "dataLocation": "Germany (Hanover)",
+      "verifiedAffiliate": true
     },
     {
       "id": "volla-phone",
@@ -355,7 +430,17 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://www.passbolt.com",
       "description": "Open-source, OpenPGP encrypted, designed for dev teams.",
       "monetization": "affiliate",
-      "affiliateUrl": "https://www.passbolt.com"
+      "affiliateUrl": "https://www.passbolt.com",
+      "longDescription": "Passbolt is an open-source, extensible password manager engineered specifically for DevOps teams and collaborative work environments. Headquartered in Luxembourg, it utilizes an asymmetric OpenPGP encryption model. Every user possesses their own private key, and password credentials are encrypted locally on the user's browser before transfer. Passbolt can be hosted on sovereign cloud servers or deployed fully on-premises (on air-gapped systems), providing complete credential sovereignty.",
+      "features": [
+        "Asymmetric OpenPGP encryption protocol",
+        "Zero-knowledge team sharing system",
+        "Self-hostable and ready for air-gapped setups",
+        "Granular access controls and audit logging",
+        "100% open-source and security audited"
+      ],
+      "pricing": "Free (Community) or €20/user/year",
+      "dataLocation": "Luxembourg / On-premises"
     },
     {
       "id": "organic-maps",
@@ -784,32 +869,122 @@ export const ALTERNATIVES: Alternative[] = [
     {
       "id": "threema",
       "name": "Threema",
-      "country": "EU",
-      "category": "email",
-      "replaces": ["WhatsApp", "Telegram"],
+      "country": "CH",
+      "category": "messaging",
+      "replaces": ["WhatsApp", "Telegram", "Viber"],
       "url": "https://threema.ch/",
-      "description": "*(CH)No phone number required",
-      "monetization": "other"
+      "description": "Zero-knowledge messenger from Switzerland. No phone number required.",
+      "monetization": "other",
+      "longDescription": "Threema is an end-to-end encrypted messaging service based in Switzerland. It is engineered from the ground up for data minimization: it allows fully anonymous account creation without requiring an email address or a phone number. All communications—including text messages, voice calls, group chats, and media—are encrypted locally on the device using the NaCl cryptography library. Threema hosts its own server infrastructure in state-of-the-art Swiss data centers, ensuring your social graph and communication metadata remain isolated from external intelligence agencies.",
+      "features": [
+        "100% anonymous (no phone number/email needed)",
+        "End-to-end encrypted group chats and calls",
+        "Self-owned servers in Swiss data centers",
+        "Symmetric encryption via NaCl library",
+        "Strict Swiss jurisdiction"
+      ],
+      "pricing": "€4.99 one-time payment",
+      "dataLocation": "Switzerland (Zürich)"
     },
     {
-      "id": "wire-delta-chat-ginlo-olvid-skred",
-      "name": "Wire, Delta Chat, Ginlo, Olvid, SKRED",
+      "id": "simplex-chat",
+      "name": "SimpleX Chat",
+      "country": "EU",
+      "category": "messaging",
+      "replaces": ["WhatsApp", "Signal", "Telegram"],
+      "url": "https://simplex.chat/",
+      "description": "The first messaging platform without user identifiers. Absolute metadata protection.",
+      "monetization": "other",
+      "longDescription": "SimpleX Chat is a decentralized messaging protocol that eliminates metadata tracking by operating without any global user identifiers—no phone numbers, no email addresses, and no randomized user IDs. It utilizes the SimpleX Messaging Protocol (SMP) to create temporary, unidirectional communication queues between contacts. Traffic is routed through onion-routing mechanisms, preventing server operators from mapping your social graph. Post-quantum cryptographic resistance is integrated through crystals-kyber keys, offering absolute future-proof security.",
+      "features": [
+        "No user identifiers of any kind",
+        "Unidirectional temporary message queues",
+        "Onion-routed traffic to mask IP and social graph",
+        "Post-quantum resistant cryptography (Kyber)",
+        "100% open-source and peer-reviewed"
+      ],
+      "pricing": "Free (Open-source)",
+      "dataLocation": "Decentralized (Onion-routed)"
+    },
+    {
+      "id": "olvid",
+      "name": "Olvid",
+      "country": "FR",
+      "category": "messaging",
+      "replaces": ["WhatsApp", "Signal", "Teams"],
+      "url": "https://olvid.io/",
+      "description": "French government-mandated zero-trust messenger. ANSSI certified security.",
+      "monetization": "other",
+      "longDescription": "Olvid is a French secure messaging platform that uses a zero-trust model to authenticate users without relying on a centralized contact directory or server-side trust. All encryption keys are exchanged peer-to-peer directly between devices. Olvid encrypts both content and communication metadata on-device, ensuring that even a compromised server operator cannot read messages or reconstruct users' social graphs. In 2023, the French government officially mandated Olvid for all ministries to replace US platforms, backed by a First-Level Security Certification (CSPN) from the national agency ANSSI.",
+      "features": [
+        "Zero-trust peer-to-peer key exchange",
+        "ANSSI CSPN certified architecture",
+        "Mandated for French government ministries",
+        "Zero centralized server directory",
+        "Encrypted metadata and content"
+      ],
+      "pricing": "Free or €4.99/month (enterprise features)",
+      "dataLocation": "France / Local"
+    },
+    {
+      "id": "wire",
+      "name": "Wire",
       "country": "CH",
-      "category": "email",
-      "replaces": ["WhatsApp", "Signal"],
+      "category": "messaging",
+      "replaces": ["Slack", "Microsoft Teams", "WhatsApp"],
       "url": "https://wire.com/",
-      "description": "Various E2E messengers",
-      "monetization": "other"
+      "description": "Secure collaboration platform with Swiss jurisdiction and MLS encryption.",
+      "monetization": "other",
+      "longDescription": "Wire is an end-to-end encrypted collaboration and messaging platform headquartered in Switzerland. Engineered for enterprise environments and remote teams, Wire integrates the Messaging Layer Security (MLS) protocol to ensure efficient, secure communication across large groups. It secures chat, video calls, files, and screen sharing. Unlike foreign alternatives, Wire can be hosted on sovereign European clouds or deployed completely on-premises for maximum data control.",
+      "features": [
+        "End-to-end encryption via MLS protocol",
+        "On-premises or sovereign cloud hosting options",
+        "Secure group video calls and screen sharing",
+        "Swiss data residency and jurisdiction",
+        "Open-source client code"
+      ],
+      "pricing": "Free or €5.83/month (enterprise)",
+      "dataLocation": "Switzerland / EU / On-premises"
+    },
+    {
+      "id": "delta-chat",
+      "name": "Delta Chat",
+      "country": "DE",
+      "category": "messaging",
+      "replaces": ["WhatsApp", "Telegram"],
+      "url": "https://delta.chat/",
+      "description": "Serverless messaging over standard email servers.",
+      "monetization": "other",
+      "longDescription": "Delta Chat is a serverless, decentralized messaging app that does not use its own servers, but instead uses the most massive and diverse open communication system in existence: email. Delta Chat runs E2EE chat communications via Autocrypt keys using standard IMAP/SMTP protocols. This means you do not need a phone number, registration, or a separate service provider—it works with your existing secure email account.",
+      "features": [
+        "Serverless architecture using existing email IMAP/SMTP",
+        "Autocrypt end-to-end encryption standard",
+        "No new registration, usernames, or phone numbers needed",
+        "Completely open-source and community governed",
+        "Fully decentralized and independent of chat corporations"
+      ],
+      "pricing": "Free (Open-source)",
+      "dataLocation": "Decentralized (Your email host)"
     },
     {
       "id": "element-matrix",
-      "name": "Element/Matrix",
+      "name": "Element / Matrix",
       "country": "GB",
-      "category": "email",
-      "replaces": ["Slack", "Discord", "WhatsApp"],
+      "category": "messaging",
+      "replaces": ["Slack", "Discord", "Microsoft Teams"],
       "url": "https://element.io/",
-      "description": "Federated, decentralized",
-      "monetization": "other"
+      "description": "Decentralized, federated secure communication platform built on Matrix.",
+      "monetization": "other",
+      "longDescription": "Element is the flagship client for Matrix, an open, decentralized network protocol for real-time secure communications. Matrix operates as a federated system: rather than relying on a single company's servers, users can join any server in the federation or host their own, communicating seamlessly across the entire network. Element encrypts chats, video calls, and files by default using the Olm and Megolm cryptographic ratchets. It serves as a standard tool for digital sovereignty in the German public sector, French government (Tchap), and Swedish healthcare systems.",
+      "features": [
+        "Decentralized federated architecture",
+        "End-to-end encryption via Megolm protocol",
+        "Sovereign hosting on-premises or EU cloud",
+        "Bridging capabilities to Slack, Discord, WhatsApp",
+        "Chosen by major European governments"
+      ],
+      "pricing": "Free or €3.00/month (enterprise hosting)",
+      "dataLocation": "Decentralized / EU / Germany / UK"
     },
     {
       "id": "fleep",
@@ -845,11 +1020,21 @@ export const ALTERNATIVES: Alternative[] = [
       "id": "pexip",
       "name": "Pexip",
       "country": "NO",
-      "category": "email",
-      "replaces": ["Cisco Webex", "Zoom"],
+      "category": "office",
+      "replaces": ["Cisco Webex", "Zoom", "Microsoft Teams"],
       "url": "https://www.pexip.com/",
-      "description": "Enterprise, self-hostable",
-      "monetization": "other"
+      "description": "Enterprise-grade, self-hostable video conferencing from Norway.",
+      "monetization": "other",
+      "longDescription": "Pexip is a secure video conferencing and collaboration platform based in Oslo, Norway. Engineered to provide a 'fortress' communications model, Pexip is designed for government agencies, military organizations, healthcare systems, and highly regulated enterprises. It can be deployed in sovereign private clouds, on-premises, or in completely air-gapped secure zones. Pexip adheres to strict zero-trust principles, supports role-based and attribute-based access controls, and holds certifications including DISA, FIPS 140-3, and ISO 27001.",
+      "features": [
+        "Fully self-hostable and deployable in air-gapped zones",
+        "Zero data/metadata collection when self-hosted",
+        "Sovereign Norwegian jurisdiction and GDPR compliant",
+        "DISA and FIPS 140-3 security certifications",
+        "Seamless interoperability with legacy systems"
+      ],
+      "pricing": "Custom enterprise pricing",
+      "dataLocation": "Norway / EU / On-premises"
     },
     {
       "id": "infomaniak-kmeet",
@@ -905,11 +1090,21 @@ export const ALTERNATIVES: Alternative[] = [
       "id": "nextcloud",
       "name": "Nextcloud",
       "country": "DE",
-      "category": "cloud-storage",
-      "replaces": ["Google Drive", "Dropbox"],
+      "category": "office",
+      "replaces": ["Google Drive", "Dropbox", "Microsoft 365", "Google Workspace"],
       "url": "https://nextcloud.com/",
       "description": "German self-hostable suite for file sync, calendar, mail and collaboration.",
-      "monetization": "other"
+      "monetization": "other",
+      "longDescription": "Nextcloud is an open-source, self-hostable collaboration platform headquartered in Germany. It replaces Google Workspace and Microsoft 365 by unifying file storage, document editing, email, calendars, task management, and video conferencing in a single hub. Unlike US cloud suites, Nextcloud can be hosted on your own server or on sovereign European hostings (OVHcloud, Hetzner), ensuring you maintain absolute ownership of your data, free from US CLOUD Act surveillance. It is the gold standard for public sector bodies, education networks, and enterprises seeking compliance and zero vendor lock-in.",
+      "features": [
+        "100% self-hostable or sovereign EU hosted",
+        "Full suite: Files, Mail, Talk, Calendar, Office",
+        "GDPR-compliant collaboration without vendor telemetry",
+        "Relational security with complete audit logs",
+        "Open-source license (no user pricing escalations)"
+      ],
+      "pricing": "Free (Self-hosted) or Hosted from €3/user/month",
+      "dataLocation": "Self-hosted / Germany / EU"
     },
     {
       "id": "tresorit",
@@ -930,7 +1125,18 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://proton.me/drive",
       "description": "200 GB end-to-end encrypted cloud storage for €1. Swiss privacy.",
       "monetization": "affiliate",
-      "affiliateUrl": "https://go.getproton.me/SH1mO"
+      "affiliateUrl": "https://go.getproton.me/SH1mO",
+      "longDescription": "Proton Drive is a secure, end-to-end encrypted cloud storage service that safeguards your files, photos, and folders. Unlike traditional cloud drives, Proton Drive encrypts file contents and vital metadata—including file names, folder structures, and file sizes—on your device before uploading. This zero-knowledge approach ensures that Proton, hackers, and foreign agencies can never read your files. Integrated with Swiss law, Proton Drive provides a robust space for collaboration and backup without vendor surveillance.",
+      "features": [
+        "Zero-knowledge end-to-end encryption",
+        "Metadata encryption (filenames & folder tree)",
+        "Secure, encrypted link sharing",
+        "Automatic photo backups",
+        "Strict Swiss jurisdiction"
+      ],
+      "pricing": "Free or €1.99/month",
+      "dataLocation": "Switzerland (Geneva)",
+      "verifiedAffiliate": true
     },
     {
       "id": "internxt",
@@ -960,7 +1166,17 @@ export const ALTERNATIVES: Alternative[] = [
       "replaces": ["Dropbox", "iCloud", "Google Photos"],
       "url": "https://www.jottacloud.com/",
       "description": "Norwegian unlimited-backup cloud storage under strong privacy laws.",
-      "monetization": "other"
+      "monetization": "other",
+      "longDescription": "Jottacloud is a cloud storage and backup provider headquartered in Oslo, Norway. It operates green server infrastructure deep inside the Norwegian mountains, cooled by seawater and powered entirely by renewable hydropower. Because Jottacloud is wholly based in Norway, it is governed strictly by Norwegian privacy laws and the GDPR, removing it from US jurisdiction and the CLOUD Act. It offers unlimited cloud backup plans for consumers, automatic photo synchronization, and privacy-respecting local machine learning models for image search without third-party data processing.",
+      "features": [
+        "100% Norwegian jurisdiction (outside US CLOUD Act)",
+        "Unlimited storage plans for personal backup",
+        "Green server facilities powered by hydropower",
+        "Local privacy-safe AI photo searching",
+        "Fully GDPR compliant storage"
+      ],
+      "pricing": "Free or €9.90/month (unlimited)",
+      "dataLocation": "Norway (Stavanger/Oslo)"
     },
     {
       "id": "koofr",
@@ -1738,10 +1954,20 @@ export const ALTERNATIVES: Alternative[] = [
       "name": "CryptPad",
       "country": "FR",
       "category": "office",
-      "replaces": ["Notion", "Google Docs"],
+      "replaces": ["Google Docs", "Google Sheets", "Miro", "Confluence"],
       "url": "https://cryptpad.fr/",
-      "description": "French zero-knowledge encrypted collaboration suite — open-source, self-hostable.",
-      "monetization": "other"
+      "description": "French zero-knowledge collaborative office suite. Browser-side encryption.",
+      "monetization": "other",
+      "longDescription": "CryptPad is a private, zero-knowledge collaborative office suite developed in France. It encrypts all documents, spreadsheets, slides, and Kanban boards directly in the user's browser before transmission. The decryption keys are stored in the URL fragment (#), meaning the server hosting the files receives only encrypted blobs and never has access to the document contents. CryptPad is fully open-source, respects user privacy by refusing to compile behavioral tracking profiles, and is funded by research grants and donations.",
+      "features": [
+        "Zero-knowledge browser-side encryption",
+        "Decryption keys stored locally in URL fragment",
+        "Collaborative real-time spreadsheets, docs, and pads",
+        "No email or personal details required to sign up",
+        "Open-source and hostable on-premises"
+      ],
+      "pricing": "Free or €5.00/month",
+      "dataLocation": "France (Paris)"
     },
     {
       "id": "bunny-cdn",
@@ -1914,5 +2140,145 @@ export const ALTERNATIVES: Alternative[] = [
       "url": "https://www.justeattakeaway.com/",
       "description": "Dutch-headquartered food delivery platform — EU-registered, GDPR-compliant.",
       "monetization": "other"
+    },
+    {
+      "id": "signicat",
+      "name": "Signicat",
+      "country": "NO",
+      "category": "security",
+      "replaces": ["DocuSign", "Jumio"],
+      "url": "https://www.signicat.com/",
+      "description": "Norwegian Qualified Trust Service Provider (QTSP) for identity verification.",
+      "monetization": "other",
+      "longDescription": "Signicat is a premier European digital identity service provider based in Trondheim, Norway. Operating as an eIDAS Qualified Trust Service Provider, Signicat offers secure electronic signatures, identity verification, and customer onboarding. It integrates more than 35 national electronic IDs (e.g. BankID, MitID) across Europe into a single secure interface, enabling businesses in highly regulated sectors (fintech, banking, healthcare) to conduct automated AML and KYC checks under strict GDPR compliance.",
+      "features": [
+        "Qualified Trust Service Provider (QTSP) under eIDAS",
+        "Aggregation of 35+ national eIDs under one API",
+        "Deepfake-resistant optical identity verification",
+        "Strict compliance with PSD2 and AML regulations",
+        "Sovereign Norwegian and EU data residency"
+      ],
+      "pricing": "Custom enterprise pricing",
+      "dataLocation": "Norway / EU"
+    },
+    {
+      "id": "dealbuilder",
+      "name": "Dealbuilder",
+      "country": "NO",
+      "category": "office",
+      "replaces": ["DocuSign", "PandaDoc"],
+      "url": "https://dealbuilder.io/",
+      "description": "Norwegian contract lifecycle and e-signature platform.",
+      "monetization": "other",
+      "longDescription": "Dealbuilder is a Norwegian contract lifecycle management and electronic signature platform. It streamlines proposal generation, document editing, and legally binding e-signatures under eIDAS and GDPR rules. Because all document vaults and server logs are kept within the EEA under Norwegian jurisdiction, corporate agreements and employee records remain isolated from foreign surveillance or unauthorized intelligence access requests.",
+      "features": [
+        "Contract proposal builder and e-signature flow",
+        "Strict GDPR compliance with data hosted in the EU/EEA",
+        "Legally binding signatures matching eIDAS regulations",
+        "No transfer of corporate data to third countries",
+        "Clean, modern user experience designed for sales teams"
+      ],
+      "pricing": "From €29/month",
+      "dataLocation": "Norway / EU"
+    },
+    {
+      "id": "n8n",
+      "name": "n8n",
+      "country": "DE",
+      "category": "project-management",
+      "replaces": ["Zapier", "Make"],
+      "url": "https://n8n.io/",
+      "description": "Fair-code workflow automation. Keep your API keys and data local.",
+      "monetization": "other",
+      "longDescription": "n8n is a fair-code, extendable workflow automation tool based in Berlin, Germany. It serves as a secure alternative to Zapier, allowing enterprises to connect various software tools and APIs. By self-hosting n8n, organizations ensure that sensitive customer data, corporate credentials, and internal databases never traverse third-party servers. n8n's open-source node system allows deep flexibility while preserving complete data residency, making it highly suitable for compliance-sensitive operations.",
+      "features": [
+        "Self-hostable node-based automation platform",
+        "Prevents API credential leakage to third parties",
+        "Granular data flow governance and custom node building",
+        "EU-based enterprise support and compliance audits",
+        "No transaction execution limits when self-hosted"
+      ],
+      "pricing": "Free (Self-hosted) or Hosted from €20/month",
+      "dataLocation": "Self-hosted / Germany / EU"
+    },
+    {
+      "id": "baserow",
+      "name": "Baserow",
+      "country": "NL",
+      "category": "project-management",
+      "replaces": ["Airtable"],
+      "url": "https://baserow.io/",
+      "description": "Dutch open-source no-code database built on PostgreSQL.",
+      "monetization": "other",
+      "longDescription": "Baserow is an open-source, no-code database and collaborative spreadsheet platform headquartered in Amsterdam, Netherlands. Built on robust relational technology (PostgreSQL and Django), Baserow lets teams manage complex datasets without vendor lock-in. Unlike US-based Airtable, Baserow can be self-hosted, removing row limitations and ensuring total data residency under GDPR. It is SOC 2 Type II certified and complies fully with HIPAA requirements, making it ideal for government and healthcare teams.",
+      "features": [
+        "Self-hostable with unlimited rows and tables",
+        "Relational database architecture built on PostgreSQL",
+        "SOC 2 Type II, HIPAA, and GDPR compliant",
+        "Rich REST API and developer-first design",
+        "100% open-source and customizable"
+      ],
+      "pricing": "Free (Self-hosted) or Hosted from €5/user/month",
+      "dataLocation": "Self-hosted / Netherlands / EU"
+    },
+    {
+      "id": "black-forest-labs",
+      "name": "Black Forest Labs",
+      "country": "DE",
+      "category": "ai",
+      "replaces": ["Midjourney", "OpenAI DALL-E"],
+      "url": "https://blackforestlabs.ai/",
+      "description": "German AI lab; creators of the state-of-the-art FLUX model family.",
+      "monetization": "other",
+      "longDescription": "Black Forest Labs is a frontier artificial intelligence research lab based in Germany, founded by the original architects of Stable Diffusion. The lab developed FLUX, a state-of-the-art family of open-weight text-to-image models. Utilizing 'Flow Matching' technology, FLUX predicts optimal transport paths from noise, leading to superior prompt adherence, text rendering, and high-fidelity generation. By hosting FLUX weights on local GPU rigs or using European API endpoints, creative teams keep their generative assets and IP fully within EU jurisdictions.",
+      "features": [
+        "Advanced Flow Matching image generation technology",
+        "State-of-the-art text rendering and spatial reasoning",
+        "Open-weight models (FLUX.1 Schnell) under Apache 2.0",
+        "Can be run 100% locally on sovereign GPU infrastructure",
+        "Strictly complies with the upcoming EU AI Act"
+      ],
+      "pricing": "Free (Open-weight) or API per-image pricing",
+      "dataLocation": "Local / Germany / EU"
+    },
+    {
+      "id": "kyutai",
+      "name": "Kyutai",
+      "country": "FR",
+      "category": "ai",
+      "replaces": ["OpenAI Voice Mode"],
+      "url": "https://kyutai.org/",
+      "description": "French open-science AI laboratory; creators of the Moshi real-time voice model.",
+      "monetization": "other",
+      "longDescription": "Kyutai is an open-science artificial intelligence laboratory headquartered in Paris, France. Financed by sovereign European investments, Kyutai developed Moshi, a speech-to-speech AI model that operates in full-duplex mode. Unlike US models which stack separate speech-to-text, LLM, and text-to-speech stages, Moshi processes audio directly with under 300 milliseconds of latency, understanding emotional tones and backchannel signals. Kyutai releases its models as openweights to ensure European AI sovereignty.",
+      "features": [
+        "Speech-native multimodal modeling (no text bridge)",
+        "Ultra-low latency under 300ms (full-duplex conversation)",
+        "Open-science weight releases for public deployment",
+        "Independent European funding and corporate structure",
+        "Zero vendor lock-in or telemetry enforcement"
+      ],
+      "pricing": "Free (Open-source weights)",
+      "dataLocation": "Local / France (EU)"
+    },
+    {
+      "id": "floka",
+      "name": "Floka",
+      "country": "NO",
+      "category": "ai",
+      "replaces": ["OpenAI Enterprise Assistants"],
+      "url": "https://floka.ai/",
+      "description": "Norwegian AI assistant (Solvei) connecting to sovereign business systems.",
+      "monetization": "other",
+      "longDescription": "Floka is a Norwegian artificial intelligence integrator that bridges advanced language models with localized business systems. Their signature AI assistant, Solvei, connects securely to ERP, CRM, and accounting programs within the EEA. Floka prioritizes strict privacy and data minimization, ensuring that sensitive corporate files are never exported to foreign cloud hosts or used to train third-party models.",
+      "features": [
+        "Privacy-first integration with localized ERP/CRM systems",
+        "Solvei assistant designed specifically for Nordic SMBs",
+        "Ensures company IP is never ingested by foreign LLM trainers",
+        "Sovereign hosting in Norwegian data centers",
+        "Full compliance with GDPR and EEA rules"
+      ],
+      "pricing": "Custom contract pricing",
+      "dataLocation": "Norway / EU"
     }
   ];

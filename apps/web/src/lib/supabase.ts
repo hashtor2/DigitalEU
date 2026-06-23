@@ -35,3 +35,54 @@ export const supabase: SupabaseClient | null = isSupabaseConfigured
       },
     })
   : null;
+
+/**
+ * Email verification helpers for scanner flow
+ */
+export const emailVerificationHelpers = {
+  /**
+   * Poll for email verification status
+   */
+  pollVerification: async (token: string, maxAttempts = 30) => {
+    for (let i = 0; i < maxAttempts; i++) {
+      try {
+        if (!supabase) return { verified: false };
+        const { data } = await supabase
+          .from("email_verifications")
+          .select("*")
+          .eq("token", token)
+          .single();
+
+        if (data?.verified_at) {
+          return { verified: true, data };
+        }
+      } catch (err) {
+        // Token not found yet or error
+      }
+
+      // Wait 1 second before retry
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+
+    return { verified: false };
+  },
+
+  /**
+   * Check scanner metadata verification status
+   */
+  checkScannerMetadata: async (userId: string) => {
+    try {
+      if (!supabase) return false;
+      const { data } = await supabase
+        .from("user_scanner_metadata")
+        .select("gmail_verified, verified_at")
+        .eq("user_id", userId)
+        .single();
+
+      return data?.gmail_verified ?? false;
+    } catch (err) {
+      console.error("Failed to check scanner metadata:", err);
+      return false;
+    }
+  },
+};

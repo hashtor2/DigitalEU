@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { SocialLinks } from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { EarlyAccessSignup } from "@/components/EarlyAccessSignup";
 import { COUNTRY_FLAGS } from "@/lib/flags";
 
 const CATEGORY_LABELS: Record<ServiceInfo["category"], string> = {
@@ -175,6 +176,14 @@ export function SelectorPage() {
               <span className="font-medium">Zero data sent to our servers</span>
             </span>
           </div>
+        </div>
+
+        {/* Early access: automatic Gmail inbox scan (manual-MVP signup) */}
+        <div className="mb-12">
+          <EarlyAccessSignup />
+          <p className="mt-3 text-center text-xs text-text-secondary dark:text-dark-text-secondary">
+            Or tick your services manually below — free, no signup.
+          </p>
         </div>
 
         {/* Search + filter bar */}
