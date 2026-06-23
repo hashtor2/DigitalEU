@@ -27,6 +27,34 @@ export function Footer() {
             <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
               🇪🇺 Data hosted in Switzerland (Zürich)
             </p>
+
+            {/* Social Links */}
+            <div className="space-y-2 pt-2">
+              <a href="https://digitaleu.me" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-text-primary dark:hover:text-dark-text-primary transition-colors text-sm">
+                <span>🌐</span>
+                <span>Website</span>
+              </a>
+              <a href="mailto:info@digitaleu.me" className="flex items-center gap-2 hover:text-text-primary dark:hover:text-dark-text-primary transition-colors text-sm">
+                <span>✉️</span>
+                <span>Email</span>
+              </a>
+              <a href="https://x.com/digitaleume" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-text-primary dark:hover:text-dark-text-primary transition-colors text-sm">
+                <span>𝕏</span>
+                <span>X</span>
+              </a>
+              <a href="https://www.reddit.com/user/DigitalEUme/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-text-primary dark:hover:text-dark-text-primary transition-colors text-sm">
+                <span>🔴</span>
+                <span>Reddit</span>
+              </a>
+              <a href="https://substack.com/@digitaleurope" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-text-primary dark:hover:text-dark-text-primary transition-colors text-sm">
+                <span>📄</span>
+                <span>Substack</span>
+              </a>
+              <a href="https://bsky.app/profile/digitaleu.me" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-text-primary dark:hover:text-dark-text-primary transition-colors text-sm">
+                <span>🌌</span>
+                <span>Bluesky</span>
+              </a>
+            </div>
           </div>
 
           {/* Navigation */}
