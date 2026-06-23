@@ -35,9 +35,12 @@ Privacy-relevant facts of the build:
 - Guest mode: data lives only in `sessionStorage`. Profile mode: **zero-knowledge
   client-side encryption** before storage in Supabase (data in Switzerland 🇨🇭,
   Zürich) — we cannot read plaintext.
-- Analytics: Plausible (cookieless, EU 🇪🇪). Payment: Stripe. Hosting: Vercel (US;
-  sovereignty under review). Breach check: Have I Been Pwned via backend proxy.
+- Analytics: Plausible (cookieless, EU 🇪🇪). Payment: Stripe. Code hosting:
+  Codeberg. Hosting: Vercel (US; sovereignty under review). Breach check: Have
+  I Been Pwned via backend proxy.
 - We run affiliate links and a €29 one-time digital purchase.
+- **Pre-commit security review is mandatory** (CLAUDE.md §5): no commit without
+  verifying secrets, OAuth scopes, data leakage, and dependencies.
 
 ## BLOCK B — Your team (other agents I can consult)
 This is a virtual team; each member is a separate AI agent I can open in another

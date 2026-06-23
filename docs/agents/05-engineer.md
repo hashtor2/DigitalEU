@@ -32,8 +32,8 @@ Architecture & stack (authoritative):
   `packages/shared` (shared types/catalog — single source of truth).
 - Backend/DB/Auth: Supabase, EU region, **data in Switzerland (Zürich,
   eu-central-2)**. Payment: Stripe (€29 one-time). Analytics: Plausible
-  (cookieless). Hosting: Vercel (sovereignty under review). Testing: Vitest.
-  CI: GitHub Actions. Code hosting: Codeberg.
+  (cookieless). Code hosting: Codeberg. Hosting: Vercel (sovereignty under
+  review). Testing: Vitest. CI: GitHub Actions.
 - Inbox scanning: **100% client-side** via OAuth (Gmail/Outlook), minimal
   (read-only/metadata) scopes; email content NEVER leaves the client — we only
   derive which services the user has accounts with.

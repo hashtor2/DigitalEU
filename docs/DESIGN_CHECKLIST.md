@@ -86,20 +86,21 @@ git commit -m "feat: Add Service display components with country flags
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
 
-### **Phase 2: Forms & Flows (Next)**
-- [ ] Multi-column form layout (name + email side-by-side)
-- [ ] Consent flow UI (clear, plain language)
-- [ ] Payment form (with Service selection)
-- [ ] Inbox Scanner onboarding
-- [ ] Dashboard layout
-
-### **Phase 3: Pages (After Forms)**
-- [ ] Landing page (hero + benefits + footer)
+### **Phase 2: Pages (CURRENT)**
+- [x] Landing page (hero + dual CTA + trust signals)
+- [x] Report page (breach alert + services + alternatives + next steps)
+- [x] How it works page (4-step explainer, zero-knowledge focus)
 - [ ] Dashboard page
 - [ ] Settings/profile page
 - [ ] Success/confirmation page
 
-### **Phase 4: Polish (End)**
+### **Phase 3: Forms & Flows (CURRENT)**
+- [x] Multi-column form layout (name + email side-by-side)
+- [x] Consent flow UI (clear, plain language)
+- [x] Payment form (with Service selection)
+- [x] Inbox Scanner onboarding (3-step: intro → scanning → results)
+
+### **Phase 4: Polish (Next)**
 - [ ] Extension UI (popover 300–400px)
 - [ ] Loading & error states (all components)
 - [ ] Accessibility audit (WCAG AAA)
@@ -141,11 +142,16 @@ Before committing any design changes, verify:
 
 | Commit | Date       | Status | Notes |
 |--------|-----------|--------|-------|
-| 1. Foundation (tokens + config) | 2026-06-22 | 🟢 Done | 8ea8f0b — Base config + BRAND.md |
-| 2. Component overrides | 2026-06-22 | 🟢 Done | fa7cdb4 — shadcn/ui theme |
-| 3. Header + Footer | 2026-06-22 | 🟢 Done | 4161035 — Layout structure |
-| 4. Service display | 2026-06-22 | 🟢 Done | e7b8810 — Service card/grid/badge + flag icons |
-| (merge to main) | (TBD) | ⏳ | Design system ready |
+| 1. Foundation (tokens + config) | 2026-06-22 | 🟢 Done | Base config + BRAND.md |
+| 2. Component overrides | 2026-06-22 | 🟢 Done | shadcn/ui theme |
+| 3. Header + Footer | 2026-06-22 | 🟢 Done | Layout structure |
+| 4. Service display | 2026-06-22 | 🟢 Done | Logos + flags |
+| 5. Landing redesign | 2026-06-23 | 🟢 Done | Hero + dual CTA + Nordic Warmth |
+| 6. Report + How it works | 2026-06-23 | 🟢 Done | Breach alert, 4-step explainer |
+| 7. Routing update | 2026-06-23 | 🟢 Done | / → landing, /selector, /report, /how |
+| 8. Phase 3 forms | 2026-06-23 | 🟢 Done | Profile, consent modal, payment forms |
+| 9. Inbox Scanner onboarding | 2026-06-23 | 🟢 Done | 3-step: intro → scanning → results |
+| (merge to main) | (2026-06-23) | 🟢 Done | Design system + all pages + forms ready |
 
 ---
 

@@ -23,6 +23,10 @@ data — data minimization, client-side/zero-knowledge encryption, local-first.
 (3) European-first. (4) Openness — no hidden tracking. (5) Privacy by design &
 default.
 
+Tech stack (high-level): Vite + React 19 + TypeScript + Tailwind v4 + shadcn/ui;
+Supabase (data in Switzerland 🇨🇭); Stripe; Plausible analytics; Code hosting on
+Codeberg. Default language English; all European languages supported after MVP.
+
 Facts you'll lean on when reassuring users (must stay accurate — never overpromise):
 - Inbox scanning is **100% client-side** via OAuth with minimal (read-only/
   metadata) scopes; email content never leaves the user's device — we only

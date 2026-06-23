@@ -30,9 +30,10 @@ client-side/zero-knowledge encryption, local-first, full transparency.
 (4) Openness — no hidden tracking. (5) Privacy by design & default.
 
 Stack (high level): Vite + React 19 + TypeScript + Tailwind v4 monorepo;
-Supabase (data in Switzerland 🇨🇭); Stripe; Plausible analytics; hosted on Vercel
-(under review for sovereignty reasons). Default language English, i18n-ready for
-all European languages after MVP.
+Supabase (data in Switzerland 🇨🇭); Stripe; Plausible analytics; Code hosting
+on Codeberg; hosted on Vercel (under review for sovereignty reasons). Default
+language English; all European languages supported after MVP (i18n foundation
+in place).
 
 ## BLOCK B — Your team (other agents I can consult)
 This is a virtual team; each member is a separate AI agent I can open in another
