@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/db'
+import { initializeGmailScan } from '@/lib/scan'
 
 interface Scan {
   id: string
@@ -8,14 +9,21 @@ interface Scan {
   completed_at: string | null
 }
 
+interface MailboxConnection {
+  id: string
+  provider: string
+  connected_at: string
+}
+
 export default function DashboardPage() {
   const [scans, setScans] = useState<Scan[]>([])
+  const [connections, setConnections] = useState<MailboxConnection[]>([])
   const [loading, setLoading] = useState(true)
+  const [scanning, setScanning] = useState(false)
   const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
     const loadDashboard = async () => {
-      // Get current user
       const {
         data: { user: currentUser },
       } = await supabase.auth.getUser()
@@ -26,6 +34,15 @@ export default function DashboardPage() {
       }
 
       setUser(currentUser)
+
+      // Load user's connections
+      const { data: connectionsData } = await supabase
+        .from('mailbox_connections')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .is('revoked_at', null)
+
+      setConnections(connectionsData || [])
 
       // Load user's scans
       const { data: scansData } = await supabase
@@ -41,11 +58,33 @@ export default function DashboardPage() {
     loadDashboard()
   }, [])
 
+  const handleConnectGmail = async () => {
+    setScanning(true)
+
+    if (!user || !connections.length) {
+      alert('Please sign in with Gmail first')
+      setScanning(false)
+      return
+    }
+
+    const connection = connections[0]!
+    const { scanId, error } = await initializeGmailScan(connection.id, user.id)
+
+    if (error) {
+      alert(`Scan failed: ${error}`)
+      setScanning(false)
+      return
+    }
+
+    // Redirect to results page
+    window.location.href = `/results/${scanId}`
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="text-center space-y-4">
-          <div className="animate-spin h-8 w-8 border-4 border-terracotta border-t-transparent rounded-full mx-auto"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] border-t-transparent rounded-full mx-auto"></div>
           <p className="text-[#1a2332]/70">Loading dashboard...</p>
         </div>
       </div>
@@ -70,9 +109,35 @@ export default function DashboardPage() {
       <div className="rounded-lg border border-[#1a2332]/10 bg-white p-6">
         <h2 className="text-xl font-mono font-semibold mb-4">Mailbox connections</h2>
         <p className="text-[#1a2332]/70 mb-4">Connect your Gmail or Outlook account to scan for subscriptions.</p>
-        <button className="px-4 py-2 rounded bg-[#c17a5c] font-mono font-semibold text-[#f9f7f2] hover:bg-[#c17a5c]/90 transition">
-          Connect Gmail
-        </button>
+
+        {connections.length === 0 ? (
+          <div className="space-y-3">
+            <p className="text-sm text-[#1a2332]/60">No connections yet</p>
+            <a
+              href="/auth/signin"
+              className="inline-block px-4 py-2 rounded bg-[#c17a5c] font-mono font-semibold text-[#f9f7f2] hover:bg-[#c17a5c]/90 transition"
+            >
+              Connect Gmail via OAuth
+            </a>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {connections.map((conn) => (
+              <div key={conn.id} className="flex items-center justify-between rounded bg-[#1a2332]/5 p-3">
+                <span className="font-mono text-sm">
+                  {conn.provider === 'gmail' ? '✓ Gmail' : '✓ Outlook'} connected
+                </span>
+                <button
+                  onClick={handleConnectGmail}
+                  disabled={scanning}
+                  className="px-4 py-2 rounded bg-[#c17a5c] font-mono font-semibold text-[#f9f7f2] hover:bg-[#c17a5c]/90 disabled:opacity-50 transition"
+                >
+                  {scanning ? 'Scanning...' : 'Start scan'}
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {scans.length === 0 ? (

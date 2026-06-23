@@ -5,6 +5,7 @@ import SignInPage from './routes/auth/signin'
 import SignUpPage from './routes/auth/signup'
 import CallbackPage from './routes/auth/callback'
 import DashboardPage from './routes/dashboard'
+import ResultsPage from './routes/results/$scanId'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="auth/signup" element={<SignUpPage />} />
           <Route path="auth/callback" element={<CallbackPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="results/:scanId" element={<ResultsPage />} />
         </Route>
       </Routes>
     </Router>
