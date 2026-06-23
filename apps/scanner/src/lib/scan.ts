@@ -9,6 +9,32 @@ interface GmailScanResult {
   }>
 }
 
+interface CancellationStep {
+  step: number
+  title: string
+  description: string
+}
+
+export interface CancellationGuide {
+  id: string
+  service_id: string
+  title: string
+  slug: string
+  description: string
+  seo_meta_description: string
+  canonical_url: string
+  how_to_cancel_steps: CancellationStep[]
+  hero_image_url: string
+  og_image_url: string
+  featured_eu_alternative: string
+  service?: {
+    id: string
+    name: string
+    website_url: string
+    logo_url: string
+  }
+}
+
 export async function initializeGmailScan(
   mailboxConnectionId: string,
   userId: string
@@ -160,6 +186,69 @@ export async function getScanResults(scanId: string, userId: string) {
     console.error('Error fetching scan results:', error)
     return {
       results: null,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    }
+  }
+}
+
+export async function getCancellationGuides() {
+  try {
+    const { data: guides, error } = await supabase
+      .from('cancellation_guides')
+      .select(
+        `
+        *,
+        service:services_catalog!service_id (
+          id,
+          name,
+          website_url,
+          logo_url
+        )
+      `
+      )
+      .order('id', { ascending: true })
+
+    if (error) {
+      return { guides: null, error: 'Failed to fetch guides' }
+    }
+
+    return { guides: (guides || []) as CancellationGuide[] }
+  } catch (error) {
+    console.error('Error fetching cancellation guides:', error)
+    return {
+      guides: null,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    }
+  }
+}
+
+export async function getCancellationGuide(id: string) {
+  try {
+    const { data: guide, error } = await supabase
+      .from('cancellation_guides')
+      .select(
+        `
+        *,
+        service:services_catalog!service_id (
+          id,
+          name,
+          website_url,
+          logo_url
+        )
+      `
+      )
+      .eq('id', id)
+      .single()
+
+    if (error || !guide) {
+      return { guide: null, error: 'Guide not found' }
+    }
+
+    return { guide: guide as CancellationGuide }
+  } catch (error) {
+    console.error('Error fetching cancellation guide:', error)
+    return {
+      guide: null,
       error: error instanceof Error ? error.message : 'Unknown error',
     }
   }
