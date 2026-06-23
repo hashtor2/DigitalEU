@@ -1,0 +1,68 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: E
+        - generic [ref=e6]: Europa
+      - generic [ref=e7]:
+        - navigation "Legal" [ref=e8]:
+          - link "Privacy" [ref=e9] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms" [ref=e10] [cursor=pointer]:
+            - /url: /terms
+        - link "Sign in" [ref=e11] [cursor=pointer]:
+          - /url: /auth
+    - generic [ref=e12]:
+      - paragraph [ref=e13]: Closed beta · invite only
+      - heading "Find European alternatives to the services you already use." [level=1] [ref=e14]
+      - paragraph [ref=e15]: Connect your Gmail — we only read sender names, never message contents — and we'll recognise services like Notion, Dropbox or Slack and suggest a privacy-first European alternative for each one.
+    - generic [ref=e17]:
+      - heading "How your data is handled" [level=2] [ref=e18]
+      - list [ref=e19]:
+        - listitem [ref=e20]:
+          - generic [ref=e21]: ✓
+          - generic [ref=e22]:
+            - paragraph [ref=e23]: Read-only metadata
+            - paragraph [ref=e24]: Only sender address and subject line. Never email bodies, attachments, or contacts.
+        - listitem [ref=e25]:
+          - generic [ref=e26]: ✓
+          - generic [ref=e27]:
+            - paragraph [ref=e28]: Stored in your account
+            - paragraph [ref=e29]: Results live in your Europa account so you can come back to them. Auto-deleted after 30 days.
+        - listitem [ref=e30]:
+          - generic [ref=e31]: ✕
+          - generic [ref=e32]:
+            - paragraph [ref=e33]: Never sold or shared
+            - paragraph [ref=e34]: Inbox data is never sold, shared, or used to train models.
+        - listitem [ref=e35]:
+          - generic [ref=e36]: ✕
+          - generic [ref=e37]:
+            - paragraph [ref=e38]: Disconnect anytime
+            - paragraph [ref=e39]: One click to revoke access and delete everything we have.
+    - generic [ref=e40]:
+      - generic [ref=e41]:
+        - link "Try the demo →" [ref=e42] [cursor=pointer]:
+          - /url: /scan?mode=demo
+        - link "Join the waitlist" [ref=e43] [cursor=pointer]:
+          - /url: /auth
+      - paragraph [ref=e44]: The demo runs on a mock inbox — no Google sign-in needed. Real Gmail scanning is invite-only during closed beta; create an account and we'll add you to the waitlist.
+    - generic [ref=e45]:
+      - navigation [ref=e46]:
+        - link "Privacy Policy" [ref=e47] [cursor=pointer]:
+          - /url: /privacy
+        - generic [ref=e48]: ·
+        - link "Terms of Service" [ref=e49] [cursor=pointer]:
+          - /url: /terms
+        - generic [ref=e50]: ·
+        - link "Security & data" [ref=e51] [cursor=pointer]:
+          - /url: /security
+      - paragraph [ref=e52]:
+        - generic [ref=e53]: ★
+        - text: Built for people who'd rather keep their data on this continent.
+  - complementary "Edit with Lovable" [ref=e54]:
+    - link "Edit with Lovable" [ref=e55] [cursor=pointer]:
+      - /url: https://lovable.dev/projects/6d344cb3-ee5a-418e-9b1a-095d57b8c08f?utm_source=lovable-badge
+      - generic [ref=e56]: Edit with
+      - img [ref=e57]
+    - button "Dismiss" [ref=e62] [cursor=pointer]:
+      - img [ref=e63]

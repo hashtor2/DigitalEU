@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm install --workspaces=false && npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install --workspaces=false",
+  "env": {
+    "VITE_SUPABASE_URL": "@supabase_url",
+    "VITE_SUPABASE_KEY": "@supabase_key"
+  }
+}

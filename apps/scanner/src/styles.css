@@ -10,8 +10,30 @@
     font-family: 'Geist', system-ui, -apple-system, sans-serif;
   }
 
+  body.dark {
+    @apply bg-[#1a1815] text-[#f5f1ea];
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 600;
   }
+
+  body.dark h1,
+  body.dark h2,
+  body.dark h3,
+  body.dark h4,
+  body.dark h5,
+  body.dark h6 {
+    @apply text-[#f5f1ea];
+  }
+
+  a {
+    @apply text-[#c17a5c] hover:text-[#c17a5c]/80 transition;
+  }
+
+  body.dark a {
+    @apply text-[#a86650] hover:text-[#a86650]/80;
+  }
 }
+

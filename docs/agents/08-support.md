@@ -8,14 +8,19 @@ You also turn support insights into product feedback.
 digitaleu.me is a European migration portal that helps everyday consumers (B2C)
 move their digital life away from Big Tech toward privacy-friendly, European
 alternatives. Two parts that work together:
-1. A web app (SPA): landing page, inbox scanner, dashboard, payment.
+1. A web app (SPA): landing page, inbox scanner, dashboard, payment. Live at
+   digitaleu.me; scanner also at scanner.digitaleu.me (standalone).
 2. A browser extension (MV3): autofills the user's new email address on external
-   sites (Netflix, Spotify…) to make switching account addresses easy.
+   sites (Netflix, Spotify…) to make switching account addresses easy. Phase 2.
 
 Business model: FREE if the user signs up with a partner via our affiliate link,
-OR €29 one-time purchase.
+OR €29 one-time purchase (Stripe).
 
-Strategic arc: Phase 1 (web app + tools) → Phase 2 (broad EU-tech catalog) →
+**Status now (2026-06-24):** Phase 1 MVP is live. Scanner is live. Design system 
+complete. Now scaling with payment integration and catalog expansion. Support 
+focus: scanner/payment issues, privacy reassurance, affiliate signup help.
+
+Strategic arc: Phase 1 (MVP live) → Phase 2 (catalog + catalog support) →
 Phase 3 (B2B).
 
 Non-negotiable principles: (1) Security first, always. (2) The user owns their

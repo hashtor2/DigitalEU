@@ -131,8 +131,8 @@ export default function CancellationGuidePage() {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="text-center space-y-4">
-          <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-[#1a2332]/70">Loading guide...</p>
+          <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] dark:border-[#a86650] border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-[#1a2332]/70 dark:text-[#a89d96]">Loading guide...</p>
         </div>
       </div>
     )
@@ -141,10 +141,10 @@ export default function CancellationGuidePage() {
   if (error || !guide) {
     return (
       <div className="mx-auto max-w-2xl space-y-4">
-        <div className="rounded-lg border border-red-300 bg-red-50 p-6">
-          <h2 className="mb-2 text-lg font-mono font-semibold text-red-900">Guide not found</h2>
-          <p className="text-sm text-red-700 mb-4">{error}</p>
-          <a href="/cancel" className="inline-block text-sm text-[#c17a5c] hover:underline">
+        <div className="rounded-lg border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-900/20 p-6">
+          <h2 className="mb-2 text-lg font-mono font-semibold text-red-900 dark:text-red-400">Guide not found</h2>
+          <p className="text-sm text-red-700 dark:text-red-300 mb-4">{error}</p>
+          <a href="/cancel" className="inline-block text-sm text-[#c17a5c] dark:text-[#a86650] hover:underline">
             Back to guides
           </a>
         </div>
@@ -167,16 +167,16 @@ export default function CancellationGuidePage() {
 
       {/* Header */}
       <div>
-        <a href="/cancel" className="text-[#c17a5c] font-mono text-sm hover:underline mb-3 inline-block">
+        <a href="/cancel" className="text-[#c17a5c] dark:text-[#a86650] font-mono text-sm hover:underline mb-3 inline-block">
           ← Back to guides
         </a>
-        <h1 className="text-4xl font-mono font-bold mb-3">{guide.title}</h1>
-        <p className="text-[#1a2332]/70 text-lg">{guide.description}</p>
+        <h1 className="text-4xl font-mono font-bold mb-3 text-[#1a2332] dark:text-[#f5f1ea]">{guide.title}</h1>
+        <p className="text-[#1a2332]/70 dark:text-[#a89d96] text-lg">{guide.description}</p>
       </div>
 
       {/* Service info */}
       {guide.service && (
-        <div className="rounded-lg border border-[#1a2332]/10 bg-white p-6">
+        <div className="rounded-lg border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6">
           <div className="flex items-center gap-4">
             {guide.service.logo_url && (
               <img
@@ -186,12 +186,12 @@ export default function CancellationGuidePage() {
               />
             )}
             <div>
-              <h3 className="font-mono font-semibold">{guide.service.name}</h3>
+              <h3 className="font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">{guide.service.name}</h3>
               <a
                 href={guide.service.website_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-[#c17a5c] hover:underline"
+                className="text-sm text-[#c17a5c] dark:text-[#a86650] hover:underline"
               >
                 Visit website →
               </a>
@@ -202,19 +202,19 @@ export default function CancellationGuidePage() {
 
       {/* Steps */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-mono font-semibold">How to cancel</h2>
+        <h2 className="text-2xl font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">How to cancel</h2>
         <div className="space-y-4">
           {guide.how_to_cancel_steps.map((step) => (
-            <div key={step.step} className="rounded-lg border border-[#1a2332]/10 bg-white p-6">
+            <div key={step.step} className="rounded-lg border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6">
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c17a5c]/10">
-                    <span className="font-mono font-bold text-[#c17a5c]">{step.step}</span>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c17a5c]/10 dark:bg-[#a86650]/20">
+                    <span className="font-mono font-bold text-[#c17a5c] dark:text-[#a86650]">{step.step}</span>
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-mono font-semibold text-lg mb-2">{step.title}</h3>
-                  <p className="text-[#1a2332]/70">{step.description}</p>
+                  <h3 className="font-mono font-semibold text-lg mb-2 text-[#1a2332] dark:text-[#f5f1ea]">{step.title}</h3>
+                  <p className="text-[#1a2332]/70 dark:text-[#a89d96]">{step.description}</p>
                 </div>
               </div>
             </div>
@@ -224,14 +224,14 @@ export default function CancellationGuidePage() {
 
       {/* European alternative */}
       {guide.featured_eu_alternative && (
-        <div className="rounded-lg border border-[#2d3e2d]/20 bg-[#2d3e2d]/5 p-6">
-          <h3 className="font-mono font-semibold mb-2">Recommended European alternative</h3>
-          <p className="text-[#1a2332]/70 mb-4">
+        <div className="rounded-lg border border-[#2d3e2d]/20 dark:border-[#2d3e2d]/40 bg-[#2d3e2d]/5 dark:bg-[#2d3e2d]/20 p-6">
+          <h3 className="font-mono font-semibold mb-2 text-[#1a2332] dark:text-[#f5f1ea]">Recommended European alternative</h3>
+          <p className="text-[#1a2332]/70 dark:text-[#a89d96] mb-4">
             After cancelling, consider switching to <strong>{guide.featured_eu_alternative}</strong> for better privacy and data sovereignty.
           </p>
           <a
             href={`/cancel/${guide.featured_eu_alternative.toLowerCase().replace(/\s+/g, '-')}`}
-            className="text-[#2d3e2d] font-mono font-semibold hover:underline"
+            className="text-[#2d3e2d] dark:text-[#6ba86b] font-mono font-semibold hover:underline"
           >
             View guide for {guide.featured_eu_alternative} →
           </a>
@@ -239,39 +239,39 @@ export default function CancellationGuidePage() {
       )}
 
       {/* Next steps */}
-      <div className="rounded-lg border border-[#1a2332]/10 bg-[#f9f7f2] p-6">
-        <h3 className="font-mono font-semibold mb-4">Next steps after cancellation</h3>
-        <ol className="space-y-3 text-[#1a2332]/70">
+      <div className="rounded-lg border border-[#1a2332]/10 dark:border-[#3a3530] bg-[#f9f7f2] dark:bg-[#2a251f] p-6">
+        <h3 className="font-mono font-semibold mb-4 text-[#1a2332] dark:text-[#f5f1ea]">Next steps after cancellation</h3>
+        <ol className="space-y-3 text-[#1a2332]/70 dark:text-[#a89d96]">
           <li className="flex gap-3">
-            <span className="font-mono font-bold text-[#c17a5c] flex-shrink-0">1</span>
+            <span className="font-mono font-bold text-[#c17a5c] dark:text-[#a86650] flex-shrink-0">1</span>
             <span>Complete all cancellation steps above</span>
           </li>
           <li className="flex gap-3">
-            <span className="font-mono font-bold text-[#c17a5c] flex-shrink-0">2</span>
+            <span className="font-mono font-bold text-[#c17a5c] dark:text-[#a86650] flex-shrink-0">2</span>
             <span>Set up your new account with a European provider</span>
           </li>
           <li className="flex gap-3">
-            <span className="font-mono font-bold text-[#c17a5c] flex-shrink-0">3</span>
+            <span className="font-mono font-bold text-[#c17a5c] dark:text-[#a86650] flex-shrink-0">3</span>
             <span>Update your email address across all services you use</span>
           </li>
           <li className="flex gap-3">
-            <span className="font-mono font-bold text-[#c17a5c] flex-shrink-0">4</span>
+            <span className="font-mono font-bold text-[#c17a5c] dark:text-[#a86650] flex-shrink-0">4</span>
             <span>Consider using our browser extension to auto-fill the new email</span>
           </li>
         </ol>
       </div>
 
       {/* Navigation */}
-      <div className="flex gap-4 justify-between pt-6 border-t border-[#1a2332]/10">
+      <div className="flex gap-4 justify-between pt-6 border-t border-[#1a2332]/10 dark:border-[#3a3530]">
         <a
           href="/cancel"
-          className="px-6 py-2 rounded border border-[#1a2332]/20 font-mono font-semibold hover:bg-[#1a2332]/5 transition"
+          className="px-6 py-2 rounded border border-[#1a2332]/20 dark:border-[#3a3530] text-[#1a2332] dark:text-[#f5f1ea] font-mono font-semibold hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
         >
           ← All guides
         </a>
         <a
           href="/"
-          className="px-6 py-2 rounded bg-[#c17a5c] font-mono font-semibold text-[#f9f7f2] hover:bg-[#c17a5c]/90 transition"
+          className="px-6 py-2 rounded bg-[#c17a5c] dark:bg-[#a86650] font-mono font-semibold text-[#f9f7f2] hover:bg-[#c17a5c]/90 dark:hover:bg-[#a86650]/90 transition"
         >
           Back to home
         </a>
