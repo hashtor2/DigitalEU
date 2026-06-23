@@ -15,7 +15,7 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
     localStorage.setItem("email_scanner_unlock_via_proton", "true");
     // Open Proton signup link
     window.open(PROTON_AFFILIATE_URL, "_blank", "width=1200,height=800");
-    
+
     // Also trigger unlock immediately with a 2-second delay (for return users)
     setTimeout(() => {
       const unlocked = localStorage.getItem("email_scanner_unlocked");
@@ -54,91 +54,89 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col items-center justify-center px-4">
-      <div className="max-w-2xl w-full text-center space-y-8">
+    <main className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col items-center justify-center px-6 py-12">
+      <div className="max-w-2xl w-full space-y-12">
         {/* Heading */}
-        <div className="space-y-2">
-          <h1 className="text-4xl sm:text-5xl font-bold">
-            Unlock the Email Scanner
-          </h1>
-          <p className="text-xl text-slate-400">
+        <div className="text-center space-y-4">
+          <h1 className="text-h1 font-mono">Unlock the Email Scanner</h1>
+          <p className="text-h3 text-text-secondary dark:text-dark-text-secondary font-sans">
             See all your Big Tech accounts in just 2 minutes
           </p>
         </div>
 
         {/* Benefits */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-8">
-          <div className="space-y-2">
-            <div className="text-2xl">🔍</div>
-            <p className="font-semibold">Automatic Detection</p>
-            <p className="text-sm text-slate-400">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="space-y-3 text-center">
+            <div className="text-4xl">🔍</div>
+            <h3 className="font-medium text-text-primary dark:text-dark-text-primary">Automatic Detection</h3>
+            <p className="text-small text-text-secondary dark:text-dark-text-secondary">
               Scans your inbox to find all your Big Tech accounts
             </p>
           </div>
-          <div className="space-y-2">
-            <div className="text-2xl">🇪🇺</div>
-            <p className="font-semibold">EU Alternatives</p>
-            <p className="text-sm text-slate-400">
+          <div className="space-y-3 text-center">
+            <div className="text-4xl">🇪🇺</div>
+            <h3 className="font-medium text-text-primary dark:text-dark-text-primary">EU Alternatives</h3>
+            <p className="text-small text-text-secondary dark:text-dark-text-secondary">
               Get privacy-first European replacements
             </p>
           </div>
-          <div className="space-y-2">
-            <div className="text-2xl">🛡️</div>
-            <p className="font-semibold">100% Private</p>
-            <p className="text-sm text-slate-400">
+          <div className="space-y-3 text-center">
+            <div className="text-4xl">🛡️</div>
+            <h3 className="font-medium text-text-primary dark:text-dark-text-primary">100% Private</h3>
+            <p className="text-small text-text-secondary dark:text-dark-text-secondary">
               Scanning happens locally; we never see your emails
             </p>
           </div>
         </div>
 
         {/* Two unlock paths */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Free path: Proton signup */}
           <button
             onClick={handleProtonClick}
-            className="relative group rounded-lg border-2 border-[#1a56db] bg-[#1a56db]/10 p-8 text-left transition-all duration-300 hover:bg-[#1a56db]/20 hover:border-[#1a56db] active:scale-95"
+            className="group relative rounded-sm border-2 border-accent bg-accent/5 dark:bg-accent/10 p-8 text-left transition-all duration-300 hover:bg-accent/10 dark:hover:bg-accent/20 hover:border-accent active:scale-95"
           >
-            <div className="space-y-3">
-              <div className="text-3xl font-bold text-white">Free</div>
-              <p className="text-sm text-slate-400">
+            <div className="space-y-4">
+              <div className="text-h2 font-mono font-semibold text-accent">Free</div>
+              <p className="text-small text-text-secondary dark:text-dark-text-secondary">
                 Sign up for a new{" "}
-                <span className="font-semibold text-slate-200">Proton Mail</span>{" "}
+                <span className="font-semibold text-text-primary dark:text-dark-text-primary">Proton Mail</span>{" "}
                 account
               </p>
-              <div className="text-xs text-slate-500 space-y-1 py-2">
-                <p>✓ Privacy-first email</p>
-                <p>✓ 500 MB storage</p>
-                <p>✓ Unlock email scanner</p>
+              <div className="space-y-2 pt-2">
+                <p className="text-xs text-text-secondary dark:text-dark-text-secondary">✓ Privacy-first email</p>
+                <p className="text-xs text-text-secondary dark:text-dark-text-secondary">✓ 500 MB storage</p>
+                <p className="text-xs text-text-secondary dark:text-dark-text-secondary">✓ Unlock email scanner</p>
               </div>
             </div>
           </button>
 
-          {/* Paid path: €9.99 payment */}
+          {/* Paid path: €29 payment */}
           <button
             onClick={handlePaymentClick}
             disabled={loading}
-            className="relative group rounded-lg border-2 border-[#f0c040] bg-[#f0c040]/10 p-8 text-left transition-all duration-300 hover:bg-[#f0c040]/20 hover:border-[#f0c040] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group relative rounded-sm border-2 border-warning bg-warning/5 dark:bg-warning/10 p-8 text-left transition-all duration-300 hover:bg-warning/10 dark:hover:bg-warning/20 hover:border-warning active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <div className="space-y-3">
-              <div className="text-3xl font-bold">
-                <span className="text-[#f0c040]">€9.99</span>
-                <span className="text-sm text-slate-400 font-normal ml-2">
+            <div className="space-y-4">
+              <div className="text-h2 font-mono font-semibold">
+                <span className="text-warning">€29</span>
+                <span className="text-small text-text-secondary dark:text-dark-text-secondary font-normal ml-2">
                   one-time
                 </span>
               </div>
-              <p className="text-sm text-slate-400">
+              <p className="text-small text-text-secondary dark:text-dark-text-secondary">
                 Pay once for{" "}
-                <span className="font-semibold text-slate-200">
+                <span className="font-semibold text-text-primary dark:text-dark-text-primary">
                   lifetime access
                 </span>
               </p>
-              <div className="text-xs text-slate-500 space-y-1 py-2">
-                <p>✓ Lifetime scanner access</p>
-                <p>✓ Support open-source development</p>
-                <p>✓ Instant activation</p>
+              <div className="space-y-2 pt-2">
+                <p className="text-xs text-text-secondary dark:text-dark-text-secondary">✓ Lifetime scanner access</p>
+                <p className="text-xs text-text-secondary dark:text-dark-text-secondary">✓ Support open-source development</p>
+                <p className="text-xs text-text-secondary dark:text-dark-text-secondary">✓ Instant activation</p>
               </div>
               {loading && (
-                <p className="text-xs text-[#f0c040]">
+                <p className="text-xs text-warning font-medium">
                   Redirecting to payment...
                 </p>
               )}
@@ -147,11 +145,11 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
         </div>
 
         {/* Why choose Proton for free */}
-        <div className="bg-slate-900/30 border border-slate-800 rounded-lg p-6 text-left space-y-3">
-          <p className="text-sm font-semibold text-slate-300">
+        <div className="bg-canvas dark:bg-dark-canvas border-2 border-dashed border-border dark:border-dark-border rounded-sm p-6 space-y-4">
+          <p className="text-small font-mono font-semibold text-accent">
             💡 Why Proton Mail free?
           </p>
-          <ul className="text-sm text-slate-400 space-y-2">
+          <ul className="text-small text-text-secondary dark:text-dark-text-secondary space-y-3">
             <li>
               • Proton Mail is one of the best privacy-first email alternatives
             </li>
@@ -167,11 +165,11 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
         </div>
 
         {/* Footer note */}
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-center text-text-secondary dark:text-dark-text-secondary">
           Both options fully unlock the scanner. Proton Mail is a one-time setup;
-          payment is a one-time €9.99 charge.
+          payment is a one-time €29 charge.
         </p>
       </div>
-    </div>
+    </main>
   );
 }

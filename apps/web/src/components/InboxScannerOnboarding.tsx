@@ -1,30 +1,50 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ScanProgress } from "@/components/InboxScanner/ScanProgress";
+import { scanGmailInbox, type DiscoveredAccount } from "@/lib/scanGmail";
 
 interface InboxScannerOnboardingProps {
-  onStart?: () => void;
   onSkip?: () => void;
-  isScanning?: boolean;
-  scanProgress?: number;
+  onComplete?: (accounts: DiscoveredAccount[]) => void;
+  accessToken?: string;
 }
 
 export function InboxScannerOnboarding({
-  onStart,
   onSkip,
-  isScanning,
-  scanProgress = 0,
+  onComplete,
+  accessToken,
 }: InboxScannerOnboardingProps) {
   const [currentStep, setCurrentStep] = useState<"intro" | "scanning" | "results">(
     "intro"
   );
+  const [isScanning, setIsScanning] = useState(false);
+  const [discoveredAccounts, setDiscoveredAccounts] = useState<DiscoveredAccount[]>([]);
 
-  const handleStart = () => {
+  const handleStart = async () => {
+    if (!accessToken) {
+      alert("No access token provided. Please sign in first.");
+      return;
+    }
+    setIsScanning(true);
     setCurrentStep("scanning");
-    onStart?.();
+
+    try {
+      const accounts = await scanGmailInbox(accessToken);
+      setDiscoveredAccounts(accounts);
+      setCurrentStep("results");
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Scan failed");
+      setCurrentStep("intro");
+    } finally {
+      setIsScanning(false);
+    }
   };
 
   const handleScanComplete = () => {
     setCurrentStep("results");
+    if (onComplete) {
+      onComplete(discoveredAccounts);
+    }
   };
 
   if (currentStep === "intro") {
@@ -134,116 +154,100 @@ export function InboxScannerOnboarding({
 
   if (currentStep === "scanning") {
     return (
-      <div className="w-full max-w-2xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-h2 font-mono mb-2">Scanning your inbox...</h1>
-          <p className="text-text-secondary dark:text-dark-text-secondary">
-            Finding services in your email. This usually takes 10–30 seconds.
-          </p>
-        </div>
-
-        {/* Progress */}
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-mono font-semibold">Progress</span>
-              <span className="text-sm text-text-secondary dark:text-dark-text-secondary">
-                {scanProgress}%
-              </span>
-            </div>
-            <div className="w-full h-2 bg-border dark:bg-dark-border rounded-full overflow-hidden">
-              <div
-                className="h-full bg-accent transition-all duration-300"
-                style={{ width: `${scanProgress}%` }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Scanning Animation */}
-        <div className="p-6 bg-accent/5 dark:bg-accent/10 border border-accent rounded-sm">
-          <div className="space-y-3">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <div className="h-3 bg-border dark:bg-dark-border rounded-sm flex-1 animate-pulse" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Info */}
-        <div className="p-4 bg-canvas dark:bg-dark-canvas border border-border dark:border-dark-border rounded-sm">
-          <p className="text-xs text-center text-text-secondary dark:text-dark-text-secondary">
-            🔒 Scanning happens in your browser only.{" "}
-            <span className="font-medium">
-              We never see your emails or store your data.
-            </span>
-          </p>
-        </div>
-
-        {/* Note */}
-        <p className="text-xs text-center text-text-secondary dark:text-dark-text-secondary">
-          Having trouble? You can{" "}
-          <button
-            onClick={onSkip}
-            className="font-medium text-accent hover:underline"
-          >
-            select services manually
-          </button>
-        </p>
+      <div className="w-full py-16">
+        <ScanProgress
+          isScanning={isScanning}
+          mode="real"
+          onComplete={handleScanComplete}
+        />
       </div>
     );
   }
 
-  return (
-    <div className="w-full max-w-2xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-h2 font-mono mb-2">Scan complete!</h1>
-        <p className="text-text-secondary dark:text-dark-text-secondary">
-          We found {scanProgress || 12} services in your inbox.
-        </p>
-      </div>
+  if (currentStep === "results") {
+    return (
+      <div className="w-full max-w-2xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-h2 font-mono mb-2">Scan complete!</h1>
+          <p className="text-text-secondary dark:text-dark-text-secondary">
+            We found {discoveredAccounts.length} services in your inbox.
+          </p>
+        </div>
 
-      {/* Results Placeholder */}
-      <div className="p-6 bg-accent/5 dark:bg-accent/10 border border-accent rounded-sm">
-        <p className="text-center text-sm text-text-secondary dark:text-dark-text-secondary">
-          Services will appear here once scanning is complete.
-        </p>
-      </div>
+        {/* Results List */}
+        {discoveredAccounts.length > 0 ? (
+          <div className="space-y-4">
+            <h2 className="text-sm font-mono font-semibold">Detected Services</h2>
+            <div className="space-y-3">
+              {discoveredAccounts.map((account) => (
+                <div
+                  key={account.domain}
+                  className="p-4 border border-border dark:border-dark-border rounded-sm bg-canvas dark:bg-dark-canvas"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="font-medium text-text-primary dark:text-dark-text-primary">
+                        {account.name}
+                      </p>
+                      <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
+                        {account.domain} · {account.count} email{account.count !== 1 ? "s" : ""}
+                      </p>
+                    </div>
+                    {account.matchedServiceId && (
+                      <span className="px-2 py-1 text-xs bg-accent/10 text-accent rounded-sm">
+                        ✓ Has EU alternative
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="p-6 bg-accent/5 dark:bg-accent/10 border border-accent rounded-sm">
+            <p className="text-center text-sm text-text-secondary dark:text-dark-text-secondary">
+              No services found. Try connecting more emails or scanning manually.
+            </p>
+          </div>
+        )}
 
-      {/* Next Steps */}
-      <div className="space-y-3">
-        <h2 className="text-sm font-mono font-semibold">What's next?</h2>
-        <ul className="space-y-2 text-sm">
-          <li className="flex items-start gap-2">
-            <span className="text-accent flex-shrink-0">→</span>
-            <span>Review detected services above</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-accent flex-shrink-0">→</span>
-            <span>Check which ones are exposed in a breach</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-accent flex-shrink-0">→</span>
-            <span>Get your personalized migration plan</span>
-          </li>
-        </ul>
-      </div>
+        {/* Next Steps */}
+        <div className="space-y-3">
+          <h2 className="text-sm font-mono font-semibold">What's next?</h2>
+          <ul className="space-y-2 text-sm">
+            <li className="flex items-start gap-2">
+              <span className="text-accent flex-shrink-0">→</span>
+              <span>Review detected services above</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-accent flex-shrink-0">→</span>
+              <span>Get your personalized migration plan</span>
+            </li>
+          </ul>
+        </div>
 
-      {/* Action */}
-      <Button
-        onClick={() => {
-          /* Navigate to report or next step */
-        }}
-        className="w-full h-12 rounded-sm bg-accent px-8 font-mono font-semibold text-white hover:bg-accent-hover"
-      >
-        See Your Privacy Report
-      </Button>
-    </div>
-  );
+        {/* Actions */}
+        <div className="flex gap-3">
+          <Button
+            onClick={onSkip}
+            className="flex-1 h-12 rounded-sm bg-accent px-8 font-mono font-semibold text-white hover:bg-accent-hover"
+          >
+            Continue
+          </Button>
+          <Button
+            onClick={handleStart}
+            variant="outline"
+            className="h-12 rounded-sm border border-border dark:border-dark-border px-8 font-mono font-semibold hover:bg-border/10"
+          >
+            Scan Again
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 export default InboxScannerOnboarding;
