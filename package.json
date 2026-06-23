@@ -9,10 +9,12 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace @digitaleu/web",
+    "dev:scanner": "npm run dev --workspace @digitaleu/scanner",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "web": "npm run dev --workspace @digitaleu/web"
+    "web": "npm run dev --workspace @digitaleu/web",
+    "scanner": "npm run dev --workspace @digitaleu/scanner"
   },
   "engines": {
     "node": ">=20"

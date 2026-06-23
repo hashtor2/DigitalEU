@@ -1,0 +1,47 @@
+import { useEffect, useState } from 'react'
+import { supabase } from '@/lib/db'
+
+export default function CallbackPage() {
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const handleCallback = async () => {
+      const { data, error: sessionError } = await supabase.auth.getSession()
+
+      if (sessionError || !data.session) {
+        setError('Failed to establish session. Please try signing in again.')
+        setLoading(false)
+        return
+      }
+
+      // Redirect to dashboard after successful auth
+      window.location.href = '/dashboard'
+    }
+
+    handleCallback()
+  }, [])
+
+  if (error) {
+    return (
+      <div className="mx-auto max-w-md space-y-6">
+        <div className="rounded-lg border border-red-300 bg-red-50 p-6">
+          <h2 className="mb-2 text-lg font-mono font-semibold text-red-900">Authentication failed</h2>
+          <p className="text-sm text-red-700 mb-4">{error}</p>
+          <a href="/auth/signin" className="inline-block text-sm text-[#c17a5c] hover:underline">
+            Try signing in again
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex items-center justify-center">
+      <div className="text-center space-y-4">
+        <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] border-t-transparent rounded-full mx-auto"></div>
+        <p className="text-[#1a2332]/70">Completing authentication...</p>
+      </div>
+    </div>
+  )
+}

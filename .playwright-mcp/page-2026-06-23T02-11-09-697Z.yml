@@ -1,0 +1,125 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - link "Mastodon" [ref=e5] [cursor=pointer]:
+      - /url: https://mastodon.social/@digitaleu
+    - generic [ref=e6]:
+      - link "digitaleu.me" [ref=e7] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e8]:
+        - link "For You" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - link "For Business" [ref=e10] [cursor=pointer]:
+          - /url: /b2b
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Scanner" [ref=e12] [cursor=pointer]:
+          - /url: https://scanner.digitaleu.me
+        - link "Alternatives" [ref=e13] [cursor=pointer]:
+          - /url: /directory
+        - link "Guides" [ref=e14] [cursor=pointer]:
+          - /url: /guides
+      - button "Toggle theme" [ref=e16]:
+        - img [ref=e17]
+  - main [ref=e23]:
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - heading "Scan Your Inbox" [level=1] [ref=e26]
+        - paragraph [ref=e27]: We'll find which services you use and suggest European alternatives.
+      - generic [ref=e28]:
+        - heading "How it works" [level=2] [ref=e29]
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - generic [ref=e32]: "1"
+            - generic [ref=e33]:
+              - paragraph [ref=e34]: We read email sender domains
+              - paragraph [ref=e35]: Your Gmail or Outlook grants us read-only access
+          - generic [ref=e36]:
+            - generic [ref=e37]: "2"
+            - generic [ref=e38]:
+              - paragraph [ref=e39]: We check which services you use
+              - paragraph [ref=e40]: 100% in your browser — nothing leaves your device
+          - generic [ref=e41]:
+            - generic [ref=e42]: "3"
+            - generic [ref=e43]:
+              - paragraph [ref=e44]: We show you European alternatives
+              - paragraph [ref=e45]: For each service, we suggest privacy-first swaps
+      - generic [ref=e46]:
+        - paragraph [ref=e47]: We never read
+        - list [ref=e48]:
+          - listitem [ref=e49]:
+            - generic [ref=e50]: ✗
+            - generic [ref=e51]: Message content or attachments
+          - listitem [ref=e52]:
+            - generic [ref=e53]: ✗
+            - generic [ref=e54]: Full email addresses
+          - listitem [ref=e55]:
+            - generic [ref=e56]: ✗
+            - generic [ref=e57]: Any data beyond sender domains
+      - paragraph [ref=e59]:
+        - text: 🔒 Zero-knowledge
+        - text: Your emails never reach our servers
+      - generic [ref=e60]:
+        - button "Start Scanning" [ref=e61]
+        - button "Choose Manually" [active] [ref=e62]
+  - contentinfo [ref=e63]:
+    - generic [ref=e64]:
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - paragraph [ref=e67]: digitaleu.me
+          - paragraph [ref=e68]: Helping Europeans reclaim their digital lives. Privacy-first, built in Norway, open by design.
+          - paragraph [ref=e69]: 🇪🇺 Data hosted in Switzerland (Zürich)
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - paragraph [ref=e72]: Product
+            - generic [ref=e73]:
+              - link "Privacy Check" [ref=e74] [cursor=pointer]:
+                - /url: /
+              - link "Email Scanner" [ref=e75] [cursor=pointer]:
+                - /url: /emailscanner
+              - link "Dashboard" [ref=e76] [cursor=pointer]:
+                - /url: /dashboard
+          - generic [ref=e77]:
+            - paragraph [ref=e78]: Learn
+            - generic [ref=e79]:
+              - link "Alternatives" [ref=e80] [cursor=pointer]:
+                - /url: /directory
+              - link "Guides" [ref=e81] [cursor=pointer]:
+                - /url: /guides
+              - link "Manifesto" [ref=e82] [cursor=pointer]:
+                - /url: /about
+        - generic [ref=e85]:
+          - textbox "your@email.com" [ref=e86]
+          - button "Subscribe" [ref=e87]
+      - generic [ref=e88]:
+        - paragraph [ref=e89]: Recommended EU Tech
+        - generic [ref=e90]:
+          - link "Proton 🇨🇭 Switzerland" [ref=e91] [cursor=pointer]:
+            - /url: https://proton.me
+            - paragraph [ref=e92]: Proton
+            - paragraph [ref=e93]: 🇨🇭 Switzerland
+          - link "Tuta 🇩🇪 Germany" [ref=e94] [cursor=pointer]:
+            - /url: https://tuta.com
+            - paragraph [ref=e95]: Tuta
+            - paragraph [ref=e96]: 🇩🇪 Germany
+          - link "Mullvad 🇸🇪 Sweden" [ref=e97] [cursor=pointer]:
+            - /url: https://mullvad.net
+            - paragraph [ref=e98]: Mullvad
+            - paragraph [ref=e99]: 🇸🇪 Sweden
+          - link "Jami (GNU Ring) 🇨🇦 Open Source" [ref=e100] [cursor=pointer]:
+            - /url: https://jami.net
+            - paragraph [ref=e101]: Jami (GNU Ring)
+            - paragraph [ref=e102]: 🇨🇦 Open Source
+          - link "Briar 🌍 Open Source" [ref=e103] [cursor=pointer]:
+            - /url: https://briarproject.org
+            - paragraph [ref=e104]: Briar
+            - paragraph [ref=e105]: 🌍 Open Source
+          - link "Signal 🌍 Open Source" [ref=e106] [cursor=pointer]:
+            - /url: https://signal.org
+            - paragraph [ref=e107]: Signal
+            - paragraph [ref=e108]: 🌍 Open Source
+      - generic [ref=e109]:
+        - paragraph [ref=e110]: © 2026 DigitalEU.me — All rights reserved.
+        - paragraph [ref=e111]:
+          - text: Some links are affiliate links that support our work.
+          - link "Learn more." [ref=e112] [cursor=pointer]:
+            - /url: /about
