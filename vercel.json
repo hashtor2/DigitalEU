@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build --workspace @digitaleu/scanner",
+  "devCommand": "npm run dev:scanner",
+  "installCommand": "npm install",
+  "outputDirectory": "apps/scanner/dist"
+}
