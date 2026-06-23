@@ -94,13 +94,13 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 - [ ] Settings/profile page
 - [ ] Success/confirmation page
 
-### **Phase 3: Forms & Flows (Next)**
-- [ ] Multi-column form layout (name + email side-by-side)
-- [ ] Consent flow UI (clear, plain language)
-- [ ] Payment form (with Service selection)
+### **Phase 3: Forms & Flows (CURRENT)**
+- [x] Multi-column form layout (name + email side-by-side)
+- [x] Consent flow UI (clear, plain language)
+- [x] Payment form (with Service selection)
 - [ ] Inbox Scanner onboarding
 
-### **Phase 4: Polish (End)**
+### **Phase 4: Polish (Next)**
 - [ ] Extension UI (popover 300–400px)
 - [ ] Loading & error states (all components)
 - [ ] Accessibility audit (WCAG AAA)
@@ -149,7 +149,8 @@ Before committing any design changes, verify:
 | 5. Landing redesign | 2026-06-23 | 🟢 Done | Hero + dual CTA + Nordic Warmth |
 | 6. Report + How it works | 2026-06-23 | 🟢 Done | Breach alert, 4-step explainer |
 | 7. Routing update | 2026-06-23 | 🟢 Done | / → landing, /selector, /report, /how |
-| (merge to main) | (TBD) | ⏳ | Design system + landing pages ready |
+| 8. Phase 3 forms | 2026-06-23 | 🟢 Done | Profile, consent modal, payment forms |
+| (merge to main) | (TBD) | ⏳ | Design system + pages + forms ready |
 
 ---
 
