@@ -62,17 +62,20 @@ export function Footer() {
             <div className="space-y-3">
               <p className="font-semibold text-text-primary dark:text-dark-text-primary text-xs uppercase tracking-wide">Product</p>
               <div className="space-y-2">
-                <Link to="/" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Privacy Check</Link>
+                <Link to="/selector" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Privacy Check</Link>
                 <Link to="/emailscanner" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Email Scanner</Link>
                 <Link to="/dashboard" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Dashboard</Link>
+                <Link to="/how" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">How it works</Link>
               </div>
             </div>
             <div className="space-y-3">
               <p className="font-semibold text-text-primary dark:text-dark-text-primary text-xs uppercase tracking-wide">Learn</p>
               <div className="space-y-2">
                 <Link to="/directory" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Alternatives</Link>
+                <Link to="/news" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">News</Link>
                 <Link to="/guides" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Guides</Link>
-                <Link to="/about" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Manifesto</Link>
+                <Link to="/about" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">About</Link>
+                <Link to="/b2b" className="block hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">For business</Link>
               </div>
             </div>
           </div>

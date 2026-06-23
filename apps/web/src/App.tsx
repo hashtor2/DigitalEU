@@ -27,12 +27,6 @@ const router = createBrowserRouter([
     }),
   },
   {
-    path: "/start",
-    lazy: async () => ({
-      Component: (await import("./pages/AudienceSelectorPage")).AudienceSelectorPage,
-    }),
-  },
-  {
     path: "/b2b",
     lazy: async () => ({
       Component: (await import("./pages/B2BPage")).B2BPage,

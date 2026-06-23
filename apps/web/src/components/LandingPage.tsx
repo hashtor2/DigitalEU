@@ -30,7 +30,7 @@ export function LandingPage() {
               Check Services
             </Button>
             <Button
-              onClick={() => navigate("/scanner")}
+              onClick={() => navigate("/emailscanner")}
               variant="outline"
               className="h-12 rounded-sm border-2 border-accent px-8 font-mono font-semibold text-accent hover:bg-accent/10"
             >

@@ -45,18 +45,18 @@ function ServiceCard({
     <button
       type="button"
       onClick={onToggle}
-      className={`group relative flex items-center gap-3 rounded-lg border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a56db] ${
+      className={`group relative flex items-center gap-3 rounded-sm border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
         checked
-          ? "border-[#1a56db] bg-[#1a56db]/10"
-          : "border-[#2d4a6e] bg-[#1e293b] hover:border-[#2a3d5f] hover:bg-[#0f2040]"
+          ? "border-accent bg-accent/10"
+          : "border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas hover:border-accent/50 hover:bg-accent/5"
       }`}
     >
       {/* Checkbox indicator */}
       <span
-        className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 transition-colors ${
+        className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-sm border-2 transition-colors ${
           checked
-            ? "border-[#1a56db] bg-[#1a56db] text-white"
-            : "border-slate-600 group-hover:border-slate-400"
+            ? "border-accent bg-accent text-white"
+            : "border-border dark:border-dark-border group-hover:border-accent"
         }`}
         aria-hidden
       >
@@ -68,7 +68,7 @@ function ServiceCard({
       </span>
 
       {/* Logo */}
-      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white">
+      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-sm bg-white">
         <img
           src={logoUrl}
           alt=""
@@ -82,7 +82,7 @@ function ServiceCard({
           }}
         />
         <span
-          className="hidden h-full w-full items-center justify-center text-sm font-bold text-slate-600"
+          className="hidden h-full w-full items-center justify-center text-sm font-bold text-text-secondary"
           aria-hidden
         >
           {fallbackIcon}
@@ -92,7 +92,7 @@ function ServiceCard({
       {/* Name + flag */}
       <span
         className={`flex-1 text-sm font-semibold leading-tight transition-colors ${
-          checked ? "text-[#93c5fd]" : "text-slate-200 group-hover:text-white"
+          checked ? "text-accent" : "text-text-primary dark:text-dark-text-primary"
         }`}
       >
         {service.name}
@@ -143,35 +143,35 @@ export function SelectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-canvas text-text-primary dark:bg-dark-canvas dark:text-dark-text-primary flex flex-col">
       <Header />
       <SocialLinks />
 
       <main className="flex-1 mx-auto max-w-5xl px-4 py-10 sm:px-6">
         {/* Hero section */}
         <div className="mb-12 text-center">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#f0c040]">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-accent">
             Free · Takes 30 seconds · No account needed
           </p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-h1 font-mono text-text-primary dark:text-dark-text-primary mb-6 leading-tight">
             Find out which of your accounts put your privacy at risk
           </h1>
-          <p className="mb-4 text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-semibold">
+          <p className="mb-4 text-lg text-text-secondary dark:text-dark-text-secondary max-w-2xl mx-auto leading-relaxed font-semibold">
             Tick the services you use. We'll score each one for privacy risk, data breaches, and
             GDPR compliance — then show you the best European alternatives.
           </p>
           {/* Trust indicators */}
-          <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm text-slate-300">
+          <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm text-text-secondary dark:text-dark-text-secondary">
             <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="h-2 w-2 rounded-full bg-success" />
               <span className="font-medium">{SERVICES.length} services tracked</span>
             </span>
             <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#5b8ff9]" />
+              <span className="h-2 w-2 rounded-full bg-accent" />
               <span className="font-medium">149 EU alternatives catalogued</span>
             </span>
             <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-purple-400" />
+              <span className="h-2 w-2 rounded-full bg-warning" />
               <span className="font-medium">Zero data sent to our servers</span>
             </span>
           </div>
@@ -181,7 +181,7 @@ export function SelectorPage() {
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
             <svg
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-secondary dark:text-dark-text-secondary"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -194,7 +194,7 @@ export function SelectorPage() {
               placeholder="Search services…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="pl-9 bg-[#1e293b] border-[#2d4a6e] text-white placeholder:text-slate-400 focus:border-[#1a56db]"
+              className="pl-9 bg-canvas dark:bg-dark-canvas border-border dark:border-dark-border text-text-primary dark:text-dark-text-primary placeholder:text-text-secondary focus:border-accent"
             />
           </div>
         </div>
@@ -203,10 +203,10 @@ export function SelectorPage() {
         <div className="mb-6 flex flex-wrap gap-2">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`rounded border px-3 py-1 text-xs font-medium transition ${
+            className={`rounded-sm border px-3 py-1 text-xs font-medium transition ${
               activeCategory === "all"
-                ? "border-[#1a56db] bg-[#1a56db]/15 text-[#93c5fd]"
-                : "border-[#2d4a6e] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
+                ? "border-accent bg-accent/15 text-accent"
+                : "border-border dark:border-dark-border text-text-secondary dark:text-dark-text-secondary hover:border-accent hover:text-text-primary dark:hover:text-dark-text-primary"
             }`}
           >
             All
@@ -215,10 +215,10 @@ export function SelectorPage() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`rounded border px-3 py-1 text-xs font-medium transition ${
+              className={`rounded-sm border px-3 py-1 text-xs font-medium transition ${
                 activeCategory === cat
-                  ? "border-[#1a56db] bg-[#1a56db]/15 text-[#93c5fd]"
-                  : "border-[#2d4a6e] text-slate-400 hover:border-[#2a3d5f] hover:text-white"
+                  ? "border-accent bg-accent/15 text-accent"
+                  : "border-border dark:border-dark-border text-text-secondary dark:text-dark-text-secondary hover:border-accent hover:text-text-primary dark:hover:text-dark-text-primary"
               }`}
             >
               {CATEGORY_LABELS[cat]}
@@ -228,7 +228,7 @@ export function SelectorPage() {
 
         {/* Service grid */}
         {filtered.length === 0 ? (
-          <p className="py-12 text-center text-slate-400">No services match your search.</p>
+          <p className="py-12 text-center text-text-secondary dark:text-dark-text-secondary">No services match your search.</p>
         ) : (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
             {filtered.map((service) => (
@@ -243,14 +243,14 @@ export function SelectorPage() {
         )}
 
         {/* Sticky bottom bar */}
-        <div className="sticky bottom-0 mt-10 -mx-4 border-t border-[#2d4a6e] bg-[#0d1117]/95 backdrop-blur px-4 py-4 sm:-mx-6 sm:px-6">
+        <div className="sticky bottom-0 mt-10 -mx-4 border-t border-border dark:border-dark-border bg-canvas/95 dark:bg-dark-canvas/95 backdrop-blur px-4 py-4 sm:-mx-6 sm:px-6">
           <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
               {selected.size === 0 ? (
                 "Select services to get started"
               ) : (
                 <>
-                  <span className="font-semibold text-white">{selected.size}</span> service
+                  <span className="font-semibold text-text-primary dark:text-dark-text-primary">{selected.size}</span> service
                   {selected.size !== 1 ? "s" : ""} selected
                 </>
               )}
@@ -258,7 +258,7 @@ export function SelectorPage() {
             <Button
               onClick={handleSubmit}
               disabled={selected.size === 0}
-              className="bg-[#1a56db] font-semibold text-white hover:bg-[#2563eb] disabled:opacity-40 rounded-md"
+              className="bg-accent font-mono font-semibold text-white hover:bg-accent-hover disabled:opacity-40 rounded-sm"
               size="lg"
             >
               Get My Privacy Report →
