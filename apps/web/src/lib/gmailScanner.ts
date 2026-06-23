@@ -31,7 +31,7 @@ export function getGoogleAuthUrl(): string {
     );
   }
 
-  const redirectUri = `${window.location.origin}/dashboard`;
+  const redirectUri = `${window.location.origin}/emailscanner`;
   const scope = "https://www.googleapis.com/auth/gmail.metadata";
 
   const params = new URLSearchParams({

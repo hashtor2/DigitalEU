@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScanProgress } from "@/components/InboxScanner/ScanProgress";
-import { scanGmailInbox, type DiscoveredAccount } from "@/lib/scanGmail";
+import { scanGmailInbox } from "@/lib/gmailScanner";
 
 interface InboxScannerOnboardingProps {
   onSkip?: () => void;
-  onComplete?: (accounts: DiscoveredAccount[]) => void;
+  onComplete?: (accounts: any[]) => void;
   accessToken?: string;
 }
 
@@ -18,7 +18,7 @@ export function InboxScannerOnboarding({
     "intro"
   );
   const [isScanning, setIsScanning] = useState(false);
-  const [discoveredAccounts, setDiscoveredAccounts] = useState<DiscoveredAccount[]>([]);
+  const [discoveredAccounts, setDiscoveredAccounts] = useState<any[]>([]);
 
   const handleStart = async () => {
     if (!accessToken) {
