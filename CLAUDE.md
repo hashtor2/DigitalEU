@@ -187,7 +187,7 @@ npm run lint       # lint (når satt opp)
 
 Git/GitHub:
 ```bash
-# Repo: https://github.com/hashthor/digitaleu.me (privat). Konto: hashthor.
+# Repo: https://github.com/hashtor2/DigitalEU (privat). Konto: hashtor2.
 git add -A && git commit -m "..." && git push
 ```
 
