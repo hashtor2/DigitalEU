@@ -85,7 +85,6 @@ export default function EmailCallbackPage() {
         }
 
         // 6. Call scan-email Edge Function to get detected services
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
         const scanUrl = `${supabaseUrl}/functions/v1/scan-email`
         
         const scanResponse = await fetch(scanUrl, {
