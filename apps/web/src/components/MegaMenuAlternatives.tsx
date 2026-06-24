@@ -88,7 +88,7 @@ export function MegaMenuAlternatives({
       <div className="absolute inset-x-0 -top-1 h-1" />
 
       {/* Dropdown panel - appears on parent hover */}
-      <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-canvas dark:bg-dark-canvas border border-border dark:border-dark-border rounded-sm shadow-lg">
+      <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-border/40 dark:bg-dark-border/40 border border-secondary-accent/40 dark:border-secondary-accent/40 rounded-sm shadow-lg backdrop-blur-sm">
         <div className="max-w-4xl grid grid-cols-3 gap-4 p-6">
           {MEGA_MENU_CATEGORIES.map((item) => (
             <Link

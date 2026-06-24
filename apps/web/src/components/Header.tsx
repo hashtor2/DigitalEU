@@ -75,16 +75,12 @@ export function Header() {
                     {item.label}
                   </button>
                   {/* Submenu dropdown */}
-                  <div className="invisible group-hover:visible absolute left-0 top-full mt-1 flex flex-col gap-1 bg-canvas dark:bg-dark-canvas border border-border dark:border-dark-border rounded-sm shadow-lg z-50 py-2 min-w-[200px] transition-all duration-150">
-                    {item.children.map((child: any) => (
+                  <div className="invisible group-hover:visible absolute left-0 top-full mt-1 flex flex-col gap-1 bg-border/50 dark:bg-dark-border/50 border border-secondary-accent/40 dark:border-secondary-accent/40 rounded-sm shadow-lg z-50 py-2 min-w-[200px] transition-all duration-150">
+                    {item.children?.map((child: any) => (
                       <Link
-                        key={child.to}
+                        key={child.label}
                         to={child.to}
-                        className={`px-4 py-2 text-sm transition-all duration-150 ${
-                          isActive(child.to)
-                            ? "text-accent bg-accent/10 font-semibold"
-                            : "text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary hover:bg-border/50 dark:hover:bg-dark-border/50"
-                        }`}
+                        className="px-3 py-2 text-sm font-medium text-text-primary dark:text-dark-text-primary hover:bg-secondary-accent/20 dark:hover:bg-secondary-accent/30 hover:text-accent transition-colors duration-150"
                       >
                         {child.label}
                       </Link>

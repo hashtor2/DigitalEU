@@ -7,6 +7,8 @@ import { SocialLinks } from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EarlyAccessSignup } from "@/components/EarlyAccessSignup";
+import { NewsRotation } from "@/components/NewsRotation";
+import { SAMPLE_NEWS_ARTICLES } from "@/data/news";
 import { COUNTRY_FLAGS } from "@/lib/flags";
 
 const CATEGORY_LABELS: Record<ServiceInfo["category"], string> = {
@@ -275,6 +277,7 @@ export function LandingPage() {
                 <p className="text-sm text-text-secondary dark:text-dark-text-secondary mb-6">
                   Weekly news about privacy, compliance, and European alternatives.
                 </p>
+                <NewsRotation articles={SAMPLE_NEWS_ARTICLES} />
                 <EarlyAccessSignup />
               </div>
             </div>

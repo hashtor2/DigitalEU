@@ -1,12 +1,13 @@
 # OAuth Setup Guide
 
-## Google OAuth (Gmail Scanner)
+## Google OAuth (Gmail Scanner) — Current Setup
 
 ### Current Configuration
-- **Client ID**: `930614896383-60q1c4cik7pcaudbcf9kpdkoau7uc405.apps.googleusercontent.com`
+- **Client ID**: `646817279563-3qupgvhauv7i0shb9mpeuuerr5goldmg.apps.googleusercontent.com`
 - **Scope**: `gmail.metadata` (read-only metadata, no email bodies)
-- **Flow**: Implicit Grant (OAuth 2.0 token redirect)
-- **Token Location**: URL fragment `#access_token=...` (memory-only, not stored)
+- **Flow**: Authorization Code with PKCE (S256)
+- **Token Location**: URL fragment `#access_token=...` (memory-only, never stored)
+- **Redirect Path**: `/auth/email-callback` (handles OAuth callback)
 
 ### Setup Steps
 
@@ -16,30 +17,43 @@ https://console.cloud.google.com/apis/credentials
 ```
 
 #### 2. Find OAuth 2.0 Client ID
-Click on: `930614896383-60q1c4cik7pcaudbcf9kpdkoau7uc405.apps.googleusercontent.com`
+Click on: `646817279563-3qupgvhauv7i0shb9mpeuuerr5goldmg.apps.googleusercontent.com`
 
-#### 3. Add Redirect URIs
-Under **"Authorized redirect URIs"**, add:
+#### 3. Add/Verify Redirect URIs
+Under **"Authorized redirect URIs"**, ensure these are registered:
 
 **Development (Local Testing):**
 ```
-http://localhost:5186/emailscanner
+http://localhost:5174/auth/email-callback
+http://localhost:5187/auth/email-callback
 ```
 
 **Production:**
 ```
-https://www.digitaleu.me/emailscanner
-https://scanner.digitaleu.me/emailscanner
+https://www.digitaleu.me/auth/email-callback
+https://scanner.digitaleu.me/auth/email-callback
 ```
 
+> **NOTE**: The redirect path has changed from `/emailscanner` to `/auth/email-callback` to properly handle OAuth callbacks in the scanner app.
+
 #### 4. Save and Wait
-Click **Save** and wait 5-10 seconds for Google to propagate the change globally.
+Click **Save** and wait 5-10 seconds for Google to propagate changes globally.
 
 #### 5. Test Locally
-Go to: `http://localhost:5186/emailscanner`
-Click: **"Scan Gmail →"**
 
-You should now see the Google sign-in prompt instead of a redirect error.
+**Option A - Scanner App (port 5174):**
+```
+http://localhost:5174/
+Click: "Scan Gmail →"
+```
+
+**Option B - Web App (port 5187):**
+```
+http://localhost:5187/emailscanner
+Follow the "Scan Gmail" flow
+```
+
+You should see the Google sign-in prompt instead of a redirect error.
 
 ---
 
@@ -58,10 +72,12 @@ VITE_MICROSOFT_TENANT_ID="your-tenant-id-here"
 ```
 
 ### Step 2: Verify App Registration
-- **Client ID**: `7780aaaa-4b85-4209-81f3-c60316af47e4` ✅
-- **Redirect URIs** (in Azure Portal):
-  - `http://localhost:5186/emailscanner`
-  - `https://www.digitaleu.me/emailscanner`
+- **Client ID**: `7780aaaa-4b85-4209-81f3-c60316af47e4` ✅ (web + scanner use same)
+- **Redirect URIs** (in Azure Portal → App registrations → Redirect URIs):
+  - `http://localhost:5174/auth/email-callback`
+  - `http://localhost:5187/auth/email-callback`
+  - `https://www.digitaleu.me/auth/email-callback`
+  - `https://scanner.digitaleu.me/auth/email-callback`
 
 ---
 
@@ -69,15 +85,70 @@ VITE_MICROSOFT_TENANT_ID="your-tenant-id-here"
 
 ### Demo Mode (No OAuth)
 ```
-http://localhost:5186/emailscanner
+http://localhost:5174
 Click: "try the demo (no account needed)"
 ```
 Shows: Gmail, Outlook, Dropbox, LastPass, Netflix
 
-### Real Gmail Scan
+### Real Gmail Scan (PKCE)
 ```
-1. http://localhost:5186/emailscanner
+1. http://localhost:5174 (scanner) OR http://localhost:5187 (web)
 2. Click: "Scan Gmail →"
+3. Sign in to Google
+4. Grant permission: gmail.metadata scope
+5. Redirected back to /auth/email-callback
+6. Token exchanged for email header scan
+7. Results displayed, token discarded (NOT stored)
+```
+
+---
+
+## Troubleshooting
+
+### Error: "redirect_uri_mismatch"
+**Cause**: Redirect URI in code doesn't match Google Cloud Console
+**Solution**: 
+1. Check Google Cloud Console for registered URIs (see Step 3 above)
+2. Ensure `http://localhost:5174/auth/email-callback` is registered
+3. Wait 5-10 seconds after saving
+4. Clear browser cache and try again
+
+### Error: "invalid_client_id"
+**Cause**: Wrong client ID in `.env`
+**Solution**: Verify `.env` has: `VITE_GOOGLE_CLIENT_ID=646817279563-3qupgvhauv7i0shb9mpeuuerr5goldmg.apps.googleusercontent.com`
+
+### Token Appearing in Console?
+**This is bad!** 
+- Tokens should ONLY be in memory via `sessionStorage` or URL fragment
+- Never use `localStorage` for OAuth tokens
+- Check scanner OAuth code — should NOT persist tokens
+
+---
+
+## Environment Variables
+
+### Web App (apps/web/.env)
+```
+VITE_GOOGLE_CLIENT_ID=646817279563-3qupgvhauv7i0shb9mpeuuerr5goldmg.apps.googleusercontent.com
+VITE_MICROSOFT_CLIENT_ID=7780aaaa-4b85-4209-81f3-c60316af47e4
+```
+
+### Scanner App (apps/scanner/.env.local)
+```
+VITE_GOOGLE_CLIENT_ID=646817279563-3qupgvhauv7i0shb9mpeuuerr5goldmg.apps.googleusercontent.com
+VITE_MICROSOFT_CLIENT_ID=f02f90cf-a10c-41bd-9d7c-08e74569d60e
+```
+
+---
+
+## Security Checklist
+
+- [ ] Never commit `.env` files with real credentials
+- [ ] Use `.env.example` for documentation
+- [ ] OAuth tokens never stored in `localStorage`
+- [ ] Tokens kept in memory only (URL fragment or session)
+- [ ] Scopes limited to minimum required (`gmail.metadata`, not `gmail.readonly`)
+- [ ] PKCE used for all flows (prevents token leakage)
 3. Sign in with your Google account
 4. Grant access to read metadata (no bodies/passwords)
 5. Wait 2-3 seconds for results
