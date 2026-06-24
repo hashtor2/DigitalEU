@@ -83,7 +83,7 @@ export function InboxScannerOnboarding({
                   We check which services you use
                 </p>
                 <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
-                  100% in your browser — nothing leaves your device
+                  Server-side scan via encrypted OAuth — metadata-only, never stored
                 </p>
               </div>
             </div>
@@ -127,7 +127,7 @@ export function InboxScannerOnboarding({
             <span className="font-mono font-semibold text-accent">🔒 Zero-knowledge</span>
             <br />
             <span className="text-text-secondary dark:text-dark-text-secondary">
-              Your emails never reach our servers
+              OAuth tokens never stored; you can revoke access anytime
             </span>
           </p>
         </div>
