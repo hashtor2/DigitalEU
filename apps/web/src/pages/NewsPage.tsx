@@ -1,5 +1,21 @@
+import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { supabase } from "@/lib/supabase";
+
+interface DigestStory {
+  title: string;
+  link: string;
+  source: string;
+  summary: string;
+}
+
+interface NewsDigest {
+  digest_date: string;
+  digest_text: string;
+  stories: DigestStory[];
+  created_at: string;
+}
 
 interface Journalist {
   name: string;
@@ -130,6 +146,74 @@ const CATEGORY_STYLES: Record<string, string> = {
   investigation: "bg-red-500/10 text-red-300 border-red-500/20",
 };
 
+function DailyDigest() {
+  const [digest, setDigest] = useState<NewsDigest | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!supabase) { setLoading(false); return; }
+    supabase
+      .from("news_digests")
+      .select("digest_date, digest_text, stories, created_at")
+      .order("digest_date", { ascending: false })
+      .limit(1)
+      .single()
+      .then(({ data }) => {
+        setDigest(data as NewsDigest | null);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="rounded-2xl border border-white/10 bg-slate-900/30 p-6 animate-pulse h-40" />
+    );
+  }
+
+  if (!digest) return null;
+
+  const dateLabel = new Date(digest.digest_date).toLocaleDateString("en-EU", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric",
+  });
+
+  const stories = (digest.stories ?? []) as DigestStory[];
+
+  return (
+    <section className="rounded-2xl border border-sky-500/20 bg-sky-950/10 p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/20 bg-sky-500/10 px-3 py-1 text-xs font-semibold text-sky-400">
+          🤖 AI Daily Digest
+        </span>
+        <span className="text-xs text-slate-500">{dateLabel}</span>
+      </div>
+
+      <div className="space-y-3">
+        {stories.slice(0, 5).map((s, i) => (
+          <a
+            key={i}
+            href={s.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex gap-3 group hover:bg-white/5 rounded-xl p-2 -mx-2 transition"
+          >
+            <span className="text-sky-500 font-bold text-sm shrink-0 pt-0.5">📌</span>
+            <div>
+              <p className="text-sm font-semibold text-white group-hover:text-sky-200 transition leading-snug">
+                {s.title}
+              </p>
+              <p className="text-xs text-slate-400 mt-0.5">{s.source}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <p className="text-[10px] text-slate-500 pt-2 border-t border-white/5">
+        🤖 Curated daily by Claude AI + digitaleu.me
+      </p>
+    </section>
+  );
+}
+
 export function NewsPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
@@ -149,6 +233,9 @@ export function NewsPage() {
             The voice of European digital self-determination. We report on local technology developments, regulatory shifts, and host interviews with top founders, tech pioneers, and privacy politicians.
           </p>
         </section>
+
+        {/* Live AI-generated daily digest from news agent */}
+        <DailyDigest />
 
         {/* Featured Story */}
         <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-sky-950/20 via-slate-900/50 to-transparent p-6 sm:p-8">
