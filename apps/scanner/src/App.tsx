@@ -10,6 +10,7 @@ import ResultsPage from './routes/results/$scanId'
 import CancellationIndexPage from './routes/cancel/index'
 import CancellationGuidePage from './routes/cancel/$id'
 import ReportPage from './routes/report/$sessionId'
+import DemoScanPage from './routes/scan'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<IndexPage />} />
+          <Route path="scan" element={<DemoScanPage />} />
           <Route path="auth/signin" element={<SignInPage />} />
           <Route path="auth/signup" element={<SignUpPage />} />
           <Route path="auth/callback" element={<CallbackPage />} />

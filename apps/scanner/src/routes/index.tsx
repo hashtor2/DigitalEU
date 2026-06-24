@@ -93,12 +93,20 @@ export default function IndexPage() {
               Connected via {connectedProvider === 'gmail' ? 'Gmail' : 'Outlook'}.
             </p>
           )}
-          <Link
-            to="/auth/signin"
-            className="inline-flex items-center justify-center rounded-none border border-[#1a1815] bg-[#1a1815] px-8 py-3.5 font-mono text-sm font-semibold text-[#faf8f5] transition hover:bg-[#2a241d] dark:border-[#2a251f] dark:bg-[#2a251f] dark:text-[#faf8f5]"
-          >
-            {connectedProvider ? 'Reconnect inbox' : 'Scan my inbox'}
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+            <Link
+              to="/auth/signin"
+              className="inline-flex items-center justify-center rounded-none border border-[#1a1815] bg-[#1a1815] px-8 py-3.5 font-mono text-sm font-semibold text-[#faf8f5] transition hover:bg-[#2a241d] dark:border-[#2a251f] dark:bg-[#2a251f] dark:text-[#faf8f5]"
+            >
+              {connectedProvider ? 'Reconnect inbox' : 'Scan my inbox'}
+            </Link>
+            <Link
+              to="/scan"
+              className="inline-flex items-center justify-center rounded-none border border-[#d9d3c8] bg-transparent px-8 py-3.5 font-mono text-sm font-semibold text-[#1a1815] transition hover:bg-[#d9d3c8]/20 dark:border-[#2a251f] dark:text-[#faf8f5] dark:hover:bg-[#2a251f]"
+            >
+              Try the demo
+            </Link>
+          </div>
           <p className="mt-4 text-sm leading-relaxed text-[#1a1815]/70 dark:text-[#6f655c]">
             Connect Gmail or Outlook to see which services are linked to your email.
           </p>
