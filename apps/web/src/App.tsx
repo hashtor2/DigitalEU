@@ -5,6 +5,8 @@ import { useEffect } from "react";
 
 import { Elements } from "@stripe/react-stripe-js";
 
+// v2: Complete website redesign with 6-item menu, auth buttons, and new hero
+
 const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY
   ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
   : null;
