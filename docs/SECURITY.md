@@ -37,17 +37,38 @@ Grunnregel: **datamininmering** — samle og lagre minst mulig, kortest mulig.
 - **Kun OAuth.** Ingen rå IMAP-passord i v1. Bruk Gmail API / Microsoft Graph.
 - **Minimale scopes.** Be om read-only / metadata-scope der det dekker behovet
   (vi trenger i praksis bare avsender-domener, ikke meldingstekst).
-- **100 % klientside.** Skanning og analyse skjer i nettleseren. E-postinnhold
-  sendes **aldri** til vår backend, og logges aldri.
-- **In-memory.** Behandle data i minnet; ikke persister rådata. Resultatet er en
-  avledet liste over tjenester/domener.
-- **Token-håndtering:**
-  - *Gjestemodus:* token lever kun i økten; ingen persistering utover `sessionStorage`.
-  - *Profilmodus:* unngå å lagre langlivede tokens hvis mulig; hvis nødvendig,
-    behandle som svært sensitivt og krypter klientside.
-- **Åpenhet:** Forklar tydelig, før tilkobling, hva vi gjør (og ikke gjør) med
-  innboksen. Samtykke skal være informert.
+  - Gmail: `gmail.metadata` (avsenderdomener, aldri body/vedlegg)
+  - Outlook: `Mail.ReadBasic` (avsender, dato, aldri body/vedlegg)
+- **Authorization Code + PKCE (KRITISK).**
+  - **NB:** Ikke Implicit Grant (deprecated). Tokens må ALDRI være i URL hash.
+  - Flyt: Bruker → Google/Microsoft → code → Edge Function exchange → access token
+    (edge-only) → Edge Function bruker token → domenelisten til klient.
+  - Detaljert guide: se `OAUTH_FLOW_MIGRATION.md`.
+  - **Deadline:** Implementer før offentlig lansering.
+- **Server-side (Supabase Edge Function `scan-email`).** Grunner:
+  - **CORS-frihet:** code kan sendes fra nettleseren til Edge Function uten
+    CORS-problemer med Gmail/Outlook.
+  - **Sikker token-håndtering:** access token behandles kun på Edge Function,
+    aldri eksponert i HTML/JS eller URL.
+  - **Bedre error-recovery:** timeout/rate-limiting håndteres server-side.
+  - **Skalering:** håndterer flere samtidige brukere uten blokkering av klienten.
+- **Metadata-only.** Edge Function leser kun avsenderdomener fra meldingsheadere,
+  aldri e-postinnhold eller vedlegg. Data ekstraheres og returneres; token lagres
+  aldri.
+- **Ephemeral token flow:**
+  1. Bruker autentiserer via Google/Microsoft OAuth.
+  2. Google/Microsoft returnerer **authorization code** (ikke access token).
+  3. Klient sender code til Edge Function over HTTPS (sammen med code_verifier).
+  4. Edge Function bytter code + code_verifier mot access token hos Google/Microsoft.
+  5. Access token brukes umiddelbar for å hente metadata, ekstraherer domener.
+  6. Access token og code kastes umiddelbar etter; lagres aldri i Supabase.
+  7. Kun domenelisten returneres til klienten.
+- **Åpenhet:** Forklar tydelig, før tilkobling, at vi bruker OAuth-token for
+  server-side scanning, at data er metadata-only, og at brukeren kan tilbakekalle
+  tilgang når som helst (OAuth-revoking, ikke vår kontroll).
 - **Revoker-lett:** Gjør det enkelt for brukeren å koble fra / trekke tilbake tilgang.
+  Viser Google-/Microsoft-tillatelsesside slik bruker kan oppheve i oprindelig
+  leverandør.
 
 ---
 
@@ -129,14 +150,77 @@ Funksjonen lar brukeren sjekke om e-posten finnes i kjente datalekkasjer.
   uten reelt europeisk ekvivalent for dette datasettet — akseptabelt unntak fra
   europeisk-først (jf. CLAUDE.md §6), nettopp fordi det er et sikkerhetsverktøy.
 
-## 10. Sikkerhetssjekkliste FØR HVER COMMIT (obligatorisk)
+## 10. CASA Tier 2 Security Assessment (KRITISK for Gmail `gmail.metadata`)
+
+**Status:** Må initieres før offentlig lansering.
+
+**Bakgrunn:**
+- `gmail.metadata` er en **Restricted Scope** hos Google.
+- Apps som er offentlig tilgjengelige (ikke intern/personlig bruk) krever årlig
+  CASA Tier 2-sertifisering av tredjepart-lab.
+- Uten sertifisering får brukeren "Unverified App"-advarsel og app er capped til 100 test users.
+
+**Aksjon:**
+1. **Kontakt Google eller autorisert lab** (f.eks. Coalfire, Corsec) for CASA Tier 2 self-serve assessment.
+2. **Budget:** $540–$1,000 (varierer per lab).
+3. **Tidslinje:** 4–8 uker for gjennomgang.
+4. **Deliverable:** Security assessment rapport som Google aksepterer.
+5. **Implementering:** Resultatet skal dokumenteres i en CASA_TIER_2_ROADMAP.md.
+
+**Hva blir vurdert:**
+- OAuth flow sikkerhet (PKCE, token-håndtering, scope-minimering).
+- Data-handling (metadata-only, ingen lagring).
+- Infrastruktur og RLS-policyer.
+- Incident response & datalekkasje-prosedyrer.
+
+Se `CASA_TIER_2_ROADMAP.md` for detaljer.
+
+---
+
+## 11. Edge Function Logging & Metadata Caching (KRITISK)
+
+**Sikkerhetskrav:**
+- Alle `console.log()`, `console.warn()`, `console.error()` som omhandler eller exponerer
+  access tokens, brukerdata eller e-postdomener **må fjernes** før produksjon.
+- Edge Functions logges automatisk av Supabase — logs kan få tilgang fra
+  attackers hvis Supabase-kontoen kompromitteres.
+
+**Implementering:**
+- Fjern debug-logging av tokens, sender-domener og antall meldinger.
+- Behold kun kritisk error-logging (f.eks. "OAuth exchange failed") uten PII/tokens.
+- Bruk structured logging eller external service for sikker audit-logging.
+- Test i staging før deploy.
+
+Se `OAUTH_FLOW_MIGRATION.md` §3 for konkrete endringer.
+
+---
+
+## 12. B2B Admin Consent (Outlook i Enterprise)
+
+**Scenario:** B2B kunder med Microsoft Entra ID (Azure AD) enterprise.
+
+**Realitet:**
+- Selv `Mail.ReadBasic` kan kreve tenant-wide **Admin Consent** i enterprise-miljøer.
+- Admin Consent legges inn av IT-administrator, ikke slutt-bruker.
+
+**Løsning:**
+- Opprett en dedikert IT-admin-guide med eksakt scope-begrunnelse.
+- Legg inn links til Microsoft docs for Admin Consent flow.
+- Se `B2B_ADMIN_CONSENT_GUIDE.md` for malen.
+
+---
+
+## 13. Sikkerhetssjekkliste FØR HVER COMMIT (obligatorisk)
 
 Gå gjennom denne før `git commit`:
 
 - [ ] Ingen hemmeligheter/nøkler/tokens i diffen (heller ikke i kommentarer/tester).
-- [ ] Ingen brukerdata, e-postinnhold eller PII logget eller persistert utilsiktet.
+- [ ] Ingen brukerdata, e-postinnhold, domener eller PII logget eller persistert utilsiktet.
 - [ ] OAuth-scopes er fortsatt minimale — ingen ny scope sneket inn.
 - [ ] Klientside-kryptering omgås ikke (ingen klartekst-profildata mot Supabase).
+- [ ] Edge Function: ingen console.* statements som exponerer tokens eller metadata.
+- [ ] Authorization Code + PKCE: tokens aldri i URL hash.
+- [ ] Rate limiting på Edge Functions for å forhindre abuse.
 - [ ] RLS-policy finnes for nye tabeller.
 - [ ] Utvidelsen sender ikke brukerdata ut; permissions ikke utvidet unødig.
 - [ ] Nye avhengigheter er nødvendige og vurdert.
