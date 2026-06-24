@@ -20,6 +20,7 @@
 ## Status Snapshot — 2026-06-24
 
 ### Completed
+- [x] **SCANNER APP MERGED INTO WEB APP** — Scanner app now runs under `/scanner` route in main web app instead of separate subdomain. Resolves Vercel routing issue where scanner.digitaleu.me was incorrectly serving web app instead of scanner app. Single deployment simplifies infrastructure. Commit 94cdddf.
 - [x] Scanner dashboard rebuilt as a structured account center with connected inboxes, access status, recent scans, security, and account actions.
 - [x] Scanner navigation corrected so logged-in users see Dashboard and Sign out, and public links resolve to valid destinations.
 - [x] Manual-check anchor added so dashboard links resolve to the manual review section.
@@ -36,8 +37,14 @@
 - [x] Cross-links added to catalog UX: quick stack filters on directory page and "Complete your stack" recommendations on alternative detail pages.
 
 ### Verified
+- [x] Scanner routes working locally at http://localhost:5191/scanner and http://localhost:5191/scanner/scan
+- [x] Demo scan page displays all 7 detected services with Nordic Warmth design
+- [x] Scanner layout (header, nav, theme toggle) renders correctly inside web app routing
+- [x] Web workspace build passes: 2024 modules transformed, 0 TypeScript errors
+- [x] All TypeScript errors fixed (unused variables, missing props)
+- [x] Git commit 94cdddf pushed to GitHub
+- [x] Vercel should auto-deploy on push to main
 - [x] Scanner workspace build passes.
-- [x] Web workspace build passes.
 - [x] Dashboard route auth-gates correctly when logged out.
 - [x] Live scanner dashboard loads without the previous 404 fetch errors.
 - [x] Live `/guides` page resolves correctly.
@@ -46,9 +53,10 @@
 - [x] Web production build passes after analytics QA route and trust badge/cross-link catalog updates.
 
 ### Remaining to test
-- [ ] Full Gmail OAuth round-trip in production.
+- [ ] Production deployment of scanner merge (check www.digitaleu.me/scanner loads new design)
+- [ ] Full Gmail OAuth round-trip in production at `/scanner/auth/signin`
 - [ ] Full Outlook OAuth round-trip in production.
-- [ ] Authenticated dashboard actions with a real user session.
+- [ ] Authenticated dashboard actions with a real user session at `/scanner/dashboard`
 - [ ] `delete-account` success path with a valid bearer token.
 - [ ] Stripe payment flow, if the premium unlock path is still active in production.
 - [ ] Guide deep links under `/guides/:id`.
@@ -58,8 +66,9 @@
 - [ ] Spot-check trust badges and cross-link recommendations on live `/directory` and `/alternative/:id` pages.
 
 ### Next development items
-- [ ] Finish production smoke testing of scanner auth and dashboard flows.
-- [ ] Decide whether the scanner dashboard should stay separate from the main web app or be merged into one user journey.
+- [ ] Monitor Vercel deployment and verify www.digitaleu.me/scanner shows new scanner design
+- [ ] Verify OAuth redirect URIs still work (may need to update to www.digitaleu.me/scanner/auth/email-callback)
+- [ ] Remove separate scanner app from Vercel and codeberg if deployment confirmed working
 - [ ] Continue account/security polish, especially 2FA management and delete-account UX.
 - [ ] Reduce non-functional console noise such as analytics request aborts if desired.
 - [ ] Keep affiliate placement conservative: Proton where it is genuinely the strongest alternative, not everywhere.
