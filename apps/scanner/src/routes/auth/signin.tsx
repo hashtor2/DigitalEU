@@ -90,10 +90,10 @@ export default function SignInPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <div className="space-y-2">
-        <h1 className="text-3xl font-mono font-bold text-[#1a2332] dark:text-[#f5f1ea]">
+        <h1 className="text-3xl font-mono font-bold text-black dark:text-slate-50">
           Sign in or connect email
         </h1>
-        <p className="text-[#1a2332]/70 dark:text-[#a89d96]">
+        <p className="text-gray dark:text-slate-400">
           Create an account or scan your email with OAuth.
         </p>
       </div>
@@ -105,35 +105,35 @@ export default function SignInPage() {
       )}
 
       {/* Email/Password Section */}
-      <div className="space-y-4 pb-6 border-b border-[#1a2332]/10 dark:border-[#3a3530]">
-        <h2 className="text-sm font-mono font-semibold text-[#1a2332]/60 dark:text-[#a89d96] uppercase tracking-wider">
+      <div className="space-y-4 pb-6 border-b border-slate-200 dark:border-slate-700">
+        <h2 className="text-sm font-mono font-semibold text-gray dark:text-slate-400 uppercase tracking-wider">
           Traditional login
         </h2>
 
         <form onSubmit={handleSignIn} className="space-y-4">
           <div>
-            <label className="block text-sm font-mono font-semibold mb-1 text-[#1a2332] dark:text-[#f5f1ea]">
+            <label className="block text-sm font-mono font-semibold mb-1 text-black dark:text-slate-50">
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded border border-[#1a2332]/20 dark:border-[#3a3530] px-3 py-2 bg-white dark:bg-[#2a251f] text-[#1a2332] dark:text-[#f5f1ea] focus:outline-none focus:ring-2 focus:ring-[#c17a5c]"
+              className="w-full rounded border border-slate-200 dark:border-slate-700 px-3 py-2 bg-white dark:bg-navy-dark text-black dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-green"
               disabled={loading}
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-mono font-semibold mb-1 text-[#1a2332] dark:text-[#f5f1ea]">
+            <label className="block text-sm font-mono font-semibold mb-1 text-black dark:text-slate-50">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded border border-[#1a2332]/20 dark:border-[#3a3530] px-3 py-2 bg-white dark:bg-[#2a251f] text-[#1a2332] dark:text-[#f5f1ea] focus:outline-none focus:ring-2 focus:ring-[#c17a5c]"
+              className="w-full rounded border border-slate-200 dark:border-slate-700 px-3 py-2 bg-white dark:bg-navy-dark text-black dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-green"
               disabled={loading}
               required
             />
@@ -142,7 +142,7 @@ export default function SignInPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded bg-[#c17a5c] dark:bg-[#a86650] px-4 py-2 font-mono font-semibold text-[#f9f7f2] hover:bg-[#c17a5c]/90 dark:hover:bg-[#a86650]/90 disabled:opacity-50 transition"
+            className="w-full rounded bg-green dark:bg-green px-4 py-2 font-mono font-semibold text-white hover:bg-green-dark dark:hover:bg-green-dark disabled:opacity-50 transition"
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
@@ -151,14 +151,14 @@ export default function SignInPage() {
 
       {/* Email Scanner Section */}
       <div className="space-y-4">
-        <h2 className="text-sm font-mono font-semibold text-[#1a2332]/60 dark:text-[#a89d96] uppercase tracking-wider">
+        <h2 className="text-sm font-mono font-semibold text-gray dark:text-slate-400 uppercase tracking-wider">
           Quick scan (no account)
         </h2>
 
         <button
           onClick={handleGmailEmailConnect}
           disabled={loading}
-          className="w-full rounded border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-3 font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 disabled:opacity-50 transition flex items-center justify-center gap-2"
+          className="w-full rounded border border-slate-200 dark:border-slate-700 px-4 py-3 font-mono font-semibold text-black dark:text-slate-50 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 disabled:opacity-50 transition flex items-center justify-center gap-2"
         >
           {loading ? 'Connecting...' : '🔗 Connect Gmail'}
         </button>
@@ -166,26 +166,26 @@ export default function SignInPage() {
         <button
           onClick={handleOutlookEmailConnect}
           disabled={loading}
-          className="w-full rounded border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-3 font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 disabled:opacity-50 transition flex items-center justify-center gap-2"
+          className="w-full rounded border border-slate-200 dark:border-slate-700 px-4 py-3 font-mono font-semibold text-black dark:text-slate-50 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 disabled:opacity-50 transition flex items-center justify-center gap-2"
         >
           {loading ? 'Connecting...' : '🔗 Connect Outlook'}
         </button>
 
-        <p className="text-xs text-[#1a2332]/60 dark:text-[#a89d96] text-center">
+        <p className="text-xs text-gray dark:text-slate-400 text-center">
           Read-only access. Your inbox stays private.
         </p>
       </div>
 
       {/* Sign up link */}
-      <div className="text-center text-sm text-[#1a2332]/70 dark:text-[#a89d96] pt-4 border-t border-[#1a2332]/10 dark:border-[#3a3530]">
+      <div className="text-center text-sm text-gray dark:text-slate-400 pt-4 border-t border-slate-200 dark:border-slate-700">
         Don't have an account?{' '}
-        <a href="/auth/signup" className="font-semibold text-[#c17a5c] dark:text-[#a86650] hover:underline">
+        <a href="/auth/signup" className="font-semibold text-green dark:text-green hover:underline">
           Sign up
         </a>
       </div>
 
       {/* Beta notice */}
-      <div className="rounded-lg border border-[#2d3e2d]/10 dark:border-[#3a3530] bg-[#2d3e2d]/5 dark:bg-[#2d3e2d]/20 p-4 text-xs text-[#1a2332]/70 dark:text-[#a89d96] space-y-2">
+      <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-200/10 dark:bg-slate-700/20 p-4 text-xs text-gray dark:text-slate-400 space-y-2">
         <p className="font-mono font-semibold">🔐 Security</p>
         <ul className="space-y-1 text-xs">
           <li>✓ Metadata-only scanning (no email bodies)</li>
