@@ -99,11 +99,11 @@ export function RiskOverview({ services }: RiskOverviewProps) {
                 Medium Risk
               </span>
             </span>
-            <span className="text-sm font-mono text-[#1a1815]/70 dark:text-[#a89d96]">
+            <span className="text-sm font-mono text-black/70 dark:text-slate-400">
               {risks.medium} services
             </span>
           </div>
-          <div className="h-2 bg-[#e0dbd2] dark:bg-[#2a251f] rounded overflow-hidden">
+          <div className="h-2 bg-slate-200 dark:bg-navy-dark rounded overflow-hidden">
             <div
               className="h-full bg-yellow-500 transition-all"
               style={{ width: `${mediumPercent}%` }}
@@ -116,15 +116,15 @@ export function RiskOverview({ services }: RiskOverviewProps) {
           <div className="flex items-center justify-between">
             <span className="text-sm flex items-center gap-2">
               <span className="text-lg">🟢</span>
-              <span className="font-mono text-[#1a1815] dark:text-[#faf8f5]">
+              <span className="font-mono text-black dark:text-white">
                 Low Risk
               </span>
             </span>
-            <span className="text-sm font-mono text-[#1a1815]/70 dark:text-[#a89d96]">
+            <span className="text-sm font-mono text-black/70 dark:text-slate-400">
               {risks.low} services
             </span>
           </div>
-          <div className="h-2 bg-[#e0dbd2] dark:bg-[#2a251f] rounded overflow-hidden">
+          <div className="h-2 bg-slate-200 dark:bg-navy-dark rounded overflow-hidden">
             <div
               className="h-full bg-green-500 transition-all"
               style={{ width: `${lowPercent}%` }}
@@ -134,7 +134,7 @@ export function RiskOverview({ services }: RiskOverviewProps) {
       </div>
 
       {/* Overall message */}
-      <div className="text-xs text-[#1a1815]/60 dark:text-[#a89d96] pt-2">
+      <div className="text-xs text-black/60 dark:text-slate-400 pt-2">
         {risks.high > 0 && (
           <p>
             💡 <strong>{risks.high} services</strong> are exposed to US CLOUD Act

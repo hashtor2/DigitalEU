@@ -209,7 +209,7 @@ export default function DemoScanPage() {
         </div>
 
         <div className="grid grid-cols-3 gap-4 md:gap-6">
-          <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-4">
+          <div className="rounded-none border border-black/10 dark:border-slate-700 bg-white dark:bg-navy-dark p-4">
             <p className="text-3xl font-mono font-bold text-black dark:text-white">{totalServices}</p>
             <p className="text-sm text-black/70 dark:text-slate-400 mt-1">Services detected</p>
           </div>
@@ -217,13 +217,13 @@ export default function DemoScanPage() {
             <p className="text-3xl font-mono font-bold text-green dark:text-green">18</p>
             <p className="text-sm text-black/70 dark:text-slate-400 mt-1">EU alternatives</p>
           </div>
-          <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-4">
-            <p className="text-3xl font-mono font-bold text-[#10b981]">💪</p>
+          <div className="rounded-none border border-black/10 dark:border-slate-700 bg-white dark:bg-navy-dark p-4">
+            <p className="text-3xl font-mono font-bold text-green">💪</p>
             <p className="text-sm text-black/70 dark:text-slate-400 mt-1">High risk</p>
           </div>
         </div>
 
-        <div className="rounded-none border border-[#d9d3c8] bg-[#faf8f4] dark:border-[#2a251f] dark:bg-[#f4efe6]/5 p-6 space-y-4">
+        <div className="rounded-none border border-slate-200 bg-white dark:border-navy-dark dark:bg-slate-700/10 p-6 space-y-4">
           <h2 className="text-lg font-mono font-semibold text-black dark:text-white">This is just a sample</h2>
           <p className="text-sm text-black/70 dark:text-slate-400">
             Your actual scan will be customized based on what&apos;s really in your inbox. Connect Gmail or Outlook to get your personalized report with recommendations tailored to your actual service usage.

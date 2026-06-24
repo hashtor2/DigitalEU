@@ -25,7 +25,7 @@ export function MonetizationCTAs({
         <h3 className="text-2xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5] mb-2">
           {title}
         </h3>
-        <p className="text-[#1a1815]/70 dark:text-[#a89d96]">{description}</p>
+        <p className="text-black/70 dark:text-slate-400">{description}</p>
       </div>
 
       <div
@@ -46,7 +46,7 @@ export function MonetizationCTAs({
         </button>
 
         {/* OR divider */}
-        <div className="flex items-center gap-3 text-[#1a1815]/40 dark:text-[#a89d96]/40">
+        <div className="flex items-center gap-3 text-black/40 dark:text-slate-400/40">
           <div className="flex-1 h-px bg-current" />
           <span className="text-xs font-mono uppercase">or</span>
           <div className="flex-1 h-px bg-current" />
@@ -64,7 +64,7 @@ export function MonetizationCTAs({
       </div>
 
       {/* Benefit list */}
-      <div className="pt-4 border-t border-[#e0dbd2] dark:border-[#2a251f] space-y-2 text-sm text-[#1a1815]/70 dark:text-[#a89d96]">
+      <div className="pt-4 border-t border-slate-200 dark:border-navy-dark space-y-2 text-sm text-black/70 dark:text-slate-400">
         <p className="font-semibold text-[#1a1815] dark:text-[#faf8f5]">What you get:</p>
         <ul className="space-y-1">
           <li>✓ Auto-detect all your online accounts</li>

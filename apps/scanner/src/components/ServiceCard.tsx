@@ -73,7 +73,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
               </span>
             )}
           </div>
-          <p className="text-xs text-[#1a1815]/70 dark:text-[#a89d96]">
+          <p className="text-xs text-black/70 dark:text-slate-400">
             {service.description}
           </p>
         </div>
@@ -81,7 +81,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           <div className="text-3xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5]">
             {score}
           </div>
-          <p className="text-[10px] font-mono uppercase tracking-wide text-[#1a1815]/60 dark:text-[#a89d96]">
+          <p className="text-[10px] font-mono uppercase tracking-wide text-black/60 dark:text-slate-400">
             Privacy Score
           </p>
         </div>

@@ -80,7 +80,7 @@ export function ServiceCheckboxGrid({
         onChange={e => setSearch(e.target.value)}
         className="w-full px-4 py-3 rounded border border-[#e0dbd2] dark:border-[#2a251f] 
                    bg-white dark:bg-[#1a1510] text-[#1a1815] dark:text-[#faf8f5]
-                   placeholder:text-[#a89d96] dark:placeholder:text-[#6b6560]
+                   placeholder:text-slate-400 dark:placeholder:text-slate-400
                    focus:outline-none focus:border-[#b8705c] dark:focus:border-[#a8664f]"
       />
 
@@ -136,7 +136,7 @@ export function ServiceCheckboxGrid({
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-[#1a1815]/60 dark:text-[#a89d96]">
+                <p className="text-xs text-black/60 dark:text-slate-400">
                   {service.description}
                 </p>
                 {service.replaces && service.replaces.length > 0 && (
@@ -150,7 +150,7 @@ export function ServiceCheckboxGrid({
         </div>
 
         {filtered.length === 0 && (
-          <p className="text-center text-[#1a1815]/60 dark:text-[#a89d96] py-8">
+          <p className="text-center text-black/60 dark:text-slate-400 py-8">
             No services found. Try a different search or category.
           </p>
         )}
@@ -176,7 +176,7 @@ export function ServiceCheckboxGrid({
             Clear all
           </button>
         )}
-        <span className="text-xs text-[#1a1815]/60 dark:text-[#a89d96] ml-auto">
+        <span className="text-xs text-black/60 dark:text-slate-400 ml-auto">
           {selected.size} selected
         </span>
       </div>
