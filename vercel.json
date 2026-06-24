@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm run build --workspace @digitaleu/web",
   "devCommand": "npm run dev",
-  "installCommand": "npm install",
+  "installCommand": "npm ci",
   "outputDirectory": "apps/web/dist"
 }

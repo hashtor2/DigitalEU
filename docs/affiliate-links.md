@@ -67,3 +67,15 @@ bruk short-link-formen i koden. Kommisjon er RevShare (CPS).
   tilbake til `SH1mQ` (default) etter turneringen.
 - Bruk alltid short-link-formen (`SH***`) i koden — ikke de lange redirect-URLene.
 - Kommisjon betales på faktisk kjøp (RevShare), ikke klikk.
+
+
+--------------------
+
+Andre
+
+
+RepoCloud
+
+https://repocloud.io/?ref=mde79e5
+
+
