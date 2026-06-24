@@ -95,7 +95,7 @@ export default function Layout() {
             <a href="https://www.digitaleu.me/catalog" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
               Alternatives
             </a>
-            <a href="https://www.digitaleu.me/guides/browser-security" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/guides" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
               Guides
             </a>
             <a href="https://www.digitaleu.me/news" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">

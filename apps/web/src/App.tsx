@@ -1,9 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useTheme } from "./hooks/useTheme";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY
+  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
+  : null;
 
 const router = createBrowserRouter([
   {
@@ -114,9 +117,13 @@ export default function App() {
   // Initialize theme on mount
   useTheme();
 
-  return (
+  const routerContent = <RouterProvider router={router} />
+
+  return stripePromise ? (
     <Elements stripe={stripePromise}>
-      <RouterProvider router={router} />
+      {routerContent}
     </Elements>
-  );
+  ) : (
+      <RouterProvider router={router} />
+  )
 }
