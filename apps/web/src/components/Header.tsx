@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useMigrationState } from "@/hooks/useMigrationState";
 import { useTheme } from "@/hooks/useTheme";
 import { Menu, Moon, Sun, X } from "lucide-react";
+import { MegaMenuAlternatives } from "./MegaMenuAlternatives";
+import { HeaderSearch } from "./HeaderSearch";
 
 // Hovednavigasjon: 6-punkts IA. Logoen = landing (side 1).
 const NAV_ITEMS = [
@@ -23,10 +25,10 @@ export function Header() {
   const isB2B = location.pathname.startsWith("/b2b");
 
   const linkClass = (path: string) =>
-    `text-sm transition-colors ${
+    `text-sm transition-all duration-150 ${
       isActive(path)
-        ? "text-text-primary dark:text-dark-text-primary font-semibold"
-        : "text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary"
+        ? "text-text-primary dark:text-dark-text-primary font-semibold border-b-2 border-accent pb-1"
+        : "text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary hover:bg-border/30 dark:hover:bg-dark-border/30 px-2 py-1 rounded-sm"
     }`;
 
   return (
@@ -42,12 +44,24 @@ export function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {NAV_ITEMS.map((item) => (
-            <Link key={item.to} to={item.to} className={linkClass(item.to)}>
-              {item.label}
-            </Link>
-          ))}
+        <nav className="hidden md:flex items-center gap-2 relative">
+          {NAV_ITEMS.map((item) =>
+            item.label === "Alternatives" ? (
+              <div
+                key={item.to}
+                className={`relative ${linkClass(item.to)}`}
+              >
+                <Link to={item.to} className={linkClass(item.to)}>
+                  {item.label}
+                </Link>
+                <MegaMenuAlternatives isMobile={false} />
+              </div>
+            ) : (
+              <Link key={item.to} to={item.to} className={linkClass(item.to)}>
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
         {/* Right side */}
@@ -55,7 +69,7 @@ export function Header() {
           {/* Theme toggle */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 rounded-sm border border-border dark:border-dark-border hover:bg-border dark:hover:bg-dark-border text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary transition-colors"
+            className="p-2 rounded-sm border border-border dark:border-dark-border hover:text-accent dark:hover:text-accent text-text-secondary dark:text-dark-text-secondary transition-colors duration-150"
             title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             aria-label="Toggle theme"
           >
@@ -78,6 +92,9 @@ export function Header() {
             </a>
           )}
 
+          {/* Search */}
+          <HeaderSearch />
+
           {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileOpen((open) => !open)}
@@ -92,17 +109,31 @@ export function Header() {
 
       {/* Mobile nav panel */}
       {mobileOpen && (
-        <nav className="md:hidden border-t border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas">
-          <div className="mx-auto max-w-6xl flex flex-col px-6 py-2">
+        <nav className="md:hidden border-t border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas animate-in fade-in duration-200">
+          <div className="mx-auto max-w-6xl flex flex-col px-6 py-4">
             {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setMobileOpen(false)}
-                className={`py-3 border-b border-border/60 dark:border-dark-border/60 last:border-0 ${linkClass(item.to)}`}
-              >
-                {item.label}
-              </Link>
+              <div key={item.to}>
+                {item.label === "Alternatives" ? (
+                  <>
+                    <Link
+                      to={item.to}
+                      onClick={() => setMobileOpen(false)}
+                      className={`block py-3 border-b border-border/60 dark:border-dark-border/60 transition-all duration-150 ${linkClass(item.to)}`}
+                    >
+                      {item.label}
+                    </Link>
+                    <MegaMenuAlternatives isMobile={true} onLinkClick={() => setMobileOpen(false)} />
+                  </>
+                ) : (
+                  <Link
+                    to={item.to}
+                    onClick={() => setMobileOpen(false)}
+                    className={`block py-3 border-b border-border/60 dark:border-dark-border/60 last:border-0 transition-all duration-150 ${linkClass(item.to)}`}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
         </nav>

@@ -214,6 +214,109 @@ function DailyDigest() {
   );
 }
 
+function Subscribe() {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleEmailSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setMessage({ type: "error", text: "Please enter a valid email address" });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      if (!supabase) {
+        setMessage({ type: "error", text: "Service unavailable. Please try again later." });
+        setLoading(false);
+        return;
+      }
+      const { error } = await supabase
+        .from("newsletter_subscribers")
+        .insert([{ email, name: name || null, status: "active" }]);
+
+      if (error) {
+        if (error.message.includes("duplicate")) {
+          setMessage({ type: "error", text: "This email is already subscribed" });
+        } else {
+          setMessage({ type: "error", text: "Failed to subscribe. Please try again." });
+        }
+      } else {
+        setMessage({ type: "success", text: "✓ Subscribed! Check your email for confirmation." });
+        setEmail("");
+        setName("");
+      }
+    } catch (err) {
+      setMessage({ type: "error", text: "An error occurred. Please try again." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section className="rounded-2xl border border-white/10 bg-slate-900/30 p-6 space-y-6">
+      <div className="space-y-2">
+        <h2 className="text-lg font-bold text-white">📬 Stay Updated</h2>
+        <p className="text-sm text-slate-400">Get daily EU tech news delivered to your inbox or Telegram</p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        {/* Telegram Subscribe */}
+        <a
+          href="https://t.me/eurotechnewsbot"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 rounded-xl border border-sky-500/30 bg-sky-500/10 px-4 py-3 font-semibold text-sky-300 hover:bg-sky-500/20 hover:border-sky-500/50 transition"
+        >
+          <span>💬 Subscribe to Telegram Bot</span>
+        </a>
+
+        {/* Email Newsletter */}
+        <form onSubmit={handleEmailSignup} className="space-y-2">
+          <div className="flex gap-2">
+            <input
+              type="email"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+              className="flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-sky-500/50 focus:bg-white/10 focus:outline-none transition disabled:opacity-50"
+              required
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="rounded-xl border border-sky-500/30 bg-sky-500/10 px-4 py-2 font-semibold text-sky-300 hover:bg-sky-500/20 hover:border-sky-500/50 transition disabled:opacity-50"
+            >
+              {loading ? "..." : "Subscribe"}
+            </button>
+          </div>
+          <input
+            type="text"
+            placeholder="Your name (optional)"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={loading}
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-sky-500/50 focus:bg-white/10 focus:outline-none transition disabled:opacity-50"
+          />
+          {message && (
+            <p className={`text-xs font-semibold ${message.type === "success" ? "text-emerald-400" : "text-red-400"}`}>
+              {message.text}
+            </p>
+          )}
+        </form>
+      </div>
+
+      <p className="text-[10px] text-slate-500 border-t border-white/5 pt-4">
+        We respect your privacy. Unsubscribe anytime. Learn more in our <a href="#" className="text-sky-400 hover:underline">privacy policy</a>.
+      </p>
+    </section>
+  );
+}
+
 export function NewsPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
@@ -236,6 +339,9 @@ export function NewsPage() {
 
         {/* Live AI-generated daily digest from news agent */}
         <DailyDigest />
+
+        {/* Subscribe to Telegram bot & email newsletter */}
+        <Subscribe />
 
         {/* Featured Story */}
         <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-sky-950/20 via-slate-900/50 to-transparent p-6 sm:p-8">

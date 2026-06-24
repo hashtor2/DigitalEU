@@ -199,6 +199,18 @@ git add -A && git commit -m "..." && git push
 **Før commit:** kjør sikkerhetssjekklisten i `docs/SECURITY.md` (hemmeligheter,
 scopes, datalekkasje, avhengigheter).
 
+## 10. Dokumentasjonsflyt
+
+- `docs/PROGRESS.md` er den eneste løpende sprintloggen og den primære
+  kontekstkilden for hva som faktisk er ferdig, hva som er verifisert, og hva
+  som gjenstår.
+- Før du starter nytt arbeid, les alltid siste oppdatering i
+  `docs/PROGRESS.md`.
+- Etter hver arbeidssprint skal du oppdatere `docs/PROGRESS.md` med det som ble
+  gjort, verifisert, og neste prioritering.
+- `EXECUTIVE_SUMMARY.md` er avviklet som aktiv statuskilde og skal bare brukes
+  som et historisk pekepunkt hvis det trengs.
+
 ### Design System Workflow (`feat/brand-identity` branch)
 
 Designarbeid gjøres på dedikert `feat/brand-identity`-branch. **Prosessen:**
@@ -225,7 +237,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 
 ---
 
-## 10. Beslutningslogg (ADR — kort)
+## 11. Beslutningslogg (ADR — kort)
 
 | #  | Beslutning                                                        | Dato       |
 | -- | ----------------------------------------------------------------- | ---------- |
@@ -257,7 +269,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 
 ---
 
-## 11. Åpne spørsmål / til revisjon
+## 12. Åpne spørsmål / til revisjon
 
 - **Hosting (Vercel = USA):** spenning mot suverenitets-budskapet. Vurder
   europeisk PaaS (Clever Cloud, Scaleway) før vi profilerer dette tungt utad.
@@ -276,10 +288,11 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 
 ---
 
-## 12. Pekere
+## 13. Pekere
 
 **Core:**
 - `docs/BRAND.md` — design system (colors, typography, components, tone).
+- `docs/PROGRESS.md` — eneste levende sprintlogg og statuskilde.
 - `docs/DESIGN_CHECKLIST.md` — design implementation roadmap + commit templates.
 - `docs/DEVELOPMENT_PLAN.md` — faseinndelt roadmap.
 - `docs/SECURITY.md` — sikkerhets- og personverndoktrine + commit-sjekkliste.
@@ -289,6 +302,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 - `docs/SCANNER_*.md` — scanner-spesifikasjoner, implementasjon, deployment.
 - `docs/OAUTH_SETUP_GUIDE.md` — Gmail/Outlook OAuth setup for lokalt dev + prod.
 - `docs/PROGRESS.md` — løpende fremdriftsnotat.
+- `EXECUTIVE_SUMMARY.md` — historisk statusoversikt, ikke primær sprintlogg.
 - `docs/MARKETING_PLAN.md` — affiliate, content, growth strategy.
 - `docs/IA_NAV_RESTRUCTURE.md` — navigasjon og informasjonsarkitektur.
 - `supabase/README.md` — Edge Functions og migrations.
