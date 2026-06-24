@@ -193,7 +193,7 @@ export function LandingPage() {
                 {/* CTA Button - Emerald */}
                 <Button
                   onClick={handleAutoScan}
-                  className="w-full bg-accent text-white font-mono font-semibold py-3 rounded-sm hover:bg-accent-hover transition-colors shadow-sm hover:shadow-md"
+                  className="w-full bg-accent text-white font-mono font-bold text-base py-4 px-6 rounded-sm hover:bg-green-600 active:bg-green-700 transition-all shadow-lg hover:shadow-xl"
                   size="lg"
                 >
                   Start Auto-Scan →
@@ -316,7 +316,7 @@ export function LandingPage() {
               </p>
               <Button
                 onClick={() => navigate("/news")}
-                className="border-2 border-warm-accent bg-transparent text-warm-accent hover:bg-warm-accent hover:text-white rounded-sm px-4 py-2 text-sm font-semibold transition-all"
+                className="bg-warm-accent text-white hover:bg-yellow-500 rounded-sm px-4 py-2 text-sm font-semibold transition-all shadow-md hover:shadow-lg"
               >
                 Read news →
               </Button>
@@ -332,7 +332,7 @@ export function LandingPage() {
               </p>
               <Button
                 onClick={() => navigate("/directory")}
-                className="border-2 border-secondary-accent bg-transparent text-secondary-accent hover:bg-secondary-accent hover:text-white rounded-sm px-4 py-2 text-sm font-semibold transition-all"
+                className="bg-secondary-accent text-white hover:bg-cyan-400 rounded-sm px-4 py-2 text-sm font-semibold transition-all shadow-md hover:shadow-lg"
               >
                 Browse catalog →
               </Button>
@@ -348,7 +348,7 @@ export function LandingPage() {
               </p>
               <Button
                 onClick={() => navigate("/b2b")}
-                className="border-2 border-accent bg-transparent text-accent hover:bg-accent hover:text-white rounded-sm px-4 py-2 text-sm font-semibold transition-all"
+                className="bg-accent text-white hover:bg-green-500 rounded-sm px-4 py-2 text-sm font-semibold transition-all shadow-md hover:shadow-lg"
               >
                 Learn more →
               </Button>
