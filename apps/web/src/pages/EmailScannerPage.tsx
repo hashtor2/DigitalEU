@@ -1,118 +1,73 @@
 /**
- * EmailScannerPage.tsx — Main scanner page
+ * EmailScannerPage.tsx — Landing page for email scanner
  *
- * Orchestrates the email scanner flow using the new backend-proxy architecture:
- * 1. User sees intro with privacy guarantees
- * 2. User clicks "Scan Gmail/Outlook" → initiates OAuth
- * 3. After OAuth callback, token is extracted from URL hash (memory-only)
- * 4. Frontend calls backend edge function with token
- * 5. Backend fetches email metadata server-side
- * 6. Frontend displays results
- * 7. Optional: save encrypted results to profile
+ * This page shows the EmailScannerGate (Proton affiliate + Stripe payment options).
+ * Once unlocked, it redirects to the dedicated scanner app at localhost:5174
+ * for the actual OAuth-based inbox scanning.
  */
 
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import {
-  ScannerIntro,
-  ScannerProgressStep,
-  ScannerResultsStep,
-} from "@/components/ScannerFlow";
-import { useClientSideScanner } from "@/hooks/useClientSideScanner";
-import {
-  extractAccessTokenFromUrl,
-  getGoogleAuthUrl,
-} from "@/lib/gmailScanner";
+import { EmailScannerGate } from "@/components/EmailScannerGate";
+
+const SCANNER_APP_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5174"
+    : "https://scanner.digitaleu.me";
 
 export function EmailScannerPage() {
-  const [searchParams] = useSearchParams();
-  const { state, startGmailAuth, startOutlookAuth, scanWithToken, startDemo, reset } =
-    useClientSideScanner();
+  const [isUnlocked, setIsUnlocked] = useState(false);
 
-  // After OAuth callback, token is in URL fragment
+  // Check if scanner was unlocked via payment/Proton
   useEffect(() => {
-    const token = extractAccessTokenFromUrl();
-    if (token) {
-      // Determine provider from URL (or default to gmail)
-      const provider = searchParams.get("provider") as "gmail" | "outlook" || "gmail";
-      scanWithToken(token, provider);
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("scanner_unlocked") === "true") {
+      setIsUnlocked(true);
     }
-  }, [scanWithToken, searchParams]);
+  }, []);
 
-  const handleStartGmailScan = () => {
-    startGmailAuth();
-    // Redirect to Google OAuth
-    window.location.href = getGoogleAuthUrl();
+  const handleUnlock = () => {
+    setIsUnlocked(true);
   };
 
-  const handleStartOutlookScan = () => {
-    startOutlookAuth();
-    // TODO: Implement Outlook OAuth URL
-    // window.location.href = getOutlookAuthUrl();
-  };
-
-  const handleTryDemo = () => {
-    startDemo();
+  const handleStartScanning = () => {
+    // Redirect to scanner app for OAuth
+    window.location.href = `${SCANNER_APP_URL}/auth/signin`;
   };
 
   return (
     <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
       <Header />
       <main className="flex-1 mx-auto max-w-4xl px-6 py-16 w-full">
-        {/* Intro step */}
-        {state.step === "intro" && (
-          <ScannerIntro
-            onStartGmailScan={handleStartGmailScan}
-            onStartOutlookScan={handleStartOutlookScan}
-            onTryDemo={handleTryDemo}
-          />
-        )}
+        {!isUnlocked ? (
+          <EmailScannerGate onUnlock={handleUnlock} />
+        ) : (
+          <div className="max-w-2xl mx-auto space-y-8 text-center">
+            <div className="space-y-4">
+              <h1 className="text-h1 font-mono">Ready to scan your inbox?</h1>
+              <p className="text-h3 text-text-secondary dark:text-dark-text-secondary font-sans">
+                Connect your Gmail or Outlook account to get your personalized report.
+              </p>
+            </div>
 
-        {/* Scanning progress */}
-        {state.step === "scanning" && (
-          <ScannerProgressStep
-            progress={state.progress}
-            scannedCount={state.scannedCount}
-          />
-        )}
+            <button
+              onClick={handleStartScanning}
+              className="inline-block px-8 py-4 bg-accent hover:bg-accent-dark text-white rounded-lg transition text-lg font-medium"
+            >
+              Open Scanner
+            </button>
 
-        {/* Results */}
-        {state.step === "results" && (
-          <ScannerResultsStep
-            results={state.results}
-            isDemo={false}
-            onReset={reset}
-            onSaveProfile={() => {
-              // TODO: Implement profile save flow
-              console.log("Save to profile:", state.results);
-            }}
-          />
-        )}
-
-        {/* Error state */}
-        {state.step === "error" && (
-          <div className="max-w-2xl mx-auto space-y-6">
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900 rounded-lg p-6">
-              <h2 className="text-lg font-semibold text-red-900 dark:text-red-100 mb-2">
-                Scan failed
-              </h2>
-              <p className="text-red-700 dark:text-red-200 mb-4">{state.error}</p>
-              <div className="flex gap-2">
-                <button
-                  onClick={reset}
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
-                >
-                  Try again
-                </button>
-                <a
-                  href="/directory"
-                  className="px-4 py-2 bg-canvas-elevated dark:bg-dark-canvas-elevated text-text-primary dark:text-dark-text-primary border border-border-subtle dark:border-dark-border-subtle rounded-lg transition"
-                >
-                  Browse alternatives
-                </a>
-              </div>
+            <div className="bg-canvas-elevated dark:bg-dark-canvas-elevated border border-border-subtle dark:border-dark-border-subtle rounded-lg p-6 text-left space-y-3">
+              <h3 className="font-semibold text-text-primary dark:text-dark-text-primary">
+                🔐 Your privacy is protected
+              </h3>
+              <ul className="space-y-2 text-small text-text-secondary dark:text-dark-text-secondary">
+                <li>✓ Metadata-only scanning (no email bodies)</li>
+                <li>✓ Secure OAuth 2.0 with PKCE</li>
+                <li>✓ Results never stored without your consent</li>
+                <li>✓ Zero-knowledge encryption for saved profiles</li>
+              </ul>
             </div>
           </div>
         )}
