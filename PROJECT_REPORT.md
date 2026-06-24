@@ -50,7 +50,7 @@
 
 **Freemium + Affiliate + Premium:**
 - **Free:** Register via affiliate link to partner (Proton, Tuta, etc.) = commission
-- **Paid:** €29 one-time purchase for scanner unlock + premium features
+- **Paid:** €5 one-time purchase for scanner unlock + premium features
 - **B2B:** Enterprise consulting for companies leaving US clouds
 
 ---

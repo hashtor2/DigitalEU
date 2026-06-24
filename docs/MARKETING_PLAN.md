@@ -43,7 +43,7 @@ restricted-scope/CASA verification to lift it before open launch.)*
 
 **💶 Pricing — do NOT mention price publicly yet** (founder decision, 2026-06-23). Beta is free;
 the pricing model will be communicated openly once locked. (Internal note: €9.99 vs documented
-€29 is unresolved — parked, CLAUDE.md unchanged until decided. Not a marketing input right now.)
+€5 is unresolved — parked, CLAUDE.md unchanged until decided. Not a marketing input right now.)
 
 **🏢 B2B seed:** The scanner doubles as a sales entry point toward businesses wanting to move
 from a US to an EU tech stack (Phase 3). We add one soft "for business" capture now — low effort,
@@ -89,7 +89,7 @@ and how we protect your data.
 2. **European-first, and we mean it.** We use EU providers ourselves (dogfooding), not just
    recommend them.
 3. **Radically honest business model.** Free if you sign up with a partner via our affiliate
-   link, or €29 one-time. We tell you exactly which links pay us. We sell trust, not the
+   link, or €5 one-time. We tell you exactly which links pay us. We sell trust, not the
    highest commission.
 
 > ⚠️ **Legal gate:** Every concrete privacy claim above ("never leaves your device",
@@ -105,7 +105,7 @@ Privacy audiences will surface these in seconds. We get there first — that's t
 
 **Objection A — "You're just a Proton affiliate cashing in."**
 → *Response:* Yes, affiliate links fund this. We disclose every one. The catalog is broad and
-editorially honest, and there's always a €29 no-affiliate path. (Reinforces pillar 3.)
+editorially honest, and there's always a €5 no-affiliate path. (Reinforces pillar 3.)
 
 **Objection B — "Why would I give YOU OAuth access to my inbox?"**
 → *Response:* You don't give it to us — the scan runs entirely in your browser, read-only,
@@ -216,7 +216,7 @@ Dates are relative to "now" (2026-06-23). Fill in real dates once launch date is
 
 ### Week 4 — Launch + convert
 - [ ] **Launch announcement** across all channels (coordinated, scheduled).
-- [ ] Activate waitlist: launch email with the clear FREE-via-partner vs €29 choice.
+- [ ] Activate waitlist: launch email with the clear FREE-via-partner vs €5 choice.
 - [ ] Begin small **paid test budgets** (Reddit/Mastodon promo) only on the angle that already
       converted organically.
 - [ ] Retro: what to keep, kill, scale → update this doc (§12).
@@ -266,7 +266,7 @@ for *qualified, opted-in* humans.
 - **No dark patterns.** No fake scarcity, no pre-ticked consent, no guilt-trip unsubscribes.
 - **GDPR-clean by default.** Cookieless analytics, double-opt-in, data minimization, clear
   privacy notice at every collection point.
-- **Affiliate honesty.** Disclose every affiliate link, every time. Always show the €29
+- **Affiliate honesty.** Disclose every affiliate link, every time. Always show the €5
   non-affiliate path.
 - **Never overpromise on privacy.** If Legal hasn't cleared a claim, it doesn't go public.
 - **Respond in the user's language.** English default; expand per i18n roadmap after MVP.
@@ -290,7 +290,7 @@ for *qualified, opted-in* humans.
 | --- | --- | --- |
 | 2026-06-23 | v0.1 drafted. Objective = waitlist. Channels, pillars, <1mo sprint, EU-first automation stance set. Waitlist brief handed to Lead Engineer. | CMO |
 | 2026-06-23 | v0.2. Decided: **Postiz** as scheduler; **Substack = public long-form**, waitlist owned in **Supabase (Zürich)**. Open item narrowed to "how to send launch email." | CMO |
-| 2026-06-23 | v0.3. **Beta scanner is live now** → primary CTA = "try the beta," waitlist secondary. **No price mentioned publicly yet** (€9.99/€29 parked). Added **narrative spine** (Europe takes back its data, not fanatical) and **soft B2B capture**. | CMO |
+| 2026-06-23 | v0.3. **Beta scanner is live now** → primary CTA = "try the beta," waitlist secondary. **No price mentioned publicly yet** (€5/€5 parked). Added **narrative spine** (Europe takes back its data, not fanatical) and **soft B2B capture**. | CMO |
 | 2026-06-23 | v0.4. **Gmail = early-access on-ramp** (scanner supports Gmail first). "Still on Gmail? Good — that's the point" framing. Outlook/others → waitlist. | CMO |
 | 2026-06-23 | v0.5. **Beta is GATED + capped** (Google Testing mode, ~100 manually-approved testers). Flow = request access → founder approves → scanner works. Forum = honest "limited beta, help me test"; **waitlist = overflow + the larger list.** De-risks traffic. | CMO |
 

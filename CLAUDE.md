@@ -20,7 +20,7 @@ Produktet består av tre deler som spiller sammen:
    (Netflix, Spotify, ...) slik at det blir lett å bytte kontoadresse. Fase 2.
 
 **Forretningsmodell:** Gratis hvis brukeren registrerer seg hos en partner via
-vår affiliate-lenke, ELLER €29 som engangskjøp via betalingsleverandør (begge metoder integrert i scanner).
+vår affiliate-lenke, ELLER €5 som engangskjøp via betalingsleverandør (begge metoder integrert i scanner).
 
 ---
 
@@ -148,7 +148,7 @@ Tabellen sporer hvor vi står, og hvor vi har en bevisst åpen vurdering.
 
 ## 7. Forretningsmodell & produktnotater
 
-- **Pris:** Gratis via partner-affiliate ELLER €29 engangskjøp (Stripe).
+- **Pris:** Gratis via partner-affiliate ELLER €5 engangskjøp (Stripe).
 - **Affiliate-balanse:** Ikke bli en ren Proton-side (se §2). Affiliate finansierer
   utviklingen, men katalogen skal være bred og redaksjonelt ærlig.
 - **Nettleserguide:** Nettsiden skal ha en egen guide som **sammenligner
@@ -253,7 +253,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 9  | Utvidelse: lokal-først, null brukerdata til vår backend           | 2026-06-18 |
 | 10 | Sikkerhetsgjennomgang før hver commit (obligatorisk)             | 2026-06-18 |
 | 11 | i18n: engelsk default, alle europeiske språk etter MVP            | 2026-06-18 |
-| 12 | Betaling: Stripe, €29 engangskjøp (Mollie som åpen vurdering)     | 2026-06-18 |
+| 12 | Betaling: Stripe, €5 engangskjøp (Mollie som åpen vurdering)     | 2026-06-18 |
 | 13 | Utvidelse for både Chrome og Firefox                              | 2026-06-18 |
 | 14 | UI-komponenter: shadcn/ui                                         | 2026-06-18 |
 | 15 | Testing: Vitest. CI: GitHub Actions                               | 2026-06-18 |
@@ -266,6 +266,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 22 | **Innboksskanning:** Server-side (Supabase Edge Function) ikke client-side; årsak: CORS-frihet, sikker token-håndtering, skalering. OAuth kontrolleres av bruker (tilbakekallbar). Metadata-only, token lagres aldri. | 2026-06-24 |
 | 23 | **Betalingsflow:** Stripe Elements (client-side form) + Edge Function webhook for verification + affiliate tracking. Live og testbar. | 2026-06-24 |
 | 24 | **Scanner som standalone app:** `scanner.digitaleu.me` — egen SPA, samme stack (React, Supabase, Stripe). Separate deployment, integrert med web via affiliate-kryss. | 2026-06-24 |
+| 25 | **Design:** UNIFIED across all apps — ONLY European Digital (emerald #10b981, deep navy dark mode) is active. All previous designs (Nordic Warmth, etc.) are DEPRECATED. Web + Scanner use identical design system from digitaleu.me. | 2026-06-25 |
 
 ---
 

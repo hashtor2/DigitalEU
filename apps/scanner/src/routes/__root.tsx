@@ -41,26 +41,49 @@ export default function Layout() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f9f7f2] dark:bg-[#1a1815] text-[#1a2332] dark:text-[#f5f1ea] transition-colors">
-      <header className="border-b border-[#1a2332]/10 dark:border-[#3a3530] py-4">
+    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary transition-colors">
+      <header className="sticky top-0 z-50 border-b border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          {/* Top row: Logo + Sign in + Theme */}
-          <div className="flex justify-between items-center mb-4">
-            <Link to="/" className="text-2xl font-mono font-semibold hover:text-[#c17a5c] transition">
-              Europa
+          {/* Top row: Logo + Nav + Sign in + Theme */}
+          <div className="flex justify-between items-center py-4">
+            <Link to="/" className="font-mono text-lg font-semibold text-text-primary dark:text-dark-text-primary hover:text-accent transition-colors">
+              digitaleu.me
             </Link>
+            
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-6">
+              <a href="/" className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition">
+                HOME
+              </a>
+              <a href="/emailscanner" className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition font-medium text-accent">
+                EMAIL SCANNER
+              </a>
+              <a href="/directory" className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition">
+                EU ALTERNATIVES
+              </a>
+              <a href="/news" className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition">
+                NEWS
+              </a>
+              <a href="/b2b" className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition">
+                BUSINESS
+              </a>
+              <a href="/about" className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition">
+                ABOUT
+              </a>
+            </nav>
+
             <div className="flex items-center gap-4">
               {isAuthenticated ? (
                 <>
                   <a
                     href="/dashboard"
-                    className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] hover:text-[#c17a5c] dark:hover:text-[#a86650] transition"
+                    className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition"
                   >
                     Dashboard
                   </a>
                   <button
                     onClick={handleSignOut}
-                    className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] hover:text-[#c17a5c] dark:hover:text-[#a86650] transition"
+                    className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition"
                   >
                     Sign out
                   </button>
@@ -68,14 +91,14 @@ export default function Layout() {
               ) : (
                 <a
                   href="/auth/signin"
-                  className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] hover:text-[#c17a5c] dark:hover:text-[#a86650] transition"
+                  className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition"
                 >
                   Sign in
                 </a>
               )}
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-lg bg-[#f9f7f2]/10 dark:bg-[#f5f1ea]/10 hover:bg-[#1a2332]/20 dark:hover:bg-[#f5f1ea]/20 transition"
+                className="p-2 rounded-lg bg-border/10 dark:bg-dark-border/10 hover:bg-border/20 dark:hover:bg-dark-border/20 transition"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (

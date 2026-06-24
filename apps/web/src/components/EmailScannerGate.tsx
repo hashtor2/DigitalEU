@@ -111,7 +111,7 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
             </div>
           </button>
 
-          {/* Paid path: €29 payment */}
+          {/* Paid path: €5 payment */}
           <button
             onClick={handlePaymentClick}
             disabled={loading}
@@ -119,7 +119,7 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
           >
             <div className="space-y-4">
               <div className="text-h2 font-mono font-semibold">
-                <span className="text-warning">€29</span>
+                <span className="text-warning">€5</span>
                 <span className="text-small text-text-secondary dark:text-dark-text-secondary font-normal ml-2">
                   one-time
                 </span>
@@ -167,7 +167,7 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
         {/* Footer note */}
         <p className="text-xs text-center text-text-secondary dark:text-dark-text-secondary">
           Both options fully unlock the scanner. Proton Mail is a one-time setup;
-          payment is a one-time €29 charge.
+          payment is a one-time €5 charge.
         </p>
       </div>
     </main>

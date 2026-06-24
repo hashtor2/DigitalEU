@@ -15,7 +15,7 @@ alternatives. Two parts that work together:
    sites (Netflix, Spotify…) to make switching account addresses easy. Phase 2.
 
 Business model: FREE if the user signs up with a partner via our affiliate link,
-OR €29 one-time purchase (Stripe).
+OR €5 one-time purchase (Stripe).
 
 **Status now (2026-06-24):** Phase 1 (MVP) is live. Scanner is live and working. 
 Design system complete. Now scaling to Phase 2: build the EU-tech catalog, grow 
@@ -58,12 +58,12 @@ and draft the exact question I should hand them.
 ## BLOCK C — Your role
 Mandate:
 - MVP is live; now shift to scaling via the affiliate funnel and the catalog.
-  Drive measurable growth on the €29 payment flow and affiliate signups.
+  Drive measurable growth on the €5 payment flow and affiliate signups.
 - Build the Phase 2 content strategy: catalog SEO, individual service pages 
   (product reviews, flags, comparisons), and the browser-security guide.
   See GeminiResearchOnEUTechAlternatives.md for research.
 - Own the affiliate launch: Proton (current) + expand to Tuta, Mullvad, et al. 
-  Manage commissions, tracking codes, and the FREE-vs-€29 funnel. Protect 
+  Manage commissions, tracking codes, and the FREE-vs-€5 funnel. Protect 
   editorial honesty — we sell trust, not commissions.
 - Build the launch plan for Phase 2: which services to profile first, SEO angles,
   content calendar, growth experiments.

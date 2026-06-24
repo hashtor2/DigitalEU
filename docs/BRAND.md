@@ -1,7 +1,8 @@
 # Brand Identity — digitaleu.me
 
-**Last updated:** 2026-06-24  
-**Status:** Design System v2 (European Digital)
+**Last updated:** 2026-06-25  
+**Status:** ✅ ACTIVE — European Digital Design System (Web + Scanner unified)  
+**Deprecated:** All previous designs (Nordic Warmth, etc.) — NO LONGER IN USE
 
 ---
 

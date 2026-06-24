@@ -1,8 +1,11 @@
 # Design System — Implementation Checklist & Commit Log
 
-**Branch:** `feat/brand-identity`  
-**Started:** 2026-06-22  
-**Lead:** Head of Design
+**Branch:** `main` (unified across web + scanner)  
+**Last Updated:** 2026-06-25  
+**Status:** ✅ ACTIVE — European Digital Design System
+
+> **IMPORTANT:** All apps (web, scanner) now use the **European Digital** design system unified from digitaleu.me.  
+> **Deprecated:** Nordic Warmth and all previous design iterations are no longer in use.
 
 ---
 
@@ -21,12 +24,13 @@
 **Commit when done:**
 ```bash
 git add docs/BRAND.md apps/web/tailwind.config.ts
-git commit -m "feat: Add Nordic Warmth design system v1
+git commit -m "feat: Apply European Digital design system unified across web + scanner
 
-- Brand identity docs (tone, colors, typography, accessibility)
-- Tailwind tokens: warm palette, monospace headlines, dark mode
-- Color: canvas #f9f7f2, accent #c17a5c, errors/warnings defined
-- All colors WCAG AAA compliant
+- BRAND.md updated with official design guidelines (modern, premium, trusted)
+- Tailwind tokens: emerald accent (#10b981), deep navy dark mode, high contrast
+- All colors WCAG AAA compliant, accessible, professional
+- Monospace headlines (IBM Plex Mono), system fonts for speed + accessibility
+- Unified design across all apps (web, scanner)
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```

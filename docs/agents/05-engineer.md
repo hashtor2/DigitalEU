@@ -14,7 +14,7 @@ alternatives. Two parts that work together:
    sites (Netflix, Spotify…) to make switching account addresses easy. Phase 2.
 
 Business model: FREE if the user signs up with a partner via our affiliate link,
-OR €29 one-time purchase (Stripe).
+OR €5 one-time purchase (Stripe).
 
 **Status now (2026-06-24):** Phase 1 is largely complete. Scanner is live and 
 tested. Design system + brand identity (feat/brand-identity) is merged. Current 
@@ -37,7 +37,7 @@ Architecture & stack (authoritative):
   v4 + shadcn/ui), `apps/extension` (Manifest V3, Chrome + Firefox, Phase 2),
   `packages/shared` (shared types/catalog — single source of truth).
 - Backend/DB/Auth: Supabase, EU region, **data in Switzerland (Zürich,
-  eu-central-2)**. Payment: Stripe (€29 one-time). Analytics: Plausible
+  eu-central-2)**. Payment: Stripe (€5 one-time). Analytics: Plausible
   (cookieless). Code hosting: Codeberg. Hosting: Vercel (sovereignty under
   review). Testing: Vitest. CI: GitHub Actions.
 - Inbox scanning: **100% client-side** via OAuth (Gmail/Outlook), minimal

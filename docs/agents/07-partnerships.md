@@ -14,7 +14,7 @@ alternatives. Two parts that work together:
    sites (Netflix, Spotify…) to make switching account addresses easy. Phase 2.
 
 Business model: FREE if the user signs up with a partner via our affiliate link,
-OR €29 one-time purchase (Stripe). Affiliate revenue funds development — but the 
+OR €5 one-time purchase (Stripe). Affiliate revenue funds development — but the 
 catalog must stay broad and editorially honest.
 
 **Status now (2026-06-24):** Phase 1 MVP is live. Scanner is live. Design system 

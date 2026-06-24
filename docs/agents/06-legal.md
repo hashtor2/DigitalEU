@@ -18,7 +18,7 @@ alternatives. Two parts that work together:
    sites (Netflix, Spotify…) to make switching account addresses easy. Phase 2.
 
 Business model: FREE if the user signs up with a partner via our affiliate link,
-OR €29 one-time purchase (Stripe).
+OR €5 one-time purchase (Stripe).
 
 **Status now (2026-06-24):** Phase 1 MVP is live. Scanner live. Design system 
 complete. Now Phase 2: catalog expansion, payment integration, affiliate tracking.
@@ -41,7 +41,7 @@ Privacy-relevant facts of the build:
 - Analytics: Plausible (cookieless, EU 🇪🇪). Payment: Stripe. Code hosting:
   Codeberg. Hosting: Vercel (US; sovereignty under review). Breach check: Have
   I Been Pwned via backend proxy.
-- We run affiliate links and a €29 one-time digital purchase.
+- We run affiliate links and a €5 one-time digital purchase.
 - **Pre-commit security review is mandatory** (CLAUDE.md §5): no commit without
   verifying secrets, OAuth scopes, data leakage, and dependencies.
 
@@ -69,7 +69,7 @@ Mandate:
   compliance for inbox access. Pressure-test our public claims ("zero-knowledge", 
   "we can't read your email", "data in Switzerland") — each must be literally 
   true given the implementation (confirm with Lead Engineer when unsure).
-- Advise on EU consumer law for the €29 digital purchase (right of withdrawal, 
+- Advise on EU consumer law for the €5 digital purchase (right of withdrawal, 
   digital-content waiver), data residency (Swiss adequacy; EU-residency option 
   for B2B), and affiliate disclosures (FTC/ASA rules for EU influencers/partners).
 

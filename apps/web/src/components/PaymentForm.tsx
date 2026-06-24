@@ -30,7 +30,7 @@ export function PaymentForm({ onSubmit, isLoading }: PaymentFormProps) {
       {/* Price */}
       <div className="p-6 bg-accent/5 dark:bg-accent/10 border border-accent rounded-sm">
         <p className="text-sm font-mono font-semibold">
-          One-time payment: <span className="text-lg">€29</span>
+          One-time payment: <span className="text-lg">€5</span>
         </p>
       </div>
 
@@ -88,7 +88,7 @@ export function PaymentForm({ onSubmit, isLoading }: PaymentFormProps) {
           disabled={!agreeTerms || isLoading}
           className="flex-1 h-12 rounded-sm bg-accent px-8 font-mono font-semibold text-white hover:bg-accent-hover disabled:opacity-50"
         >
-          {isLoading ? "Processing..." : "Pay €29"}
+          {isLoading ? "Processing..." : "Pay €5"}
         </Button>
         <Button
           type="button"

@@ -61,14 +61,14 @@ export default function IndexPage() {
     <div className="space-y-10 md:space-y-12">
       <section className="space-y-8 pt-6 md:pt-10">
         <div className="mx-auto max-w-4xl text-center space-y-5">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5] leading-[0.95] tracking-tight max-w-4xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono font-bold text-text-primary dark:text-dark-text-primary leading-[0.95] tracking-tight max-w-4xl mx-auto">
             Find out which of your accounts put your privacy at risk
           </h1>
-          <p className="mx-auto max-w-2xl text-base sm:text-lg text-[#1a1815]/70 dark:text-[#a89d96] leading-relaxed">
+          <p className="mx-auto max-w-2xl text-base sm:text-lg text-text-secondary dark:text-dark-text-secondary leading-relaxed">
             Tick the services you use. We&apos;ll score each one for privacy risk, data breaches, and GDPR compliance — then show you the best European alternatives.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-[#1a1815]/60 dark:text-[#a89d96]">
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-text-secondary dark:text-dark-text-secondary">
             <div className="flex items-center gap-2">
               <span className="text-lg">137</span>
               <span>services tracked</span>

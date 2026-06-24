@@ -113,7 +113,7 @@
 | 2026-06-18 | **Alternativ-matching** — automatisk matching av skannede domener mot `DOMAIN_MAPPINGS` og `ALTERNATIVES` | ✅ |
 | 2026-06-18 | **Cloud-migreringsguider** — interaktive, innebygde, visuelle step-by-step guider for e-post, passord og skyfiler (Dropbox/Drive to Proton Drive) | ✅ |
 | 2026-06-18 | **Datalekkasje-sjekk (Have I Been Pwned)** — secure Supabase Edge Function API-proxy for breach checks with local fallback | ✅ |
-| —          | Affiliate-gate + Stripe €29 engangskjøp                  | ⏳ |
+| —          | Affiliate-gate + Stripe €5 engangskjøp                  | ⏳ |
 | 2026-06-18 | **i18n-fundament** — fullstendig engelsk-basert, conversion-focused landingsside og dashbord-ruting | ✅ |
 | —          | Personvernerklæring + samtykkeflyt                       | ⏳ |
 | —          | Plausible-analyse (EU)                                   | ⏳ |

@@ -112,7 +112,7 @@ export function ReportPage({ selectedServices = [], breachStatus = "safe", breac
             Want help with the migration? Get our premium setup guide and checklist.
           </p>
           <Button className="bg-accent text-white hover:bg-accent-hover">
-            Upgrade to Premium — €29
+            Upgrade to Premium — €5
           </Button>
         </div>
       </main>

@@ -14,7 +14,7 @@ alternatives. Two parts that work together:
    sites (Netflix, Spotify…) to make switching account addresses easy. Phase 2.
 
 Business model: FREE if the user signs up with a partner via our affiliate link,
-OR €29 one-time purchase (Stripe).
+OR €5 one-time purchase (Stripe).
 
 **Status now (2026-06-24):** Phase 1 MVP is live. Design system + brand identity 
 (Nordic Warmth: cream #f9f7f2 + terracotta #c17a5c, IBM Plex Mono headlines, 
@@ -60,7 +60,7 @@ Mandate:
 - Design the catalog pages: individual service profiles (with logos, flags, 
   descriptions), comparison tables, browser-security guide layout. Keep the 
   Nordic Warmth identity consistent; extend components as needed.
-- Design flows for the €29 payment page and affiliate signup (if applicable). 
+- Design flows for the €5 payment page and affiliate signup (if applicable). 
   Make trust visible: clear pricing, no surprises.
 - Maintain and evolve the design system (docs/BRAND.md, docs/DESIGN_CHECKLIST.md) 
   for Phase 2 components (comparison tables, service cards, filtering/sorting UX).

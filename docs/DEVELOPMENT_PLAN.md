@@ -21,7 +21,7 @@
 ## Fase 1 — MVP web-app + standalone scanner ✅ (live, Phase 1.5 underway)
 
 **Mål:** En fungerende, sikker nettside der en bruker kan se hvilke tjenester
-de har, få europeiske alternativer, en personvernscore, og betale €29 for tilgang.
+de har, få europeiske alternativer, en personvernscore, og betale €5 for tilgang.
 
 > **Status nå (2026-06-24):** Både web-app (`digitaleu.me`) og scanner (`scanner.digitaleu.me`)
 > er **live på Vercel.** Server-side scanning via Edge Function deployed. Stripe checkout
@@ -73,7 +73,7 @@ teknologi, med innhold som drar organisk trafikk og affiliate-inntekt.
 7. [ ] **Nettleserutvidelse v1:** autofyll e-postadresse, liten og sikker.
 
 **Revenue drivers (Phase 2)**
-- €29 checkout (live, men lav konvertering nå — fokus på katalog-trafikkk).
+- €5 checkout (live, men lav konvertering nå — fokus på katalog-trafikkk).
 - Affiliate-inntekt fra partnerlinks (Proton, Tuta, Mullvad, osv.).
 - Sponsored posts / partnerskaps-innslag (ærlige, merket).
 
@@ -127,4 +127,4 @@ visits, og affiliate-program er aktiv.
 1. [x] Bygg innboksskanner, sjekkliste og autofyll-utvidelse (MV3).
 2. [x] Integrer Google og Microsoft Graph metadata-skanning.
 3. [ ] Sett opp OAuth Client IDs på dine Google- og Azure-kontoer for live-testing.
-4. [ ] Implementer Stripe €29 engangskjøp og affiliate-synkronisering.
+4. [ ] Implementer Stripe €5 engangskjøp og affiliate-synkronisering.
