@@ -98,33 +98,33 @@ export default function Layout() {
               )}
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-lg bg-border/10 dark:bg-dark-border/10 hover:bg-border/20 dark:hover:bg-dark-border/20 transition"
+                className="p-2 rounded-sm bg-border/10 dark:bg-dark-border/10 hover:bg-border/20 dark:hover:bg-dark-border/20 transition"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
-                  <Sun size={20} className="text-[#c17a5c]" />
+                  <Sun size={20} className="text-accent" />
                 ) : (
-                  <Moon size={20} className="text-[#1a2332]" />
+                  <Moon size={20} className="text-accent" />
                 )}
               </button>
             </div>
           </div>
 
           {/* Navigation menu */}
-          <nav className="flex gap-8 text-sm text-[#1a2332]/70 dark:text-[#a89d96]">
-            <Link to="/" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+          <nav className="flex gap-8 text-sm text-text-secondary dark:text-dark-text-secondary border-t border-border dark:border-dark-border py-3">
+            <Link to="/" className="hover:text-accent transition">
               How it works
             </Link>
-            <a href="https://www.digitaleu.me/catalog" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/directory" className="hover:text-accent transition">
               Alternatives
             </a>
-            <a href="https://www.digitaleu.me/guides" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/guides" className="hover:text-accent transition">
               Guides
             </a>
-            <a href="https://www.digitaleu.me/news" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/news" className="hover:text-accent transition">
               News
             </a>
-            <a href="https://www.digitaleu.me/about" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/about" className="hover:text-accent transition">
               About
             </a>
           </nav>
@@ -133,8 +133,8 @@ export default function Layout() {
       <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
         <Outlet />
       </main>
-      <footer className="border-t border-[#1a2332]/10 dark:border-[#3a3530] py-6 mt-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-sm text-[#1a2332]/60 dark:text-[#a89d96]">
+      <footer className="border-t border-border dark:border-dark-border py-6 mt-12 bg-canvas dark:bg-dark-canvas">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-small text-text-secondary dark:text-dark-text-secondary">
           <p>&copy; 2026 digitaleu.me. Privacy first, always.</p>
           <p className="mt-1 text-xs leading-relaxed">
             Some recommendation links support the project.
