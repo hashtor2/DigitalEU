@@ -43,7 +43,7 @@ This checklist tracks the OAuth Code+PKCE migration (Implicit Grant → Authoriz
   ```bash
   supabase functions deploy exchange-email-code --project-ref fuiebtpezpoxvkuuhaqy
   ```
-  Expected: Function deployed to `https://fuiebtpezpoxvkuuhaqy.supabase.co/functions/v1/exchange-email-code`
+  Expected: Function deployed to `https://mwsalzjsvuvlmshxzbxg.supabase.co/functions/v1/exchange-email-code`
 
 - [ ] **Manual testing — Gmail flow:**
   1. Navigate to http://localhost:5174/auth/signin
@@ -103,7 +103,7 @@ This checklist tracks the OAuth Code+PKCE migration (Implicit Grant → Authoriz
 
 - [ ] **Deploy Edge Function to staging:**
   ```bash
-  supabase functions deploy exchange-email-code --project-ref fuiebtpezpoxvkuuhaqy
+  supabase functions deploy exchange-email-code --project-ref mwsalzjsvuvlmshxzbxg
   ```
 
 - [ ] **Deploy scanner app to staging:**
@@ -117,7 +117,7 @@ This checklist tracks the OAuth Code+PKCE migration (Implicit Grant → Authoriz
   - [ ] Verify token exchange succeeds (no CORS errors)
   - [ ] Monitor Supabase logs for errors:
     ```bash
-    supabase functions list --project-ref fuiebtpezpoxvkuuhaqy
+    supabase functions list --project-ref mwsalzjsvuvlmshxzbxg
     # Then check logs in Supabase dashboard
     ```
 
@@ -180,7 +180,7 @@ This checklist tracks the OAuth Code+PKCE migration (Implicit Grant → Authoriz
 ```
 VITE_GOOGLE_CLIENT_ID=<from Google Cloud Console>
 VITE_MICROSOFT_CLIENT_ID=<from Azure AD>
-VITE_SUPABASE_URL=https://fuiebtpezpoxvkuuhaqy.supabase.co
+VITE_SUPABASE_URL=https://mwsalzjsvuvlmshxzbxg.supabase.co
 VITE_SUPABASE_ANON_KEY=<from Supabase>
 ```
 
@@ -238,10 +238,10 @@ git status
 # Expected: nothing to commit
 
 # 3. Deploy Edge Function
-supabase functions deploy exchange-email-code --project-ref fuiebtpezpoxvkuuhaqy
+supabase functions deploy exchange-email-code --project-ref mwsalzjsvuvlmshxzbxg
 
 # 4. Verify function deployed
-supabase functions list --project-ref fuiebtpezpoxvkuuhaqy
+supabase functions list --project-ref mwsalzjsvuvlmshxzbxg
 
 # 5. Monitor Supabase
 # Open Supabase dashboard → Edge Functions → exchange-email-code

@@ -49,7 +49,7 @@ File: `apps/web/.env`
 
 ```bash
 # Already set (should be there):
-VITE_SUPABASE_URL=https://fuiebtpezpoxvkuuhaqy.supabase.co
+VITE_SUPABASE_URL=https://mwsalzjsvuvlmshxzbxg.supabase.co
 VITE_SUPABASE_ANON_KEY=<your-anon-key>
 
 # Add from Google:

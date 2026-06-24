@@ -38,7 +38,7 @@ de har, få europeiske alternativer, en personvernscore, og betale €5 for tilg
 1. [x] **Verktøyoppsett:** shadcn/ui, Vitest, GitHub Actions CI (build/lint/test),
    Plausible-analyse (EU).
 2. [x] **Ruting & skall:** React Router v7 på både web og scanner.
-3. [x] **Supabase (EU-region):** prosjekt `fuiebtpezpoxvkuuhaqy` (Zürich), Auth, RLS på alt.
+3. [x] **Supabase (EU-region):** prosjekt `mwsalzjsvuvlmshxzbxg` (Zürich), Auth, RLS på alt.
 4. [x] **Zero-knowledge-lag:** `crypto.ts` (Web Crypto) eksisterer for Profilmodus.
 5. [x] **Innboksskanner v1:** Gmail/Outlook via OAuth, server-side (`scan-email` Edge Function),
    live og testbar.

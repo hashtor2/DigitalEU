@@ -88,7 +88,7 @@ Orchestrates the full flow:
 **File:** `apps/web/.env`
 ```
 VITE_GOOGLE_CLIENT_ID=<from Google Cloud>
-VITE_SUPABASE_URL=https://fuiebtpezpoxvkuuhaqy.supabase.co
+VITE_SUPABASE_URL=https://mwsalzjsvuvlmshxzbxg.supabase.co
 VITE_SUPABASE_ANON_KEY=<from Supabase>
 ```
 

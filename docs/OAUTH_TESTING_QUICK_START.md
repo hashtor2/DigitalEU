@@ -136,7 +136,7 @@ All checks passed! Ready for local testing.
 # Create apps/scanner/.env.local with:
 VITE_GOOGLE_CLIENT_ID=<your-google-client-id>
 VITE_MICROSOFT_CLIENT_ID=<your-microsoft-client-id>
-VITE_SUPABASE_URL=https://fuiebtpezpoxvkuuhaqy.supabase.co
+VITE_SUPABASE_URL=https://mwsalzjsvuvlmshxzbxg.supabase.co
 VITE_SUPABASE_ANON_KEY=<your-supabase-anon-key>
 ```
 
@@ -180,7 +180,7 @@ taskkill /F /IM node.exe
 **Cause:** Edge Function not deployed to Supabase  
 **Fix:**
 ```bash
-supabase functions deploy exchange-email-code --project-ref fuiebtpezpoxvkuuhaqy
+supabase functions deploy exchange-email-code --project-ref mwsalzjsvuvlmshxzbxg
 ```
 
 ---

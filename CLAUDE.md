@@ -267,6 +267,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 23 | **Betalingsflow:** Stripe Elements (client-side form) + Edge Function webhook for verification + affiliate tracking. Live og testbar. | 2026-06-24 |
 | 24 | **Scanner som standalone app:** `scanner.digitaleu.me` — egen SPA, samme stack (React, Supabase, Stripe). Separate deployment, integrert med web via affiliate-kryss. | 2026-06-24 |
 | 25 | **Design:** UNIFIED across all apps — ONLY European Digital (emerald #10b981, deep navy dark mode) is active. All previous designs (Nordic Warmth, etc.) are DEPRECATED. Web + Scanner use identical design system from digitaleu.me. | 2026-06-25 |
+| 26 | **Supabase project migration:** Old project `fuiebtpezpoxvkuuhaqy` replaced with `mwsalzjsvuvlmshxzbxg` (same region: Zürich, eu-central-2). All migrations, functions, and data transferred. Update .env.local and all docs. | 2026-06-25 |
 
 ---
 
