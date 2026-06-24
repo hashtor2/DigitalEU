@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { supabase } from '@/lib/db'
 
 interface ServiceResult {
   service_id: string
@@ -26,33 +25,96 @@ export default function DemoScanPage() {
   useEffect(() => {
     const loadDemoResults = async () => {
       try {
-        // Fetch the services catalog
-        const { data: servicesData, error: servicesError } = await supabase
-          .from('services_catalog')
-          .select('id, name, category, logo_url, website_url')
-          .in('id', [
-            'gmail',
-            'proton-mail',
-            'google-drive',
-            'dropbox',
-            'slack',
-            'notion',
-            'netflix',
-            'spotify',
-            'facebook',
-            'instagram',
-            'google-analytics',
-            'zoom',
-          ])
-
-        if (servicesError) {
-          console.error('Error loading services:', servicesError)
-          setLoading(false)
-          return
-        }
+        // Mock demo services for demonstration
+        const mockServices = [
+          {
+            id: 'gmail',
+            name: 'Gmail',
+            category: 'email',
+            logo_url: 'https://www.gstatic.com/images/branding/product/1x/gmail_2020q4_512dp.png',
+            website_url: 'https://mail.google.com',
+          },
+          {
+            id: 'proton-mail',
+            name: 'Proton Mail',
+            category: 'email',
+            logo_url: 'https://proton.me/download/brand/proton-mail-icon.svg',
+            website_url: 'https://proton.me/mail',
+          },
+          {
+            id: 'google-drive',
+            name: 'Google Drive',
+            category: 'cloud-storage',
+            logo_url: 'https://www.gstatic.com/images/branding/product/1x/drive_2020q4_512dp.png',
+            website_url: 'https://drive.google.com',
+          },
+          {
+            id: 'dropbox',
+            name: 'Dropbox',
+            category: 'cloud-storage',
+            logo_url: 'https://djzheuzskyaie.cloudfront.net/images/brand-guidelines/logos/dropbox-logo-blue.png',
+            website_url: 'https://dropbox.com',
+          },
+          {
+            id: 'slack',
+            name: 'Slack',
+            category: 'messaging',
+            logo_url: 'https://a.slack-edge.com/80588/marketing/img/icons/icon_slack_hash_256.png',
+            website_url: 'https://slack.com',
+          },
+          {
+            id: 'notion',
+            name: 'Notion',
+            category: 'project-management',
+            logo_url: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Notion-logo.svg',
+            website_url: 'https://notion.so',
+          },
+          {
+            id: 'netflix',
+            name: 'Netflix',
+            category: 'social',
+            logo_url: 'https://www.netflix.com/favicon.ico',
+            website_url: 'https://netflix.com',
+          },
+          {
+            id: 'spotify',
+            name: 'Spotify',
+            category: 'social',
+            logo_url: 'https://www.spotify.com/favicon.ico',
+            website_url: 'https://spotify.com',
+          },
+          {
+            id: 'facebook',
+            name: 'Facebook',
+            category: 'social',
+            logo_url: 'https://www.facebook.com/favicon.ico',
+            website_url: 'https://facebook.com',
+          },
+          {
+            id: 'google-analytics',
+            name: 'Google Analytics',
+            category: 'analytics',
+            logo_url: 'https://www.gstatic.com/images/branding/product/1x/analytics_2020q4_512dp.png',
+            website_url: 'https://analytics.google.com',
+          },
+          {
+            id: 'zoom',
+            name: 'Zoom',
+            category: 'messaging',
+            logo_url: 'https://www.zoom.us/favicon.ico',
+            website_url: 'https://zoom.us',
+          },
+          {
+            id: 'instagram',
+            name: 'Instagram',
+            category: 'social',
+            logo_url: 'https://www.instagram.com/favicon.ico',
+            website_url: 'https://instagram.com',
+          },
+        ]
 
         // Map to sample results grouped by category
-        const sampleServices = (servicesData || []).map((service: any) => ({
+        const sampleServices = mockServices.map((service: any) => ({
           service_id: service.id,
           name: service.name,
           category: service.category || 'other',
