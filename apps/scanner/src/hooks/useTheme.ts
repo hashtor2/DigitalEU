@@ -17,7 +17,7 @@ export function useTheme(): [Theme, (theme: Theme) => void] {
     ) {
       return "dark";
     }
-    return "dark"; // Default to dark
+    return "dark"; // Default to dark (matches web app)
   });
 
   // Apply theme to DOM and listen for changes from other tabs

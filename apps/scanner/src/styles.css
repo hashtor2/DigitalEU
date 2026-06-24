@@ -4,6 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Workaround for Tailwind v4 gap utilities bug */
+@layer utilities {
+  .gap-1 { gap: 0.25rem; }
+  .gap-2 { gap: 0.5rem; }
+  .gap-3 { gap: 0.75rem; }
+  .gap-4 { gap: 1rem; }
+  .gap-5 { gap: 1.25rem; }
+  .gap-6 { gap: 1.5rem; }
+  .gap-8 { gap: 2rem; }
+  .gap-10 { gap: 2.5rem; }
+  .gap-12 { gap: 3rem; }
+}
+
 @layer base {
   body {
     @apply bg-[#f9f7f2] text-[#1a2332];
@@ -36,4 +49,5 @@
     @apply text-[#a86650] hover:text-[#a86650]/80;
   }
 }
+
 
