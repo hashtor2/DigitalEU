@@ -42,11 +42,16 @@ export default function EmailCallbackPage() {
         }
 
         // 4. Call Edge Function to exchange code for access token
-        const exchangeUrl = new URL(`${window.location.origin}/api/auth/exchange-code`)
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+        const exchangeUrl = `${supabaseUrl}/functions/v1/exchange-email-code`
         
-        const response = await fetch(exchangeUrl.toString(), {
+        const response = await fetch(exchangeUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${supabaseAnonKey}`,
+          },
           body: JSON.stringify({
             code,
             codeVerifier,
@@ -57,6 +62,10 @@ export default function EmailCallbackPage() {
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}))
+          console.error("OAuth token exchange error:", {
+            status: response.status,
+            response: errorData
+          })
           throw new Error(
             errorData.error || `Token exchange failed with status ${response.status}`
           )
