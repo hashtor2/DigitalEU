@@ -152,71 +152,49 @@ export function LandingPage() {
       <SocialLinks />
 
       <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* ====== HERO + TWO-COLUMN LAYOUT ====== */}
-        <div className="mb-16">
-          {/* Hero headline */}
-          <div className="mb-12">
-            <h1 className="text-h1 font-mono text-text-primary dark:text-dark-text-primary mb-6 leading-tight max-w-3xl">
-              Reclaim your privacy in 30 seconds
+        {/* ====== HERO SECTION: SCAN YOUR INBOX NOW ====== */}
+        <div className="mb-12">
+          {/* Hero headline - Prominent "SCAN YOUR INBOX NOW" */}
+          <div className="mb-8 text-center">
+            <h1 className="text-5xl sm:text-6xl font-mono font-bold text-text-primary dark:text-dark-text-primary mb-4 leading-tight">
+              SCAN YOUR INBOX NOW
             </h1>
-            <p className="text-lg text-text-secondary dark:text-dark-text-secondary max-w-2xl leading-relaxed">
-              Scan your inbox, see which services have your data, and switch to European alternatives you can trust.
+            <p className="text-lg sm:text-xl text-text-secondary dark:text-dark-text-secondary max-w-2xl mx-auto leading-relaxed">
+              Free inbox scanning or manually check what accounts the user is registered on
             </p>
           </div>
 
-          {/* Two-column: Auto-scan + Newsletter */}
+          {/* Auto-scan CTA - Prominent button */}
+          <div className="max-w-2xl mx-auto mb-12">
+            <Button
+              onClick={handleAutoScan}
+              className="w-full bg-accent text-white font-mono font-bold text-lg py-6 px-8 rounded-sm hover:bg-green-600 active:bg-green-700 transition-all shadow-lg hover:shadow-xl"
+              size="lg"
+            >
+              Start Auto-Scan →
+            </Button>
+          </div>
+        </div>
+
+        {/* ====== MANUAL SELECTION SECTION (now directly below hero) ====== */}
+        <div className="mb-16">
+
+          {/* Manual account checking heading */}
+          <div className="mb-8">
+            <h2 className="text-h2 font-mono text-text-primary dark:text-dark-text-primary mb-3">
+              MANUAL CHECKING OF WHAT ACCOUNTS THE USER IS REGISTERED ON
+            </h2>
+            <p className="text-base text-text-secondary dark:text-dark-text-secondary">
+              Or select services manually below to generate your privacy report
+            </p>
+          </div>
+
+          {/* Service selection grid */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {/* LEFT COLUMN: Auto-scan pathway */}
+            {/* LEFT COLUMN: Service selection */}
             <div className="md:col-span-2">
-              {/* Auto-scan card */}
-              <div className="mb-8 border border-border dark:border-dark-border rounded-sm p-8 bg-white dark:bg-dark-canvas relative overflow-hidden">
-                {/* Accent border on left */}
-                <div className="absolute top-0 left-0 bottom-0 w-1 bg-accent"></div>
-                
-                <div className="mb-6">
-                  <h2 className="text-h2 font-mono text-text-primary dark:text-dark-text-primary mb-3">
-                    Auto-scan your inbox
-                  </h2>
-                  <p className="text-base text-text-secondary dark:text-dark-text-secondary">
-                    Connect Gmail or Outlook. We scan your email headers only — no account passwords, no storage of data.
-                  </p>
-                </div>
-
-                {/* Trust statement with emerald accent */}
-                <div className="mb-6 border-t border-border dark:border-dark-border pt-4">
-                  <p className="text-sm text-text-secondary dark:text-dark-text-secondary flex items-center gap-2">
-                    <span className="text-accent text-lg font-bold">✓</span>
-                    <strong className="text-accent">Zero-knowledge.</strong> <span>Results stay on your device. No login required.</span>
-                  </p>
-                </div>
-
-                {/* CTA Button - Emerald */}
-                <Button
-                  onClick={handleAutoScan}
-                  className="w-full bg-accent text-white font-mono font-bold text-base py-4 px-6 rounded-sm hover:bg-green-600 active:bg-green-700 transition-all shadow-lg hover:shadow-xl"
-                  size="lg"
-                >
-                  Start Auto-Scan →
-                </Button>
-              </div>
-
-              {/* Or divider */}
-              <div className="relative mb-8">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-border dark:border-dark-border"></div>
-                </div>
-                <div className="relative flex justify-center">
-                  <span className="bg-canvas dark:bg-dark-canvas px-3 text-sm text-text-secondary dark:text-dark-text-secondary font-medium">
-                    Or choose manually below
-                  </span>
-                </div>
-              </div>
-
-              {/* Manual selection section */}
+              {/* Service selection section */}
               <div>
-                <h2 className="text-h2 font-mono text-text-primary dark:text-dark-text-primary mb-6">
-                  Choose your services
-                </h2>
 
                 {/* Search + filter bar */}
                 <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
