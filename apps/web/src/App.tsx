@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { useTheme } from "./hooks/useTheme";
+import { useEffect } from "react";
 
 import { Elements } from "@stripe/react-stripe-js";
 
@@ -82,6 +83,24 @@ const router = createBrowserRouter([
     }),
   },
   {
+    path: "/privacy",
+    lazy: async () => ({
+      Component: (await import("./pages/PrivacyPolicyPage")).PrivacyPolicyPage,
+    }),
+  },
+  {
+    path: "/terms",
+    lazy: async () => ({
+      Component: (await import("./pages/TermsPage")).TermsPage,
+    }),
+  },
+  {
+    path: "/qa/analytics",
+    lazy: async () => ({
+      Component: (await import("./pages/AnalyticsQAPage")).AnalyticsQAPage,
+    }),
+  },
+  {
     path: "/services/:id",
     lazy: async () => ({
       Component: (await import("./pages/ServicePage")).ServicePage,
@@ -116,6 +135,30 @@ const router = createBrowserRouter([
 export default function App() {
   // Initialize theme on mount
   useTheme();
+
+  useEffect(() => {
+    const plausibleDomain = import.meta.env.VITE_PLAUSIBLE_DOMAIN;
+    if (!import.meta.env.PROD || !plausibleDomain) {
+      return;
+    }
+
+    if (document.querySelector('script[data-plausible="true"]')) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.defer = true;
+    script.dataset.domain = plausibleDomain;
+    script.dataset.plausible = "true";
+    script.src = import.meta.env.VITE_PLAUSIBLE_SCRIPT_SRC || "https://plausible.io/js/script.js";
+    document.head.appendChild(script);
+
+    if (!(window as any).plausible) {
+      (window as any).plausible = (...args: unknown[]) => {
+        ((window as any).plausible.q = (window as any).plausible.q || []).push(args);
+      };
+    }
+  }, []);
 
   const routerContent = <RouterProvider router={router} />
 

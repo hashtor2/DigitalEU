@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 interface PaymentFormProps {
@@ -61,9 +62,9 @@ export function PaymentForm({ onSubmit, isLoading }: PaymentFormProps) {
           />
           <span className="text-sm">
             I agree to the{" "}
-            <a href="#terms" className="font-medium text-accent hover:underline">
+            <Link to="/terms" className="font-medium text-accent hover:underline">
               Terms & Privacy Policy
-            </a>
+            </Link>
           </span>
         </label>
 

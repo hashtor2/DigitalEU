@@ -114,10 +114,14 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-12 flex flex-col gap-2 border-t border-border dark:border-dark-border pt-6 sm:flex-row sm:items-center sm:justify-between text-xs">
           <p>© {new Date().getFullYear()} DigitalEU.me — All rights reserved.</p>
-          <p>
-            Some links are affiliate links that support our work.{" "}
-            <Link to="/about" className="underline hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Learn more.</Link>
-          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to="/terms" className="underline hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Terms</Link>
+            <Link to="/privacy" className="underline hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Privacy</Link>
+            <p>
+              Some links are affiliate links that support our work.{" "}
+              <Link to="/about" className="underline hover:text-text-primary dark:hover:text-dark-text-primary transition-colors">Learn more.</Link>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

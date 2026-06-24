@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -151,7 +152,7 @@ export function ScannerPaymentModal({ onClose, onSuccess }: ScannerPaymentModalP
               disabled={loading}
             />
             <span className="text-xs text-text-secondary dark:text-dark-text-secondary">
-              I agree to the terms of service and privacy policy
+              I agree to the <Link to="/terms" className="underline hover:text-text-primary dark:hover:text-dark-text-primary">terms of service</Link> and <Link to="/privacy" className="underline hover:text-text-primary dark:hover:text-dark-text-primary">privacy policy</Link>
             </span>
           </label>
 

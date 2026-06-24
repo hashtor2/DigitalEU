@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -120,9 +121,9 @@ export function ProfileForm({ onSubmit, isLoading }: ProfileFormProps) {
           />
           <span className="text-sm">
             I agree to the{" "}
-            <a href="#terms" className="font-medium text-accent hover:underline">
+            <Link to="/terms" className="font-medium text-accent hover:underline">
               Terms & Privacy Policy
-            </a>
+            </Link>
           </span>
         </label>
 

@@ -1,10 +1,68 @@
 # PROGRESS.md — Byggdagbok
 
 > Levende logg over hva som faktisk er **ferdig utviklet og implementert**.
+> Dette er den eneste aktive sprintloggen for prosjektet og skal oppdateres
+> etter hver arbeidssprint for å holde kontekst samlet.
 > Oppdateres hver gang en funksjon eller del av nettsiden er ferdigstilt.
 > Planen for hva som *skal* gjøres ligger i `docs/DEVELOPMENT_PLAN.md`.
 >
 > Status-ikoner: ✅ ferdig · 🚧 påbegynt · ⏳ ikke startet
+
+## How to Use This File
+
+- Read the latest section before starting new work.
+- Add sprint outcomes here immediately after finishing a work session.
+- Keep this file as the canonical place for progress, verification, and next steps.
+- Do not duplicate sprint status elsewhere unless there is a short historical note that points back here.
+
+---
+
+## Status Snapshot — 2026-06-24
+
+### Completed
+- [x] Scanner dashboard rebuilt as a structured account center with connected inboxes, access status, recent scans, security, and account actions.
+- [x] Scanner navigation corrected so logged-in users see Dashboard and Sign out, and public links resolve to valid destinations.
+- [x] Manual-check anchor added so dashboard links resolve to the manual review section.
+- [x] Missing scanner favicon added to stop 404 noise.
+- [x] Supabase Edge Function `delete-account` implemented and deployed.
+- [x] Missing scanner tables were created in Supabase so dashboard fetches no longer return 404.
+- [x] Main web app Stripe initialization guarded so pages without a publishable key do not crash.
+- [x] Production deploy forced to Vercel and aliased to `www.digitaleu.me`.
+- [x] Legal trust layer implemented in web app: new `/terms` and `/privacy` pages, routed and linked from payment/signup/footer surfaces.
+- [x] Dead legal anchors (`#terms`) replaced with real route links in onboarding and payment components.
+- [x] Plausible bootstrap added in app shell (production + env-gated) with env typings and `.env.example` entries.
+- [x] Lightweight analytics QA route added at `/qa/analytics` for quick Plausible runtime checks and manual event firing in production.
+- [x] Trust badges implemented for catalog credibility signals (EU/EEA data region, tested partner, open-source option, migration guide).
+- [x] Cross-links added to catalog UX: quick stack filters on directory page and "Complete your stack" recommendations on alternative detail pages.
+
+### Verified
+- [x] Scanner workspace build passes.
+- [x] Web workspace build passes.
+- [x] Dashboard route auth-gates correctly when logged out.
+- [x] Live scanner dashboard loads without the previous 404 fetch errors.
+- [x] Live `/guides` page resolves correctly.
+- [x] Live `/emailscanner` page loads after the production redeploy.
+- [x] Web production build passes after legal routes/pages and Plausible bootstrap changes.
+- [x] Web production build passes after analytics QA route and trust badge/cross-link catalog updates.
+
+### Remaining to test
+- [ ] Full Gmail OAuth round-trip in production.
+- [ ] Full Outlook OAuth round-trip in production.
+- [ ] Authenticated dashboard actions with a real user session.
+- [ ] `delete-account` success path with a valid bearer token.
+- [ ] Stripe payment flow, if the premium unlock path is still active in production.
+- [ ] Guide deep links under `/guides/:id`.
+- [ ] Live smoke test of `/terms` and `/privacy` route availability and footer/payment navigation to those routes.
+- [ ] Confirm Plausible events in production (pageview + affiliate click events).
+- [ ] Confirm `/qa/analytics` route works in production and test events appear in Plausible dashboard.
+- [ ] Spot-check trust badges and cross-link recommendations on live `/directory` and `/alternative/:id` pages.
+
+### Next development items
+- [ ] Finish production smoke testing of scanner auth and dashboard flows.
+- [ ] Decide whether the scanner dashboard should stay separate from the main web app or be merged into one user journey.
+- [ ] Continue account/security polish, especially 2FA management and delete-account UX.
+- [ ] Reduce non-functional console noise such as analytics request aborts if desired.
+- [ ] Keep affiliate placement conservative: Proton where it is genuinely the strongest alternative, not everywhere.
 
 ---
 

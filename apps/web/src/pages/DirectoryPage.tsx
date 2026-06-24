@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { COUNTRY_FLAGS } from "@/lib/flags";
+import { TrustBadges } from "@/components/TrustBadges";
 
 const CATEGORY_LABELS: Record<ServiceCategory | string, string> = {
   email: "Email",
@@ -26,6 +27,12 @@ const CATEGORY_LABELS: Record<ServiceCategory | string, string> = {
   social: "Social Media",
   transport: "Transport",
 };
+
+const CROSS_LINK_PACKS: { label: string; categories: ServiceCategory[] }[] = [
+  { label: "De-Google core", categories: ["email", "search", "browser"] },
+  { label: "Secure work stack", categories: ["messaging", "office", "cloud-storage"] },
+  { label: "Founder stack", categories: ["code-hosting", "project-management", "analytics"] },
+];
 
 function getDomain(url: string): string {
   try { return new URL(url).hostname; } catch { return ""; }
@@ -143,6 +150,18 @@ export function DirectoryPage() {
             Vetted alternatives keeping data within EU/EEA/Swiss jurisdiction.
           </p>
 
+          <div className="flex flex-wrap gap-2 mb-5">
+            {CROSS_LINK_PACKS.map((pack) => (
+              <button
+                key={pack.label}
+                onClick={() => setSelectedCategories(new Set(pack.categories))}
+                className="rounded border border-[#30363d] bg-[#161b22] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-300 hover:border-[#f0c040]/35 hover:text-[#f0c040] transition"
+              >
+                {pack.label}
+              </button>
+            ))}
+          </div>
+
           {/* Mobile search */}
           <div className="md:hidden mb-4">
             <input
@@ -208,6 +227,10 @@ export function DirectoryPage() {
                     <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-2 mb-3 flex-1">
                       {alt.description}
                     </p>
+
+                    <div className="mb-3">
+                      <TrustBadges alternative={alt} compact />
+                    </div>
 
                     {/* Replaces chips */}
                     {alt.replaces.length > 0 && (

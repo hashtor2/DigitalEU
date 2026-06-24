@@ -1,9 +1,31 @@
 import { useParams, Link } from "react-router-dom";
-import { ALTERNATIVES, getAffiliateUrl, hasVerifiedAffiliate } from "@digitaleu/shared";
+import { ALTERNATIVES, getAffiliateUrl, hasVerifiedAffiliate, type ServiceCategory } from "@digitaleu/shared";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { COUNTRY_FLAGS } from "@/lib/flags";
+import { TrustBadges } from "@/components/TrustBadges";
+
+const COMPLEMENTARY_CATEGORY_MAP: Record<ServiceCategory, ServiceCategory[]> = {
+  email: ["cloud-storage", "password-manager", "vpn"],
+  vpn: ["browser", "search", "messaging"],
+  "cloud-storage": ["email", "office", "password-manager"],
+  browser: ["search", "vpn", "password-manager"],
+  "password-manager": ["email", "browser", "security"],
+  search: ["browser", "vpn", "email"],
+  office: ["cloud-storage", "messaging", "project-management"],
+  messaging: ["email", "vpn", "security"],
+  "code-hosting": ["cloud-infra", "project-management", "security"],
+  "cloud-infra": ["code-hosting", "security", "analytics"],
+  analytics: ["cloud-infra", "security", "project-management"],
+  hardware: ["security", "vpn", "browser"],
+  ai: ["cloud-infra", "security", "analytics"],
+  fintech: ["security", "analytics", "project-management"],
+  "project-management": ["messaging", "office", "code-hosting"],
+  security: ["password-manager", "vpn", "browser"],
+  social: ["messaging", "browser", "search"],
+  transport: ["fintech", "security", "analytics"],
+};
 
 export function AlternativePage() {
   const { id } = useParams<{ id: string }>();
@@ -37,6 +59,11 @@ export function AlternativePage() {
 
   // Big Tech services this replaces
   const replacesServices = alternative.replaces || [];
+
+  const complementaryCategories = COMPLEMENTARY_CATEGORY_MAP[alternative.category] || [];
+  const crossLinkedAlternatives = ALTERNATIVES.filter(
+    (entry) => entry.id !== alternative.id && complementaryCategories.includes(entry.category)
+  ).slice(0, 3);
 
   return (
     <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
@@ -97,6 +124,9 @@ export function AlternativePage() {
                 <span className="rounded-full border border-emerald-500/25 bg-emerald-500/5 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
                   Sovereign EU Tech
                 </span>
+              </div>
+              <div className="mb-2">
+                <TrustBadges alternative={alternative} />
               </div>
               <div className="flex items-center gap-3 text-sm text-slate-400">
                 <span>{COUNTRY_FLAGS[alternative.country] || ""} {alternative.country}</span>
@@ -244,6 +274,29 @@ export function AlternativePage() {
             </div>
           </div>
         </div>
+
+        {/* Cross-links: complete your stack */}
+        {crossLinkedAlternatives.length > 0 && (
+          <div className="mb-10 rounded border border-[#30363d] bg-[#161b22] p-6">
+            <h2 className="text-lg font-semibold mb-2 text-slate-200">Complete your stack</h2>
+            <p className="text-sm text-slate-400 mb-4">
+              Teams replacing {replacesServices.join(", ") || "Big Tech"} often combine {alternative.name} with these categories.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {crossLinkedAlternatives.map((entry) => (
+                <Link
+                  key={entry.id}
+                  to={`/alternative/${entry.id}`}
+                  className="rounded border border-[#30363d] bg-[#0d1117] p-3 hover:border-[#484f58] transition"
+                >
+                  <p className="text-sm font-semibold text-slate-100 mb-1">{entry.name}</p>
+                  <p className="text-[11px] text-slate-500 mb-2 uppercase tracking-wide">{entry.category.replace("-", " ")}</p>
+                  <TrustBadges alternative={entry} compact />
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Back to Directory */}
         <div className="text-center pt-6 border-t border-[#30363d]">
