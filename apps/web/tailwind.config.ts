@@ -9,35 +9,40 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Nordic Warmth — Light Mode
-        canvas: '#f9f7f2',
-        'text-primary': '#2c2520',
-        'text-secondary': '#6b6560',
-        accent: '#c17a5c',
-        'accent-hover': '#a8654a',
-        border: '#e8e3da',
-        success: '#5a9873',
-        warning: '#d9a835',
-        error: '#c85553',
+        // European Digital — Light Mode (Clean, High-Contrast)
+        canvas: '#ffffff',
+        'text-primary': '#111827',
+        'text-secondary': '#6b7280',
+        accent: '#10b981',
+        'accent-hover': '#059669',
+        border: '#e5e7eb',
+        success: '#10b981',
+        warning: '#f59e0b',
+        error: '#ef4444',
 
-        // Dark Mode
-        'dark-canvas': '#1a1815',
-        'dark-text-primary': '#f5f1ea',
-        'dark-text-secondary': '#a89d96',
-        'dark-border': '#3a3530',
+        // Dark Mode (Rich, Premium)
+        'dark-canvas': '#0f172a',
+        'dark-text-primary': '#f8fafc',
+        'dark-text-secondary': '#cbd5e1',
+        'dark-border': '#1e293b',
 
-        // shadcn/ui tokens (mapped to Nordic Warmth)
-        primary: '#c17a5c',
+        // Secondary Accents
+        'secondary-accent': '#0ea5e9',
+        'secondary-accent-hover': '#0284c7',
+        'warm-accent': '#f59e0b',
+
+        // shadcn/ui tokens (mapped to European Digital)
+        primary: '#10b981',
         'primary-foreground': '#ffffff',
-        secondary: '#e8e3da',
-        'secondary-foreground': '#2c2520',
-        background: '#f9f7f2',
-        foreground: '#2c2520',
-        muted: '#6b6560',
-        'muted-foreground': '#6b6560',
-        input: '#e8e3da',
-        ring: '#c17a5c',
-        destructive: '#c85553',
+        secondary: '#0ea5e9',
+        'secondary-foreground': '#ffffff',
+        background: '#ffffff',
+        foreground: '#111827',
+        muted: '#6b7280',
+        'muted-foreground': '#6b7280',
+        input: '#f3f4f6',
+        ring: '#10b981',
+        destructive: '#ef4444',
         'destructive-foreground': '#ffffff',
       },
       fontFamily: {

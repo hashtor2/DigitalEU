@@ -169,7 +169,10 @@ export function LandingPage() {
             {/* LEFT COLUMN: Auto-scan pathway */}
             <div className="md:col-span-2">
               {/* Auto-scan card */}
-              <div className="mb-8 border border-border dark:border-dark-border rounded-sm p-8 bg-white dark:bg-dark-canvas">
+              <div className="mb-8 border border-border dark:border-dark-border rounded-sm p-8 bg-white dark:bg-dark-canvas relative overflow-hidden">
+                {/* Accent border on left */}
+                <div className="absolute top-0 left-0 bottom-0 w-1 bg-accent"></div>
+                
                 <div className="mb-6">
                   <h2 className="text-h2 font-mono text-text-primary dark:text-dark-text-primary mb-3">
                     Auto-scan your inbox
@@ -179,18 +182,18 @@ export function LandingPage() {
                   </p>
                 </div>
 
-                {/* Trust statement */}
+                {/* Trust statement with emerald accent */}
                 <div className="mb-6 border-t border-border dark:border-dark-border pt-4">
                   <p className="text-sm text-text-secondary dark:text-dark-text-secondary flex items-center gap-2">
-                    <span className="text-success text-lg">✓</span>
-                    <strong>Zero-knowledge.</strong> Results stay on your device. No login required.
+                    <span className="text-accent text-lg font-bold">✓</span>
+                    <strong className="text-accent">Zero-knowledge.</strong> <span>Results stay on your device. No login required.</span>
                   </p>
                 </div>
 
-                {/* CTA Button */}
+                {/* CTA Button - Emerald */}
                 <Button
                   onClick={handleAutoScan}
-                  className="w-full bg-accent text-white font-mono font-semibold py-3 rounded-sm hover:bg-accent-hover transition-colors"
+                  className="w-full bg-accent text-white font-mono font-semibold py-3 rounded-sm hover:bg-accent-hover transition-colors shadow-sm hover:shadow-md"
                   size="lg"
                 >
                   Start Auto-Scan →
@@ -284,7 +287,10 @@ export function LandingPage() {
 
             {/* RIGHT COLUMN: Newsletter signup */}
             <div className="md:col-span-1">
-              <div className="sticky top-24">
+              <div className="sticky top-24 border border-secondary-accent dark:border-secondary-accent rounded-sm p-6 bg-secondary-accent/5 dark:bg-secondary-accent/10">
+                <div className="mb-2 inline-block px-2 py-1 bg-secondary-accent/20 text-secondary-accent rounded-sm text-xs font-semibold uppercase tracking-wide">
+                  New this week
+                </div>
                 <h2 className="text-h2 font-mono text-text-primary dark:text-dark-text-primary mb-4">
                   EU tech digest
                 </h2>
@@ -301,7 +307,7 @@ export function LandingPage() {
         <div className="mt-20 border-t border-border dark:border-dark-border pt-16">
           <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
             {/* EU News */}
-            <div>
+            <div className="group">
               <h3 className="text-h3 font-mono text-text-primary dark:text-dark-text-primary mb-4">
                 🗞️ EU News
               </h3>
@@ -310,14 +316,14 @@ export function LandingPage() {
               </p>
               <Button
                 onClick={() => navigate("/news")}
-                className="border border-border dark:border-dark-border bg-transparent text-text-primary dark:text-dark-text-primary hover:bg-accent/5 hover:border-accent rounded-sm px-4 py-2 text-sm font-semibold transition"
+                className="border-2 border-warm-accent bg-transparent text-warm-accent hover:bg-warm-accent hover:text-white rounded-sm px-4 py-2 text-sm font-semibold transition-all"
               >
                 Read news →
               </Button>
             </div>
 
             {/* EU Alternatives Directory */}
-            <div>
+            <div className="group">
               <h3 className="text-h3 font-mono text-text-primary dark:text-dark-text-primary mb-4">
                 📚 EU Alternatives
               </h3>
@@ -326,14 +332,14 @@ export function LandingPage() {
               </p>
               <Button
                 onClick={() => navigate("/directory")}
-                className="border border-border dark:border-dark-border bg-transparent text-text-primary dark:text-dark-text-primary hover:bg-accent/5 hover:border-accent rounded-sm px-4 py-2 text-sm font-semibold transition"
+                className="border-2 border-secondary-accent bg-transparent text-secondary-accent hover:bg-secondary-accent hover:text-white rounded-sm px-4 py-2 text-sm font-semibold transition-all"
               >
                 Browse catalog →
               </Button>
             </div>
 
             {/* For Business */}
-            <div>
+            <div className="group">
               <h3 className="text-h3 font-mono text-text-primary dark:text-dark-text-primary mb-4">
                 🏢 For Business
               </h3>
@@ -342,7 +348,7 @@ export function LandingPage() {
               </p>
               <Button
                 onClick={() => navigate("/b2b")}
-                className="border border-border dark:border-dark-border bg-transparent text-text-primary dark:text-dark-text-primary hover:bg-accent/5 hover:border-accent rounded-sm px-4 py-2 text-sm font-semibold transition"
+                className="border-2 border-accent bg-transparent text-accent hover:bg-accent hover:text-white rounded-sm px-4 py-2 text-sm font-semibold transition-all"
               >
                 Learn more →
               </Button>

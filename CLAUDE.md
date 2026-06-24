@@ -13,13 +13,14 @@
 (B2C) med å flytte det digitale livet sitt bort fra Big Tech og over til
 personvernvennlige, europeiske alternativer.
 
-Produktet består av to deler som spiller sammen:
-1. **Web-applikasjon (SPA)** — landingsside, innboksskanner, dashbord, betaling.
-2. **Nettleserutvidelse (MV3)** — autofyller ny e-postadresse på eksterne sider
-   (Netflix, Spotify, ...) slik at det blir lett å bytte kontoadresse.
+Produktet består av tre deler som spiller sammen:
+1. **Web-applikasjon (digitaleu.me)** — landingsside, katalog, dashbord, betaling, brukerinformasjon.
+2. **Innboksskanner (scanner.digitaleu.me)** — standalone-app for Gmail/Outlook-analyse, OAuth-basert innboksaksess, service-deteksjon med betalingsflow (Stripe) + affiliate-integrasjon.
+3. **Nettleserutvidelse (MV3)** — autofyller ny e-postadresse på eksterne sider
+   (Netflix, Spotify, ...) slik at det blir lett å bytte kontoadresse. Fase 2.
 
 **Forretningsmodell:** Gratis hvis brukeren registrerer seg hos en partner via
-vår affiliate-lenke, ELLER €29 som engangskjøp via betalingsleverandør.
+vår affiliate-lenke, ELLER €29 som engangskjøp via betalingsleverandør (begge metoder integrert i scanner).
 
 ---
 
@@ -61,15 +62,17 @@ Beslutninger skal tas i lys av denne retningen, ikke bare det kortsiktige MVP-et
 ## 4. Arkitektur
 
 **Monorepo** basert på **npm workspaces** (ingen ekstra verktøy med mindre vi
-trenger det).
+trenger det). Node.js >=20.
 
 ```
 digitaleu.me/
 ├── apps/
-│   ├── web/          # SPA: Vite + React 19 + TypeScript + Tailwind v4 (+ shadcn/ui)
-│   └── extension/    # Chrome/Firefox-utvidelse (Manifest V3) — bygges i Fase 2
+│   ├── web/          # SPA: landingsside + katalog. Vite + React 19 + TypeScript + Tailwind v4 + shadcn/ui
+│   ├── scanner/      # Standalone scanner SPA (scanner.digitaleu.me). Innboksskanning, OAuth, betaling, service-deteksjon
+│   └── extension/    # Chrome/Firefox-utvidelse (Manifest V3) — Fase 2
 ├── packages/
 │   └── shared/       # Delte typer, alternativ-katalog, hjelpefunksjoner
+├── supabase/         # Migrations + Edge Functions (Deno)
 ├── docs/             # Prosjektdokumentasjon (plan, sikkerhet, arkitektur)
 ├── research/         # 🔒 LOKAL, gitignorert. Privat kildemateriale. ALDRI i repoet.
 ├── CLAUDE.md         # ← denne filen
@@ -83,23 +86,25 @@ digitaleu.me/
 | Build/dev       | Vite 6                              | ✅ i bruk    |
 | UI              | React 19 + TypeScript               | ✅ i bruk    |
 | Styling         | Tailwind CSS v4 (`@tailwindcss/vite`) | ✅ i bruk  |
-| Komponenter     | shadcn/ui                           | ⏳ planlagt  |
-| Backend/DB/Auth | Supabase (EU-region)                | ⏳ planlagt  |
-| Betaling        | Stripe (engangskjøp €29)            | ⏳ planlagt  |
-| Analyse         | Plausible (🇪🇪 EU, cookieless)        | ⏳ planlagt  |
-| Testing         | Vitest                              | ⏳ planlagt  |
+| Komponenter     | shadcn/ui + Radix UI + Lucide       | ✅ i bruk    |
+| Backend/DB/Auth | Supabase (Sveits, eu-central-2)    | ✅ i bruk    |
+| Edge Functions  | Deno (Supabase Functions)           | ✅ i bruk    |
+| Betaling        | Stripe (checkout + webhook)         | ✅ i bruk    |
+| Analyse         | Plausible (🇪🇪 EU, cookieless)        | ⏳ planlagt (integrasjon starter) |
+| Testing         | Vitest                              | ✅ i bruk    |
 | CI              | GitHub Actions (build/lint/test)    | ⏳ planlagt  |
-| Hosting         | Vercel (se §6 — åpen vurdering)     | ⏳ planlagt  |
+| Hosting         | Vercel (se §6 — åpen vurdering)     | ✅ i bruk    |
 
 ### Dataflyt (overordnet)
-- **Innboksskanning** skjer **100 % klientside** via OAuth (Gmail/Outlook),
-  med minst mulige (helst read-only/metadata) scopes. E-postinnhold sendes
-  aldri til noen server. Vi utleder kun hvilke tjenester brukeren har konto hos.
+- **Innboksskanning:** OAuth (Gmail/Outlook) → ephemeral access token → **Supabase Edge Function `scan-email`** (server-side) → domene-utdrag → klient. Metadata-only, token lagres ikke, safe token exchange.
+  - *Hvorfor server-side?* CORS-frihet på tredjepartssider, sikker token-håndtering, bedre error-recovery, skalering. Brukeren har full kontroll over OAuth-tillatelse (kan tilbakekalle når som helst).
 - **Gjestemodus:** data lever kun i `sessionStorage` på klienten.
 - **Profilmodus:** data **krypteres klientside (zero-knowledge)** før de lagres
   i Supabase. Vi skal aldri kunne lese klartekst.
 - **Utvidelsen** er **lokal-først**: den mottar `ny_epost` fra web-appen og
   fyller felt lokalt — den sender aldri brukerdata til vår backend.
+- **Betalinger:** Stripe Elements (klientside form) → Stripe → Edge Function webhook → Supabase payment verification + affiliate tracking.
+- **Datalekkasje-sjekk:** `check-breach` Edge Function kaller Have I Been Pwned API v3 med hemmelig nøkkel (aldri eksponert klienten).
 
 ---
 
@@ -246,6 +251,9 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 19 | **Design:** Dark mode + light mode, WCAG AAA, desktop-first, open-source fonts | 2026-06-22 |
 | 20 | **Services:** Logo for hver tjeneste + landsflagg ved navn         | 2026-06-22 |
 | 21 | **Footer:** Links til EU tech websites, newsletter, copyright      | 2026-06-22 |
+| 22 | **Innboksskanning:** Server-side (Supabase Edge Function) ikke client-side; årsak: CORS-frihet, sikker token-håndtering, skalering. OAuth kontrolleres av bruker (tilbakekallbar). Metadata-only, token lagres aldri. | 2026-06-24 |
+| 23 | **Betalingsflow:** Stripe Elements (client-side form) + Edge Function webhook for verification + affiliate tracking. Live og testbar. | 2026-06-24 |
+| 24 | **Scanner som standalone app:** `scanner.digitaleu.me` — egen SPA, samme stack (React, Supabase, Stripe). Separate deployment, integrert med web via affiliate-kryss. | 2026-06-24 |
 
 ---
 
@@ -254,19 +262,36 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 - **Hosting (Vercel = USA):** spenning mot suverenitets-budskapet. Vurder
   europeisk PaaS (Clever Cloud, Scaleway) før vi profilerer dette tungt utad.
 - **Kodehosting:** migrert til Codeberg 🇩🇪 — ferdig.
-- **Betaling (Stripe vs Mollie):** Mollie 🇳🇱 er mer "on-brand".
+- **Betaling (Stripe vs Mollie):** Stripe live og fungerer. Mollie 🇳🇱 vurderes ved nestegang.
 - **Domeneregistrar (Spaceship):** notert; europeisk registrar ved fornyelse.
-- **Git-historikk:** researchdokumentene finnes i første commit-historikk — kan
-  skrives bort ved behov for full renhet.
+- **Innboksskanning server-side:** Arkitektur valgt for sikkerhet/skalering. Se ADR #22. Brukeren bevarer full kontroll via OAuth-tilbakekall.
+
+### Subsystemer i utvikling (ikke i MVP-scope, men built):
+- **Social/news automation:** Twitter-posting, news-scraping, newsletter (4 Edge Functions + migrations). Fase 2.
+- **Email verification:** send + resend flow for early access.
+- **Early access system:** signup + tracking.
+- **Breach-sjekking:** HIBP API proxy via Edge Function (live).
+- **PDF-rapporter:** generate-report-pdf Edge Function.
+- **Betaling:** Stripe checkout + webhook verification + affiliate tracking (live).
 
 ---
 
 ## 12. Pekere
 
+**Core:**
 - `docs/BRAND.md` — design system (colors, typography, components, tone).
 - `docs/DESIGN_CHECKLIST.md` — design implementation roadmap + commit templates.
 - `docs/DEVELOPMENT_PLAN.md` — faseinndelt roadmap.
 - `docs/SECURITY.md` — sikkerhets- og personverndoktrine + commit-sjekkliste.
+- `packages/shared/src/types.ts` — datamodellen (Alternative, StorageMode, DetectedAccount, FillEmailMessage).
+
+**Scanner & operasjonal:**
+- `docs/SCANNER_*.md` — scanner-spesifikasjoner, implementasjon, deployment.
+- `docs/OAUTH_SETUP_GUIDE.md` — Gmail/Outlook OAuth setup for lokalt dev + prod.
+- `docs/PROGRESS.md` — løpende fremdriftsnotat.
+- `docs/MARKETING_PLAN.md` — affiliate, content, growth strategy.
+- `docs/IA_NAV_RESTRUCTURE.md` — navigasjon og informasjonsarkitektur.
+- `supabase/README.md` — Edge Functions og migrations.
+
+**Research & context:**
 - `research/` — privat, lokal forskningsmappe (gitignorert). Kildemateriale for utvikling.
-- `packages/shared/src/types.ts` — datamodellen (Alternative, StorageMode,
-  DetectedAccount, FillEmailMessage).
