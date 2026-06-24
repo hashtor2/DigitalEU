@@ -46,7 +46,7 @@ export function AboutPage() {
                 <strong className="text-text-primary dark:text-dark-text-primary">Zero-Knowledge Cryptography:</strong> When you register for an account to sync your progress, your data is encrypted with a private passphrase <em>before</em> it leaves your machine. Your keys never touch our servers.
               </li>
               <li>
-                <strong className="text-text-primary dark:text-dark-text-primary">Switzerland Hosting:</strong> We physically host our secure cloud endpoints in Zürich, Switzerland, protected by the strictest personal privacy laws in the world.
+                <strong className="text-text-primary dark:text-dark-text-primary">Sweden Hosting:</strong> We physically host our secure cloud endpoints in Stockholm, Sweden, protected by some of the strictest personal privacy laws in Europe.
               </li>
               <li>
                 <strong className="text-text-primary dark:text-dark-text-primary">European Dogfooding:</strong> We walk the talk. We host on compliant platforms, analyze with Estonian cookieless analytics, and partner only with European tech champions.

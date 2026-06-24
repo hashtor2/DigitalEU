@@ -30,7 +30,7 @@ The first tool is an inbox scanner, and it runs entirely on your device. Your em
 
 A browser extension does the rest. Once you've chosen a new address, it fills that address in for you across each site, so updating dozens of accounts doesn't become a second job.
 
-Privacy isn't a feature we bolted on; it's the architecture. The scanning happens on your machine. If you save your progress, it's encrypted on your device before it ever leaves, and the only server involved sits in Switzerland, under an EU adequacy decision and some of the strongest data-protection law anywhere. We never want to be in a position where we *could* read your data, even if we never would. The design makes that promise, not the privacy policy.
+Privacy isn't a feature we bolted on; it's the architecture. The scanning happens on your machine. If you save your progress, it's encrypted on your device before it ever leaves, and the only server involved sits in Sweden, under an EU adequacy decision and some of the strongest data-protection law anywhere. We never want to be in a position where we *could* read your data, even if we never would. The design makes that promise, not the privacy policy.
 
 ## A real catalogue, not a shortlist
 

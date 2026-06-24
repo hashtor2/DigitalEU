@@ -11,8 +11,8 @@ export const SITE = {
 
   /** Region der brukerdata lagres (Profilmodus, Supabase). */
   dataRegion: "Zürich",
-  dataRegionCountry: "Switzerland",
-  dataRegionLabel: "Switzerland (Zürich)",
+  dataRegionCountry: "Sweden",
+  dataRegionLabel: "Sweden (Stockholm)",
 } as const;
 
 /**

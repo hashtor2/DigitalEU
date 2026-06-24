@@ -87,7 +87,7 @@ digitaleu.me/
 | UI              | React 19 + TypeScript               | ✅ i bruk    |
 | Styling         | Tailwind CSS v4 (`@tailwindcss/vite`) | ✅ i bruk  |
 | Komponenter     | shadcn/ui + Radix UI + Lucide       | ✅ i bruk    |
-| Backend/DB/Auth | Supabase (Sveits, eu-central-2)    | ✅ i bruk    |
+| Backend/DB/Auth | Supabase (Sverige, eu-north-1)    | ✅ i bruk    |
 | Edge Functions  | Deno (Supabase Functions)           | ✅ i bruk    |
 | Betaling        | Stripe (checkout + webhook)         | ✅ i bruk    |
 | Analyse         | Plausible (🇪🇪 EU, cookieless)        | ⏳ planlagt (integrasjon starter) |
@@ -133,7 +133,7 @@ Tabellen sporer hvor vi står, og hvor vi har en bevisst åpen vurdering.
 | Funksjon       | Nåværende valg     | Opphav         | Europeisk alternativ            | Status                         |
 | -------------- | ------------------ | -------------- | ------------------------------- | ------------------------------ |
 | Analyse        | Plausible          | 🇪🇪 Estland     | (allerede EU)                   | ✅ EU-valg                      |
-| Backend/DB     | Supabase           | 🇺🇸 USA (open source) | self-host / Nhost; **data i Sveits (Zürich, eu-central-2)** | ✅ Data i Sveits 🇨🇭 |
+| Backend/DB     | Supabase           | 🇺🇸 USA (open source) | self-host / Nhost; **data i Sverige (Stockholm, eu-north-1)** | ✅ Data i Sverige 🇸🇪 |
 | Hosting        | Vercel             | 🇺🇸 USA         | Clever Cloud 🇫🇷, Scaleway 🇫🇷, OVHcloud 🇫🇷, Hetzner 🇩🇪 | ⚠️ Åpen vurdering |
 | Kodehosting    | Codeberg           | 🇩🇪 Non-profit  | (allerede EU)                   | ✅ EU-valg (migrert 2026-06-20) |
 | Betaling       | Stripe             | 🇺🇸/🇮🇪          | Mollie 🇳🇱, Paddle               | ⚠️ Åpen vurdering              |
@@ -229,7 +229,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 - **Supabase MCP:** hosted HTTP + OAuth, låst til prosjektet via `project_ref`
   i `.mcp.json` (ingen token i repoet — OAuth via `/mcp`). Brukes til
   migrasjoner og DB-ops. Prosjekt-ref: `fuiebtpezpoxvkuuhaqy` (navn:
-  «emailchanger», Sveits/Zürich, eu-central-2).
+  «emailchanger», Sverige/Stockholm, eu-north-1).
   Se `supabase/README.md`.
 - **Vercel MCP:** tilgjengelig i sessionen for deploy/infra.
 - **Prinsipp:** hemmeligheter til connectors settes som miljøvariabler lokalt,
@@ -244,7 +244,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 1  | Stack: Vite + React 19 + TS + Tailwind v4, npm workspaces monorepo | 2026-06-18 |
 | 2  | Hosting på Vercel (åpen vurdering, jf. §6)                        | 2026-06-18 |
 | 3  | Supabase som eneste backend nå; utvid ved trafikk                 | 2026-06-18 |
-| 3b | Datalagring i **Sveits (Zürich, eu-central-2)** — sterkest privacy-PR + Proton-linje; EU-adekvans gir fri GDPR-flyt. EU-residens tilbys separat for B2B ved behov | 2026-06-18 |
+| 3b | Datalagring i **Sverige (Stockholm, eu-north-1)** — sterkest privacy-PR + Proton-linje; EU-adekvans gir fri GDPR-flyt. EU-residens tilbys separat for B2B ved behov | 2026-06-18 |
 | 4  | Innboksskanning 100 % klientside                                  | 2026-06-18 |
 | 5  | Kun OAuth (ingen rå IMAP-passord) i v1                            | 2026-06-18 |
 | 6  | Profilmodus: zero-knowledge klientside-kryptering + informer bruker | 2026-06-18 |
@@ -267,7 +267,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 23 | **Betalingsflow:** Stripe Elements (client-side form) + Edge Function webhook for verification + affiliate tracking. Live og testbar. | 2026-06-24 |
 | 24 | **Scanner som standalone app:** `scanner.digitaleu.me` — egen SPA, samme stack (React, Supabase, Stripe). Separate deployment, integrert med web via affiliate-kryss. | 2026-06-24 |
 | 25 | **Design:** UNIFIED across all apps — ONLY European Digital (emerald #10b981, deep navy dark mode) is active. All previous designs (Nordic Warmth, etc.) are DEPRECATED. Web + Scanner use identical design system from digitaleu.me. | 2026-06-25 |
-| 26 | **Supabase project migration:** Old project `fuiebtpezpoxvkuuhaqy` replaced with `mwsalzjsvuvlmshxzbxg` (same region: Zürich, eu-central-2). All migrations, functions, and data transferred. Update .env.local and all docs. | 2026-06-25 |
+| 26 | **Supabase project migration:** Old project `fuiebtpezpoxvkuuhaqy` replaced with `mwsalzjsvuvlmshxzbxg` (new region: Stockholm, Sweden, eu-north-1). All migrations, functions, and data transferred. Update .env.local and all docs. | 2026-06-25 |
 
 ---
 

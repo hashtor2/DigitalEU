@@ -26,9 +26,9 @@ describe("LandingPage", () => {
     expect(cta).toHaveAttribute("href", "/b2c");
   });
 
-  it("shows the trust signal about data hosting in Switzerland/Zürich", () => {
+  it("shows the trust signal about data hosting in Sweden/Stockholm", () => {
     renderLanding();
-    expect(screen.getAllByText(/Switzerland|🇨🇭/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Sweden|🇸🇪/i).length).toBeGreaterThan(0);
   });
 
   it("renders the preview of alternatives (first 3 of each of the first 8 categories)", () => {

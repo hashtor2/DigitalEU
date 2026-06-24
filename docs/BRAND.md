@@ -163,7 +163,7 @@ The goal: make security feel real, modern, and approachable—not paranoid or co
 ## Tone of Voice
 
 - **Direct.** "We scan your inbox. Here's what we found."
-- **Honest.** "This data lives in Switzerland, encrypted."
+- **Honest.** "This data lives in Sweden, encrypted."
 - **Human.** "Your email is personal. We treat it that way."
 - **No marketing fluff.** No "revolutionary," no "cutting-edge," no exclamation marks.
 - **Plain language.** Explain what we do in 10-year-old terms.

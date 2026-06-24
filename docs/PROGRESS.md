@@ -105,7 +105,7 @@
 | 2026-06-18 | **Dashbord-skall** med Gjest/Profil-modusbryter + fremdrift | ✅ |
 | 2026-06-18 | **Gjestemodus-lagring** (`guestStorage.ts` + `useMigrationState`) — sessionStorage, 4 tester | ✅ |
 | 2026-06-18 | Datalekkasje-sjekk (HIBP) lagt inn i planen (SECURITY §9)  | ✅ (planlagt) |
-| 2026-06-18 | **Opprett Supabase-prosjekt (Sveits/Zürich)** + kjør migrasjon (`0001_initial_schema.sql`) | ✅ |
+| 2026-06-18 | **Opprett Supabase-prosjekt (Sverige/Stockholm)** + kjør migrasjon (`0001_initial_schema.sql`) | ✅ |
 | 2026-06-18 | **Supabase Auth-flyt + Profilmodus-lagring (zero-knowledge)** — fullstendig klientside-kryptert synkronisering, låseskjerm og øktbevaring | ✅ |
 | 2026-06-18 | **Innboksskanner v1** — klientside Gmail OAuth (metadata-headers) batch-skanning med unikt avsender-uttrekk | ✅ |
 | 2026-06-18 | **Outlook/Graph-skanning** — klientside Microsoft Graph API OAuth 2.0 (Mail.ReadBasic) for Outlook & Hotmail (fremskyndet fra Fase 2) | ✅ |
@@ -133,6 +133,6 @@
   fungerer uten database. Gjestemodus persisterer til sessionStorage. HIBP
   datalekkasje-sjekk lagt inn i planen. 20 tester grønne, bygg rent (Supabase
   code-splittet ut av landingssiden).
-- **2026-06-18:** Fullført end-to-end integrasjon av **Profilmodus (Zero-Knowledge)**. Supabase-tilkoblingen er konfigurert i `.env` mot det nye prosjektet i Sveits (Zürich), migrasjonen er klargjort, og klientside-kryptert synkronisering med automatiske sky-oppdateringer er fullt implementert og testet. Låseskjerm med passfrasere-opplåsing beskytter økten. Alle 21 tester i monorepoet kjører nå grønt!
+- **2026-06-18:** Fullført end-to-end integrasjon av **Profilmodus (Zero-Knowledge)**. Supabase-tilkoblingen er konfigurert i `.env` mot det nye prosjektet i Sverige (Stockholm), migrasjonen er klargjort, og klientside-kryptert synkronisering med automatiske sky-oppdateringer er fullt implementert og testet. Låseskjerm med passfrasere-opplåsing beskytter økten. Alle 21 tester i monorepoet kjører nå grønt!
 - **2026-06-18:** Stor-oppdatering: Bygget innboksskanner (Gmail OAuth 100 % klientside) med batching og domene-ekstrahering, koblet opp alternativ-matching direkte mot `DOMAIN_MAPPINGS`, og opprettet en produksjonsklar **Supabase Edge Function** (`check-breach`) for sikker Have I Been Pwned sjekk. Hele prosjektet er oversatt til et engelsk, høytkonverterende "Gmail-to-Proton" fokus. Testdekningen er økt til 36 suksessfulle enhetstester, og full produksjonsbygning fullfører 100 % feilfritt.
 - **2026-06-18:** Fullført utvidelse av innboksskanneren med native Microsoft Outlook / Hotmail OAuth 2.0 (MS Graph) integrasjon, lagt inn GitHub OAuth innlogging i Supabase auth-flyten med støtte for zero-knowledge krypteringsavledning, og utviklet interaktive, visuelle migreringsguider for skyfiler, e-post og passord innebygget direkte i dashbordets sjekklister. Testdekningen økt til 40 suksessfulle enhetstester, og full produksjonsbygning er 100 % grønn.

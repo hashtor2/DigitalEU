@@ -61,7 +61,7 @@ This includes:
 | Concern | DigitalEU.me's Approach |
 | --- | --- |
 | **What can the app access?** | **Metadata only:** Sender domains, dates, subject. **Never:** Message bodies, attachments, or other folders. |
-| **Is it a SaaS with data residency?** | ✅ Yes — Data is **zero-knowledge encrypted** before reaching our servers. You can also choose **EU data residency** (Switzerland, GDPR-compliant). |
+| **Is it a SaaS with data residency?** | ✅ Yes — Data is **zero-knowledge encrypted** before reaching our servers. You can also choose **EU data residency** (Sweden, GDPR-compliant). |
 | **How long is data kept?** | ⏳ Scans are **deleted automatically after 30 days**. No long-term storage. |
 | **Can we revoke access instantly?** | ✅ Yes — Entra ID admin can revoke the application consent anytime in the Microsoft Entra admin center. |
 | **Is there a user access log?** | ✅ Yes — All authorization events appear in **Entra ID > Sign-ins** and **App registrations > Audit logs**. |
@@ -147,7 +147,7 @@ If IT decides to revoke access:
 **A:** Yes — **Entra ID > Enterprise applications > digitaleu.me > Permissions > Revoke admin consent.** Revocation is immediate.
 
 ### Q: Is it GDPR-compliant?
-**A:** Yes — Data is in Switzerland (GDPR-adequate), encrypted end-to-end, and auto-deleted after 30 days. Request a DPA from their compliance team if needed.
+**A:** Yes — Data is in Sweden (GDPR-adequate), encrypted end-to-end, and auto-deleted after 30 days. Request a DPA from their compliance team if needed.
 
 ### Q: Do they comply with SOC 2 or ISO 27001?
 **A:** Limited — App is CASA Tier 2 security assessed. Request audit reports if required for your org's vendor management.
@@ -197,7 +197,7 @@ DigitalEU.me (www.digitaleu.me) has been approved for organizational use to help
 
 ### Objection: "This is a US company spying on us."
 
-**Response:** DigitalEU.me is based in **[Norway/EU]** with servers in **Switzerland** (GDPR-adequate). Data is **end-to-end encrypted** — we cannot read your emails. Fully GDPR-compliant.
+**Response:** DigitalEU.me is based in **[Norway/EU]** with servers in **Sweden** (GDPR-adequate). Data is **end-to-end encrypted** — we cannot read your emails. Fully GDPR-compliant.
 
 ### Objection: "We don't need a third-party scanning our emails."
 

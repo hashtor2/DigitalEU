@@ -5,7 +5,7 @@ Databaseskjema og oppsett for Profilmodus. Skjemaet er **versjonert** i
 
 ## 1. Prosjektet (opprettet)
 
-Prosjektet er opprettet i **Sveits — Zürich (eu-central-2)** 🇨🇭
+Prosjektet er opprettet i **Sverige — Stockholm (eu-north-1)** 🇸🇪
 (jf. CLAUDE.md beslutning #3b). Prosjekt-ref: `mwsalzjsvuvlmshxzbxg`
 (migrert 2026-06-25 fra `fuiebtpezpoxvkuuhaqy`).
 

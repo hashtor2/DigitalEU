@@ -49,7 +49,7 @@
 | --- | --- | --- |
 | **OAuth Security** | PKCE, token handling, scope minimization | ✅ In progress (see OAUTH_FLOW_MIGRATION.md) |
 | **Data Security** | Encryption, access controls, RLS | ✅ Zero-knowledge AES-256-GCM |
-| **Infrastructure** | Supabase, Edge Functions, Vercel security | ✅ Using Supabase Switzerland |
+| **Infrastructure** | Supabase, Edge Functions, Vercel security | ✅ Using Supabase Sweden |
 | **Incident Response** | Data breach protocols, user notification | ⏳ Need formal policy |
 | **Logging & Auditing** | No PII in logs, secure access trails | ⏳ Need to remove console.* statements |
 | **Dependency Scanning** | npm audit, known vulnerabilities | ⏳ Need CI checks |

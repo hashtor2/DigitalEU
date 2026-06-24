@@ -23,7 +23,7 @@ function hasEuDataSignal(alternative: Alternative): boolean {
   }
 
   const location = (alternative.dataLocation || "").toLowerCase();
-  return ["eu", "europe", "switzerland", "norway", "gdpr"].some((keyword) =>
+  return ["eu", "europe", "sweden", "stockholm", "norway", "gdpr"].some((keyword) =>
     location.includes(keyword)
   );
 }

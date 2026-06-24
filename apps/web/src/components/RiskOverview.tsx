@@ -2,7 +2,7 @@ import type { Alternative } from '@digitaleu/shared'
 
 function getPrivacyScore(service: Alternative): number {
   // Simple scoring: lower is worse, higher is better (0-10)
-  // US-based = 1, EU = 7, Switzerland = 9, etc.
+  // US-based = 1, EU = 7, Sweden/Nordic = 8-9, etc.
   // Open-source bonus +1, Audited bonus +0.5
 
   let score = 5 // Neutral baseline

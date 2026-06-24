@@ -3,7 +3,7 @@ import { NewsletterSignup } from "./NewsletterSignup";
 
 export function Footer() {
   const euTechWebsites = [
-    { name: "Proton", url: "https://proton.me", region: "🇨🇭 Switzerland" },
+    { name: "Proton", url: "https://proton.me", region: "�🇸 Spain" },
     { name: "Tuta", url: "https://tuta.com", region: "🇩🇪 Germany" },
     { name: "Mullvad", url: "https://mullvad.net", region: "🇸🇪 Sweden" },
     { name: "Jami (GNU Ring)", url: "https://jami.net", region: "🇨🇦 Open Source" },
@@ -25,7 +25,7 @@ export function Footer() {
               Helping Europeans reclaim their digital lives. Privacy-first, built in Norway, open by design.
             </p>
             <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
-              🇪🇺 Data hosted in Switzerland (Zürich)
+              🇪🇺 Data hosted in Sweden (Stockholm)
             </p>
 
             {/* Social Links */}
