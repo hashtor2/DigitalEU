@@ -81,8 +81,6 @@ async function scanGmailServer(
     const listData = await listResponse.json();
     const messageIds = listData.messages?.map((m: any) => m.id) || [];
 
-    console.log(`[scan-email] Fetching headers for ${messageIds.length} messages`);
-
     // Step 2: Fetch headers for each message (metadata only)
     for (const messageId of messageIds) {
       const msgUrl = new URL(`${GMAIL_API_BASE}/messages/${messageId}`);
@@ -97,9 +95,6 @@ async function scanGmailServer(
       });
 
       if (!msgResponse.ok) {
-        console.warn(
-          `[scan-email] Failed to fetch message ${messageId}: ${msgResponse.status}`
-        );
         continue;
       }
 
@@ -120,7 +115,6 @@ async function scanGmailServer(
       scannedCount: messageIds.length,
     };
   } catch (error) {
-    console.error("[scan-email] Gmail scanning error:", error);
     throw error;
   }
 }
@@ -159,8 +153,6 @@ async function scanOutlookServer(
     const data = await response.json();
     const messages = data.value || [];
 
-    console.log(`[scan-email] Fetched ${messages.length} Outlook messages`);
-
     for (const msg of messages) {
       const fromEmail = msg.from?.emailAddress?.address;
       if (fromEmail) {
@@ -176,10 +168,8 @@ async function scanOutlookServer(
       scannedCount: messages.length,
     };
   } catch (error) {
-    console.error("[scan-email] Outlook scanning error:", error);
     throw error;
   }
-}
 
 serve(async (req) => {
   // Handle CORS preflight
@@ -238,8 +228,6 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error("[scan-email] Error:", error);
-
     const message =
       error instanceof Error ? error.message : "An unknown error occurred";
 

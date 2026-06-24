@@ -4,6 +4,7 @@ import IndexPage from './routes/index'
 import SignInPage from './routes/auth/signin'
 import SignUpPage from './routes/auth/signup'
 import CallbackPage from './routes/auth/callback'
+import EmailCallbackPage from './routes/auth/email-callback'
 import DashboardPage from './routes/dashboard'
 import ResultsPage from './routes/results/$scanId'
 import CancellationIndexPage from './routes/cancel/index'
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="auth/signin" element={<SignInPage />} />
           <Route path="auth/signup" element={<SignUpPage />} />
           <Route path="auth/callback" element={<CallbackPage />} />
+          <Route path="auth/email-callback" element={<EmailCallbackPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="results/:scanId" element={<ResultsPage />} />
           <Route path="report/:sessionId" element={<ReportPage />} />

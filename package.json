@@ -14,7 +14,10 @@
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "web": "npm run dev --workspace @digitaleu/web",
-    "scanner": "npm run dev --workspace @digitaleu/scanner"
+    "scanner": "npm run dev --workspace @digitaleu/scanner",
+    "oauth:validate": "node scripts/validate-oauth.mjs",
+    "oauth:test": "npm run oauth:validate && npm run dev:scanner",
+    "oauth:start": "bash scripts/start-oauth-test.sh"
   },
   "engines": {
     "node": ">=20"
