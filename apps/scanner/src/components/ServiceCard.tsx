@@ -31,13 +31,19 @@ export function ServiceCard({ service }: ServiceCardProps) {
   const riskLevel = getRiskLevel(score)
   const hasCloudActExposure = CLOUD_ACT_EXPOSURE[service.country] ?? false
 
-  // Find best EU alternative for this service category
-  const bestAlternative = ALTERNATIVES.filter(
+  const categoryAlternatives = ALTERNATIVES.filter(
     a =>
       a.category === service.category &&
       a.id !== service.id &&
       ['CH', 'DE', 'SE', 'FI', 'NL', 'AT', 'FR', 'ES', 'IT', 'DK', 'EE', 'PT', 'PL', 'CZ', 'IS', 'NO'].includes(a.country)
-  ).sort((a, b) => getPrivacyScore(b) - getPrivacyScore(a))[0]
+  )
+
+  const protonAlternative = categoryAlternatives.find(a => a.id.startsWith('proton-'))
+
+  // Prefer Proton whenever it is an applicable alternative, otherwise use the best-scoring EU option.
+  const bestAlternative =
+    protonAlternative ??
+    categoryAlternatives.sort((a, b) => getPrivacyScore(b) - getPrivacyScore(a))[0]
 
   // Proton affiliate link for email category
   const protonAffiliateLink =

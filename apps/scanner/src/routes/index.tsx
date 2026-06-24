@@ -1,14 +1,19 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { ServiceCheckboxGrid } from '@/components/ServiceCheckboxGrid'
-import { MonetizationCTAs } from '@/components/MonetizationCTAs'
 import { useReport } from '@/hooks/useReport'
 
 export default function IndexPage() {
   const navigate = useNavigate()
   const { createReport } = useReport()
   const [selected, setSelected] = useState<Set<string>>(new Set())
-  const [showSelector, setShowSelector] = useState(false)
+  const [connectedProvider, setConnectedProvider] = useState<string | null>(null)
+
+  useEffect(() => {
+    const provider = sessionStorage.getItem('email_provider')
+    const token = sessionStorage.getItem('email_access_token')
+    setConnectedProvider(provider && token ? provider : null)
+  }, [])
 
   const handleToggle = (serviceId: string) => {
     setSelected(prev => {
@@ -53,108 +58,86 @@ export default function IndexPage() {
   }
 
   return (
-    <div className="space-y-12">
-      {/* Hero Section */}
-      <section className="space-y-6">
-        <div>
-          <h1 className="text-5xl md:text-6xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5] leading-tight mb-4">
+    <div className="space-y-10 md:space-y-12">
+      <section className="space-y-8 pt-6 md:pt-10">
+        <div className="mx-auto max-w-4xl text-center space-y-5">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5] leading-[0.95] tracking-tight max-w-4xl mx-auto">
             Find out which of your accounts put your privacy at risk
           </h1>
-          <p className="text-lg text-[#1a1815]/70 dark:text-[#a89d96] max-w-2xl">
-            Check the services you use. We'll score each for privacy risk, data breaches, and GDPR compliance — then show you the best European alternatives.
+          <p className="mx-auto max-w-2xl text-base sm:text-lg text-[#1a1815]/70 dark:text-[#a89d96] leading-relaxed">
+            Tick the services you use. We&apos;ll score each one for privacy risk, data breaches, and GDPR compliance — then show you the best European alternatives.
           </p>
+
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-[#1a1815]/60 dark:text-[#a89d96]">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">137</span>
+              <span>services tracked</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg">149</span>
+              <span>EU alternatives catalogued</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🔒</span>
+              <span>Zero data sent to servers</span>
+            </div>
+          </div>
         </div>
 
-        {/* Trust Signals */}
-        <div className="flex flex-wrap gap-6 text-sm text-[#1a1815]/60 dark:text-[#a89d96]">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">137</span>
-            <span>services tracked</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-lg">149</span>
-            <span>EU alternatives</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-lg">🔒</span>
-            <span>Zero data sent to servers</span>
-          </div>
+        <div className="mx-auto max-w-2xl rounded-none border border-[#d9d3c8] bg-[#faf8f4] px-6 py-5 text-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] dark:border-[#2a251f] dark:bg-[#f4efe6]">
+          <p className="mb-4 font-mono text-sm uppercase tracking-[0.22em] text-[#1a1815]/60 dark:text-[#5e5448]">
+            Scan your inbox
+          </p>
+          {connectedProvider && (
+            <p className="mb-3 text-sm font-mono text-[#1a1815]/70 dark:text-[#5e5448]">
+              Connected via {connectedProvider === 'gmail' ? 'Gmail' : 'Outlook'}.
+            </p>
+          )}
+          <Link
+            to="/auth/signin"
+            className="inline-flex items-center justify-center rounded-none border border-[#1a1815] bg-[#1a1815] px-8 py-3.5 font-mono text-sm font-semibold text-[#faf8f5] transition hover:bg-[#2a241d] dark:border-[#2a251f] dark:bg-[#2a251f] dark:text-[#faf8f5]"
+          >
+            {connectedProvider ? 'Reconnect inbox' : 'Scan my inbox'}
+          </Link>
+          <p className="mt-4 text-sm leading-relaxed text-[#1a1815]/70 dark:text-[#6f655c]">
+            Connect Gmail or Outlook to see which services are linked to your email.
+          </p>
         </div>
       </section>
 
-      {/* Toggle to selector */}
-      {!showSelector ? (
-        <div className="rounded-lg border border-[#e0dbd2] dark:border-[#2a251f] bg-white dark:bg-[#1a1510] p-8 space-y-4">
+      <section id="manual-check" className="space-y-6">
+        <div className="max-w-3xl space-y-2">
           <h2 className="text-2xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5]">
-            How it works
+            Manual service check
           </h2>
-          <ol className="space-y-3 text-[#1a1815]/70 dark:text-[#a89d96]">
-            <li className="flex gap-4">
-              <span className="font-mono font-bold text-[#b8705c] dark:text-[#a8664f] flex-shrink-0">1</span>
-              <span>Check the services you use from our curated list.</span>
-            </li>
-            <li className="flex gap-4">
-              <span className="font-mono font-bold text-[#b8705c] dark:text-[#a8664f] flex-shrink-0">2</span>
-              <span>We analyze privacy risks, CLOUD Act exposure, and data practices.</span>
-            </li>
-            <li className="flex gap-4">
-              <span className="font-mono font-bold text-[#b8705c] dark:text-[#a8664f] flex-shrink-0">3</span>
-              <span>Get your personalized report with EU alternatives and next steps.</span>
-            </li>
-          </ol>
+          <p className="text-[#1a1815]/70 dark:text-[#a89d96]">
+            Search and select the services you already know you use. This stays free and gives you a fast report.
+          </p>
+        </div>
 
+        <ServiceCheckboxGrid
+          selected={selected}
+          onToggle={handleToggle}
+          onSelectAll={handleSelectAll}
+          onClearAll={handleClearAll}
+        />
+
+        <div className="flex flex-col gap-3 sm:flex-row">
           <button
-            onClick={() => setShowSelector(true)}
-            className="mt-6 inline-block rounded bg-[#b8705c] dark:bg-[#a8664f] px-6 py-3 font-mono font-semibold text-white hover:bg-[#b8705c]/90 dark:hover:bg-[#a8664f]/90 transition"
+            onClick={handleGenerateReport}
+            disabled={selected.size === 0}
+            className="flex-1 rounded-none border border-[#1a1815] bg-[#1a1815] px-6 py-3 font-mono font-semibold text-[#faf8f5] transition hover:bg-[#2a241d] disabled:cursor-not-allowed disabled:opacity-50 dark:border-[#2a251f] dark:bg-[#2a251f] dark:hover:bg-[#3a3128]"
           >
-            Check Your Services
+            Generate my report ({selected.size})
+          </button>
+          <button
+            onClick={handleClearAll}
+            className="rounded-none border border-[#d9d3c8] bg-transparent px-6 py-3 font-mono font-semibold text-[#1a1815] transition hover:bg-[#f3efe7] dark:border-[#2a251f] dark:text-[#faf8f5] dark:hover:bg-[#2a251f]"
+          >
+            Clear selection
           </button>
         </div>
-      ) : (
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-2xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5] mb-2">
-              Service Selector
-            </h2>
-            <p className="text-[#1a1815]/70 dark:text-[#a89d96]">
-              Search and select the services you use:
-            </p>
-          </div>
-
-          <ServiceCheckboxGrid
-            selected={selected}
-            onToggle={handleToggle}
-            onSelectAll={handleSelectAll}
-            onClearAll={handleClearAll}
-          />
-
-          <div className="flex gap-4">
-            <button
-              onClick={handleGenerateReport}
-              disabled={selected.size === 0}
-              className="flex-1 rounded bg-[#b8705c] dark:bg-[#a8664f] px-6 py-3 font-mono font-semibold text-white hover:bg-[#b8705c]/90 dark:hover:bg-[#a8664f]/90 disabled:opacity-50 disabled:cursor-not-allowed transition"
-            >
-              Generate My Report ({selected.size})
-            </button>
-            <button
-              onClick={() => {
-                setShowSelector(false)
-                setSelected(new Set())
-              }}
-              className="rounded border border-[#e0dbd2] dark:border-[#2a251f] px-6 py-3 font-mono font-semibold text-[#1a1815] dark:text-[#faf8f5] hover:bg-[#f5f3ef] dark:hover:bg-[#2a251f] transition"
-            >
-              Back
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Scanner Teaser with Monetization CTA */}
-      <MonetizationCTAs
-        title="Don't know what you're signed up for?"
-        description="Connect your Gmail or Outlook. We'll scan your inbox metadata (sender names only — never contents) and find every account automatically."
-        layout="stacked"
-      />
+      </section>
     </div>
   )
 }

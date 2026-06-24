@@ -89,8 +89,8 @@ export default function EmailCallbackPage() {
         sessionStorage.removeItem('oauth_provider')
         sessionStorage.removeItem('oauth_state')
 
-        // 7. Redirect to scanner dashboard
-        navigate('/dashboard')
+        // 7. Return to the scanner home page with the inbox session active
+        navigate('/', { replace: true })
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Unknown error during authentication'
         setError(errorMessage)
