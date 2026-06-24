@@ -226,8 +226,8 @@ export default function DashboardPage() {
     return (
       <div className="flex items-center justify-center py-14">
         <div className="text-center space-y-4">
-          <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] dark:border-[#a86650] border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-[#1a2332]/70 dark:text-[#a89d96] font-mono">Loading dashboard...</p>
+          <div className="animate-spin h-8 w-8 border-4 border-accent dark:border-accent border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-text-secondary dark:text-dark-text-secondary font-mono">Loading dashboard...</p>
         </div>
       </div>
     )
@@ -237,8 +237,8 @@ export default function DashboardPage() {
     <div className="space-y-8">
       <section className="space-y-1">
         <div className="space-y-1">
-          <h1 className="text-3xl font-mono font-bold text-[#1a2332] dark:text-[#f5f1ea]">Scanner dashboard</h1>
-          <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96]">
+          <h1 className="text-3xl font-mono font-bold text-text-primary dark:text-dark-text-primary">Scanner dashboard</h1>
+          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
             Signed in as {user?.email}
           </p>
         </div>
@@ -251,14 +251,14 @@ export default function DashboardPage() {
       )}
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Connected inboxes</h2>
+        <div className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Connected inboxes</h2>
           {connections.length === 0 ? (
             <div className="space-y-3">
-              <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96]">No mailbox connected yet.</p>
+              <p className="text-sm text-text-secondary dark:text-dark-text-secondary">No mailbox connected yet.</p>
               <a
                 href="/auth/signin"
-                className="inline-flex rounded-none border border-[#1a2332] bg-[#1a2332] px-4 py-2 font-mono text-sm font-semibold text-[#f9f7f2] hover:bg-[#2a241d] transition"
+                className="inline-flex rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition"
               >
                 Connect Gmail or Outlook
               </a>
@@ -266,49 +266,49 @@ export default function DashboardPage() {
           ) : (
             <div className="space-y-2">
               {connections.map((conn) => (
-                <div key={conn.id} className="flex items-center justify-between rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] p-3">
-                  <p className="font-mono text-sm text-[#1a2332] dark:text-[#f5f1ea]">
+                <div key={conn.id} className="flex items-center justify-between rounded-none border border-border dark:border-dark-border p-3">
+                  <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">
                     {conn.provider === 'gmail' ? 'Gmail' : 'Outlook'} connected
                   </p>
-                  <span className="text-xs text-[#1a2332]/60 dark:text-[#a89d96]">{formatDate(conn.connected_at)}</span>
+                  <span className="text-xs text-text-secondary dark:text-dark-text-secondary">{formatDate(conn.connected_at)}</span>
                 </div>
               ))}
             </div>
           )}
 
           {scannerMetadata?.gmail_verified && scannerMetadata.gmail_address && (
-            <p className="text-xs text-[#1a2332]/70 dark:text-[#a89d96]">
+            <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
               Verified Gmail: {scannerMetadata.gmail_address}
             </p>
           )}
         </div>
 
-        <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Access status</h2>
+        <div className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Access status</h2>
           <div
             className={`rounded-none border p-3 ${
               accessState.tone === 'ok'
-                ? 'border-emerald-300 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-900/20'
+                ? 'border-success/30 bg-success/10 dark:border-success/50 dark:bg-success/10'
                 : accessState.tone === 'pending'
-                  ? 'border-amber-300 bg-amber-50 dark:border-amber-900 dark:bg-amber-900/20'
-                  : 'border-[#1a2332]/10 bg-[#f9f7f2] dark:border-[#3a3530] dark:bg-[#1f1b16]'
+                  ? 'border-warning/30 bg-warning/10 dark:border-warning/50 dark:bg-warning/10'
+                  : 'border-border dark:border-dark-border bg-muted/5 dark:bg-muted/5'
             }`}
           >
-            <p className="font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">{accessState.label}</p>
-            <p className="mt-1 text-sm text-[#1a2332]/70 dark:text-[#a89d96]">{accessState.detail}</p>
+            <p className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">{accessState.label}</p>
+            <p className="mt-1 text-sm text-text-secondary dark:text-dark-text-secondary">{accessState.detail}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <a
               href={getProtonAffiliateLink('mail')}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-none border border-[#1a2332] bg-[#1a2332] px-4 py-2 font-mono text-sm font-semibold text-[#f9f7f2] hover:bg-[#2a241d] transition"
+              className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition"
             >
               Unlock options
             </a>
             <a
               href="/#manual-check"
-              className="rounded-none border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-2 font-mono text-sm font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
+              className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
             >
               Manual report
             </a>
@@ -316,48 +316,48 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-        <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Quick actions</h2>
+      <section className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+        <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Quick actions</h2>
         <div className="flex flex-wrap gap-3">
           <button
             onClick={handleStartScan}
             disabled={scanning}
-            className="rounded-none border border-[#1a2332] bg-[#1a2332] px-4 py-2 font-mono text-sm font-semibold text-[#f9f7f2] hover:bg-[#2a241d] disabled:opacity-50 transition"
+            className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 transition"
           >
             {scanning ? 'Scanning…' : 'Start new scan'}
           </button>
           <a
             href="/#manual-check"
-            className="rounded-none border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-2 font-mono text-sm font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
+            className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
           >
             Open manual checker
           </a>
           <a
             href="/cancel"
-            className="rounded-none border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-2 font-mono text-sm font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
+            className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
           >
             Cancellation guides
           </a>
         </div>
       </section>
 
-      <section className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-        <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Recent scans</h2>
+      <section className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+        <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Recent scans</h2>
         {scans.length === 0 ? (
-          <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96]">No scans yet. Connect your inbox and run your first scan.</p>
+          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">No scans yet. Connect your inbox and run your first scan.</p>
         ) : (
           <div className="space-y-3">
             {scans.map((scan) => (
-              <div key={scan.id} className="flex flex-col gap-3 rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] p-4 md:flex-row md:items-center md:justify-between">
+              <div key={scan.id} className="flex flex-col gap-3 rounded-none border border-border dark:border-dark-border p-4 md:flex-row md:items-center md:justify-between">
                 <div className="space-y-1">
-                  <p className="font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">
+                  <p className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">
                     {scan.scan_status === 'complete' ? 'Scan complete' : `Status: ${scan.scan_status}`}
                   </p>
-                  <p className="text-xs text-[#1a2332]/60 dark:text-[#a89d96]">Started {formatDate(scan.created_at)}</p>
+                  <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Started {formatDate(scan.created_at)}</p>
                 </div>
                 <a
                   href={`/results/${scan.id}`}
-                  className="text-sm font-mono font-semibold text-[#c17a5c] dark:text-[#a86650] hover:underline"
+                  className="text-sm font-mono font-semibold text-accent dark:text-accent hover:underline"
                 >
                   View results →
                 </a>
@@ -368,11 +368,11 @@ export default function DashboardPage() {
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Security</h2>
-          <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] p-3">
-            <p className="font-mono text-sm text-[#1a2332] dark:text-[#f5f1ea]">2FA (TOTP)</p>
-            <p className="mt-1 text-xs text-[#1a2332]/70 dark:text-[#a89d96]">
+        <div className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Security</h2>
+          <div className="rounded-none border border-border dark:border-dark-border p-3">
+            <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">2FA (TOTP)</p>
+            <p className="mt-1 text-xs text-text-secondary dark:text-dark-text-secondary">
               {mfaEnabled
                 ? 'Enabled for this account.'
                 : 'Not enabled yet. Add authenticator-based 2FA for stronger sign-in protection.'}
@@ -380,21 +380,21 @@ export default function DashboardPage() {
           </div>
           <a
             href="/auth/signin"
-            className="inline-flex rounded-none border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-2 font-mono text-sm font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
+            className="inline-flex rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
           >
             Open 2FA setup
           </a>
         </div>
 
-        <div className="rounded-none border border-red-300 dark:border-red-900 bg-white dark:bg-[#2a251f] p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-red-700 dark:text-red-400">Delete account</h2>
-          <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96]">
+        <div className="rounded-none border border-error/30 dark:border-error/50 bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+          <h2 className="text-lg font-mono font-semibold text-error dark:text-error">Delete account</h2>
+          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
             This removes your dashboard account and scanner history. This action cannot be undone.
           </p>
           <button
             onClick={handleDeleteAccount}
             disabled={deletingAccount}
-            className="rounded-none border border-red-700 bg-red-700 px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-red-800 disabled:opacity-60 transition"
+            className="rounded-none border border-error bg-error px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-red-600 disabled:opacity-60 transition"
           >
             {deletingAccount ? 'Deleting…' : 'Delete my account'}
           </button>
