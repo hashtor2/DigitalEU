@@ -22,7 +22,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests feedparser python-dotenv anthropic
+          pip install -v requests feedparser python-dotenv anthropic
+
+      - name: Test imports
+        run: |
+          python -c "import requests; print('✓ requests')"
+          python -c "import feedparser; print('✓ feedparser')"
+          python -c "import anthropic; print('✓ anthropic')"
+          python -c "import os; print('✓ os'); print(f'Env vars: TELEGRAM_TOKEN={bool(os.environ.get(\"TELEGRAM_TOKEN\"))}, CLAUDE_API_KEY={bool(os.environ.get(\"CLAUDE_API_KEY\"))}')"
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
 
       - name: Run news agent
         env:

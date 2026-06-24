@@ -17,11 +17,17 @@ if not os.environ.get("GITHUB_ACTIONS"):
     load_dotenv(Path(__file__).parent / ".env")
 
 # ── Config ──────────────────────────────────────────────────────────────────
-TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-CLAUDE_API_KEY = os.environ["CLAUDE_API_KEY"]
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+CLAUDE_API_KEY = os.environ.get("CLAUDE_API_KEY")
 CHAT_ID = os.environ.get("CHAT_ID", "539927333")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
+
+# Validate required env vars
+if not TELEGRAM_TOKEN:
+    raise ValueError("TELEGRAM_TOKEN env var is not set")
+if not CLAUDE_API_KEY:
+    raise ValueError("CLAUDE_API_KEY env var is not set")
 
 EU_TECH_FEEDS = [
     "https://techcrunch.com/tag/europe/feed/",
