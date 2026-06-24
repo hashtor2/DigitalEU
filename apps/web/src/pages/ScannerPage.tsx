@@ -1,108 +1,33 @@
-import { useState, useEffect } from "react";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { supabase } from "@/lib/supabase";
-import { ScannerOnboarding } from "@/components/ScannerOnboarding";
-import { ScannerPaymentModal } from "@/components/ScannerPaymentModal";
-import { ScannerDashboard } from "@/components/ScannerDashboard";
+import { Routes, Route } from 'react-router-dom'
+import ScannerLayout from './scanner/__root'
+import IndexPage from './scanner/index'
+import DemoScanPage from './scanner/scan'
+import SignInPage from './scanner/auth/signin'
+import SignUpPage from './scanner/auth/signup'
+import CallbackPage from './scanner/auth/callback'
+import EmailCallbackPage from './scanner/auth/email-callback'
+import DashboardPage from './scanner/dashboard'
+import ResultsPage from './scanner/results/$scanId'
+import CancellationIndexPage from './scanner/cancel/index'
+import CancellationGuidePage from './scanner/cancel/$id'
+import ReportPage from './scanner/report/$sessionId'
 
 export function ScannerPage() {
-  const [user, setUser] = useState<any>(null);
-  const [verified, setVerified] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        if (!supabase) {
-          setLoading(false);
-          return;
-        }
-        // Check if user is authenticated
-        const { data } = await supabase.auth.getSession();
-        const session = data?.session;
-        setUser(session?.user ?? null);
-
-        if (session?.user) {
-          // Check if email is verified in user_scanner_metadata
-          const { data: metadata } = await supabase
-            .from("user_scanner_metadata")
-            .select("gmail_verified")
-            .eq("user_id", session.user.id)
-            .single();
-
-          setVerified(metadata?.gmail_verified ?? false);
-        }
-      } catch (err) {
-        console.error("Auth check failed:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-canvas dark:bg-dark-canvas flex items-center justify-center">
-        <div className="text-text-primary dark:text-dark-text-primary">Loading...</div>
-      </div>
-    );
-  }
-
-  // Guest mode or unauthenticated
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-canvas dark:bg-dark-canvas flex flex-col">
-        <Header />
-        <main className="flex-1">
-          <ScannerOnboarding onPaymentClick={() => setShowPaymentModal(true)} />
-        </main>
-        <Footer />
-        {showPaymentModal && (
-          <ScannerPaymentModal
-            onClose={() => setShowPaymentModal(false)}
-            onSuccess={() => {
-              setShowPaymentModal(false);
-              // Redirect to verification page or show success state
-            }}
-          />
-        )}
-      </div>
-    );
-  }
-
-  // Authenticated but not verified
-  if (!verified) {
-    return (
-      <div className="min-h-screen bg-canvas dark:bg-dark-canvas flex flex-col">
-        <Header />
-        <main className="flex-1">
-          <ScannerOnboarding onPaymentClick={() => setShowPaymentModal(true)} />
-        </main>
-        <Footer />
-        {showPaymentModal && (
-          <ScannerPaymentModal
-            onClose={() => setShowPaymentModal(false)}
-            onSuccess={() => {
-              setShowPaymentModal(false);
-            }}
-          />
-        )}
-      </div>
-    );
-  }
-
-  // Authenticated and verified - show dashboard
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas flex flex-col">
-      <Header />
-      <main className="flex-1">
-        <ScannerDashboard userId={user.id} />
-      </main>
-      <Footer />
-    </div>
-  );
+    <Routes>
+      <Route element={<ScannerLayout />}>
+        <Route index element={<IndexPage />} />
+        <Route path="scan" element={<DemoScanPage />} />
+        <Route path="auth/signin" element={<SignInPage />} />
+        <Route path="auth/signup" element={<SignUpPage />} />
+        <Route path="auth/callback" element={<CallbackPage />} />
+        <Route path="auth/email-callback" element={<EmailCallbackPage />} />
+        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="results/:scanId" element={<ResultsPage />} />
+        <Route path="report/:sessionId" element={<ReportPage />} />
+        <Route path="cancel" element={<CancellationIndexPage />} />
+        <Route path="cancel/:id" element={<CancellationGuidePage />} />
+      </Route>
+    </Routes>
+  )
 }

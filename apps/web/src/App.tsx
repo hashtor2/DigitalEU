@@ -115,15 +115,9 @@ const router = createBrowserRouter([
     }),
   },
   {
-    path: "/scanner",
+    path: "/scanner/*",
     lazy: async () => ({
       Component: (await import("./pages/ScannerPage")).ScannerPage,
-    }),
-  },
-  {
-    path: "/scanner/results/:scanId",
-    lazy: async () => ({
-      Component: (await import("./pages/ScannerResultsPage")).ScannerResultsPage,
     }),
   },
   {
