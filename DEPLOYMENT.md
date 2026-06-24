@@ -1,11 +1,11 @@
 # DigitalEU.me — Complete Deployment Guide
 
-**Status:** All 6 phases complete ✅  
+**Status:** All 6 phases complete ✅ + Dual Analytics Setup ✅  
 **Commits:** `62016b2` → `b75076f` → `0e6e0ff` → `26dd8ad` → `ec40b75`  
-**Ready:** Full production deployment
+**Ready:** Full production deployment with Plausible (EU) + Vercel Analytics
 
 <!-- FORCE REBUILD: 849c15c - Final deployment with vibrant button colors -->
-**Last Updated:** 2026-06-24 15:45 UTC - Production deployment active
+**Last Updated:** 2026-06-24 18:50 UTC - Dual analytics configuration (Plausible + Vercel Analytics) added
 
 ---
 
@@ -81,19 +81,23 @@ supabase db push
 - `0004_newsletter_and_news_schema.sql` — Newsletter + articles tables
 - `0005_posted_tweets_table.sql` — Posted tweets tracking
 
-### Step 3: Set Environment Variables (Supabase)
+### Step 3: Set Environment Variables (Vercel)
 
-In Supabase Dashboard → Project Settings → Edge Functions:
+In Vercel Dashboard → Project Settings → Environment Variables:
 
 ```
+# Supabase (Backend & Database)
+VITE_SUPABASE_URL=https://[PROJECT_ID].supabase.co
+VITE_SUPABASE_ANON_KEY=[your-anon-key]
+VITE_STRIPE_PUBLIC_KEY=[your-stripe-public-key]
+
+# Analytics - Plausible (Privacy-first, EU-based)
+VITE_PLAUSIBLE_DOMAIN=digitaleu.me
+VITE_PLAUSIBLE_SCRIPT_SRC=https://plausible.io/js/script.js
+
+# API Keys for Edge Functions (Supabase Dashboard only)
 SUPABASE_URL=https://[PROJECT_ID].supabase.co
 SUPABASE_SERVICE_ROLE_KEY=[your-service-role-key]
-
-# Phase 1 (Newsletter)
-PLAUSIBLE_API_KEY=[your-plausible-api-key]
-PLAUSIBLE_EMAIL_LIST_ID=[your-plausible-list-id]
-
-# Phase 5 (Twitter)
 MISTRAL_API_KEY=[your-mistral-api-key]
 TWITTER_BEARER_TOKEN=[your-x-api-bearer-token]
 TWITTER_CRON_TOKEN=[generate-random-secret]
@@ -103,12 +107,19 @@ TWITTER_CRON_TOKEN=[generate-random-secret]
 
 | Variable | Source | Instructions |
 |----------|--------|--------------|
+| `VITE_SUPABASE_URL` | Supabase Dashboard | Settings → API → Project URL |
+| `VITE_SUPABASE_ANON_KEY` | Supabase Dashboard | Settings → API → Anon public key |
+| `VITE_STRIPE_PUBLIC_KEY` | Stripe Dashboard | Developers → API Keys → Publishable key |
+| `VITE_PLAUSIBLE_DOMAIN` | Plausible.io | Dashboard → Copy domain (e.g., digitaleu.me) |
+| `VITE_PLAUSIBLE_SCRIPT_SRC` | Static | Always: `https://plausible.io/js/script.js` |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase Dashboard | Settings → API → Service role key |
-| `PLAUSIBLE_API_KEY` | Plausible.io | Settings → API Tokens → Generate new |
-| `PLAUSIBLE_EMAIL_LIST_ID` | Plausible.io | Email → Subscribers → Copy list ID |
 | `MISTRAL_API_KEY` | Mistral Console | https://console.mistral.ai → API Keys |
 | `TWITTER_BEARER_TOKEN` | X Developer Portal | https://developer.twitter.com → Auth Settings |
 | `TWITTER_CRON_TOKEN` | Generate locally | `openssl rand -hex 32` or UUID |
+
+**Note on Analytics:**
+- `VITE_PLAUSIBLE_*` variables are for the frontend (browser) — applied to all environments
+- Vercel Analytics is **auto-enabled** and requires no configuration — it reads the Vercel deployment context automatically
 
 ### Step 4: Deploy Edge Functions
 
@@ -186,7 +197,124 @@ VITE_SUPABASE_URL=https://[PROJECT_ID].supabase.co
 VITE_SUPABASE_ANON_KEY=[your-anon-key]
 ```
 
-### Step 7: Post-Deployment Verification
+### Step 7: Configure Analytics
+
+DigitalEU.me uses a **dual analytics setup** for comprehensive data collection while maintaining the project's EU-first privacy commitment:
+
+#### Analytics Stack
+
+| System | Purpose | Region | Config | Status |
+|--------|---------|--------|--------|--------|
+| **Plausible** | Privacy-first, EU-compliant tracking | 🇪🇪 Estonia (EU) | `VITE_PLAUSIBLE_DOMAIN` | Required |
+| **Vercel Analytics** | Hosting-integrated Web Vitals & performance | Multi-region | Auto-enabled | Optional |
+
+#### A. Plausible Configuration (Required)
+
+**Setup Plausible account:**
+1. Go to https://plausible.io/register
+2. Create account, verify email
+3. Add site: `digitaleu.me` (and optionally `scanner.digitaleu.me`)
+
+**Get Plausible credentials:**
+1. Dashboard → Settings → Copy **Domain** (e.g., `digitaleu.me`)
+2. Settings → API → Generate new API token (if using API features later)
+
+**Configure in Vercel:**
+1. Go to Vercel Dashboard → Project: `digitaleu.me` → Settings → Environment Variables
+2. Add:
+   ```
+   VITE_PLAUSIBLE_DOMAIN=digitaleu.me
+   VITE_PLAUSIBLE_SCRIPT_SRC=https://plausible.io/js/script.js
+   ```
+3. Apply to: **Production, Preview, Development**
+4. Deploy (or redeploy if already deployed)
+
+**Verify Plausible is tracking:**
+- Wait 30 seconds after deployment
+- Visit https://digitaleu.me in a browser
+- Go to Plausible Dashboard → digitaleu.me
+- You should see 1 page view appear
+- Click around the site; page views should increment
+- Check affiliate link clicks tracked as "Affiliate Click" events
+
+**Plausible Integration Details (for reference):**
+- Script automatically loads in production (`import.meta.env.PROD`)
+- Affiliate click tracking: `trackAffiliateClick(provider)` fires "Affiliate Click" event
+- No environment configuration needed locally; Plausible is production-only
+- See [apps/web/src/App.tsx](../apps/web/src/App.tsx#L135-L165) for implementation
+
+#### B. Vercel Analytics Configuration (Auto-Enabled)
+
+**What you get automatically:**
+- Web Vitals metrics (LCP, INP, CLS) on page load
+- Performance traces for slow page loads
+- Auto-collected on all Vercel deployments
+- No configuration needed; auto-detects `VERCEL_ENV`
+
+**Verify Vercel Analytics is working:**
+1. Deploy changes to Vercel (or wait for auto-deploy)
+2. Go to Vercel Dashboard → Project: `digitaleu.me` → Analytics tab
+3. Wait 30 seconds, then navigate through the site
+4. You should see:
+   - **Real Experience Score**: Overall page performance
+   - **Core Web Vitals**: LCP, INP, CLS metrics
+   - **Edge Network**: Geographic data
+5. Click on pages to see detailed breakdown
+
+**Vercel Analytics Integration Details (for reference):**
+- React component: `<Analytics />` from `@vercel/analytics/react`
+- Added to [apps/web/src/App.tsx](../apps/web/src/App.tsx) and [apps/scanner/src/App.tsx](../apps/scanner/src/App.tsx)
+- No environment variables needed
+- Automatically sends data only on Vercel deployments; inactive in local dev
+
+#### C. Data Handling & Privacy
+
+**Why dual analytics?**
+- **Plausible** (EU) = Primary system for business metrics (affiliate tracking, user engagement)
+- **Vercel Analytics** (US) = Supplementary system for performance/Web Vitals (hosting provider integration)
+
+**User Privacy:**
+- Plausible: Cookieless, GDPR-compliant, no personal data
+- Vercel Analytics: Collects anonymized Web Vitals only
+- Both: No user IP logging, no tracking across sites
+- Document in Privacy Policy: "We use Plausible (EU) and Vercel Analytics for aggregated, anonymized performance data"
+
+**Data Retention:**
+- Plausible: 90 days default (adjustable in settings)
+- Vercel Analytics: 30 days default (adjustable in Vercel dashboard)
+
+#### D. Monitoring Both Systems
+
+**Weekly review:**
+```
+Plausible Dashboard (digitaleu.me):
+  - Total page views
+  - Bounce rate
+  - Top pages
+  - Affiliate click events
+
+Vercel Dashboard (Analytics tab):
+  - Real Experience Score (target: >75)
+  - Core Web Vitals (LCP <2.5s, INP <200ms, CLS <0.1)
+  - Top slow pages
+  - Traffic by region
+```
+
+**If Plausible not tracking:**
+- Check: `VITE_PLAUSIBLE_DOMAIN` set on Vercel
+- Verify: Site added in Plausible account
+- Test: `window.plausible` defined in browser console
+- Check: Content blockers not blocking plausible.io
+
+**If Vercel Analytics not tracking:**
+- Verify: Deployment is on Vercel (not self-hosted)
+- Check: `<Analytics />` component rendered in React tree
+- Confirm: `@vercel/analytics` installed (`npm list @vercel/analytics`)
+- Test: No errors in browser console
+
+---
+
+### Step 8: Post-Deployment Verification
 
 #### Manual Tests
 
@@ -255,7 +383,8 @@ SELECT COUNT(*) FROM posted_tweets;
 | **Database Schema** | ✅ Ready | 4 migrations prepared, ready to deploy |
 | **Edge Functions** | ✅ Ready | 6 functions created, code verified |
 | **Cron Jobs** | ⏳ Pending | Need manual SQL execution in Supabase |
-| **Env Variables** | ⏳ Pending | Need values from Mistral, X API, Plausible |
+| **Env Variables** | ⏳ Pending | Need values from Mistral, X API, Plausible, Stripe |
+| **Analytics** | ✅ Ready | Plausible + Vercel Analytics integrated; config required |
 | **Web App** | ✅ Ready | Latest build successful, push to Vercel |
 | **DNS** | ✅ Ready | digitaleu.me domain registered, hosted via Spaceship |
 
@@ -271,10 +400,27 @@ SELECT COUNT(*) FROM posted_tweets;
 - [x] Bearer token verification on all Cron jobs
 - [x] No hardcoded API keys
 - [x] CORS headers properly set
+- [x] Analytics: Plausible (EU, GDPR-compliant, cookieless) configured
+- [x] Analytics: Vercel Analytics sends only anonymized Web Vitals
+- [x] Privacy: No personal data collected in analytics
 
 ---
 
 ## 🎯 Post-Deployment Monitoring
+
+### Analytics Verification (First 30 seconds)
+1. **Plausible:**
+   - Visit https://digitaleu.me
+   - Open Plausible Dashboard → digitaleu.me
+   - Confirm page view appears (~30 sec delay)
+   - Click through site; verify page views increment
+   - Check affiliate link clicks tracked as events
+
+2. **Vercel Analytics:**
+   - Go to Vercel Dashboard → digitaleu.me → Analytics tab
+   - Confirm data appears (~30 sec delay)
+   - Check Real Experience Score and Core Web Vitals metrics
+   - Navigate pages; verify metrics update
 
 ### First Week
 1. Monitor Supabase Cron job logs
@@ -282,14 +428,16 @@ SELECT COUNT(*) FROM posted_tweets;
    SELECT * FROM pg_cron.job_cache;
    ```
 2. Check error rates in Edge Functions dashboard
-3. Monitor newsletter signup rate
+3. Monitor newsletter signup rate (via Plausible or database)
 4. Verify X tweets posting daily at 09:00 UTC
+5. Track analytics data growth in both Plausible and Vercel
 
 ### Ongoing
 - Monitor Supabase database usage
 - Check X API rate limits (450 tweets/15 min should be fine)
-- Track newsletter subscriber growth
-- Monitor page performance (Plausible analytics)
+- Track newsletter subscriber growth via Plausible or database
+- Monitor page performance (Vercel Analytics Web Vitals)
+- Review Plausible for top pages, bounce rates, affiliate conversions
 
 ---
 
