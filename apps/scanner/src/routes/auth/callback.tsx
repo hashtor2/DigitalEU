@@ -28,7 +28,7 @@ export default function CallbackPage() {
         <div className="rounded-lg border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-900/20 p-6">
           <h2 className="mb-2 text-lg font-mono font-semibold text-red-900 dark:text-red-400">Authentication failed</h2>
           <p className="text-sm text-red-700 dark:text-red-300 mb-4">{error}</p>
-          <a href="/auth/signin" className="inline-block text-sm text-[#c17a5c] dark:text-[#a86650] hover:underline">
+          <a href="/auth/signin" className="inline-block text-sm text-green dark:text-green-dark hover:underline">
             Try signing in again
           </a>
         </div>
@@ -39,7 +39,7 @@ export default function CallbackPage() {
   return (
     <div className="flex items-center justify-center">
       <div className="text-center space-y-4">
-        <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] dark:border-[#a86650] border-t-transparent rounded-full mx-auto"></div>
+        <div className="animate-spin h-8 w-8 border-4 border-green dark:border-green-dark border-t-transparent rounded-full mx-auto"></div>
         <p className="text-[#1a2332]/70 dark:text-[#a89d96]">Completing authentication...</p>
       </div>
     </div>

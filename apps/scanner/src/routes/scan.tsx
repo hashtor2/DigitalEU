@@ -189,8 +189,8 @@ export default function DemoScanPage() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center space-y-4">
-          <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] dark:border-[#a86650] border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-[#1a2332]/70 dark:text-[#a89d96] font-mono">Loading demo results...</p>
+          <div className="animate-spin h-8 w-8 border-4 border-green dark:border-green-dark border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-black/70 dark:text-slate-400 font-mono">Loading demo results...</p>
         </div>
       </div>
     )
@@ -200,32 +200,32 @@ export default function DemoScanPage() {
     <div className="space-y-8">
       <section className="space-y-6">
         <div className="space-y-3">
-          <h1 className="text-3xl sm:text-4xl font-mono font-bold text-[#1a2332] dark:text-[#f5f1ea] leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-mono font-bold text-black dark:text-white leading-tight">
             Sample scan results
           </h1>
-          <p className="text-base text-[#1a2332]/70 dark:text-[#a89d96] max-w-2xl">
+          <p className="text-base text-black/70 dark:text-slate-400 max-w-2xl">
             This is what a real inbox scan looks like. We found {totalServices} services across your typical email patterns. Scan your own Gmail or Outlook to see which services are actually connected to your inbox.
           </p>
         </div>
 
         <div className="grid grid-cols-3 gap-4 md:gap-6">
           <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-4">
-            <p className="text-3xl font-mono font-bold text-[#1a2332] dark:text-[#f5f1ea]">{totalServices}</p>
-            <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] mt-1">Services detected</p>
+            <p className="text-3xl font-mono font-bold text-black dark:text-white">{totalServices}</p>
+            <p className="text-sm text-black/70 dark:text-slate-400 mt-1">Services detected</p>
           </div>
-          <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-4">
-            <p className="text-3xl font-mono font-bold text-[#c17a5c] dark:text-[#a86650]">18</p>
-            <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] mt-1">EU alternatives</p>
+          <div className="rounded-none border border-black/10 dark:border-slate-700 bg-white dark:bg-navy-dark p-4">
+            <p className="text-3xl font-mono font-bold text-green dark:text-green">18</p>
+            <p className="text-sm text-black/70 dark:text-slate-400 mt-1">EU alternatives</p>
           </div>
           <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-4">
             <p className="text-3xl font-mono font-bold text-[#10b981]">💪</p>
-            <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] mt-1">High risk</p>
+            <p className="text-sm text-black/70 dark:text-slate-400 mt-1">High risk</p>
           </div>
         </div>
 
         <div className="rounded-none border border-[#d9d3c8] bg-[#faf8f4] dark:border-[#2a251f] dark:bg-[#f4efe6]/5 p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">This is just a sample</h2>
-          <p className="text-sm text-[#1a2332]/70 dark:text-[#6f655c]">
+          <h2 className="text-lg font-mono font-semibold text-black dark:text-white">This is just a sample</h2>
+          <p className="text-sm text-black/70 dark:text-slate-400">
             Your actual scan will be customized based on what&apos;s really in your inbox. Connect Gmail or Outlook to get your personalized report with recommendations tailored to your actual service usage.
           </p>
           <div className="flex flex-col gap-3 pt-2">
@@ -246,11 +246,11 @@ export default function DemoScanPage() {
       </section>
 
       <section className="space-y-6">
-        <h2 className="text-2xl font-mono font-bold text-[#1a2332] dark:text-[#f5f1ea]">Services by category</h2>
+        <h2 className="text-2xl font-mono font-bold text-black dark:text-white">Services by category</h2>
 
         {results.map((group) => (
           <div key={group.category} className="space-y-3">
-            <h3 className="text-lg font-mono font-semibold text-[#1a2332]/70 dark:text-[#a89d96]">
+            <h3 className="text-lg font-mono font-semibold text-black/70 dark:text-slate-400">
               {categoryLabels[group.category] || group.category}
             </h3>
 
@@ -259,7 +259,7 @@ export default function DemoScanPage() {
                 <a
                   key={service.service_id}
                   href={`/cancel/${service.service_id}`}
-                  className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-4 hover:border-[#c17a5c]/50 dark:hover:border-[#a86650]/50 transition group"
+                  className="rounded-none border border-black/10 dark:border-slate-700 bg-white dark:bg-navy-dark p-4 hover:border-green/50 dark:hover:border-green-dark/50 transition group"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3 flex-1">
@@ -274,15 +274,15 @@ export default function DemoScanPage() {
                         />
                       )}
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea] group-hover:text-[#c17a5c] dark:group-hover:text-[#a86650] transition">
+                        <h4 className="font-mono font-semibold text-black dark:text-white group-hover:text-green dark:group-hover:text-green-dark transition">
                           {service.name}
                         </h4>
-                        <p className="text-xs text-[#1a2332]/60 dark:text-[#a89d96] mt-1">
+                        <p className="text-xs text-black/60 dark:text-slate-400 mt-1">
                           {Math.round(service.confidence * 100)}% match
                         </p>
                       </div>
                     </div>
-                    <span className="text-xs font-mono text-[#c17a5c] dark:text-[#a86650] flex-shrink-0">
+                    <span className="text-xs font-mono text-green dark:text-green-dark flex-shrink-0">
                       Learn how to cancel →
                     </span>
                   </div>
@@ -293,11 +293,11 @@ export default function DemoScanPage() {
         ))}
       </section>
 
-      <section className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-        <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">
+      <section className="rounded-none border border-black/10 dark:border-slate-700 bg-white dark:bg-navy-dark p-6 space-y-4">
+        <h2 className="text-lg font-mono font-semibold text-black dark:text-white">
           Want your real results?
         </h2>
-        <p className="text-[#1a2332]/70 dark:text-[#a89d96]">
+        <p className="text-black/70 dark:text-slate-400">
           Connect your email in less than 2 minutes. We read metadata only (sender addresses and subject lines), never the contents of your emails. Your token is stored safely and cleared from our systems once the scan is complete.
         </p>
         <div className="flex flex-col gap-3 pt-2">
