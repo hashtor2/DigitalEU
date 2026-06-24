@@ -8,11 +8,24 @@ export default function IndexPage() {
   const { createReport } = useReport()
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [connectedProvider, setConnectedProvider] = useState<string | null>(null)
+  const [detectedServices, setDetectedServices] = useState<string[]>([])
 
   useEffect(() => {
     const provider = sessionStorage.getItem('email_provider')
     const token = sessionStorage.getItem('email_access_token')
     setConnectedProvider(provider && token ? provider : null)
+    
+    // Load detected services from sessionStorage if available
+    const detected = sessionStorage.getItem('detected_services')
+    if (detected) {
+      try {
+        const services = JSON.parse(detected)
+        setDetectedServices(services)
+        setSelected(new Set(services))
+      } catch (e) {
+        console.error('Failed to parse detected services:', e)
+      }
+    }
   }, [])
 
   const handleToggle = (serviceId: string) => {
@@ -84,30 +97,30 @@ export default function IndexPage() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-2xl rounded-none border border-[#d9d3c8] bg-[#faf8f4] px-6 py-5 text-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] dark:border-[#2a251f] dark:bg-[#f4efe6]">
-          <p className="mb-4 font-mono text-sm uppercase tracking-[0.22em] text-[#1a1815]/60 dark:text-[#5e5448]">
+        <div className="mx-auto max-w-2xl rounded-none border border-slate-200 bg-white px-6 py-5 text-center shadow-[0_20px_60px_rgba(0,0,0,0.08)] dark:border-slate-700 dark:bg-navy-dark">
+          <p className="mb-4 font-mono text-sm uppercase tracking-[0.22em] text-black/60 dark:text-slate-400">
             Scan your inbox
           </p>
           {connectedProvider && (
-            <p className="mb-3 text-sm font-mono text-[#1a1815]/70 dark:text-[#5e5448]">
+            <p className="mb-3 text-sm font-mono text-black/70 dark:text-slate-400">
               Connected via {connectedProvider === 'gmail' ? 'Gmail' : 'Outlook'}.
             </p>
           )}
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
             <Link
               to="/auth/signin"
-              className="inline-flex items-center justify-center rounded-none border border-[#1a1815] bg-[#1a1815] px-8 py-3.5 font-mono text-sm font-semibold text-[#faf8f5] transition hover:bg-[#2a241d] dark:border-[#2a251f] dark:bg-[#2a251f] dark:text-[#faf8f5]"
+              className="inline-flex items-center justify-center rounded-none border border-black bg-black px-8 py-3.5 font-mono text-sm font-semibold text-white transition hover:bg-black/80 dark:border-slate-700 dark:bg-slate-700 dark:text-white"
             >
               {connectedProvider ? 'Reconnect inbox' : 'Scan my inbox'}
             </Link>
             <Link
               to="/scan"
-              className="inline-flex items-center justify-center rounded-none border border-[#d9d3c8] bg-transparent px-8 py-3.5 font-mono text-sm font-semibold text-[#1a1815] transition hover:bg-[#d9d3c8]/20 dark:border-[#2a251f] dark:text-[#faf8f5] dark:hover:bg-[#2a251f]"
+              className="inline-flex items-center justify-center rounded-none border border-slate-200 bg-transparent px-8 py-3.5 font-mono text-sm font-semibold text-black transition hover:bg-slate-100 dark:border-slate-700 dark:text-white dark:hover:bg-slate-700"
             >
               Try the demo
             </Link>
           </div>
-          <p className="mt-4 text-sm leading-relaxed text-[#1a1815]/70 dark:text-[#6f655c]">
+          <p className="mt-4 text-sm leading-relaxed text-black/70 dark:text-slate-400">
             Connect Gmail or Outlook to see which services are linked to your email.
           </p>
         </div>
@@ -115,10 +128,10 @@ export default function IndexPage() {
 
       <section id="manual-check" className="space-y-6">
         <div className="max-w-3xl space-y-2">
-          <h2 className="text-2xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5]">
+          <h2 className="text-2xl font-mono font-bold text-black dark:text-white">
             Manual service check
           </h2>
-          <p className="text-[#1a1815]/70 dark:text-[#a89d96]">
+          <p className="text-black/70 dark:text-slate-400">
             Search and select the services you already know you use. This stays free and gives you a fast report.
           </p>
         </div>
@@ -134,13 +147,13 @@ export default function IndexPage() {
           <button
             onClick={handleGenerateReport}
             disabled={selected.size === 0}
-            className="flex-1 rounded-none border border-[#1a1815] bg-[#1a1815] px-6 py-3 font-mono font-semibold text-[#faf8f5] transition hover:bg-[#2a241d] disabled:cursor-not-allowed disabled:opacity-50 dark:border-[#2a251f] dark:bg-[#2a251f] dark:hover:bg-[#3a3128]"
+            className="flex-1 rounded-none border border-black bg-black px-6 py-3 font-mono font-semibold text-white transition hover:bg-black/80 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600"
           >
             Generate my report ({selected.size})
           </button>
           <button
             onClick={handleClearAll}
-            className="rounded-none border border-[#d9d3c8] bg-transparent px-6 py-3 font-mono font-semibold text-[#1a1815] transition hover:bg-[#f3efe7] dark:border-[#2a251f] dark:text-[#faf8f5] dark:hover:bg-[#2a251f]"
+            className="rounded-none border border-slate-200 bg-transparent px-6 py-3 font-mono font-semibold text-black transition hover:bg-slate-100 dark:border-slate-700 dark:text-white dark:hover:bg-slate-700"
           >
             Clear selection
           </button>

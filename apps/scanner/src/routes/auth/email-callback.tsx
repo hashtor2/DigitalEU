@@ -84,12 +84,38 @@ export default function EmailCallbackPage() {
           sessionStorage.setItem('email_token_expires', String(Date.now() + expiresIn * 1000))
         }
 
-        // 6. Clean up PKCE parameters from sessionStorage
+        // 6. Call scan-email Edge Function to get detected services
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+        const scanUrl = `${supabaseUrl}/functions/v1/scan-email`
+        
+        const scanResponse = await fetch(scanUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${supabaseAnonKey}`,
+          },
+          body: JSON.stringify({
+            accessToken,
+            provider,
+            maxResults: 100,
+          }),
+        })
+
+        let detectedServices = []
+        if (scanResponse.ok) {
+          const scanData = await scanResponse.json()
+          detectedServices = scanData.detectedServices || []
+          sessionStorage.setItem('detected_services', JSON.stringify(detectedServices))
+        } else {
+          console.warn('Scan failed, proceeding anyway:', scanResponse.status)
+        }
+
+        // 7. Clean up PKCE parameters from sessionStorage
         sessionStorage.removeItem('oauth_code_verifier')
         sessionStorage.removeItem('oauth_provider')
         sessionStorage.removeItem('oauth_state')
 
-        // 7. Return to the scanner home page with the inbox session active
+        // 8. Navigate to home page with inbox session active
         navigate('/', { replace: true })
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Unknown error during authentication'
@@ -105,7 +131,7 @@ export default function EmailCallbackPage() {
     return (
       <div className="mx-auto max-w-md space-y-6 py-12">
         <div className="space-y-2">
-          <h1 className="text-3xl font-mono font-bold text-[#1a2332] dark:text-[#f5f1ea]">
+          <h1 className="text-3xl font-mono font-bold text-black dark:text-white">
             Authentication failed
           </h1>
         </div>
@@ -123,7 +149,7 @@ export default function EmailCallbackPage() {
           </a>
         </div>
 
-        <div className="rounded-lg border border-[#2d3e2d]/10 dark:border-[#3a3530] bg-[#2d3e2d]/5 dark:bg-[#2d3e2d]/20 p-4 text-xs text-[#1a2332]/70 dark:text-[#a89d96]">
+        <div className="rounded-lg border border-green/10 dark:border-slate-700 bg-green/5 dark:bg-slate-700/20 p-4 text-xs text-black/70 dark:text-slate-400">
           <p className="font-mono font-semibold mb-2">Troubleshooting</p>
           <ul className="space-y-2 text-xs">
             <li>• Ensure you're signing in with the correct email provider (Gmail or Outlook)</li>
@@ -139,8 +165,8 @@ export default function EmailCallbackPage() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center space-y-4">
-        <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] dark:border-[#a86650] border-t-transparent rounded-full mx-auto"></div>
-        <p className="text-[#1a2332]/70 dark:text-[#a89d96] font-mono">
+        <div className="animate-spin h-8 w-8 border-4 border-green dark:border-green-dark border-t-transparent rounded-full mx-auto"></div>
+        <p className="text-black/70 dark:text-slate-400 font-mono">
           {loading ? 'Completing email authentication...' : 'Redirecting...'}
         </p>
       </div>
