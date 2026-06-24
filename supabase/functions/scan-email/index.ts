@@ -170,6 +170,7 @@ async function scanOutlookServer(
   } catch (error) {
     throw error;
   }
+}
 
 serve(async (req) => {
   // Handle CORS preflight

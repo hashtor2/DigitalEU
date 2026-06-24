@@ -300,6 +300,15 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 - `docs/SECURITY.md` — sikkerhets- og personverndoktrine + commit-sjekkliste.
 - `packages/shared/src/types.ts` — datamodellen (Alternative, StorageMode, DetectedAccount, FillEmailMessage).
 
+**Affiliate / partnere:**
+- `docs/AFFILIATE_PROGRAM.md` — **management-hub** og enkeltkilde til sannhet: aktive
+  partnere, pipeline, hvor man melder seg på, kvartalsvis sjekkliste. Eies av
+  Head of Partnerships-agenten.
+- `packages/shared/src/affiliateLinks.ts` — **eneste** kodeplassering for affiliate-lenker
+  (`AFFILIATE_LINKS`-mappet). Web + scanner importerer herfra via `@digitaleu/shared`.
+- `docs/affiliate-links.md` — rå lenkearkiv (alle Proton-promovarianter). Backup; hubben er driftsvisningen.
+- `docs/agents/07-partnerships.md` — agent-personaen som eier affiliate-programmet.
+
 **Scanner & operasjonal:**
 - `docs/SCANNER_*.md` — scanner-spesifikasjoner, implementasjon, deployment.
 - `docs/OAUTH_SETUP_GUIDE.md` — Gmail/Outlook OAuth setup for lokalt dev + prod.

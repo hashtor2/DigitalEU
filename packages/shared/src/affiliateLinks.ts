@@ -29,31 +29,33 @@ export const AFFILIATE_LINKS: Record<string, AffiliateLink> = {
   },
   'proton-vpn': {
     alternativeId: 'proton-vpn',
-    url: 'https://go.getproton.me/SH1mR',
+    // World Cup 2026 — 70% off (aktiv kampanje juni–juli 2026).
+    // Etter turneringen: bytt til default https://go.getproton.me/SH1mQ
+    url: 'https://go.getproton.me/SH2jp',
     verified: true,
     type: 'affiliate',
-    lastUpdated: '2026-06-20',
+    lastUpdated: '2026-06-25',
   },
   'proton-drive': {
     alternativeId: 'proton-drive',
-    url: 'https://go.getproton.me/SH1mR',
+    url: 'https://go.getproton.me/SH1mO',
     verified: true,
     type: 'affiliate',
-    lastUpdated: '2026-06-20',
+    lastUpdated: '2026-06-25',
   },
   'proton-pass': {
     alternativeId: 'proton-pass',
-    url: 'https://go.getproton.me/SH1mR',
+    url: 'https://go.getproton.me/SH1mP',
     verified: true,
     type: 'affiliate',
-    lastUpdated: '2026-06-20',
+    lastUpdated: '2026-06-25',
   },
   'pcloud': {
     alternativeId: 'pcloud',
-    url: 'https://partner.pcloud.com/r/digitaleu',
+    url: 'https://partner.pcloud.com/r/82103',
     verified: true,
     type: 'affiliate',
-    lastUpdated: '2026-06-20',
+    lastUpdated: '2026-06-25',
   },
   'codeberg': {
     alternativeId: 'codeberg',

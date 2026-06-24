@@ -58,9 +58,9 @@ Dashboard: Proton Partners portal · all links are `go.getproton.me` short-links
 | Product | id (code) | Commission | Correct link | In code? |
 |---|---|---|---|---|
 | Proton Mail | `proton-mail` | 30% | `https://go.getproton.me/SH1mR` | ✅ |
-| Proton VPN | `proton-vpn` | 40% | `https://go.getproton.me/SH2jp` *(World Cup 70% off, active Jun–Jul 2026)* | ❌ points to `SH1mR` |
-| Proton Pass | `proton-pass` | 30% | `https://go.getproton.me/SH1mP` | ❌ points to `SH1mR` |
-| Proton Drive | `proton-drive` | 30% | `https://go.getproton.me/SH1mO` | ❌ points to `SH1mR` |
+| Proton VPN | `proton-vpn` | 40% | `https://go.getproton.me/SH2jp` *(World Cup 70% off, active Jun–Jul 2026)* | ✅ (fixed 2026-06-25) |
+| Proton Pass | `proton-pass` | 30% | `https://go.getproton.me/SH1mP` | ✅ (fixed 2026-06-25) |
+| Proton Drive | `proton-drive` | 30% | `https://go.getproton.me/SH1mO` | ✅ (fixed 2026-06-25) |
 
 > **Campaign note:** after the World Cup tournament (ends July 2026), switch `proton-vpn`
 > back to the default `https://go.getproton.me/SH1mQ`. Alternate promo links are catalogued
@@ -69,7 +69,7 @@ Dashboard: Proton Partners portal · all links are `go.getproton.me` short-links
 ### pCloud (CPS) — account: ✅ live
 | Product | id (code) | Correct link | In code? |
 |---|---|---|---|
-| pCloud | `pcloud` | `https://partner.pcloud.com/r/82103` | ❌ points to `r/digitaleu` |
+| pCloud | `pcloud` | `https://partner.pcloud.com/r/82103` | ✅ (fixed 2026-06-25) |
 
 ### RepoCloud (CPS) — account: ✅ live
 | Product | id (code) | Correct link | In code? |
@@ -141,9 +141,9 @@ Fill the link as you confirm each program. Prefer EU-origin vendors (principle #
 
 ## 7. Cleanup backlog (hand to Lead Engineer)
 
-1. **Fix Proton links** in `packages/shared/src/affiliateLinks.ts`: VPN→`SH2jp`, Pass→`SH1mP`,
-   Drive→`SH1mO` (currently all `SH1mR`). Update `lastUpdated`.
-2. **Fix pCloud ref**: `r/digitaleu` → `r/82103`.
+1. ~~**Fix Proton links** in `packages/shared/src/affiliateLinks.ts`: VPN→`SH2jp`, Pass→`SH1mP`,
+   Drive→`SH1mO`.~~ ✅ done 2026-06-25.
+2. ~~**Fix pCloud ref**: `r/digitaleu` → `r/82103`.~~ ✅ done 2026-06-25.
 3. **Add RepoCloud**: map `repocloud` → `https://repocloud.io/?ref=mde79e5`.
 4. **Delete** `apps/web/src/lib/affiliateLinks.ts` (stale duplicate). Repoint
    `apps/web/src/components/ScannerOnboarding.tsx` to `getAffiliateUrl(...)` from `@digitaleu/shared`.
