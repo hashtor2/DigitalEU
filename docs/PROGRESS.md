@@ -17,6 +17,24 @@
 
 ---
 
+## Status Snapshot — 2026-06-25
+
+### Completed (email scanner repair)
+- [x] End-to-end inbox scan wired: OAuth → `scan-email` Edge Function → client-side `DOMAIN_MAPPINGS` matching → results UI
+- [x] Guest flow: auto-scan after OAuth → `/scanner/results/guest` (sessionStorage)
+- [x] Authenticated flow: auto-scan after OAuth → persisted `scans` / `scan_results` → `/scanner/results/:scanId`
+- [x] Restored `0009_scanner_schema.sql`; added `0010_scan_results_insert_policy.sql` (RLS insert/update)
+- [x] Removed broken `gmail-scan` call; Outlook scope fixed to `Mail.ReadBasic`
+- [x] OAuth redirect docs updated to `/scanner/auth/email-callback`
+
+### Remaining to test
+- [ ] **Vercel:** add `VITE_STRIPE_PUBLIC_KEY` — run `.\scripts\sync-vercel-stripe-env.ps1` then `vercel --prod`
+- [ ] Register OAuth redirect URIs in Google/Azure consoles (see `docs/OAUTH_SETUP_GUIDE.md`)
+- [ ] Production Gmail/Outlook OAuth + scan smoke test
+- [x] **Supabase secrets:** OAuth + Stripe + service role verified via `supabase secrets list`
+
+---
+
 ## Status Snapshot — 2026-06-24
 
 ### Completed

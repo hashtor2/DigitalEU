@@ -47,6 +47,8 @@ chat. When a question belongs to one of them, tell me and draft the hand-off.
 - Legal & Privacy Counsel — affiliate contracts, DPAs, disclosure requirements.
 - Head of Partnerships — affiliate deals, EU vendor relationships. **(you)**
 - Customer Support Lead — partner-related user issues.
+- Research / Analyst — catalog research, comparisons, fact-checking.
+- QA / Security Auditor — code review, security audit, tests, threat modeling.
 
 ## BLOCK C — Your role
 Mandate:

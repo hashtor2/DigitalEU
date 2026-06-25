@@ -50,5 +50,9 @@ supabase/.branches/
 # Lokale admin-skript som inneholder service_role-nøkkel — ALDRI i repoet
 reset-user.js
 
+# Telegram bot-tokens — ALDRI i repoet. Tokens bor i ~/digitaleu-bots.env (utenfor repo).
+docs/agents/TelegramBotInfo.txt
+*BotInfo*.txt
+
 .env*
 .vercel

@@ -9,15 +9,11 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace @digitaleu/web",
-    "dev:scanner": "npm run dev --workspace @digitaleu/scanner",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "web": "npm run dev --workspace @digitaleu/web",
-    "scanner": "npm run dev --workspace @digitaleu/scanner",
-    "oauth:validate": "node scripts/validate-oauth.mjs",
-    "oauth:test": "npm run oauth:validate && npm run dev:scanner",
-    "oauth:start": "bash scripts/start-oauth-test.sh"
+    "oauth:validate": "node scripts/validate-oauth.mjs"
   },
   "engines": {
     "node": ">=20"

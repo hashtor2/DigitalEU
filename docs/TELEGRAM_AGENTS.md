@@ -145,6 +145,94 @@ scanneren. Harde regler:
 
 ---
 
+## 6.5 Kapabilitetsutforskning — NESTE STEG (før vi skalerer til 10)
+
+> **Beslutning 2026-06-25:** Pause skaleringen til 10 bots. Først utforske hva de
+> **allerede live** agentene (CEO, Marketer, Writer, Designer) kan *kobles til* og
+> *gjøre*. Persona #5–10 er kodeklare (`config.ts` + persona-filer finnes, slot #10
+> byttet til **QA/Security Auditor**); de aktiveres straks tokens legges i env-filen.
+> Verdien ligger nå i å gjøre de fire eksisterende dypere/mer nyttige, ikke å legge
+> til flere bots.
+
+**Hva en agent allerede kan i dag:** headless Claude Code i sitt eget git-worktree
+(`agent/<rolle>`), full verktøytilgang (Read/Write/Edit/Bash/Grep/Glob + git).
+Den committer på sin branch, aldri `main`. Den kan i prinsippet kobles til *alt som
+ligger på VM-en*: repoet (kode/innhold/docs), CLI-er (f.eks. `gh`, `vercel`),
+MCP-servere (Supabase MCP), og eksterne API-er via `curl` med snevert scopede nøkler.
+
+### Writer → publiser en artikkel på nettsiden
+Spørsmålet: «kan jeg si til Writer *skriv en artikkel og publiser den på nettsiden*?»
+Svar: **ja — innholdet er allerede fildrevet, så Writer kan skrive det i dag.** To veier:
+
+- **Vei A — repo-basert (matcher dagens arkitektur, trygg, mulig NÅ).**
+  Innhold bor i repoet:
+  - Guider: data i `apps/web/src/data/guide-content.ts` + indeks-entry i
+    `apps/web/src/pages/GuidesPage.tsx` (`GUIDES`-arrayen), rute `/guides/:id`.
+  - Nyhetsartikler: `NEWS_ARTICLES`-array i `apps/web/src/pages/NewsPage.tsx`.
+
+  Writer skriver artikkelen i sin klone og committer på `agent/writer`.
+  **«Publisering» = du merger branchen → Vercel auto-deployer.** Review-gaten
+  (du merger) er bevart — helt i tråd med sikkerhetsmodellen §6.
+  *Forbedring verdt å gjøre:* refaktorer artikler/guider til rene data-/markdown-
+  filer slik at Writer kun slipper inn **én** innholdsfil + én indeks-entry, uten
+  å røre TSX-logikk. Lavere risiko, renere diff, lettere review.
+
+- **Vei B — DB-basert (helautomatisk «live» uten deploy).**
+  Lag en `articles`-tabell i Supabase og render siden fra den (slik `news_digests`
+  og `daily_news_articles` allerede gjør). Writer kaller en dedikert
+  *publish*-Edge-Function (draft → review → publish) → artikkelen er live uten
+  build/deploy. **MEN dette bryter sikkerhetsgrensen §6.2** (VM-klonen skal *ikke*
+  ha prod-secrets eller DB-tilgang). Krever bevisst design: ingen rå `service_role`
+  på VM-en — kun en snever, scoped funksjon + en redaksjonell review-gate.
+  Behandles som eget designspørsmål, ikke nå.
+
+- **Anbefaling:** start med **Vei A** (mulig i dag, trygt). Vurder Vei B senere.
+
+### Andre integrasjoner å utforske for de eksisterende agentene
+- **`gh` CLI på VM-en:** agentene åpner *faktiske PR-er* automatisk (ikke bare
+  lokale commits) — du reviewer/ merger fra mobilen.
+- **`vercel` CLI:** preview-deploy per branch, så du ser endringen *før* merge.
+- **Supabase MCP (read-only/scoped):** for fremtidige Researcher/QA-oppgaver —
+  aldri med skrivetilgang til prod-data.
+- **Marketer → social:** det finnes allerede Twitter-posting Edge Functions
+  (jf. CLAUDE.md §12) — koble via en scoped funksjon, ikke rå nøkler på VM-en.
+- **Kryss-agent-handoff:** CEO drafter en oppgave til Writer (Fase 4-idé).
+
+### Sjekkliste (denne utforskningsrunden)
+- [x] **Bevis Vei A ende-til-ende** — gjort 2026-06-25: Writer skrev guide
+      «Best European Calendar Apps in 2026», committet på `agent/writer`, pushet,
+      åpnet **PR #1** mot `main`. Ren 2-fils diff (`guide-content.tsx` + `GuidesPage.tsx`).
+- [x] **Installer `gh` på VM-en + agentene åpner PR-er** — gjort 2026-06-25.
+      `gh` 2.95.0 installert; `GH_TOKEN` (fine-grained PAT, Contents+PR R/W) i
+      `digitaleu-bots.env`; `gh auth setup-git` wirer HTTPS-push. Guardrails i
+      `agent.ts` instruerer push + `gh pr create` (med compare-URL som fallback).
+- [x] **Vercel = push-trigget** (besluttet) — INGEN vercel-token på VM-en.
+- [ ] **Vercel-preview gjenstår (2 dashboard-fikser):** (1) commit-epost må være
+      knyttet til GitHub-kontoen — satt til `hashtor2 <yawadabtc@gmail.com>` på VM-en,
+      verifiser at eposten ligger på GitHub-kontoen. (2) Kun **scanner**-prosjektet er
+      koblet til GitHub auto-deploy; **web-app-prosjektet** må kobles til repoet
+      (Vercel → web-prosjekt → Settings → Git, root `apps/web`) for at web-previews skal bygge.
+- [ ] Vurder refaktor: artikler/guider til data/markdown-filer (lettere for Writer).
+- [ ] Beslutt om/når Vei B (CMS-tabell + scoped publish-funksjon) er verdt det.
+
+### Følge-integrasjoner (bygget 2026-06-25)
+- [x] **Kryss-agent-handoff — LIVE.** `/ask <agent> <oppgave>` på enhver bot kjører
+      en annen agent i dens eget worktree/session og svarer i chatten. Eieren er
+      fortsatt i loopen (ingen autonom agent-til-agent-trafikk).
+- [~] **Supabase MCP (read-only) — kodeklart, inert.** `agent.ts` registrerer en
+      `--read-only` Supabase MCP-server kun for `researcher`/`security`, gated på
+      `SUPABASE_ACCESS_TOKEN` (+ valgfri `SUPABASE_PROJECT_REF`, default
+      `mwsalzjsvuvlmshxzbxg`). **Aktiver:** legg tokenet i `digitaleu-bots.env` +
+      restart. ⚠️ Et Supabase PAT er account-scoped; gi det kun til disse to agentene,
+      aldri skrivetilgang — vei det mot §6.2-prinsippet før du slår det på.
+- [~] **Marketer → social — kodeklart, inert.** `bin/social-post.sh` trigger
+      `twitter-daily-post`/`post-to-twitter`; Twitter-nøkkelen blir server-side, agenten
+      sender kun `TWITTER_CRON_TOKEN`. Marketer får verktøyet via en gated guardrail.
+      **Aktiver:** sett `TWITTER_CRON_TOKEN` (samme verdi som i Supabase function-secrets)
+      + `SUPABASE_FUNCTIONS_URL=https://<ref>.supabase.co/functions/v1` i env + restart.
+
+---
+
 ## 7. Byggefaser
 
 ### Fase 0 — Forutsetninger

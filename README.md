@@ -8,7 +8,7 @@ digitaleu.me helps you move out. We map your digital footprint, show you the ris
 
 🌍 **Live at [digitaleu.me](https://www.digitaleu.me)**
 
-✅ **Email Scanner Live** — Try it now at [digitaleu.me/emailscanner](https://www.digitaleu.me/emailscanner)
+✅ **Email Scanner Live** — Unlock at [digitaleu.me/emailscanner](https://www.digitaleu.me/emailscanner), then scan at `/scanner`
 
 If you want to contribute to this project, please contact: torisor@pm.me
 
@@ -18,11 +18,12 @@ If you want to contribute to this project, please contact: torisor@pm.me
 
 **For individuals (`/b2c`):**
 - ✅ **Scan your inbox** to discover which Big Tech services you depend on (LIVE)
-  - Gmail & Outlook OAuth 2.0 support
-  - Backend scans emails server-side, frontend matches 100% client-side
-  - Demo mode available for testing without account
+  - Gmail & Outlook OAuth 2.0 with PKCE
+  - Server-side metadata scan via Supabase Edge Functions; tokens never stored
+  - Embedded scanner at `/scanner/*` inside the web app
 - ✅ **See alternatives matched** to your detected services (LIVE)
-- ⏳ **Personal dashboard** to track migration progress (coming soon)
+- ✅ **Scanner dashboard** — scan history and results at `/scanner/dashboard`
+- ⏳ **Personal migration dashboard** at `/dashboard` (privacy report flow)
 - ⏳ **Browser extension** to autofill new email on external sites (Phase 2)
 
 **For businesses (`/b2b`):**
@@ -31,17 +32,20 @@ If you want to contribute to this project, please contact: torisor@pm.me
 - Hands-on execution support: configuration, data transfer, staff onboarding
 - GDPR & NIS2 compliance built into every recommendation
 
+**Scanner unlock:** Free via [Proton Mail affiliate signup](https://go.getproton.me/SH1mR), or **€5 one-time** via Stripe.
+
 ---
 
 ## Stack
 
 | Layer | Choice | Why |
 |---|---|---|
-| Web app | Vite + React 19 + TypeScript | Fast, type-safe SPA |
-| Styling | Tailwind CSS v4 + shadcn/ui | Utility-first, no runtime |
+| Web app | Vite + React 19 + TypeScript | Fast, type-safe SPA (scanner embedded at `/scanner/*`) |
+| Styling | Tailwind CSS v4 + shadcn/ui | Utility-first, European Digital design system |
 | Backend / DB | Supabase (🇸🇪 Stockholm, eu-north-1) | EU data residency, zero-knowledge ready |
-| Email Scanning | Supabase Edge Functions | Server-side OAuth, client-side matching |
-| Auth | Supabase Auth (planned) | Zero-knowledge encryption for profiles |
+| Email scanning | Supabase Edge Functions (`scan-email`, `exchange-email-code`) | Server-side OAuth, metadata-only |
+| Payments | Stripe Checkout + Edge Function webhook | €5 scanner unlock |
+| Auth | Supabase Auth | Profile mode with client-side encryption (planned) |
 | Hosting | Vercel (under review → 🇫🇷 Clever Cloud / 🇩🇪 Hetzner) | Speed now, sovereignty later |
 | Analytics | Plausible 🇪🇪 | Cookieless, EU-based |
 | Code hosting | **Codeberg 🇩🇪** | We practice what we preach |
@@ -55,76 +59,87 @@ We run on European infrastructure as much as possible. Where we don't yet, it's 
 ```
 digitaleu.me/
 ├── apps/
-│   ├── web/          # SPA — Vite + React + TypeScript + Tailwind
-│   └── extension/    # Chrome/Firefox extension (MV3) — coming in Phase 2
+│   ├── web/                    # SPA — landing, catalogue, embedded scanner (/scanner/*)
+│   └── extension/              # Chrome/Firefox extension (MV3) — Phase 2
 ├── packages/
-│   └── shared/       # Types, alternatives catalogue, market segmentation
-└── docs/             # Architecture decisions, security doctrine, affiliate links
+│   └── shared/                 # Types, alternatives catalogue, affiliate links
+├── supabase/                   # Migrations + Edge Functions (Deno)
+├── tools/telegram-agents/      # Telegram-controlled AI agent orchestrator
+├── scripts/                    # OAuth validation & dev helpers
+└── docs/                       # Architecture, security, progress log
 ```
 
 ---
 
 ## Getting started
 
-**Try the scanner:**
-```bash
-# Production (live now)
-https://www.digitaleu.me/emailscanner
+**Try the scanner (production):**
+```
+https://www.digitaleu.me/emailscanner   → unlock gate
+https://www.digitaleu.me/scanner        → OAuth scan flow
 ```
 
 **Develop locally:**
 ```bash
-npm install     # install all workspaces
-npm run dev     # start web app → http://localhost:5186
-npm run build   # build all packages for production
+npm install                          # install all workspaces
+cp apps/web/.env.example apps/web/.env.local   # fill in Supabase + OAuth keys
+npm run dev                          # web app → http://localhost:5173
+npm run build                        # build all workspaces
+npm run oauth:validate               # verify OAuth file structure
 ```
 
-Scanner development uses:
-- Frontend: React 19 + TypeScript hooks
-- Backend: Supabase Edge Functions (Deno)
-- Test: Demo mode at `/emailscanner?demo=true` (no OAuth needed)
+Scanner routes live under `apps/web/src/pages/scanner/`. OAuth callback: `/scanner/auth/email-callback`.
+
+See [docs/OAUTH_SETUP_GUIDE.md](docs/OAUTH_SETUP_GUIDE.md) and [OAUTH_QUICK_REFERENCE.md](OAUTH_QUICK_REFERENCE.md) for provider setup.
 
 ---
 
-## Scanner Security & Privacy
+## Scanner security & privacy
 
-The email scanner is built on privacy-by-design principles:
+Built on privacy-by-design principles:
 
-- **100% Client-Side Matching** — Backend returns only sender domains; all matching against alternatives happens in your browser
-- **Minimal OAuth Scopes** — Gmail: `gmail.metadata` only (no email bodies), Outlook: `Mail.ReadBasic` (metadata only)
-- **No Token Storage** — Access tokens are extracted from URL hash, used once, then discarded
-- **Zero-Knowledge Profile Mode** — Results encrypted client-side (AES-256-GCM + PBKDF2) before reaching our servers
-- **Guest Mode** — All results stored in `sessionStorage`, cleared when you close the tab
+- **Metadata-only** — Gmail: `gmail.metadata` scope; Outlook: `Mail.ReadBasic`. No email bodies.
+- **Server-side scan** — Edge Function processes inbox metadata; access tokens are not persisted.
+- **Minimal OAuth scopes** — OAuth 2.0 with PKCE; user can revoke access anytime.
+- **Guest mode** — Results in `sessionStorage`, cleared when the tab closes.
+- **Profile mode (planned)** — Client-side encryption (AES-256-GCM + PBKDF2) before storage.
 
-See [docs/OAUTH_SETUP_GUIDE.md](docs/OAUTH_SETUP_GUIDE.md) for technical details.
+Full doctrine: [docs/SECURITY.md](docs/SECURITY.md)
 
 ---
 
-1. **Privacy by design.** Inbox scanning runs 100% client-side. We never see your emails.
-2. **You own your data.** Guest mode: everything in `sessionStorage`, gone when you close the tab. Profile mode: client-side encrypted before it reaches our servers.
-3. **We eat our own cooking.** We use European tools ourselves. This repo is on Codeberg. Our database is in Sweden.
+## Principles
+
+1. **Privacy by design.** Metadata-only scanning; tokens never stored server-side.
+2. **You own your data.** Guest mode: everything in `sessionStorage`. Profile mode: encrypted before it reaches our servers.
+3. **We eat our own cooking.** European tools where we can. This repo is on Codeberg. Database in Sweden.
 4. **No dark patterns.** We recommend what fits you, not what pays us most.
 
 ---
 
 ## Business model
 
-Affiliate commissions from European providers (Proton: 30–40% CPS, and growing). No ads, no data selling, no VC pressure.
+Affiliate commissions from European providers (Proton and others). No ads, no data selling.
 
-B2B consulting for companies migrating away from Big Tech — stack audits, migration roadmaps, execution support.
+Scanner: free via partner signup **or** €5 one-time purchase.
+
+B2B consulting for companies migrating away from Big Tech.
 
 ---
 
 ## Roadmap
 
 - [x] Audience selector (B2C / B2B)
-- [x] **Email scanner with OAuth** (Gmail & Outlook, LIVE 2026-06-24)
+- [x] Email scanner with OAuth (Gmail & Outlook)
 - [x] EU alternatives catalogue (150+ services)
-- [x] **Production deployment** (Vercel + Supabase)
-- [ ] **Dashboard & profile mode** (zero-knowledge encryption)
-- [ ] Browser extension (MV3) — autofill new email on external sites
+- [x] Production deployment (Vercel + Supabase, Stockholm)
+- [x] Stripe unlock flow (€5) + Proton affiliate path
+- [ ] Profile mode with zero-knowledge encryption
+- [ ] Browser extension (MV3)
 - [ ] Full i18n (all European languages)
-- [ ] B2B consulting platform with migration roadmaps
+- [ ] B2B consulting platform
+
+Progress log: [docs/PROGRESS.md](docs/PROGRESS.md)
 
 ---
 

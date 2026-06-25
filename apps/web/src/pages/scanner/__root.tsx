@@ -37,71 +37,71 @@ export default function Layout() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
-    window.location.href = '/'
+    window.location.href = '/scanner'
   }
 
   return (
-    <div className="min-h-screen bg-[#f9f7f2] dark:bg-[#1a1815] text-[#1a2332] dark:text-[#f5f1ea] transition-colors">
-      <header className="border-b border-[#1a2332]/10 dark:border-[#3a3530] py-4">
+    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary transition-colors">
+      <header className="border-b border-border dark:border-dark-border py-4">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           {/* Top row: Logo + Sign in + Theme */}
           <div className="flex justify-between items-center mb-4">
-            <Link to="/" className="text-2xl font-mono font-semibold hover:text-[#c17a5c] transition">
+            <Link to="/" className="text-2xl font-mono font-semibold hover:text-accent transition">
               Europa
             </Link>
             <div className="flex items-center gap-4">
               {isAuthenticated ? (
                 <>
                   <a
-                    href="/dashboard"
-                    className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] hover:text-[#c17a5c] dark:hover:text-[#a86650] transition"
+                    href="/scanner/dashboard"
+                    className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition"
                   >
                     Dashboard
                   </a>
                   <button
                     onClick={handleSignOut}
-                    className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] hover:text-[#c17a5c] dark:hover:text-[#a86650] transition"
+                    className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition"
                   >
                     Sign out
                   </button>
                 </>
               ) : (
                 <a
-                  href="/auth/signin"
-                  className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] hover:text-[#c17a5c] dark:hover:text-[#a86650] transition"
+                  href="/scanner/auth/signin"
+                  className="text-sm text-text-secondary dark:text-dark-text-secondary hover:text-accent transition"
                 >
                   Sign in
                 </a>
               )}
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-lg bg-[#f9f7f2]/10 dark:bg-[#f5f1ea]/10 hover:bg-[#1a2332]/20 dark:hover:bg-[#f5f1ea]/20 transition"
+                className="p-2 rounded-lg bg-border/20 hover:bg-border/40 dark:bg-dark-border/20 dark:hover:bg-dark-border/40 transition"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
-                  <Sun size={20} className="text-[#c17a5c]" />
+                  <Sun size={20} className="text-accent" />
                 ) : (
-                  <Moon size={20} className="text-[#1a2332]" />
+                  <Moon size={20} className="text-text-primary" />
                 )}
               </button>
             </div>
           </div>
 
           {/* Navigation menu */}
-          <nav className="flex gap-8 text-sm text-[#1a2332]/70 dark:text-[#a89d96]">
-            <Link to="/" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+          <nav className="flex gap-8 text-sm text-text-secondary dark:text-dark-text-secondary">
+            <Link to="/" className="hover:text-accent transition">
               How it works
             </Link>
-            <a href="https://www.digitaleu.me/catalog" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/directory" className="hover:text-accent transition">
               Alternatives
             </a>
-            <a href="https://www.digitaleu.me/guides" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/guides" className="hover:text-accent transition">
               Guides
             </a>
-            <a href="https://www.digitaleu.me/news" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/news" className="hover:text-accent transition">
               News
             </a>
-            <a href="https://www.digitaleu.me/about" className="hover:text-[#c17a5c] dark:hover:text-[#a86650] transition">
+            <a href="https://www.digitaleu.me/about" className="hover:text-accent transition">
               About
             </a>
           </nav>
@@ -110,8 +110,8 @@ export default function Layout() {
       <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
         <Outlet />
       </main>
-      <footer className="border-t border-[#1a2332]/10 dark:border-[#3a3530] py-6 mt-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-sm text-[#1a2332]/60 dark:text-[#a89d96]">
+      <footer className="border-t border-border dark:border-dark-border py-6 mt-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-sm text-text-secondary dark:text-dark-text-secondary">
           <p>&copy; 2026 digitaleu.me. Privacy first, always.</p>
           <p className="mt-1 text-xs leading-relaxed">
             Some recommendation links support the project.
