@@ -60,6 +60,12 @@ explainer in `ServicePage.tsx:53`, etc. — all correct.
 
 ## Finding 2 — "100% client-side" / "email never reaches our servers"
 
+> ✅ **VERIFIED & CLOSED 2026-06-25** by Lead Engineer against the live code.
+> Final wording, OAuth-scope record, and the Subject-line caveat are in
+> `docs/legal/CLAIM_WORDING_FINAL_2026-06-25.md`. The "100% client-side" family of
+> claims is **confirmed false** and prohibited in user-facing copy. (Engineer also
+> fixed a P0 client-secret leak and tightened the Outlook scope to `Mail.ReadBasic`.)
+
 **Risk: HIGH.** This is our headline trust claim and it is contradicted by our own
 ADR #22. What actually happens on the **live** path (`apps/scanner` →
 `supabase/functions/scan-email/index.ts`):
