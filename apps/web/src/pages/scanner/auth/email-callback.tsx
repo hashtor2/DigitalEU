@@ -51,7 +51,7 @@ export default function EmailCallbackPage() {
             code,
             codeVerifier,
             provider,
-            redirectUri: `${window.location.origin}/auth/email-callback`,
+            redirectUri: `${window.location.origin}/scanner/auth/email-callback`,
           }),
         })
 
@@ -82,7 +82,7 @@ export default function EmailCallbackPage() {
         sessionStorage.removeItem('oauth_provider')
         sessionStorage.removeItem('oauth_state')
 
-        navigate('/', { replace: true })
+        navigate('/scanner', { replace: true })
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Unknown error during authentication'
         setError(errorMessage)
@@ -104,7 +104,7 @@ export default function EmailCallbackPage() {
           <h2 className="text-lg font-mono font-semibold text-error">Error</h2>
           <p className="text-sm text-error/80">{error}</p>
           <a
-            href="/auth/signin"
+            href="/scanner/auth/signin"
             className="inline-block px-4 py-2 rounded-sm bg-error text-white font-mono font-semibold hover:opacity-90 transition"
           >
             Try signing in again

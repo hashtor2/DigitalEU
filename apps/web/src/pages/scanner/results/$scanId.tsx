@@ -32,7 +32,7 @@ export default function ResultsPage() {
       } = await supabase.auth.getUser()
 
       if (!currentUser || !scanId) {
-        window.location.href = '/dashboard'
+        window.location.href = '/scanner/dashboard'
         return
       }
 
@@ -68,7 +68,7 @@ export default function ResultsPage() {
         <div className="rounded-sm border border-error/30 bg-error/10 p-6">
           <h2 className="mb-2 text-lg font-mono font-semibold text-error">Error loading results</h2>
           <p className="text-sm text-error/80 mb-4">{error}</p>
-          <a href="/dashboard" className="inline-block text-sm text-accent hover:underline">
+          <a href="/scanner/dashboard" className="inline-block text-sm text-accent hover:underline">
             Back to dashboard
           </a>
         </div>
@@ -82,7 +82,7 @@ export default function ResultsPage() {
         <div className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 text-center">
           <h2 className="mb-2 text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">No services detected</h2>
           <p className="text-text-secondary dark:text-dark-text-secondary mb-4">We didn't find any recognizable services in your inbox.</p>
-          <a href="/dashboard" className="inline-block text-sm text-accent hover:underline">
+          <a href="/scanner/dashboard" className="inline-block text-sm text-accent hover:underline">
             Back to dashboard
           </a>
         </div>
@@ -179,7 +179,7 @@ export default function ResultsPage() {
       </div>
 
       <div className="flex gap-4 justify-center">
-        <a href="/dashboard" className="px-6 py-2 rounded-sm border border-border dark:border-dark-border text-text-primary dark:text-dark-text-primary font-mono font-semibold hover:bg-border dark:hover:bg-dark-border transition">
+        <a href="/scanner/dashboard" className="px-6 py-2 rounded-sm border border-border dark:border-dark-border text-text-primary dark:text-dark-text-primary font-mono font-semibold hover:bg-border dark:hover:bg-dark-border transition">
           Back to dashboard
         </a>
         <button className="px-6 py-2 rounded-sm bg-accent font-mono font-semibold text-white hover:bg-accent-hover transition">

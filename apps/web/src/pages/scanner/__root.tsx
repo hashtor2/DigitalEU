@@ -37,7 +37,7 @@ export default function Layout() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
-    window.location.href = '/'
+    window.location.href = '/scanner'
   }
 
   return (
@@ -53,7 +53,7 @@ export default function Layout() {
               {isAuthenticated ? (
                 <>
                   <a
-                    href="/dashboard"
+                    href="/scanner/dashboard"
                     className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] hover:text-[#c17a5c] dark:hover:text-[#a86650] transition"
                   >
                     Dashboard
@@ -67,7 +67,7 @@ export default function Layout() {
                 </>
               ) : (
                 <a
-                  href="/auth/signin"
+                  href="/scanner/auth/signin"
                   className="text-sm text-[#1a2332]/70 dark:text-[#a89d96] hover:text-[#c17a5c] dark:hover:text-[#a86650] transition"
                 >
                   Sign in

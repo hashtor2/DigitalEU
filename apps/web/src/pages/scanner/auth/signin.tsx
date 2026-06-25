@@ -27,7 +27,7 @@ export default function SignInPage() {
     if (signInError) {
       setError(signInError.message)
     } else {
-      window.location.href = '/dashboard'
+      window.location.href = '/scanner/dashboard'
     }
 
     setLoading(false)
@@ -167,7 +167,7 @@ export default function SignInPage() {
       {/* Sign up link */}
       <div className="text-center text-sm text-text-secondary dark:text-dark-text-secondary pt-4 border-t border-border dark:border-dark-border">
         Don't have an account?{' '}
-        <a href="/auth/signup" className="font-semibold text-accent hover:underline">
+        <a href="/scanner/auth/signup" className="font-semibold text-accent hover:underline">
           Sign up
         </a>
       </div>

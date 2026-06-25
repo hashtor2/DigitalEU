@@ -123,7 +123,7 @@ export default function CancellationGuidePage() {
         <div className="rounded-sm border border-error/30 bg-error/10 p-6">
           <h2 className="mb-2 text-lg font-mono font-semibold text-error">Guide not found</h2>
           <p className="text-sm text-error/80 mb-4">{error}</p>
-          <a href="/cancel" className="inline-block text-sm text-accent hover:underline">
+          <a href="/scanner/cancel" className="inline-block text-sm text-accent hover:underline">
             Back to guides
           </a>
         </div>
@@ -146,7 +146,7 @@ export default function CancellationGuidePage() {
 
       {/* Header */}
       <div>
-        <a href="/cancel" className="text-accent font-mono text-sm hover:underline mb-3 inline-block">
+        <a href="/scanner/cancel" className="text-accent font-mono text-sm hover:underline mb-3 inline-block">
           ← Back to guides
         </a>
         <h1 className="text-4xl font-mono font-bold mb-3 text-text-primary dark:text-dark-text-primary">{guide.title}</h1>
@@ -230,7 +230,7 @@ export default function CancellationGuidePage() {
 
       {/* Navigation */}
       <div className="flex gap-4 justify-between pt-6 border-t border-border dark:border-dark-border">
-        <a href="/cancel" className="px-6 py-2 rounded-sm border border-border dark:border-dark-border text-text-primary dark:text-dark-text-primary font-mono font-semibold hover:bg-border dark:hover:bg-dark-border transition">
+        <a href="/scanner/cancel" className="px-6 py-2 rounded-sm border border-border dark:border-dark-border text-text-primary dark:text-dark-text-primary font-mono font-semibold hover:bg-border dark:hover:bg-dark-border transition">
           ← All guides
         </a>
         <a href="/" className="px-6 py-2 rounded-sm bg-accent font-mono font-semibold text-white hover:bg-accent-hover transition">

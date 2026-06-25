@@ -115,10 +115,78 @@ const router = createBrowserRouter([
     }),
   },
   {
-    path: "/scanner/*",
+    path: "/scanner",
     lazy: async () => ({
-      Component: (await import("./pages/ScannerPage")).ScannerPage,
+      Component: (await import("./pages/scanner/__root")).default,
     }),
+    children: [
+      {
+        index: true,
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/index")).default,
+        }),
+      },
+      {
+        path: "scan",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/scan")).default,
+        }),
+      },
+      {
+        path: "auth/signin",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/auth/signin")).default,
+        }),
+      },
+      {
+        path: "auth/signup",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/auth/signup")).default,
+        }),
+      },
+      {
+        path: "auth/callback",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/auth/callback")).default,
+        }),
+      },
+      {
+        path: "auth/email-callback",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/auth/email-callback")).default,
+        }),
+      },
+      {
+        path: "dashboard",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/dashboard")).default,
+        }),
+      },
+      {
+        path: "results/:scanId",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/results/$scanId")).default,
+        }),
+      },
+      {
+        path: "report/:sessionId",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/report/$sessionId")).default,
+        }),
+      },
+      {
+        path: "cancel",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/cancel/index")).default,
+        }),
+      },
+      {
+        path: "cancel/:id",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/cancel/$id")).default,
+        }),
+      },
+    ],
   },
   {
     path: "/verify",

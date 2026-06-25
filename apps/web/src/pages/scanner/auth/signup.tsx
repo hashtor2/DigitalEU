@@ -115,7 +115,7 @@ export default function SignUpPage() {
 
       <div className="text-center text-sm text-text-secondary dark:text-dark-text-secondary">
         Already have an account?{' '}
-        <a href="/auth/signin" className="font-semibold text-accent hover:underline">
+        <a href="/scanner/auth/signin" className="font-semibold text-accent hover:underline">
           Sign in
         </a>
       </div>

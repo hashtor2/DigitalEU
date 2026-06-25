@@ -132,7 +132,7 @@ export default function DemoScanPage() {
           </p>
           <div className="flex flex-col gap-3 pt-2">
             <a
-              href="/auth/signin"
+              href="/scanner/auth/signin"
               className="inline-flex items-center justify-center rounded-sm border border-accent bg-accent px-6 py-3 font-mono text-sm font-semibold text-white transition hover:bg-accent-hover"
             >
               Scan your real inbox
@@ -202,7 +202,7 @@ export default function DemoScanPage() {
         </p>
         <div className="flex flex-col gap-3 pt-2">
           <a
-            href="/auth/signin"
+            href="/scanner/auth/signin"
             className="inline-flex items-center justify-center rounded-sm border border-accent bg-accent px-6 py-3 font-mono font-semibold text-white transition hover:bg-accent-hover w-full sm:w-auto"
           >
             Scan Gmail

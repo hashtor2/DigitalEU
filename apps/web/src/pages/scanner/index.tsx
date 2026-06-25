@@ -80,13 +80,13 @@ export default function IndexPage() {
           )}
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
             <Link
-              to="/auth/signin"
+              to="/scanner/auth/signin"
               className="inline-flex items-center justify-center rounded-sm border border-accent bg-accent px-8 py-3.5 font-mono text-sm font-semibold text-white transition hover:bg-accent-hover"
             >
               {connectedProvider ? 'Reconnect inbox' : 'Scan my inbox'}
             </Link>
             <Link
-              to="/scan"
+              to="/scanner/scan"
               className="inline-flex items-center justify-center rounded-sm border border-border dark:border-dark-border bg-transparent px-8 py-3.5 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary transition hover:bg-border dark:hover:bg-dark-border"
             >
               Try the demo

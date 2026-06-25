@@ -13,7 +13,7 @@ export default function CallbackPage() {
         return
       }
 
-      window.location.href = '/dashboard'
+      window.location.href = '/scanner/dashboard'
     }
 
     handleCallback()
@@ -25,7 +25,7 @@ export default function CallbackPage() {
         <div className="rounded-sm border border-error/30 bg-error/10 p-6">
           <h2 className="mb-2 text-lg font-mono font-semibold text-error">Authentication failed</h2>
           <p className="text-sm text-error/80 mb-4">{error}</p>
-          <a href="/auth/signin" className="inline-block text-sm text-accent hover:underline">
+          <a href="/scanner/auth/signin" className="inline-block text-sm text-accent hover:underline">
             Try signing in again
           </a>
         </div>

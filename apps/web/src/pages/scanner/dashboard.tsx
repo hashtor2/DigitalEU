@@ -72,7 +72,7 @@ export default function DashboardPage() {
       const { data: { user: currentUser } } = await supabase.auth.getUser()
 
       if (!currentUser) {
-        window.location.href = '/auth/signin'
+        window.location.href = '/scanner/auth/signin'
         return
       }
 
@@ -151,7 +151,7 @@ export default function DashboardPage() {
       return
     }
 
-    window.location.href = `/results/${scanId}`
+    window.location.href = `/scanner/results/${scanId}`
   }
 
   const handleDeleteAccount = async () => {
@@ -203,7 +203,7 @@ export default function DashboardPage() {
           {connections.length === 0 ? (
             <div className="space-y-3">
               <p className="text-sm text-text-secondary dark:text-dark-text-secondary">No mailbox connected yet.</p>
-              <a href="/auth/signin" className="inline-flex rounded-sm border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition">
+              <a href="/scanner/auth/signin" className="inline-flex rounded-sm border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition">
                 Connect Gmail or Outlook
               </a>
             </div>
@@ -258,7 +258,7 @@ export default function DashboardPage() {
           <a href="/#manual-check" className="rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
             Open manual checker
           </a>
-          <a href="/cancel" className="rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
+          <a href="/scanner/cancel" className="rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
             Cancellation guides
           </a>
         </div>
@@ -278,7 +278,7 @@ export default function DashboardPage() {
                   </p>
                   <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Started {formatDate(scan.created_at)}</p>
                 </div>
-                <a href={`/results/${scan.id}`} className="text-sm font-mono font-semibold text-accent hover:underline">
+                <a href={`/scanner/results/${scan.id}`} className="text-sm font-mono font-semibold text-accent hover:underline">
                   View results →
                 </a>
               </div>
@@ -296,7 +296,7 @@ export default function DashboardPage() {
               {mfaEnabled ? 'Enabled for this account.' : 'Not enabled yet. Add authenticator-based 2FA for stronger sign-in protection.'}
             </p>
           </div>
-          <a href="/auth/signin" className="inline-flex rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
+          <a href="/scanner/auth/signin" className="inline-flex rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
             Open 2FA setup
           </a>
         </div>
