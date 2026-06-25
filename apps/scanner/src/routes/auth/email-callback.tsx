@@ -101,16 +101,18 @@ export default function EmailCallbackPage() {
           }),
         })
 
-        let detectedServices: string[] = []
-        if (scanResponse.ok) {
-          const scanData = await scanResponse.json()
-          // scan-email returns sender domains; map them to the European
-          // alternative IDs that the home-page grid pre-selects.
-          detectedServices = mapDomainsToAlternativeIds(scanData.senders || [])
-          sessionStorage.setItem('detected_services', JSON.stringify(detectedServices))
-        } else {
-          console.warn('Scan failed, proceeding anyway:', scanResponse.status)
+        if (!scanResponse.ok) {
+          const scanErr = await scanResponse.text().catch(() => '')
+          throw new Error(
+            `Inbox scan failed (status ${scanResponse.status}). ${scanErr || ''}`.trim()
+          )
         }
+
+        const scanData = await scanResponse.json()
+        // scan-email returns sender domains; map them to the European
+        // alternative IDs that the home-page grid pre-selects.
+        const detectedServices = mapDomainsToAlternativeIds(scanData.senders || [])
+        sessionStorage.setItem('detected_services', JSON.stringify(detectedServices))
 
         // 7. Clean up PKCE parameters from sessionStorage
         sessionStorage.removeItem('oauth_code_verifier')
