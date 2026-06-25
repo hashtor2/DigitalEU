@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '@/lib/db'
 import {
@@ -15,6 +15,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const autoConnectTriggered = useRef(false)
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -86,6 +87,22 @@ export default function SignInPage() {
       setLoading(false)
     }
   }
+
+  // Auto-start OAuth når brukeren kommer hit via "Connect Gmail/Outlook"-knappene
+  // på hjemmesiden (lenker til /auth/signin?provider=gmail|outlook).
+  useEffect(() => {
+    if (autoConnectTriggered.current) return
+    const params = new URLSearchParams(window.location.search)
+    const provider = params.get('provider')
+    if (provider === 'gmail') {
+      autoConnectTriggered.current = true
+      handleGmailEmailConnect()
+    } else if (provider === 'outlook') {
+      autoConnectTriggered.current = true
+      handleOutlookEmailConnect()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="mx-auto max-w-md space-y-6">
