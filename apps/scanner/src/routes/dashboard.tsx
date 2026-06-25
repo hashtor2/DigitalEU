@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '@/lib/db'
-import { initializeGmailScan } from '@/lib/scan'
 import { getProtonAffiliateLink } from '@/lib/stripe'
 
 interface Scan {
@@ -65,6 +64,7 @@ export default function DashboardPage() {
   const [mfaEnabled, setMfaEnabled] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
   const [deletingAccount, setDeletingAccount] = useState(false)
+  const [inboxSession, setInboxSession] = useState<{ provider: string } | null>(null)
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -79,6 +79,19 @@ export default function DashboardPage() {
       }
 
       setUser(currentUser)
+
+      // En aktiv innbokssesjon lever kun i sessionStorage (ephemeral token,
+      // aldri lagret server-side). Speil den her slik at brukeren ser om de
+      // kan kjøre en skanning uten å koble til på nytt.
+      const sessionToken = sessionStorage.getItem('email_access_token')
+      const sessionProvider = sessionStorage.getItem('email_provider')
+      const sessionExpires = sessionStorage.getItem('email_token_expires')
+      const sessionExpired = sessionExpires ? Date.now() > Number(sessionExpires) : false
+      if (sessionToken && sessionProvider && !sessionExpired) {
+        setInboxSession({ provider: sessionProvider })
+      } else {
+        setInboxSession(null)
+      }
 
       const [connectionsRes, scansRes] = await Promise.all([
         supabase
@@ -179,22 +192,50 @@ export default function DashboardPage() {
 
   const handleStartScan = async () => {
     setActionError(null)
-    if (!user || connections.length === 0) {
-      setActionError('Connect Gmail or Outlook first, then run your scan.')
+
+    // Tokenet for innboksen lever kun i sessionStorage (ephemeral). Hvis det
+    // mangler eller er utløpt, sender vi brukeren gjennom OAuth-flyten på nytt.
+    const accessToken = sessionStorage.getItem('email_access_token')
+    const provider = sessionStorage.getItem('email_provider')
+    const tokenExpires = sessionStorage.getItem('email_token_expires')
+    const isExpired = tokenExpires ? Date.now() > Number(tokenExpires) : false
+
+    if (!accessToken || !provider || isExpired) {
+      sessionStorage.removeItem('email_access_token')
+      sessionStorage.removeItem('email_provider')
+      sessionStorage.removeItem('email_token_expires')
+      window.location.href = '/auth/signin'
       return
     }
 
     setScanning(true)
-    const primaryConnection = connections[0]!
-    const { scanId, error } = await initializeGmailScan(primaryConnection.id, user.id)
-    setScanning(false)
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+      const scanResponse = await fetch(`${supabaseUrl}/functions/v1/scan-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${supabaseAnonKey}`,
+        },
+        body: JSON.stringify({ accessToken, provider, maxResults: 100 }),
+      })
 
-    if (error || !scanId) {
-      setActionError(error || 'Unable to start scan right now.')
-      return
+      if (!scanResponse.ok) {
+        throw new Error(`Scan failed (status ${scanResponse.status})`)
+      }
+
+      const scanData = await scanResponse.json()
+      const detectedServices = scanData.detectedServices || []
+      sessionStorage.setItem('detected_services', JSON.stringify(detectedServices))
+
+      // Hjemmesiden viser oppdagede tjenester og lar brukeren generere rapport.
+      window.location.href = '/'
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Unable to start scan right now.')
+    } finally {
+      setScanning(false)
     }
-
-    window.location.href = `/results/${scanId}`
   }
 
   const handleDeleteAccount = async () => {
@@ -253,7 +294,7 @@ export default function DashboardPage() {
       <section className="grid gap-4 md:grid-cols-2">
         <div className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
           <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Connected inboxes</h2>
-          {connections.length === 0 ? (
+          {connections.length === 0 && !inboxSession ? (
             <div className="space-y-3">
               <p className="text-sm text-text-secondary dark:text-dark-text-secondary">No mailbox connected yet.</p>
               <a
@@ -265,6 +306,14 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="space-y-2">
+              {inboxSession && (
+                <div className="flex items-center justify-between rounded-none border border-success/30 bg-success/10 dark:border-success/50 dark:bg-success/10 p-3">
+                  <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">
+                    {inboxSession.provider === 'gmail' ? 'Gmail' : 'Outlook'} session active
+                  </p>
+                  <span className="text-xs text-text-secondary dark:text-dark-text-secondary">this tab only</span>
+                </div>
+              )}
               {connections.map((conn) => (
                 <div key={conn.id} className="flex items-center justify-between rounded-none border border-border dark:border-dark-border p-3">
                   <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">
@@ -324,7 +373,7 @@ export default function DashboardPage() {
             disabled={scanning}
             className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 transition"
           >
-            {scanning ? 'Scanning…' : 'Start new scan'}
+            {scanning ? 'Scanning…' : inboxSession ? 'Start new scan' : 'Connect inbox & scan'}
           </button>
           <a
             href="/#manual-check"
