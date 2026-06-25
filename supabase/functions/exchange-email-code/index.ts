@@ -79,7 +79,8 @@ async function exchangeOutlookCode(
     client_id: Deno.env.get("MICROSOFT_OAUTH_CLIENT_ID") || "",
     client_secret: Deno.env.get("MICROSOFT_OAUTH_CLIENT_SECRET") || "",
     redirect_uri: redirectUri,
-    scope: "https://graph.microsoft.com/Mail.ReadBasic offline_access",
+    // Minimalt scope: kun sender-metadata, aldri e-postinnhold (jf. ADR #5).
+    scope: "https://graph.microsoft.com/Mail.ReadBasic",
   })
 
   const response = await fetch(microsoftTokenUrl, {
@@ -161,6 +162,7 @@ serve(async (req) => {
       }
     )
   } catch (error) {
+    // Aldri lekk hemmeligheter eller miljøvariabler i respons/logg.
     const message = error instanceof Error ? error.message : "Unknown error during token exchange"
 
     return new Response(JSON.stringify({ error: message }), {
