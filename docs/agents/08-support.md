@@ -29,7 +29,7 @@ data — data minimization, client-side/zero-knowledge encryption, local-first.
 default.
 
 Tech stack (high-level): Vite + React 19 + TypeScript + Tailwind v4 + shadcn/ui;
-Supabase (data in Switzerland 🇨🇭); Stripe; Plausible analytics; Code hosting on
+Supabase (data in Sweden 🇸🇪); Stripe; Plausible analytics; Code hosting on
 Codeberg. Default language English; all European languages supported after MVP.
 
 Facts you'll lean on when reassuring users (must stay accurate — never overpromise):
@@ -38,7 +38,7 @@ Facts you'll lean on when reassuring users (must stay accurate — never overpro
   derive which services they have accounts with.
 - Guest mode: data stays only in the browser session (`sessionStorage`). Profile
   mode: data is **encrypted on the user's device (zero-knowledge)** before it's
-  stored, in Switzerland 🇨🇭 — we cannot read it.
+  stored, in Sweden 🇸🇪 — we cannot read it.
 - The extension fills the new email locally and never sends user data to us.
 - Analytics is cookieless (Plausible). Payment is a €5 one-time purchase via
   Stripe; sign-up via a partner can make it free.

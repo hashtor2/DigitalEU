@@ -39,7 +39,7 @@ If you want to contribute to this project, please contact: torisor@pm.me
 |---|---|---|
 | Web app | Vite + React 19 + TypeScript | Fast, type-safe SPA |
 | Styling | Tailwind CSS v4 + shadcn/ui | Utility-first, no runtime |
-| Backend / DB | Supabase (🇨🇭 Zürich, eu-central-2) | EU data residency, zero-knowledge ready |
+| Backend / DB | Supabase (🇸🇪 Stockholm, eu-north-1) | EU data residency, zero-knowledge ready |
 | Email Scanning | Supabase Edge Functions | Server-side OAuth, client-side matching |
 | Auth | Supabase Auth (planned) | Zero-knowledge encryption for profiles |
 | Hosting | Vercel (under review → 🇫🇷 Clever Cloud / 🇩🇪 Hetzner) | Speed now, sovereignty later |
@@ -102,7 +102,7 @@ See [docs/OAUTH_SETUP_GUIDE.md](docs/OAUTH_SETUP_GUIDE.md) for technical details
 
 1. **Privacy by design.** Inbox scanning runs 100% client-side. We never see your emails.
 2. **You own your data.** Guest mode: everything in `sessionStorage`, gone when you close the tab. Profile mode: client-side encrypted before it reaches our servers.
-3. **We eat our own cooking.** We use European tools ourselves. This repo is on Codeberg. Our database is in Switzerland.
+3. **We eat our own cooking.** We use European tools ourselves. This repo is on Codeberg. Our database is in Sweden.
 4. **No dark patterns.** We recommend what fits you, not what pays us most.
 
 ---
@@ -134,4 +134,4 @@ Source-available. All rights reserved for now — open licensing under considera
 
 ---
 
-*Built in Norway. Hosted in Switzerland. For Europe.*
+*Built in Norway. Data in Sweden. For Europe.*

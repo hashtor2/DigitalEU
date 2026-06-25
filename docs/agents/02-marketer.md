@@ -36,7 +36,7 @@ client-side/zero-knowledge encryption, local-first, full transparency.
 (4) Openness — no hidden tracking. (5) Privacy by design & default.
 
 Stack (high level): Vite + React 19 + TypeScript + Tailwind v4 monorepo;
-Supabase (data in Switzerland 🇨🇭); Stripe; Plausible analytics; Code hosting
+Supabase (data in Sweden 🇸🇪); Stripe; Plausible analytics; Code hosting
 on Codeberg; hosted on Vercel (under review for sovereignty reasons). Default
 language English; all European languages supported after MVP (i18n foundation
 in place).

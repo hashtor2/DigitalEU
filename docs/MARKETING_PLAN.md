@@ -85,7 +85,7 @@ and how we protect your data.
 
 **Three proof pillars** (every channel reinforces these):
 1. **Privacy is the product.** Inbox scanning is 100% client-side — your email never leaves
-   your device. Profile data is zero-knowledge encrypted. Data lives in Switzerland 🇨🇭.
+   your device. Profile data is zero-knowledge encrypted. Data lives in Sweden 🇸🇪.
 2. **European-first, and we mean it.** We use EU providers ourselves (dogfooding), not just
    recommend them.
 3. **Radically honest business model.** Free if you sign up with a partner via our affiliate
@@ -93,7 +93,7 @@ and how we protect your data.
    highest commission.
 
 > ⚠️ **Legal gate:** Every concrete privacy claim above ("never leaves your device",
-> "zero-knowledge", "data in Switzerland") must be verified by Legal & Privacy Counsel before
+> "zero-knowledge", "data in Sweden") must be verified by Legal & Privacy Counsel before
 > it appears in public copy. On privacy forums, every claim gets fact-checked. One overstatement
 > we can't back = permanent credibility loss.
 
@@ -128,9 +128,9 @@ Reddit `u/DigitalEUme` · Email `info@digitaleu.me` · Site `digitaleu.me`
 | **X** `@digitaleume` | Mirror + reach | 3–5×/week | ✅ Schedule (note: X API is paid) | CMO |
 | **Mastodon/Lemmy** (fediverse) | Ideological home base (EU/anti-BigTech) | 3–4×/week + participate | ✅ Schedule broadcast, manual replies | CMO |
 | **Substack** `@digitaleurope` | Long-form authority (public blog) | 1 post / 2 weeks to start | Partial | **Editor/Writer** (hand off) |
-| **Owned waitlist** (Supabase, Zürich) | The critical asset we control | Launch + milestone emails | ✅ | CMO |
+| **Owned waitlist** (Supabase, Stockholm) | The critical asset we control | Launch + milestone emails | ✅ | CMO |
 
-> **List home (✅ decided):** Waitlist is captured & owned in **Supabase (Zürich)** — EU,
+> **List home (✅ decided):** Waitlist is captured & owned in **Supabase (Stockholm)** — EU,
 > full UTM attribution, on-brand. **Substack** hosts public long-form only (US, low-risk use).
 > Sending the launch email = import to Substack or a small EU ESP (open sub-item, §11).
 
@@ -193,7 +193,7 @@ Dates are relative to "now" (2026-06-23). Fill in real dates once launch date is
 
 ### Week 1 — Foundation (no public posting yet)
 - [ ] 🚨 **Waitlist form LIVE** (brief already handed to Lead Engineer): 1 email field,
-      double-opt-in via `info@digitaleu.me`, Supabase (Zürich) storage, honeypot (no reCAPTCHA),
+      double-opt-in via `info@digitaleu.me`, Supabase (Stockholm) storage, honeypot (no reCAPTCHA),
       cookieless, **UTM `source` capture + Plausible goal event**. *This gates the whole sprint.*
 - [ ] **Legal sign-off** on consent text + the three privacy claims (§2).
 - [ ] **Warm up `u/DigitalEUme`** — 5–7 days of genuine comments in target subs; build karma.
@@ -289,7 +289,7 @@ for *qualified, opted-in* humans.
 | Date | Change | By |
 | --- | --- | --- |
 | 2026-06-23 | v0.1 drafted. Objective = waitlist. Channels, pillars, <1mo sprint, EU-first automation stance set. Waitlist brief handed to Lead Engineer. | CMO |
-| 2026-06-23 | v0.2. Decided: **Postiz** as scheduler; **Substack = public long-form**, waitlist owned in **Supabase (Zürich)**. Open item narrowed to "how to send launch email." | CMO |
+| 2026-06-23 | v0.2. Decided: **Postiz** as scheduler; **Substack = public long-form**, waitlist owned in **Supabase (Stockholm)**. Open item narrowed to "how to send launch email." | CMO |
 | 2026-06-23 | v0.3. **Beta scanner is live now** → primary CTA = "try the beta," waitlist secondary. **No price mentioned publicly yet** (€5/€5 parked). Added **narrative spine** (Europe takes back its data, not fanatical) and **soft B2B capture**. | CMO |
 | 2026-06-23 | v0.4. **Gmail = early-access on-ramp** (scanner supports Gmail first). "Still on Gmail? Good — that's the point" framing. Outlook/others → waitlist. | CMO |
 | 2026-06-23 | v0.5. **Beta is GATED + capped** (Google Testing mode, ~100 manually-approved testers). Flow = request access → founder approves → scanner works. Forum = honest "limited beta, help me test"; **waitlist = overflow + the larger list.** De-risks traffic. | CMO |

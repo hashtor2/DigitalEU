@@ -94,7 +94,7 @@ All tables have RLS scoped to `auth.uid()` or public (for guides).
 
 - **Read-only metadata** — sender, subject, date only
 - **Zero-knowledge klientside encryption** — tokens encrypted before storage
-- **GDPR-compliant** — EU-hosted (Supabase Switzerland)
+- **GDPR-compliant** — EU-hosted (Supabase Sweden)
 - **30-day auto-purge** — scans deleted automatically
 - **User control** — disconnect anytime; all data wiped immediately
 
