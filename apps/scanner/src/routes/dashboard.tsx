@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '@/lib/db'
 import { getProtonAffiliateLink, redirectToCheckout, SCANNER_PRICE_EUR } from '@/lib/stripe'
-import { mapDomainsToAlternativeIds } from '@/lib/serviceMapping'
+import { mapDomainsToAlternativeIds, extractDetectedServices } from '@/lib/serviceMapping'
 
 interface Scan {
   id: string
@@ -280,7 +280,7 @@ export default function DashboardPage() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${supabaseAnonKey}`,
         },
-        body: JSON.stringify({ accessToken, provider, maxResults: 100 }),
+        body: JSON.stringify({ accessToken, provider, maxResults: 500 }),
       })
 
       if (!scanResponse.ok) {
@@ -288,9 +288,13 @@ export default function DashboardPage() {
       }
 
       const scanData = await scanResponse.json()
+      const senders: string[] = scanData.senders || []
+      // Full footprint: every distinct service domain found in the inbox.
+      const detectedDomains = extractDetectedServices(senders)
+      sessionStorage.setItem('detected_domains', JSON.stringify(detectedDomains))
       // scan-email returns sender domains; map them to the European alternative
       // IDs that the home-page grid pre-selects.
-      const detectedServices = mapDomainsToAlternativeIds(scanData.senders || [])
+      const detectedServices = mapDomainsToAlternativeIds(senders)
       sessionStorage.setItem('detected_services', JSON.stringify(detectedServices))
 
       // Hjemmesiden viser oppdagede tjenester og lar brukeren generere rapport.

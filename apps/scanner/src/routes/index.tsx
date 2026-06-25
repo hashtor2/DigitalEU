@@ -8,11 +8,13 @@ export default function IndexPage() {
   const { createReport } = useReport()
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [detectedServices, setDetectedServices] = useState<string[]>([])
+  const [detectedDomains, setDetectedDomains] = useState<string[]>([])
   const [hasScannedInbox, setHasScannedInbox] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
 
   useEffect(() => {
     const detected = sessionStorage.getItem('detected_services')
+    const domains = sessionStorage.getItem('detected_domains')
     if (detected) {
       try {
         const services = JSON.parse(detected)
@@ -21,6 +23,13 @@ export default function IndexPage() {
         setHasScannedInbox(true)
       } catch (e) {
         console.error('Failed to parse detected services:', e)
+      }
+    }
+    if (domains) {
+      try {
+        setDetectedDomains(JSON.parse(domains))
+      } catch (e) {
+        console.error('Failed to parse detected domains:', e)
       }
     }
   }, [])
@@ -60,7 +69,9 @@ export default function IndexPage() {
     sessionStorage.removeItem('email_access_token')
     sessionStorage.removeItem('email_provider')
     sessionStorage.removeItem('detected_services')
+    sessionStorage.removeItem('detected_domains')
     setDetectedServices([])
+    setDetectedDomains([])
     setSelected(new Set())
     setHasScannedInbox(false)
     navigate('/auth/signin')
@@ -147,24 +158,28 @@ export default function IndexPage() {
                   <div className="text-left">
                     <div className="text-sm font-mono text-accent font-semibold">✓ Inbox Scanned</div>
                     <div className="text-2xl md:text-3xl font-mono font-bold">
-                      {detectedServices.length} services detected
+                      {detectedDomains.length} services found
+                    </div>
+                    <div className="text-sm text-text-secondary dark:text-dark-text-secondary">
+                      {detectedServices.length} with European alternatives ready to switch
                     </div>
                   </div>
                   <span className="text-5xl">📧</span>
                 </div>
-                
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 py-4">
-                  {detectedServices.slice(0, 12).map(service => (
+                  {detectedDomains.slice(0, 24).map(domain => (
                     <div
-                      key={service}
-                      className="bg-accent/10 dark:bg-accent/10 rounded-sm px-3 py-2 text-sm font-mono text-text-primary dark:text-dark-text-primary text-center border border-accent/20 dark:border-accent/30"
+                      key={domain}
+                      className="bg-accent/10 dark:bg-accent/10 rounded-sm px-3 py-2 text-sm font-mono text-text-primary dark:text-dark-text-primary text-center border border-accent/20 dark:border-accent/30 truncate"
+                      title={domain}
                     >
-                      {service.replace('-', ' ')}
+                      {domain}
                     </div>
                   ))}
-                  {detectedServices.length > 12 && (
+                  {detectedDomains.length > 24 && (
                     <div className="bg-muted/10 dark:bg-muted/10 rounded-sm px-3 py-2 text-sm font-mono text-text-secondary dark:text-dark-text-secondary text-center border border-muted/20">
-                      +{detectedServices.length - 12} more
+                      +{detectedDomains.length - 24} more
                     </div>
                   )}
                 </div>

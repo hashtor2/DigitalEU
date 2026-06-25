@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { mapDomainsToAlternativeIds } from '@/lib/serviceMapping'
+import { mapDomainsToAlternativeIds, extractDetectedServices } from '@/lib/serviceMapping'
 
 export default function EmailCallbackPage() {
   const navigate = useNavigate()
@@ -97,7 +97,7 @@ export default function EmailCallbackPage() {
           body: JSON.stringify({
             accessToken,
             provider,
-            maxResults: 100,
+            maxResults: 500,
           }),
         })
 
@@ -109,9 +109,13 @@ export default function EmailCallbackPage() {
         }
 
         const scanData = await scanResponse.json()
+        const senders: string[] = scanData.senders || []
+        // Full footprint: every distinct service domain found in the inbox.
+        const detectedDomains = extractDetectedServices(senders)
+        sessionStorage.setItem('detected_domains', JSON.stringify(detectedDomains))
         // scan-email returns sender domains; map them to the European
         // alternative IDs that the home-page grid pre-selects.
-        const detectedServices = mapDomainsToAlternativeIds(scanData.senders || [])
+        const detectedServices = mapDomainsToAlternativeIds(senders)
         sessionStorage.setItem('detected_services', JSON.stringify(detectedServices))
 
         // 7. Clean up PKCE parameters from sessionStorage

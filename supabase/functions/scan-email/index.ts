@@ -46,31 +46,63 @@ function extractDomainFromEmail(email: string): string | null {
   return match[2].toLowerCase();
 }
 
+/** Number of message-metadata requests to run in parallel. */
+const FETCH_CONCURRENCY = 20;
+/** Page size for Gmail message listing (Gmail caps this at 500). */
+const GMAIL_PAGE_SIZE = 500;
+
 /**
- * Fetch Gmail senders server-side using an access token.
+ * Fetch a URL with retry/backoff on transient 429 (rate-limit) responses.
  */
-async function scanGmailServer(
+async function fetchWithRetry(
+  url: string,
   accessToken: string,
-  maxResults: number = 100
-): Promise<{ domains: Set<string>; scannedCount: number }> {
-  const domains = new Set<string>();
-  const GMAIL_API_BASE = "https://www.googleapis.com/gmail/v1/users/me";
-
-  try {
-    // Step 1: Fetch recent message IDs.
-    // NOTE: the `gmail.metadata` OAuth scope does NOT permit the `q` search
-    // parameter — including it makes Gmail return HTTP 403. So we list recent
-    // messages without a query filter.
-    const listUrl = new URL(`${GMAIL_API_BASE}/messages`);
-    listUrl.searchParams.append("maxResults", String(maxResults));
-
-    const listResponse = await fetch(listUrl.toString(), {
+  retries = 3
+): Promise<Response> {
+  for (let attempt = 0; ; attempt++) {
+    const res = await fetch(url, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Accept: "application/json",
       },
     });
+    if ((res.status === 429 || res.status === 503) && attempt < retries) {
+      await new Promise((r) => setTimeout(r, 300 * Math.pow(2, attempt)));
+      continue;
+    }
+    return res;
+  }
+}
 
+/**
+ * Fetch Gmail senders server-side using an access token.
+ *
+ * Lists message IDs across multiple pages, then fetches each message's `From`
+ * header (metadata only) in bounded-concurrency batches, counting how many
+ * messages came from each sender domain.
+ */
+async function scanGmailServer(
+  accessToken: string,
+  maxResults: number = 500
+): Promise<{ counts: Map<string, number>; scannedCount: number }> {
+  const counts = new Map<string, number>();
+  const GMAIL_API_BASE = "https://www.googleapis.com/gmail/v1/users/me";
+
+  // Step 1: Collect message IDs with pagination.
+  // NOTE: the `gmail.metadata` OAuth scope does NOT permit the `q` search
+  // parameter — including it makes Gmail return HTTP 403. So we list recent
+  // messages without a query filter.
+  const messageIds: string[] = [];
+  let pageToken: string | undefined;
+  while (messageIds.length < maxResults) {
+    const listUrl = new URL(`${GMAIL_API_BASE}/messages`);
+    listUrl.searchParams.append(
+      "maxResults",
+      String(Math.min(GMAIL_PAGE_SIZE, maxResults - messageIds.length))
+    );
+    if (pageToken) listUrl.searchParams.append("pageToken", pageToken);
+
+    const listResponse = await fetchWithRetry(listUrl.toString(), accessToken);
     if (!listResponse.ok) {
       if (listResponse.status === 401) {
         throw new Error("Gmail access expired. Please reconnect your account.");
@@ -81,44 +113,37 @@ async function scanGmailServer(
     }
 
     const listData = await listResponse.json();
-    const messageIds = listData.messages?.map((m: any) => m.id) || [];
-
-    // Step 2: Fetch headers for each message (metadata only)
-    for (const messageId of messageIds) {
-      const msgUrl = new URL(`${GMAIL_API_BASE}/messages/${messageId}`);
-      msgUrl.searchParams.append("format", "metadata");
-      msgUrl.searchParams.append("metadataHeaders", "From");
-
-      const msgResponse = await fetch(msgUrl.toString(), {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: "application/json",
-        },
-      });
-
-      if (!msgResponse.ok) {
-        continue;
-      }
-
-      const msgData = await msgResponse.json();
-      const headers = msgData.payload?.headers || [];
-      const fromHeader = headers.find((h: any) => h.name === "From")?.value;
-
-      if (fromHeader) {
-        const domain = extractDomainFromEmail(fromHeader);
-        if (domain) {
-          domains.add(domain);
-        }
-      }
-    }
-
-    return {
-      domains,
-      scannedCount: messageIds.length,
-    };
-  } catch (error) {
-    throw error;
+    for (const m of listData.messages ?? []) messageIds.push(m.id);
+    pageToken = listData.nextPageToken;
+    if (!pageToken) break;
   }
+
+  // Step 2: Fetch each message's From header (metadata only) in parallel
+  // batches to stay fast while respecting Gmail's per-user rate limit.
+  for (let i = 0; i < messageIds.length; i += FETCH_CONCURRENCY) {
+    const batch = messageIds.slice(i, i + FETCH_CONCURRENCY);
+    const domains = await Promise.all(
+      batch.map(async (messageId) => {
+        const msgUrl = new URL(`${GMAIL_API_BASE}/messages/${messageId}`);
+        msgUrl.searchParams.append("format", "metadata");
+        msgUrl.searchParams.append("metadataHeaders", "From");
+
+        const msgResponse = await fetchWithRetry(msgUrl.toString(), accessToken);
+        if (!msgResponse.ok) return null;
+
+        const msgData = await msgResponse.json();
+        const headers = msgData.payload?.headers || [];
+        const fromHeader = headers.find((h: any) => h.name === "From")?.value;
+        return fromHeader ? extractDomainFromEmail(fromHeader) : null;
+      })
+    );
+
+    for (const domain of domains) {
+      if (domain) counts.set(domain, (counts.get(domain) ?? 0) + 1);
+    }
+  }
+
+  return { counts, scannedCount: messageIds.length };
 }
 
 /**
@@ -126,17 +151,19 @@ async function scanGmailServer(
  */
 async function scanOutlookServer(
   accessToken: string,
-  maxResults: number = 100
-): Promise<{ domains: Set<string>; scannedCount: number }> {
-  const domains = new Set<string>();
+  maxResults: number = 500
+): Promise<{ counts: Map<string, number>; scannedCount: number }> {
+  const counts = new Map<string, number>();
   const OUTLOOK_API_BASE = "https://graph.microsoft.com/v1.0/me/messages";
 
-  try {
-    const url = new URL(OUTLOOK_API_BASE);
-    url.searchParams.append("$top", String(maxResults));
-    url.searchParams.append("$select", "from");
+  // Microsoft Graph returns at most 1000 messages per page and paginates via
+  // an `@odata.nextLink` URL. Follow the links until we reach `maxResults`.
+  let nextUrl: string | null =
+    `${OUTLOOK_API_BASE}?$select=from&$top=${Math.min(100, maxResults)}`;
+  let scannedCount = 0;
 
-    const response = await fetch(url.toString(), {
+  while (nextUrl && scannedCount < maxResults) {
+    const response = await fetch(nextUrl, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Accept: "application/json",
@@ -156,22 +183,18 @@ async function scanOutlookServer(
     const messages = data.value || [];
 
     for (const msg of messages) {
+      scannedCount++;
       const fromEmail = msg.from?.emailAddress?.address;
       if (fromEmail) {
         const domain = extractDomainFromEmail(fromEmail);
-        if (domain) {
-          domains.add(domain);
-        }
+        if (domain) counts.set(domain, (counts.get(domain) ?? 0) + 1);
       }
     }
 
-    return {
-      domains,
-      scannedCount: messages.length,
-    };
-  } catch (error) {
-    throw error;
+    nextUrl = data["@odata.nextLink"] ?? null;
   }
+
+  return { counts, scannedCount };
 }
 
 serve(async (req) => {
@@ -211,16 +234,22 @@ serve(async (req) => {
 
     let result;
     if (provider === "gmail") {
-      result = await scanGmailServer(accessToken, maxResults || 100);
+      result = await scanGmailServer(accessToken, maxResults || 500);
     } else {
-      result = await scanOutlookServer(accessToken, maxResults || 100);
+      result = await scanOutlookServer(accessToken, maxResults || 500);
     }
 
-    const senders = Array.from(result.domains).sort();
+    // Sort detected sender domains by how many messages came from each
+    // (most frequent first) so the most relevant services surface at the top.
+    const senders = Array.from(result.counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([domain]) => domain);
+    const senderCounts = Object.fromEntries(result.counts);
 
     return new Response(
       JSON.stringify({
         senders,
+        senderCounts,
         count: senders.length,
         scannedCount: result.scannedCount,
         provider,

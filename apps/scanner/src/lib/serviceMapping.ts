@@ -76,6 +76,76 @@ function normalizeDomain(domain: string): string {
 }
 
 /**
+ * Multi-part public suffixes where the registrable domain is the last THREE
+ * labels (e.g. `bbc.co.uk`) rather than the last two.
+ */
+const MULTI_PART_TLDS = new Set([
+  'co.uk', 'org.uk', 'gov.uk', 'ac.uk', 'co.jp', 'co.nz', 'co.za',
+  'com.au', 'com.br', 'com.mx', 'com.tr', 'co.in', 'co.kr',
+])
+
+/**
+ * Reduce a full sender host to its registrable domain, so
+ * `news.e.spotify.com` and `email.spotify.com` collapse to `spotify.com`.
+ */
+function toRegistrableDomain(host: string): string {
+  const parts = normalizeDomain(host).split('.').filter(Boolean)
+  if (parts.length <= 2) return parts.join('.')
+
+  const lastTwo = parts.slice(-2).join('.')
+  const lastThree = parts.slice(-3).join('.')
+  if (MULTI_PART_TLDS.has(lastTwo)) return lastThree
+  return lastTwo
+}
+
+/**
+ * Email-infrastructure / bulk-sending domains that represent a mail provider
+ * rather than a service the user has an account with. Filtered out of the
+ * detected-footprint list to reduce noise.
+ */
+const EMAIL_INFRA_DOMAINS = new Set([
+  'amazonses.com', 'sendgrid.net', 'sendgrid.com', 'mailgun.org', 'mailgun.net',
+  'mandrillapp.com', 'mcsv.net', 'mcdlv.net', 'rsgsv.net', 'sparkpostmail.com',
+  'postmarkapp.com', 'mailjet.com', 'sendinblue.com', 'sendib.com', 'mailchimp.com',
+  'cmail19.com', 'cmail20.com', 'createsend.com', 'klaviyomail.com', 'mailendo.com',
+  'bnc3.mailjet.com', 'e.customeriomail.com', 'mailanyone.net', 'list-manage.com',
+  'amazonaws.com', 'cloudfront.net', 'bounce.email', 'bounces.email',
+])
+
+/** Personal-email provider domains (not "services" to migrate). */
+const PERSONAL_EMAIL_DOMAINS = new Set([
+  'gmail.com', 'googlemail.com', 'outlook.com', 'hotmail.com', 'live.com',
+  'yahoo.com', 'icloud.com', 'me.com', 'aol.com', 'proton.me', 'protonmail.com',
+])
+
+/**
+ * Turn the raw sender domains from the scan into a deduplicated list of
+ * registrable domains representing the services found in the inbox.
+ *
+ * Input order (frequency-sorted from the server) is preserved. Infrastructure
+ * and personal-email domains are filtered out.
+ *
+ * @param domains Sender domains from the `scan-email` response (`senders`).
+ * @returns Unique registrable domains, most-frequent first.
+ */
+export function extractDetectedServices(domains: string[]): string[] {
+  if (!Array.isArray(domains)) return []
+
+  const seen = new Set<string>()
+  const result: string[] = []
+  for (const raw of domains) {
+    const registrable = toRegistrableDomain(raw)
+    if (!registrable || registrable.indexOf('.') === -1) continue
+    if (EMAIL_INFRA_DOMAINS.has(registrable)) continue
+    if (PERSONAL_EMAIL_DOMAINS.has(registrable)) continue
+    if (seen.has(registrable)) continue
+    seen.add(registrable)
+    result.push(registrable)
+  }
+  return result
+}
+
+/**
  * Resolve a sender domain to product names, matching either the full domain or
  * its registrable parent (e.g. `mail.github.com` -> `github.com`).
  */
