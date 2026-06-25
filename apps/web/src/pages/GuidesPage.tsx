@@ -25,12 +25,62 @@ interface NewsArticle {
 }
 
 const GUIDES: Guide[] = [
-  { id: "best-european-email", title: "Best European Email Providers in 2026", description: "Compare Proton Mail, Tuta, Mailbox.org, and Posteo. End-to-end encrypted, GDPR-compliant alternatives to Gmail — with a free tier comparison.", category: "email", difficulty: "Easy", hasContent: true },
-  { id: "best-european-vpn", title: "Best European VPN Services in 2026", description: "Compare Proton VPN, Mullvad, IVPN, and AzireVPN. No-logs, independently audited VPNs based in Switzerland and Sweden.", category: "vpn", difficulty: "Easy", hasContent: true },
-  { id: "best-european-cloud-storage", title: "Best European Cloud Storage in 2026", description: "Compare Proton Drive, pCloud, Tresorit, and Nextcloud. Zero-knowledge encrypted alternatives to Google Drive and Dropbox.", category: "cloud", difficulty: "Easy", hasContent: true },
-  { id: "degoogle-checklist", title: "The Step-by-Step 'De-Googling' Master Checklist", description: "A methodical, stress-free sequence to migrate your calendar, photos, files, and email away from Google Workspace into fully private Swiss-hosted alternatives.", category: "privacy", difficulty: "Medium", hasContent: true },
-  { id: "browser-wars", title: "Uncensored Web: Browser Privacy and Security Compared", description: "We audit Google Chrome, Brave, Mullvad Browser, Safari, and LibreWolf. Which browsers prevent fingerprinting and represent safe European choices?", category: "browser", difficulty: "Easy", hasContent: true },
-  { id: "password-manager-migration", title: "Dump LastPass: How to Safely Migrate to Proton Pass", description: "Following LastPass's security breaches, learn how to export your encrypted vault and import it into a Swiss-hosted, zero-knowledge password manager.", category: "password", difficulty: "Easy", hasContent: true },
+  {
+    id: "best-european-email",
+    title: "Best European Email Providers in 2026",
+    description: "Compare Proton Mail, Tuta, Mailbox.org, and Posteo. End-to-end encrypted, GDPR-compliant alternatives to Gmail — with a free tier comparison.",
+    category: "email",
+    difficulty: "Easy",
+    hasContent: true,
+  },
+  {
+    id: "best-european-vpn",
+    title: "Best European VPN Services in 2026",
+    description: "Compare Proton VPN, Mullvad, IVPN, and AzireVPN. No-logs, independently audited VPNs based in Switzerland and Sweden.",
+    category: "vpn",
+    difficulty: "Easy",
+    hasContent: true,
+  },
+  {
+    id: "best-european-cloud-storage",
+    title: "Best European Cloud Storage in 2026",
+    description: "Compare Proton Drive, pCloud, Tresorit, and Nextcloud. Zero-knowledge encrypted alternatives to Google Drive and Dropbox.",
+    category: "cloud",
+    difficulty: "Easy",
+    hasContent: true,
+  },
+  {
+    id: "best-european-calendar",
+    title: "Best European Calendar Apps in 2026",
+    description: "Compare Proton Calendar, Tuta Calendar, and Mailbox.org. Encrypted, GDPR-compliant alternatives to Google Calendar that keep your schedule private.",
+    category: "calendar",
+    difficulty: "Easy",
+    hasContent: true,
+  },
+  {
+    id: "degoogle-checklist",
+    title: "The Step-by-Step 'De-Googling' Master Checklist",
+    description: "A methodical, stress-free sequence to migrate your calendar, photos, files, and email away from Google Workspace into fully private Swiss-hosted alternatives.",
+    category: "privacy",
+    difficulty: "Medium",
+    hasContent: true,
+  },
+  {
+    id: "browser-wars",
+    title: "Uncensored Web: Browser Privacy and Security Compared",
+    description: "We audit Google Chrome, Brave, Mullvad Browser, Safari, and LibreWolf. Which browsers prevent fingerprinting and represent safe European choices?",
+    category: "browser",
+    difficulty: "Easy",
+    hasContent: true,
+  },
+  {
+    id: "password-manager-migration",
+    title: "Dump LastPass: How to Safely Migrate to Proton Pass",
+    description: "Following LastPass's security breaches, learn how to export your encrypted vault and import it into a Swiss-hosted, zero-knowledge password manager.",
+    category: "password",
+    difficulty: "Easy",
+    hasContent: true,
+  },
 ];
 
 const DIFFICULTY_STYLE: Record<string, string> = {

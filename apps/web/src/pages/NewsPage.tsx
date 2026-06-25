@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
@@ -29,10 +30,11 @@ interface Article {
   id: string;
   title: string;
   excerpt: string;
-  category: "interview" | "innovation" | "regulation" | "investigation";
+  category: "interview" | "innovation" | "regulation" | "investigation" | "guide";
   author: string;
   date: string;
   readTime: string;
+  href?: string;
 }
 
 const JOURNALISTS: Journalist[] = [
@@ -44,13 +46,79 @@ const JOURNALISTS: Journalist[] = [
 ];
 
 const NEWS_ARTICLES: Article[] = [
-  { id: "data-industrial-complex", title: "The Data Industrial Complex: How America's Tech Giants Built Surveillance Empires at Europe's Expense", excerpt: "A 15-month investigation reveals how Facebook, Google, Microsoft and their peers systematically harvest, inadequately protect, and monetize European user data—while promoting privacy-hostile alternatives that deepen dependency on US surveillance capitalism.", category: "investigation", author: "Johan Nordström", date: "June 19, 2026", readTime: "14 min read" },
-  { id: "eu-ai-act-impact", title: "How the EU AI Act is Shaping a New Era of Ethical Artificial Intelligence", excerpt: "As the world's first comprehensive AI regulation takes effect, European startups are pioneering privacy-preserving, transparent AI systems that could become the global benchmark for ethical technology development.", category: "regulation", author: "Johan Nordström", date: "June 18, 2026", readTime: "7 min read" },
-  { id: "andy-yen-interview", title: "Sovereignty at Scale: An Interview with Andy Yen, CEO of Proton", excerpt: "Lukas Weber sits down with the founder of Proton Mail in Geneva to discuss Swiss privacy laws, competing with Google's search and advertising monopoly, and why client-side encryption is a human right.", category: "interview", author: "Lukas Weber", date: "June 15, 2026", readTime: "8 min read" },
-  { id: "dma-opening-big-tech", title: "How the Digital Markets Act (DMA) is Breaking Big Tech's Stranglehold", excerpt: "The European Union's sweeping anti-monopoly regulations are forcing Apple and Google to allow alternative app stores and browser engines. We outline what this means for European tech startups.", category: "regulation", author: "Helena Vance", date: "May 28, 2026", readTime: "5 min read" },
-  { id: "sovereign-cloud-scaling", title: "Sovereign Cloud Hosting: The German and French Infrastructure Shield", excerpt: "Why companies like Scaleway, Hetzner, and Scaleway are growing exponentially. We evaluate the true risk of the US CLOUD Act on European business intelligence and corporate data security.", category: "innovation", author: "Marc Dubois", date: "May 10, 2026", readTime: "6 min read" },
-  { id: "data-leak-surveillance", title: "The Silent Auction: Inside the Consumer Data-Brokering Matrix", excerpt: "An investigative audit of how secondary mobile apps silently bundle location trackers and telemetry tools, selling your physical movements to advertising networks without explicit GDPR consent.", category: "investigation", author: "Astrid Lindqvist", date: "April 29, 2026", readTime: "7 min read" },
-  { id: "tuta-cryptographic-email", title: "German-Engineered Privacy: Tuta Mail's Journey to Post-Quantum Encryption", excerpt: "Tuta is deploying quantum-resistant end-to-end encryption across all contacts and calendars. A deep-dive review of Hannover's premier green-energy mail provider.", category: "innovation", author: "Lukas Weber", date: "April 22, 2026", readTime: "4 min read" },
+  {
+    id: "best-european-calendar",
+    title: "Best European Calendar Apps in 2026",
+    excerpt: "Google Calendar reads your schedule. We compare three encrypted, GDPR-compliant European alternatives—Proton Calendar, Tuta Calendar, and Mailbox.org—to help you take your time back. Read the full guide.",
+    category: "guide",
+    author: "Lukas Weber",
+    date: "June 25, 2026",
+    readTime: "5 min read",
+    href: "/guides/best-european-calendar",
+  },
+  {
+    id: "data-industrial-complex",
+    title: "The Data Industrial Complex: How America's Tech Giants Built Surveillance Empires at Europe's Expense",
+    excerpt: "A 15-month investigation reveals how Facebook, Google, Microsoft and their peers systematically harvest, inadequately protect, and monetize European user data—while promoting privacy-hostile alternatives that deepen dependency on US surveillance capitalism.",
+    category: "investigation",
+    author: "Johan Nordström",
+    date: "June 19, 2026",
+    readTime: "14 min read",
+  },
+  {
+    id: "eu-ai-act-impact",
+    title: "How the EU AI Act is Shaping a New Era of Ethical Artificial Intelligence",
+    excerpt: "As the world's first comprehensive AI regulation takes effect, European startups are pioneering privacy-preserving, transparent AI systems that could become the global benchmark for ethical technology development.",
+    category: "regulation",
+    author: "Johan Nordström",
+    date: "June 18, 2026",
+    readTime: "7 min read",
+  },
+  {
+    id: "andy-yen-interview",
+    title: "Sovereignty at Scale: An Interview with Andy Yen, CEO of Proton",
+    excerpt: "Lukas Weber sits down with the founder of Proton Mail in Geneva to discuss Swiss privacy laws, competing with Google's search and advertising monopoly, and why client-side encryption is a human right.",
+    category: "interview",
+    author: "Lukas Weber",
+    date: "June 15, 2026",
+    readTime: "8 min read",
+  },
+  {
+    id: "dma-opening-big-tech",
+    title: "How the Digital Markets Act (DMA) is Breaking Big Tech's Stranglehold",
+    excerpt: "The European Union's sweeping anti-monopoly regulations are forcing Apple and Google to allow alternative app stores and browser engines. We outline what this means for European tech startups.",
+    category: "regulation",
+    author: "Helena Vance",
+    date: "May 28, 2026",
+    readTime: "5 min read",
+  },
+  {
+    id: "sovereign-cloud-scaling",
+    title: "Sovereign Cloud Hosting: The German and French Infrastructure Shield",
+    excerpt: "Why companies like Scaleway, Hetzner, and Scaleway are growing exponentially. We evaluate the true risk of the US CLOUD Act on European business intelligence and corporate data security.",
+    category: "innovation",
+    author: "Marc Dubois",
+    date: "May 10, 2026",
+    readTime: "6 min read",
+  },
+  {
+    id: "data-leak-surveillance",
+    title: "The Silent Auction: Inside the Consumer Data-Brokering Matrix",
+    excerpt: "An investigative audit of how secondary mobile apps silently bundle location trackers and telemetry tools, selling your physical movements to advertising networks without explicit GDPR consent.",
+    category: "investigation",
+    author: "Astrid Lindqvist",
+    date: "April 29, 2026",
+    readTime: "7 min read",
+  },
+  {
+    id: "tuta-cryptographic-email",
+    title: "German-Engineered Privacy: Tuta Mail's Journey to Post-Quantum Encryption",
+    excerpt: "Tuta is deploying quantum-resistant end-to-end encryption across all contacts and calendars. A deep-dive review of Hannover's premier green-energy mail provider.",
+    category: "innovation",
+    author: "Lukas Weber",
+    date: "April 22, 2026",
+    readTime: "4 min read",
+  },
 ];
 
 const CATEGORY_STYLES: Record<string, string> = {
@@ -58,6 +126,7 @@ const CATEGORY_STYLES: Record<string, string> = {
   innovation: "bg-sky-500/10 text-sky-300 border-sky-500/20",
   regulation: "bg-amber-500/10 text-amber-300 border-amber-500/20",
   investigation: "bg-red-500/10 text-red-300 border-red-500/20",
+  guide: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20",
 };
 
 function DailyDigest() {
@@ -287,29 +356,39 @@ export function NewsPage() {
             Latest Columns
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">
-            {NEWS_ARTICLES.map((article) => (
-              <div
-                key={article.id}
-                className="flex flex-col gap-3 rounded-sm border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-5 hover:border-accent/30 transition duration-200"
-              >
-                <div className="flex items-center justify-between">
-                  <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm border ${CATEGORY_STYLES[article.category] || "text-text-secondary border-border"}`}>
-                    {article.category}
-                  </span>
-                  <span className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-medium">{article.readTime}</span>
+            {NEWS_ARTICLES.map((article) => {
+              const cardClass =
+                "flex flex-col gap-3 rounded-sm border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-5 hover:border-accent/30 transition duration-200";
+              const inner = (
+                <>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm border ${CATEGORY_STYLES[article.category] || "text-text-secondary border-border"}`}>
+                      {article.category}
+                    </span>
+                    <span className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-medium">{article.readTime}</span>
+                  </div>
+                  <h3 className="text-base font-bold text-text-primary dark:text-dark-text-primary leading-snug tracking-tight">
+                    {article.title}
+                  </h3>
+                  <p className="text-xs text-text-secondary dark:text-dark-text-secondary leading-relaxed">
+                    {article.excerpt}
+                  </p>
+                  <div className="mt-auto pt-3 border-t border-border dark:border-dark-border flex items-center justify-between text-[10px] text-text-secondary dark:text-dark-text-secondary font-semibold">
+                    <span>Author: {article.author}</span>
+                    <span>{article.date}</span>
+                  </div>
+                </>
+              );
+              return article.href ? (
+                <Link key={article.id} to={article.href} className={cardClass}>
+                  {inner}
+                </Link>
+              ) : (
+                <div key={article.id} className={cardClass}>
+                  {inner}
                 </div>
-                <h3 className="text-base font-bold text-text-primary dark:text-dark-text-primary leading-snug tracking-tight">
-                  {article.title}
-                </h3>
-                <p className="text-xs text-text-secondary dark:text-dark-text-secondary leading-relaxed">
-                  {article.excerpt}
-                </p>
-                <div className="mt-auto pt-3 border-t border-border dark:border-dark-border flex items-center justify-between text-[10px] text-text-secondary dark:text-dark-text-secondary font-semibold">
-                  <span>Author: {article.author}</span>
-                  <span>{article.date}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 

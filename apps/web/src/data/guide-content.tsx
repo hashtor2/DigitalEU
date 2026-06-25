@@ -696,4 +696,95 @@ export const GUIDE_CONTENT: Record<string, GuideData> = {
       },
     ],
   },
+
+  "best-european-calendar": {
+    id: "best-european-calendar",
+    title: "Best European Calendar Apps in 2026",
+    metaTitle: "Best European Calendar Apps in 2026 — Google Calendar Alternatives | digitaleu.me",
+    metaDescription:
+      "Compare the best privacy-friendly European calendar apps: Proton Calendar, Tuta Calendar, and Mailbox.org. Encrypted, GDPR-compliant alternatives to Google Calendar.",
+    category: "calendar",
+    difficulty: "Easy",
+    intro:
+      "Your calendar reveals more than you think — who you meet, where you go, and when. Google Calendar reads all of it in cleartext and ties it to your advertising profile. European calendar apps keep that data encrypted and under GDPR jurisdiction, so your schedule stays your business. Here are three strong alternatives to Google Calendar.",
+    whySwitch: [
+      "Google Calendar stores your events in cleartext and links them to your ad profile",
+      "Meeting times, locations, and contacts reveal a detailed map of your life",
+      "European providers are subject to GDPR data minimisation",
+      "End-to-end encryption means even the provider cannot read your events",
+    ],
+    services: [
+      {
+        name: "Proton Calendar",
+        country: "Switzerland 🇨🇭",
+        tagline: "End-to-end encrypted calendar from the makers of Proton Mail",
+        pros: [
+          "Event details encrypted end-to-end — Proton cannot read them",
+          "Free with any Proton account",
+          "Swiss jurisdiction — outside EU/US surveillance treaties",
+          "Integrates with Proton Mail, Drive, and VPN",
+          "CalDAV support for third-party clients",
+        ],
+        cons: [
+          "Requires a Proton account",
+          "Shared-calendar features still expanding",
+        ],
+        price: "Free (included with Proton account)",
+        url: "https://proton.me/calendar",
+        isAffiliate: true,
+      },
+      {
+        name: "Tuta Calendar",
+        country: "Germany 🇩🇪",
+        tagline: "Open-source, fully encrypted, included with Tuta Mail",
+        pros: [
+          "End-to-end encrypted events, including reminders and notes",
+          "Fully open-source and independently audited",
+          "Free with a Tuta Mail account",
+          "Apps for web, Android, and iOS",
+        ],
+        cons: [
+          "Tied to the Tuta ecosystem",
+          "No CalDAV sync with external clients",
+        ],
+        price: "Free (included with Tuta account)",
+        url: "https://tuta.com/calendar",
+        isAffiliate: true,
+      },
+      {
+        name: "Mailbox.org",
+        country: "Germany 🇩🇪",
+        tagline: "Standards-based calendar with full CalDAV support",
+        pros: [
+          "Full CalDAV — works with any calendar client",
+          "Powered by 100% renewable energy",
+          "Bundled with email, contacts, and office tools",
+          "Strong privacy policy, no advertising",
+        ],
+        cons: [
+          "No end-to-end encryption by default",
+          "No free tier",
+        ],
+        price: "From €1/mo",
+        url: "https://mailbox.org",
+        isAffiliate: false,
+      },
+    ],
+    verdict:
+      "For most people, Proton Calendar is the best starting point — encrypted by default, free, and part of a wider privacy ecosystem. If you want fully open-source encryption, Tuta Calendar is an excellent pick. If you need standards-based CalDAV that syncs with any client, Mailbox.org is the pragmatic choice.",
+    faq: [
+      {
+        q: "Can I import my Google Calendar?",
+        a: "Yes. Export your Google Calendar as an ICS file (Settings → Import & export) and import it into Proton Calendar, Tuta, or Mailbox.org. Your existing events carry over.",
+      },
+      {
+        q: "What does an encrypted calendar actually protect?",
+        a: "Encryption hides event titles, locations, notes, and participants from the provider. With Google Calendar that data is readable and feeds your ad profile; with Proton or Tuta only you can read it.",
+      },
+      {
+        q: "Which works best with third-party calendar apps?",
+        a: "Proton Calendar and Mailbox.org both support CalDAV, so they sync with apps like Thunderbird or Apple Calendar. Tuta keeps everything inside its own encrypted apps.",
+      },
+    ],
+  },
 };
