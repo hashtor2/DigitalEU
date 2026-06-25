@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from '@/lib/db'
 
 export default function EmailCallbackPage() {
   const navigate = useNavigate()
@@ -82,7 +83,22 @@ export default function EmailCallbackPage() {
         sessionStorage.removeItem('oauth_provider')
         sessionStorage.removeItem('oauth_state')
 
-        navigate('/scanner', { replace: true })
+        // If user is signed in to Supabase, save the mailbox connection to DB
+        // so the dashboard can list it and start a scan.
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          await supabase
+            .from('mailbox_connections')
+            .upsert(
+              { user_id: user.id, provider, connected_at: new Date().toISOString(), revoked_at: null },
+              { onConflict: 'user_id,provider' }
+            )
+          navigate('/scanner/dashboard', { replace: true })
+        } else {
+          // Not signed in — go to sign-in so they can create an account to run a full scan.
+          // The access token is in sessionStorage and will survive the navigation.
+          navigate('/scanner/auth/signin', { replace: true })
+        }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Unknown error during authentication'
         setError(errorMessage)

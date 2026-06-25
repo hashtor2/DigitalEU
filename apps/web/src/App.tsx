@@ -231,6 +231,6 @@ export default function App() {
       {routerContent}
     </Elements>
   ) : (
-      <RouterProvider router={router} />
+    routerContent
   )
 }

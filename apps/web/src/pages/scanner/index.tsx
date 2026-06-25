@@ -69,33 +69,56 @@ export default function IndexPage() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-2xl rounded-sm border border-border dark:border-dark-border bg-surface dark:bg-dark-surface px-6 py-5 text-center">
-          <p className="mb-4 font-mono text-sm uppercase tracking-[0.22em] text-text-secondary dark:text-dark-text-secondary">
-            Scan your inbox
-          </p>
-          {connectedProvider && (
-            <p className="mb-3 text-sm font-mono text-text-secondary dark:text-dark-text-secondary">
-              Connected via {connectedProvider === 'gmail' ? 'Gmail' : 'Outlook'}.
+        {connectedProvider ? (
+          <div className="mx-auto max-w-2xl rounded-sm border border-accent/30 bg-accent/5 px-6 py-5 text-center space-y-4">
+            <div className="flex items-center justify-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+              <p className="font-mono text-sm font-semibold text-accent uppercase tracking-[0.22em]">
+                {connectedProvider === 'gmail' ? 'Gmail' : 'Outlook'} connected
+              </p>
+            </div>
+            <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
+              Your inbox is ready to scan. Sign in to run a full scan and save your results.
             </p>
-          )}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
-            <Link
-              to="/scanner/auth/signin"
-              className="inline-flex items-center justify-center rounded-sm border border-accent bg-accent px-8 py-3.5 font-mono text-sm font-semibold text-white transition hover:bg-accent-hover"
-            >
-              {connectedProvider ? 'Reconnect inbox' : 'Scan my inbox'}
-            </Link>
-            <Link
-              to="/scanner/scan"
-              className="inline-flex items-center justify-center rounded-sm border border-border dark:border-dark-border bg-transparent px-8 py-3.5 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary transition hover:bg-border dark:hover:bg-dark-border"
-            >
-              Try the demo
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/scanner/auth/signin"
+                className="inline-flex items-center justify-center rounded-sm border border-accent bg-accent px-8 py-3.5 font-mono text-sm font-semibold text-white transition hover:bg-accent-hover"
+              >
+                Sign in and start scan
+              </Link>
+              <Link
+                to="/scanner/scan"
+                className="inline-flex items-center justify-center rounded-sm border border-border dark:border-dark-border bg-transparent px-8 py-3.5 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary transition hover:bg-border dark:hover:bg-dark-border"
+              >
+                Preview with demo data
+              </Link>
+            </div>
           </div>
-          <p className="mt-4 text-sm leading-relaxed text-text-secondary dark:text-dark-text-secondary">
-            Connect Gmail or Outlook to see which services are linked to your email.
-          </p>
-        </div>
+        ) : (
+          <div className="mx-auto max-w-2xl rounded-sm border border-border dark:border-dark-border bg-surface dark:bg-dark-surface px-6 py-5 text-center">
+            <p className="mb-4 font-mono text-sm uppercase tracking-[0.22em] text-text-secondary dark:text-dark-text-secondary">
+              Scan your inbox
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+              <Link
+                to="/scanner/auth/signin"
+                className="inline-flex items-center justify-center rounded-sm border border-accent bg-accent px-8 py-3.5 font-mono text-sm font-semibold text-white transition hover:bg-accent-hover"
+              >
+                Scan my inbox
+              </Link>
+              <Link
+                to="/scanner/scan"
+                className="inline-flex items-center justify-center rounded-sm border border-border dark:border-dark-border bg-transparent px-8 py-3.5 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary transition hover:bg-border dark:hover:bg-dark-border"
+              >
+                Try the demo
+              </Link>
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-text-secondary dark:text-dark-text-secondary">
+              Connect Gmail or Outlook to see which services are linked to your email.
+            </p>
+          </div>
+        )}
       </section>
 
       <section id="manual-check" className="space-y-6">
