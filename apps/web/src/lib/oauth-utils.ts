@@ -73,7 +73,7 @@ export function constructGmailAuthUrl(codeChallenge: string, state: string): str
   const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth')
   
   authUrl.searchParams.append('client_id', import.meta.env.VITE_GOOGLE_CLIENT_ID || '')
-  authUrl.searchParams.append('redirect_uri', `${window.location.origin}/auth/email-callback`)
+  authUrl.searchParams.append('redirect_uri', `${window.location.origin}/scanner/auth/email-callback`)
   authUrl.searchParams.append('response_type', 'code')
   authUrl.searchParams.append('scope', 'https://www.googleapis.com/auth/gmail.metadata')
   authUrl.searchParams.append('code_challenge', codeChallenge)
@@ -95,7 +95,7 @@ export function constructOutlookAuthUrl(codeChallenge: string, state: string): s
   const authUrl = new URL('https://login.microsoftonline.com/common/oauth2/v2.0/authorize')
   
   authUrl.searchParams.append('client_id', import.meta.env.VITE_MICROSOFT_CLIENT_ID || '')
-  authUrl.searchParams.append('redirect_uri', `${window.location.origin}/auth/email-callback`)
+  authUrl.searchParams.append('redirect_uri', `${window.location.origin}/scanner/auth/email-callback`)
   authUrl.searchParams.append('response_type', 'code')
   authUrl.searchParams.append('scope', 'https://graph.microsoft.com/.default')
   authUrl.searchParams.append('code_challenge', codeChallenge)

@@ -3,6 +3,10 @@
 interface ImportMetaEnv {
   readonly VITE_SUPABASE_URL: string;
   readonly VITE_SUPABASE_ANON_KEY: string;
+  readonly VITE_GOOGLE_CLIENT_ID: string;
+  readonly VITE_MICROSOFT_CLIENT_ID: string;
+  readonly VITE_STRIPE_PUBLIC_KEY: string;
+  readonly VITE_STRIPE_CHECKOUT_SESSION_URL: string;
   readonly VITE_PLAUSIBLE_DOMAIN?: string;
   readonly VITE_PLAUSIBLE_SCRIPT_SRC?: string;
 }

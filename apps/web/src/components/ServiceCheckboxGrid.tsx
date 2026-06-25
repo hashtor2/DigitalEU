@@ -78,15 +78,15 @@ export function ServiceCheckboxGrid({
         placeholder="Search services or what you want to replace..."
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="w-full px-4 py-3 rounded border border-[#e0dbd2] dark:border-[#2a251f] 
-                   bg-white dark:bg-[#1a1510] text-[#1a1815] dark:text-[#faf8f5]
-                   placeholder:text-[#a89d96] dark:placeholder:text-[#6b6560]
-                   focus:outline-none focus:border-[#b8705c] dark:focus:border-[#a8664f]"
+        className="w-full px-4 py-3 rounded-sm border border-border dark:border-dark-border
+                   bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary
+                   placeholder:text-text-secondary dark:placeholder:text-dark-text-secondary
+                   focus:outline-none focus:border-accent dark:focus:border-accent"
       />
 
       {/* Category Filter */}
       <div className="space-y-2">
-        <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1a1815] dark:text-[#faf8f5]">
+        <p className="text-xs font-mono font-semibold uppercase tracking-wider text-text-primary dark:text-dark-text-primary">
           Categories
         </p>
         <div className="flex flex-wrap gap-2">
@@ -96,10 +96,10 @@ export function ServiceCheckboxGrid({
               <button
                 key={cat}
                 onClick={() => handleCategoryToggle(cat)}
-                className={`px-3 py-1.5 rounded text-xs font-mono transition ${
+                className={`px-3 py-1.5 rounded-sm text-xs font-mono transition ${
                   active
-                    ? 'bg-[#b8705c] dark:bg-[#a8664f] text-white'
-                    : 'border border-[#e0dbd2] dark:border-[#2a251f] text-[#1a1815] dark:text-[#faf8f5] hover:border-[#b8705c] dark:hover:border-[#a8664f]'
+                    ? 'bg-accent text-white'
+                    : 'border border-border dark:border-dark-border text-text-primary dark:text-dark-text-primary hover:border-accent dark:hover:border-accent'
                 }`}
               >
                 {CATEGORY_LABELS[cat] ?? cat}
@@ -115,19 +115,19 @@ export function ServiceCheckboxGrid({
           {filtered.map(service => (
             <label
               key={service.id}
-              className="flex items-start gap-3 p-4 rounded border border-[#e0dbd2] dark:border-[#2a251f] 
-                         bg-white dark:bg-[#1a1510] hover:border-[#b8705c] dark:hover:border-[#a8664f]
+              className="flex items-start gap-3 p-4 rounded-sm border border-border dark:border-dark-border
+                         bg-canvas dark:bg-dark-canvas hover:border-accent dark:hover:border-accent
                          cursor-pointer transition group"
             >
               <input
                 type="checkbox"
                 checked={selected.has(service.id)}
                 onChange={() => onToggle(service.id)}
-                className="mt-1 w-5 h-5 rounded accent-[#b8705c]"
+                className="mt-1 w-5 h-5 rounded-sm accent-accent"
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="font-mono font-semibold text-[#1a1815] dark:text-[#faf8f5]">
+                  <span className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">
                     {service.name}
                   </span>
                   {service.country && (
@@ -136,11 +136,11 @@ export function ServiceCheckboxGrid({
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-[#1a1815]/60 dark:text-[#a89d96]">
+                <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
                   {service.description}
                 </p>
                 {service.replaces && service.replaces.length > 0 && (
-                  <p className="text-[10px] text-[#1a1815]/50 dark:text-[#6b6560] mt-2">
+                  <p className="text-[10px] text-text-secondary/70 dark:text-dark-text-secondary/70 mt-2">
                     Replaces: {service.replaces.join(', ')}
                   </p>
                 )}
@@ -150,7 +150,7 @@ export function ServiceCheckboxGrid({
         </div>
 
         {filtered.length === 0 && (
-          <p className="text-center text-[#1a1815]/60 dark:text-[#a89d96] py-8">
+          <p className="text-center text-text-secondary dark:text-dark-text-secondary py-8">
             No services found. Try a different search or category.
           </p>
         )}
@@ -161,8 +161,8 @@ export function ServiceCheckboxGrid({
         {onSelectAll && (
           <button
             onClick={onSelectAll}
-            className="px-3 py-2 rounded text-xs font-mono border border-[#e0dbd2] dark:border-[#2a251f]
-                       text-[#1a1815] dark:text-[#faf8f5] hover:bg-[#f5f3ef] dark:hover:bg-[#2a251f] transition"
+            className="px-3 py-2 rounded-sm text-xs font-mono border border-border dark:border-dark-border
+                       text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition"
           >
             Select all
           </button>
@@ -170,13 +170,13 @@ export function ServiceCheckboxGrid({
         {onClearAll && selected.size > 0 && (
           <button
             onClick={onClearAll}
-            className="px-3 py-2 rounded text-xs font-mono border border-[#e0dbd2] dark:border-[#2a251f]
-                       text-[#1a1815] dark:text-[#faf8f5] hover:bg-[#f5f3ef] dark:hover:bg-[#2a251f] transition"
+            className="px-3 py-2 rounded-sm text-xs font-mono border border-border dark:border-dark-border
+                       text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition"
           >
             Clear all
           </button>
         )}
-        <span className="text-xs text-[#1a1815]/60 dark:text-[#a89d96] ml-auto">
+        <span className="text-xs text-text-secondary dark:text-dark-text-secondary ml-auto">
           {selected.size} selected
         </span>
       </div>

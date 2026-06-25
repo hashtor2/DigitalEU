@@ -79,8 +79,8 @@ OAuth Code+PKCE Implementation Validator
 ========================================
 
 1. File Structure
-✓ apps/scanner/src/lib/oauth-utils.ts
-✓ apps/scanner/src/routes/auth/email-callback.tsx
+✓ apps/web/src/lib/oauth-utils.ts
+✓ apps/web/src/pages/scanner/auth/email-callback.tsx
 ...
 
 All checks passed! Ready for local testing.
@@ -97,9 +97,9 @@ All checks passed! Ready for local testing.
 npm run oauth:validate
 
 # 2. If all checks pass, start dev server
-npm run oauth:test
+npm run dev
 
-# 3. Browser opens to http://localhost:5174/auth/signin
+# 3. Browser opens to http://localhost:5173/scanner/auth/signin
 # 4. Test Gmail and Outlook OAuth flows
 # 5. Verify no tokens in browser history
 ```
@@ -108,7 +108,7 @@ npm run oauth:test
 
 ```bash
 # 1. Deploy Edge Function
-supabase functions deploy exchange-email-code --project-ref fuiebtpezpoxvkuuhaqy
+supabase functions deploy exchange-email-code --project-ref mwsalzjsvuvlmshxzbxg
 
 # 2. Push feature branch to GitHub
 git push origin feature/oauth-code-pkce
@@ -123,12 +123,12 @@ git push origin feature/oauth-code-pkce
 
 ## Environment Setup
 
-### Create `.env.local` in `apps/scanner/`
+### Create `.env.local` in `apps/web/`
 
 ```bash
 VITE_GOOGLE_CLIENT_ID=<from Google Cloud Console>
 VITE_MICROSOFT_CLIENT_ID=<from Azure AD>
-VITE_SUPABASE_URL=https://fuiebtpezpoxvkuuhaqy.supabase.co
+VITE_SUPABASE_URL=https://mwsalzjsvuvlmshxzbxg.supabase.co
 VITE_SUPABASE_ANON_KEY=<from Supabase dashboard>
 ```
 
@@ -168,14 +168,14 @@ taskkill /F /IM node.exe
 
 **Fix:** Build manually to see errors
 ```bash
-npm run build --workspace @digitaleu/scanner
+npm run build --workspace @digitaleu/web
 ```
 
 ### OAuth redirect not working
 
 **Check:**
-1. Ensure `apps/scanner/.env.local` has correct client IDs
-2. Verify redirect URI in OAuth provider settings includes `http://localhost:5174/auth/email-callback`
+1. Ensure `apps/web/.env.local` has correct client IDs
+2. Verify redirect URI in OAuth provider settings includes `http://localhost:5173/scanner/auth/email-callback`
 3. Hard refresh browser (Ctrl+Shift+R)
 4. Check DevTools console for errors
 
@@ -233,7 +233,7 @@ npm run dev:scanner
 ### Deploy Edge Function directly
 
 ```bash
-supabase functions deploy exchange-email-code --project-ref fuiebtpezpoxvkuuhaqy
+supabase functions deploy exchange-email-code --project-ref mwsalzjsvuvlmshxzbxg
 ```
 
 ---

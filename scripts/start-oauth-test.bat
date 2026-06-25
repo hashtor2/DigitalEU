@@ -62,14 +62,14 @@ REM Check environment variables
 echo.
 echo [3/5] Checking environment variables...
 
-if not exist "apps\scanner\.env.local" (
-    echo X Missing apps\scanner\.env.local
+if not exist "apps\web\.env.local" (
+    echo X Missing apps\web\.env.local
     echo.
     echo Create it with these variables:
     echo.
     echo VITE_GOOGLE_CLIENT_ID=^<your-google-client-id^>
     echo VITE_MICROSOFT_CLIENT_ID=^<your-microsoft-client-id^>
-    echo VITE_SUPABASE_URL=https://fuiebtpezpoxvkuuhaqy.supabase.co
+    echo VITE_SUPABASE_URL=https://mwsalzjsvuvlmshxzbxg.supabase.co
     echo VITE_SUPABASE_ANON_KEY=^<your-supabase-anon-key^>
     echo.
     pause
@@ -82,9 +82,9 @@ echo.
 echo [4/5] Verifying OAuth implementation files...
 
 set FILES=^
-    apps\scanner\src\lib\oauth-utils.ts ^
-    apps\scanner\src\routes\auth\email-callback.tsx ^
-    apps\scanner\src\routes\auth\signin.tsx ^
+    apps\web\src\lib\oauth-utils.ts ^
+    apps\web\src\pages\scanner\auth\email-callback.tsx ^
+    apps\web\src\pages\scanner\auth\signin.tsx ^
     supabase\functions\exchange-email-code\index.ts
 
 for %%F in (%FILES%) do (

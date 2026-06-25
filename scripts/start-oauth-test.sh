@@ -53,14 +53,14 @@ echo -e "${GREEN}✓ Scanner dependencies${NC}"
 # Verify environment variables
 echo -e "\n${YELLOW}[3/5] Checking environment variables...${NC}"
 
-ENV_FILE="apps/scanner/.env.local"
+ENV_FILE="apps/web/.env.local"
 if [ ! -f "$ENV_FILE" ]; then
     echo -e "${RED}✗ Missing $ENV_FILE${NC}"
     echo -e "${YELLOW}Create it with these variables:${NC}"
     cat > /tmp/oauth-env-template.txt << 'EOF'
 VITE_GOOGLE_CLIENT_ID=<your-google-client-id>
 VITE_MICROSOFT_CLIENT_ID=<your-microsoft-client-id>
-VITE_SUPABASE_URL=https://fuiebtpezpoxvkuuhaqy.supabase.co
+VITE_SUPABASE_URL=https://mwsalzjsvuvlmshxzbxg.supabase.co
 VITE_SUPABASE_ANON_KEY=<your-supabase-anon-key>
 EOF
     cat /tmp/oauth-env-template.txt
@@ -73,9 +73,9 @@ echo -e "${GREEN}✓ Environment variables found${NC}"
 echo -e "\n${YELLOW}[4/5] Verifying OAuth implementation files...${NC}"
 
 FILES=(
-    "apps/scanner/src/lib/oauth-utils.ts"
-    "apps/scanner/src/routes/auth/email-callback.tsx"
-    "apps/scanner/src/routes/auth/signin.tsx"
+    "apps/web/src/lib/oauth-utils.ts"
+    "apps/web/src/pages/scanner/auth/email-callback.tsx"
+    "apps/web/src/pages/scanner/auth/signin.tsx"
     "supabase/functions/exchange-email-code/index.ts"
 )
 

@@ -11,9 +11,18 @@ const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY
   ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
   : null;
 
+function PageLoader() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent" />
+    </div>
+  )
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
+    HydrateFallback: PageLoader,
     lazy: async () => ({
       Component: (await import("./components/LandingPage")).LandingPage,
     }),
@@ -97,12 +106,6 @@ const router = createBrowserRouter([
     }),
   },
   {
-    path: "/qa/analytics",
-    lazy: async () => ({
-      Component: (await import("./pages/AnalyticsQAPage")).AnalyticsQAPage,
-    }),
-  },
-  {
     path: "/services/:id",
     lazy: async () => ({
       Component: (await import("./pages/ServicePage")).ServicePage,
@@ -115,10 +118,78 @@ const router = createBrowserRouter([
     }),
   },
   {
-    path: "/scanner/*",
+    path: "/scanner",
     lazy: async () => ({
-      Component: (await import("./pages/ScannerPage")).ScannerPage,
+      Component: (await import("./pages/scanner/__root")).default,
     }),
+    children: [
+      {
+        index: true,
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/index")).default,
+        }),
+      },
+      {
+        path: "scan",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/scan")).default,
+        }),
+      },
+      {
+        path: "auth/signin",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/auth/signin")).default,
+        }),
+      },
+      {
+        path: "auth/signup",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/auth/signup")).default,
+        }),
+      },
+      {
+        path: "auth/callback",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/auth/callback")).default,
+        }),
+      },
+      {
+        path: "auth/email-callback",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/auth/email-callback")).default,
+        }),
+      },
+      {
+        path: "dashboard",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/dashboard")).default,
+        }),
+      },
+      {
+        path: "results/:scanId",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/results/$scanId")).default,
+        }),
+      },
+      {
+        path: "report/:sessionId",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/report/$sessionId")).default,
+        }),
+      },
+      {
+        path: "cancel",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/cancel/index")).default,
+        }),
+      },
+      {
+        path: "cancel/:id",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/cancel/$id")).default,
+        }),
+      },
+    ],
   },
   {
     path: "/verify",
@@ -163,6 +234,6 @@ export default function App() {
       {routerContent}
     </Elements>
   ) : (
-      <RouterProvider router={router} />
+    routerContent
   )
 }
