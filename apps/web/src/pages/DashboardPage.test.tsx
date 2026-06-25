@@ -27,7 +27,9 @@ describe("DashboardPage (privacy report)", () => {
     expect(
       screen.getByRole("heading", { name: /these are your accounts/i }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/your privacy report/i)).toBeInTheDocument();
+    // Exact match targets the intro badge specifically; a redesign added an
+    // "Export Your Privacy Report" card that a loose regex would also match.
+    expect(screen.getByText("Your Privacy Report")).toBeInTheDocument();
   });
 
   it("filters the table to the services selected on the selector page", () => {

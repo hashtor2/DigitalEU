@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { ALTERNATIVES } from "@digitaleu/shared";
 import { LandingPage } from "./LandingPage";
 
 function renderLanding() {
@@ -12,53 +11,34 @@ function renderLanding() {
   );
 }
 
+// The landing page is a scan funnel. It promotes the email scanner (auto-scan)
+// and offers a manual path (checkbox grid of Big Tech services). The EU
+// alternatives catalog lives in the menu / directory, not on this page.
 describe("LandingPage", () => {
-  it("shows the main heading in English", () => {
+  it("shows the scan headline in English", () => {
     renderLanding();
     expect(
-      screen.getByRole("heading", { level: 1, name: /your data is in the wrong hands/i }),
+      screen.getByRole("heading", { level: 1, name: /scan your inbox now/i }),
     ).toBeInTheDocument();
   });
 
-  it("links the primary call-to-action to the service selector in English", () => {
+  it("offers the primary auto-scan call-to-action", () => {
     renderLanding();
-    const cta = screen.getByRole("link", { name: /check my accounts/i });
-    expect(cta).toHaveAttribute("href", "/b2c");
+    expect(
+      screen.getByRole("button", { name: /auto-scan/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("offers the manual account-checking path", () => {
+    renderLanding();
+    // Manual selection section heading (the second user path).
+    expect(
+      screen.getByRole("heading", { name: /manual checking/i }),
+    ).toBeInTheDocument();
   });
 
   it("shows the trust signal about data hosting in Sweden/Stockholm", () => {
     renderLanding();
     expect(screen.getAllByText(/Sweden|🇸🇪/i).length).toBeGreaterThan(0);
-  });
-
-  it("renders the preview of alternatives (first 3 of each of the first 8 categories)", () => {
-    renderLanding();
-
-    // Helper function to group alternatives by category (same as in LandingPage)
-    function groupByCategory(alts: typeof ALTERNATIVES) {
-      const map = new Map<string, typeof ALTERNATIVES>();
-      for (const alt of alts) {
-        const existing = map.get(alt.category) ?? [];
-        existing.push(alt);
-        map.set(alt.category, existing);
-      }
-      return Array.from(map.entries());
-    }
-
-    const grouped = groupByCategory(ALTERNATIVES);
-    const renderedAltIds = new Set<string>();
-    for (let i = 0; i < Math.min(8, grouped.length); i++) {
-      const [category, alts] = grouped[i];
-      for (let j = 0; j < Math.min(3, alts.length); j++) {
-        renderedAltIds.add(alts[j].id);
-      }
-    }
-
-    // Check that each rendered alternative is in the document
-    for (const alt of ALTERNATIVES) {
-      if (renderedAltIds.has(alt.id)) {
-        expect(screen.getByText(alt.name)).toBeInTheDocument();
-      }
-    }
   });
 });
