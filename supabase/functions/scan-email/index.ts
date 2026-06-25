@@ -57,10 +57,12 @@ async function scanGmailServer(
   const GMAIL_API_BASE = "https://www.googleapis.com/gmail/v1/users/me";
 
   try {
-    // Step 1: Fetch recent message IDs
+    // Step 1: Fetch recent message IDs.
+    // NOTE: the `gmail.metadata` OAuth scope does NOT permit the `q` search
+    // parameter — including it makes Gmail return HTTP 403. So we list recent
+    // messages without a query filter.
     const listUrl = new URL(`${GMAIL_API_BASE}/messages`);
     listUrl.searchParams.append("maxResults", String(maxResults));
-    listUrl.searchParams.append("q", "NOT is:draft");
 
     const listResponse = await fetch(listUrl.toString(), {
       headers: {
