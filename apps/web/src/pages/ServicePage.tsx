@@ -22,21 +22,21 @@ function StarRating({ stars, estimated }: { stars: number; estimated?: boolean }
         {Array.from({ length: 10 }, (_, i) => (
           <span
             key={i}
-            className={`text-lg leading-none select-none ${i < stars ? "text-amber-400" : "text-slate-600"}`}
+            className={`text-lg leading-none select-none ${i < stars ? "text-amber-400" : "text-text-secondary/30 dark:text-dark-text-secondary/30"}`}
           >
             ★
           </span>
         ))}
       </div>
       <div className="flex items-baseline gap-1.5">
-        <span className="text-3xl font-bold text-white">{stars}</span>
-        <span className="text-sm text-slate-400">/10</span>
+        <span className="text-3xl font-bold text-text-primary dark:text-dark-text-primary">{stars}</span>
+        <span className="text-sm text-text-secondary dark:text-dark-text-secondary">/10</span>
       </div>
       {estimated && (
-        <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wide">estimated</span>
+        <span className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-mono uppercase tracking-wide">estimated</span>
       )}
       {!estimated && (
-        <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wide">privacy score</span>
+        <span className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-mono uppercase tracking-wide">privacy score</span>
       )}
     </div>
   );
@@ -46,7 +46,7 @@ const SEVERITY_STYLE: Record<string, string> = {
   critical: "bg-red-500/15 text-red-400 border-red-500/30",
   high:     "bg-orange-500/15 text-orange-400 border-orange-500/30",
   medium:   "bg-amber-500/15 text-amber-400 border-amber-500/30",
-  low:      "bg-slate-500/15 text-slate-400 border-slate-500/30",
+  low:      "bg-border/40 text-text-secondary border-border",
 };
 
 const COUNTRY_JURISDICTION: Record<string, string> = {
@@ -261,11 +261,11 @@ export function ServicePage() {
 
   if (!alt && !loading && !profile) {
     return (
-      <div className="min-h-screen bg-[#0d1117] text-slate-100">
+      <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary">
         <Header />
         <main className="mx-auto max-w-3xl px-6 py-20 text-center">
-          <p className="text-slate-400 text-sm">Service not found.</p>
-          <Link to="/directory" className="mt-4 inline-block text-xs text-blue-500 hover:text-blue-400">
+          <p className="text-text-secondary dark:text-dark-text-secondary text-sm">Service not found.</p>
+          <Link to="/directory" className="mt-4 inline-block text-xs text-accent hover:text-accent-hover">
             ← Back to directory
           </Link>
         </main>
@@ -293,7 +293,7 @@ export function ServicePage() {
   const categoryNote = alt ? CATEGORY_CONTEXT[alt.category] : undefined;
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-slate-100">
+    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary">
       <title>{pageTitle}</title>
       <meta name="description" content={pageDescription} />
       <meta property="og:title" content={pageTitle} />
@@ -304,53 +304,53 @@ export function ServicePage() {
 
       <main className="mx-auto max-w-3xl px-6 py-12">
 
-        {/* ── Breadcrumb ── */}
-        <nav className="mb-6 text-[11px] font-mono text-slate-500">
-          <Link to="/" className="hover:text-slate-400 transition">home</Link>
+        {/* Breadcrumb */}
+        <nav className="mb-6 text-[11px] font-mono text-text-secondary dark:text-dark-text-secondary">
+          <Link to="/" className="hover:text-text-primary dark:hover:text-dark-text-primary transition">home</Link>
           <span className="mx-1.5">/</span>
-          <Link to="/directory" className="hover:text-slate-400 transition">directory</Link>
+          <Link to="/directory" className="hover:text-text-primary dark:hover:text-dark-text-primary transition">directory</Link>
           <span className="mx-1.5">/</span>
-          <span className="text-slate-400">{name.toLowerCase()}</span>
+          <span className="text-text-primary dark:text-dark-text-primary">{name.toLowerCase()}</span>
         </nav>
 
-        {/* ── Hero / identity ── */}
+        {/* Hero / identity */}
         <div className="flex items-start gap-5 mb-8">
           {domain && (
             <img
               src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
               alt=""
-              className="h-12 w-12 rounded-xl flex-shrink-0 mt-0.5"
+              className="h-12 w-12 rounded-sm flex-shrink-0 mt-0.5"
               onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = "0"; }}
             />
           )}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <h1 className="text-xl font-bold text-white">{name}</h1>
+              <h1 className="text-xl font-bold text-text-primary dark:text-dark-text-primary">{name}</h1>
               <span className="text-xl leading-none">{COUNTRY_FLAGS[country] ?? "🇪🇺"}</span>
               {profile?.headquarters && (
-                <span className="inline-block rounded border border-[#30363d] px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
+                <span className="inline-block rounded-sm border border-border dark:border-dark-border px-1.5 py-0.5 text-[10px] font-mono text-text-secondary dark:text-dark-text-secondary">
                   {profile.headquarters}
                 </span>
               )}
               {!profile && country && (
-                <span className="inline-block rounded border border-[#30363d] px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
+                <span className="inline-block rounded-sm border border-border dark:border-dark-border px-1.5 py-0.5 text-[10px] font-mono text-text-secondary dark:text-dark-text-secondary">
                   {country}
                 </span>
               )}
             </div>
             {profile?.tagline ? (
-              <p className="mt-1 text-sm text-slate-400">{profile.tagline}</p>
+              <p className="mt-1 text-sm text-text-secondary dark:text-dark-text-secondary">{profile.tagline}</p>
             ) : alt && (
-              <p className="mt-1 text-sm text-slate-400">{alt.description}</p>
+              <p className="mt-1 text-sm text-text-secondary dark:text-dark-text-secondary">{alt.description}</p>
             )}
             {alt && (
-              <p className="mt-1 text-[11px] text-slate-500 font-mono">
+              <p className="mt-1 text-[11px] text-text-secondary/60 dark:text-dark-text-secondary/60 font-mono">
                 replaces {alt.replaces.slice(0, 4).join(", ")}
               </p>
             )}
           </div>
           {loading ? (
-            <div className="h-5 w-5 rounded-full border-2 border-slate-700 border-t-slate-400 animate-spin flex-shrink-0" />
+            <div className="h-5 w-5 rounded-full border-2 border-border dark:border-dark-border border-t-accent animate-spin flex-shrink-0" />
           ) : (
             <div className="flex-shrink-0">
               <StarRating stars={stars} estimated={isEstimated} />
@@ -358,28 +358,28 @@ export function ServicePage() {
           )}
         </div>
 
-        {/* ── Score breakdown (only when profile exists) ── */}
+        {/* Score breakdown (only when profile exists) */}
         {profile && (
-          <div className="mb-8 rounded border border-[#30363d] bg-[#21262d]">
-            <div className="px-4 py-3 border-b border-[#30363d]">
-              <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Privacy score breakdown</p>
+          <div className="mb-8 rounded-sm border border-border dark:border-dark-border bg-surface dark:bg-dark-surface">
+            <div className="px-4 py-3 border-b border-border dark:border-dark-border">
+              <p className="text-[11px] font-semibold text-text-secondary dark:text-dark-text-secondary uppercase tracking-wider">Privacy score breakdown</p>
             </div>
             <div className="px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
               {PRIVACY_ATTRIBUTES.map(attr => {
                 const earned = profile[attr.key] as boolean;
                 return (
                   <div key={String(attr.key)} className="flex items-center gap-2.5">
-                    <span className={`w-4 h-4 flex-shrink-0 flex items-center justify-center rounded text-[10px] font-bold ${
+                    <span className={`w-4 h-4 flex-shrink-0 flex items-center justify-center rounded-sm text-[10px] font-bold ${
                       earned
-                        ? "bg-emerald-500/20 text-emerald-400"
-                        : "bg-[#21262d] text-slate-500"
+                        ? "bg-accent/20 text-accent"
+                        : "bg-surface dark:bg-dark-surface text-text-secondary/50 dark:text-dark-text-secondary/50"
                     }`}>
                       {earned ? "✓" : "✗"}
                     </span>
-                    <span className={`text-[12px] flex-1 ${earned ? "text-slate-300" : "text-slate-500"}`}>
+                    <span className={`text-[12px] flex-1 ${earned ? "text-text-primary dark:text-dark-text-primary" : "text-text-secondary dark:text-dark-text-secondary"}`}>
                       {attr.label}
                     </span>
-                    <span className={`text-[10px] font-mono flex-shrink-0 ${earned ? "text-emerald-600" : "text-slate-600"}`}>
+                    <span className={`text-[10px] font-mono flex-shrink-0 ${earned ? "text-accent" : "text-text-secondary/40 dark:text-dark-text-secondary/40"}`}>
                       {earned ? `+${attr.points}` : `+0`}
                     </span>
                   </div>
@@ -389,30 +389,27 @@ export function ServicePage() {
           </div>
         )}
 
-        {/* ── Two column: description + company/jurisdiction info ── */}
+        {/* Two column: description + company/jurisdiction info */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Description / About */}
           <div className="md:col-span-2">
-            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">About</h2>
-            <p className="text-sm text-slate-400 leading-relaxed">
+            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary mb-3">About</h2>
+            <p className="text-sm text-text-secondary dark:text-dark-text-secondary leading-relaxed">
               {profile?.long_description ?? alt?.description ?? ""}
             </p>
 
-            {/* Category context — shown when no profile */}
             {!profile && categoryNote && (
-              <div className="mt-4 rounded border border-[#30363d] bg-[#161b22] px-4 py-3">
-                <p className="text-[11px] text-slate-500 font-mono uppercase tracking-wide mb-1.5">
+              <div className="mt-4 rounded-sm border border-border dark:border-dark-border bg-surface dark:bg-dark-surface px-4 py-3">
+                <p className="text-[11px] text-text-secondary dark:text-dark-text-secondary font-mono uppercase tracking-wide mb-1.5">
                   Why this category matters
                 </p>
-                <p className="text-[12px] text-slate-400 leading-relaxed">{categoryNote}</p>
+                <p className="text-[12px] text-text-secondary dark:text-dark-text-secondary leading-relaxed">{categoryNote}</p>
               </div>
             )}
           </div>
 
-          {/* Company info (from profile) OR Jurisdiction card (fallback) */}
           {profile ? (
             <div>
-              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">Company</h2>
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary mb-3">Company</h2>
               <dl className="space-y-2">
                 {[
                   { label: "Legal entity", value: profile.legal_entity },
@@ -422,36 +419,36 @@ export function ServicePage() {
                   { label: "Pricing", value: profile.pricing_notes },
                 ].map(({ label, value }) => value ? (
                   <div key={label}>
-                    <dt className="text-[10px] text-slate-500 font-mono">{label}</dt>
-                    <dd className="text-[12px] text-slate-300 mt-0.5">{value}</dd>
+                    <dt className="text-[10px] text-text-secondary/60 dark:text-dark-text-secondary/60 font-mono">{label}</dt>
+                    <dd className="text-[12px] text-text-primary dark:text-dark-text-primary mt-0.5">{value}</dd>
                   </div>
                 ) : null)}
                 {profile.data_center_locations && profile.data_center_locations.length > 0 && (
                   <div>
-                    <dt className="text-[10px] text-slate-500 font-mono">Data centers</dt>
-                    <dd className="text-[12px] text-slate-300 mt-0.5">{profile.data_center_locations.join(" · ")}</dd>
+                    <dt className="text-[10px] text-text-secondary/60 dark:text-dark-text-secondary/60 font-mono">Data centers</dt>
+                    <dd className="text-[12px] text-text-primary dark:text-dark-text-primary mt-0.5">{profile.data_center_locations.join(" · ")}</dd>
                   </div>
                 )}
               </dl>
             </div>
           ) : (
             <div>
-              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">Jurisdiction</h2>
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary mb-3">Jurisdiction</h2>
               <div className="space-y-3">
                 <div className="flex items-center gap-2.5 text-[12px]">
-                  <span className="text-emerald-500 w-4 text-center flex-shrink-0">✓</span>
-                  <span className="text-slate-400">EU / EEA / Swiss GDPR coverage</span>
+                  <span className="text-accent w-4 text-center flex-shrink-0">✓</span>
+                  <span className="text-text-secondary dark:text-dark-text-secondary">EU / EEA / Swiss GDPR coverage</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-[12px]">
-                  <span className="text-emerald-500 w-4 text-center flex-shrink-0">✓</span>
-                  <span className="text-slate-400">Data stays in Europe</span>
+                  <span className="text-accent w-4 text-center flex-shrink-0">✓</span>
+                  <span className="text-text-secondary dark:text-dark-text-secondary">Data stays in Europe</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-[12px]">
-                  <span className="text-emerald-500 w-4 text-center flex-shrink-0">✓</span>
-                  <span className="text-slate-400">Not subject to US CLOUD Act</span>
+                  <span className="text-accent w-4 text-center flex-shrink-0">✓</span>
+                  <span className="text-text-secondary dark:text-dark-text-secondary">Not subject to US CLOUD Act</span>
                 </div>
                 {jurisdictionNote && (
-                  <p className="text-[11px] text-slate-500 leading-relaxed pt-1 border-t border-[#30363d]">
+                  <p className="text-[11px] text-text-secondary dark:text-dark-text-secondary leading-relaxed pt-1 border-t border-border dark:border-dark-border">
                     {jurisdictionNote}
                   </p>
                 )}
@@ -460,10 +457,10 @@ export function ServicePage() {
           )}
         </div>
 
-        {/* ── What it replaces ── */}
+        {/* What it replaces */}
         {alt && alt.replaces.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">
+            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary mb-3">
               What {alt.name} replaces
             </h2>
             <div className="space-y-2">
@@ -471,8 +468,8 @@ export function ServicePage() {
                 const context = REPLACES_CONTEXT[r];
                 const domain = REPLACES_DOMAINS[r];
                 return (
-                  <div key={r} className="flex items-center gap-4 rounded border border-orange-500/[0.12] bg-orange-500/[0.04] px-4 py-3">
-                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center justify-center overflow-hidden">
+                  <div key={r} className="flex items-center gap-4 rounded-sm border border-orange-500/[0.12] bg-orange-500/[0.04] px-4 py-3">
+                    <div className="flex-shrink-0 w-9 h-9 rounded-sm bg-surface dark:bg-dark-surface border border-border dark:border-dark-border flex items-center justify-center overflow-hidden">
                       {domain ? (
                         <img
                           src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
@@ -481,16 +478,16 @@ export function ServicePage() {
                           onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = "0"; }}
                         />
                       ) : (
-                        <span className="text-slate-500 text-xs font-bold">{r[0]}</span>
+                        <span className="text-text-secondary dark:text-dark-text-secondary text-xs font-bold">{r[0]}</span>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[13px] font-semibold text-slate-200">{r}</span>
+                      <span className="text-[13px] font-semibold text-text-primary dark:text-dark-text-primary">{r}</span>
                       {context && (
-                        <p className="text-[11px] text-slate-400 mt-0.5 leading-relaxed">{context}</p>
+                        <p className="text-[11px] text-text-secondary dark:text-dark-text-secondary mt-0.5 leading-relaxed">{context}</p>
                       )}
                       {!context && (
-                        <p className="text-[11px] text-slate-500 mt-0.5">US-based — data subject to US jurisdiction and legal demands.</p>
+                        <p className="text-[11px] text-text-secondary dark:text-dark-text-secondary mt-0.5">US-based — data subject to US jurisdiction and legal demands.</p>
                       )}
                     </div>
                   </div>
@@ -500,19 +497,19 @@ export function ServicePage() {
           </div>
         )}
 
-        {/* ── Data handling (from profile) ── */}
+        {/* Data handling (from profile) */}
         {profile && (
-          <div className="mb-8 rounded border border-[#30363d]">
-            <div className="px-4 py-3 border-b border-[#30363d] bg-[#21262d]">
-              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Data handling</h2>
+          <div className="mb-8 rounded-sm border border-border dark:border-dark-border">
+            <div className="px-4 py-3 border-b border-border dark:border-dark-border bg-surface dark:bg-dark-surface">
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary">Data handling</h2>
             </div>
-            <div className="divide-y divide-[#21262d]">
+            <div className="divide-y divide-border dark:divide-dark-border">
               {profile.data_collected && profile.data_collected.length > 0 && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Data collected</span>
+                  <span className="text-[11px] text-text-secondary/60 dark:text-dark-text-secondary/60 w-32 flex-shrink-0 font-mono pt-0.5">Data collected</span>
                   <div className="flex flex-wrap gap-1.5">
                     {profile.data_collected.map(item => (
-                      <span key={item} className="rounded bg-[#21262d] border border-[#30363d] px-2 py-0.5 text-[11px] text-slate-400">
+                      <span key={item} className="rounded-sm bg-surface dark:bg-dark-surface border border-border dark:border-dark-border px-2 py-0.5 text-[11px] text-text-secondary dark:text-dark-text-secondary">
                         {item}
                       </span>
                     ))}
@@ -521,108 +518,108 @@ export function ServicePage() {
               )}
               {profile.data_retention_policy && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Retention</span>
-                  <span className="text-[12px] text-slate-400">{profile.data_retention_policy}</span>
+                  <span className="text-[11px] text-text-secondary/60 dark:text-dark-text-secondary/60 w-32 flex-shrink-0 font-mono pt-0.5">Retention</span>
+                  <span className="text-[12px] text-text-secondary dark:text-dark-text-secondary">{profile.data_retention_policy}</span>
                 </div>
               )}
               {profile.jurisdiction_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Jurisdiction</span>
-                  <span className="text-[12px] text-slate-400">{profile.jurisdiction_notes}</span>
+                  <span className="text-[11px] text-text-secondary/60 dark:text-dark-text-secondary/60 w-32 flex-shrink-0 font-mono pt-0.5">Jurisdiction</span>
+                  <span className="text-[12px] text-text-secondary dark:text-dark-text-secondary">{profile.jurisdiction_notes}</span>
                 </div>
               )}
               {profile.zero_knowledge_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Encryption</span>
-                  <span className="text-[12px] text-slate-400">{profile.zero_knowledge_notes}</span>
+                  <span className="text-[11px] text-text-secondary/60 dark:text-dark-text-secondary/60 w-32 flex-shrink-0 font-mono pt-0.5">Encryption</span>
+                  <span className="text-[12px] text-text-secondary dark:text-dark-text-secondary">{profile.zero_knowledge_notes}</span>
                 </div>
               )}
               {profile.no_logs_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Logging</span>
-                  <span className="text-[12px] text-slate-400">{profile.no_logs_notes}</span>
+                  <span className="text-[11px] text-text-secondary/60 dark:text-dark-text-secondary/60 w-32 flex-shrink-0 font-mono pt-0.5">Logging</span>
+                  <span className="text-[12px] text-text-secondary dark:text-dark-text-secondary">{profile.no_logs_notes}</span>
                 </div>
               )}
               {profile.anonymous_payment_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Payment</span>
-                  <span className="text-[12px] text-slate-400">{profile.anonymous_payment_notes}</span>
+                  <span className="text-[11px] text-text-secondary/60 dark:text-dark-text-secondary/60 w-32 flex-shrink-0 font-mono pt-0.5">Payment</span>
+                  <span className="text-[12px] text-text-secondary dark:text-dark-text-secondary">{profile.anonymous_payment_notes}</span>
                 </div>
               )}
               {profile.tor_notes && (
                 <div className="px-4 py-3 flex gap-4">
-                  <span className="text-[11px] text-slate-500 w-32 flex-shrink-0 font-mono pt-0.5">Tor / onion</span>
-                  <span className="text-[12px] text-slate-400">{profile.tor_notes}</span>
+                  <span className="text-[11px] text-text-secondary/60 dark:text-dark-text-secondary/60 w-32 flex-shrink-0 font-mono pt-0.5">Tor / onion</span>
+                  <span className="text-[12px] text-text-secondary dark:text-dark-text-secondary">{profile.tor_notes}</span>
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* ── Audit + links (from profile) ── */}
+        {/* Audit + links (from profile) */}
         {profile && (profile.has_independent_audit || profile.privacy_policy_url || profile.transparency_report_url || profile.open_source_url) && (
           <div className="mb-8 flex flex-wrap gap-2">
             {profile.open_source_url && (
               <a href={profile.open_source_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-[#30363d] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-[#484f58] transition">
-                <span className="text-emerald-500">⌥</span> Source code
+                className="inline-flex items-center gap-1.5 rounded-sm border border-border dark:border-dark-border px-3 py-1.5 text-[11px] text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary hover:border-accent/30 transition">
+                <span className="text-accent">⌥</span> Source code
               </a>
             )}
             {profile.audit_url && (
               <a href={profile.audit_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-[#30363d] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-[#484f58] transition">
-                <span className="text-blue-500">✦</span> Security audit {profile.audit_year ? `(${profile.audit_year})` : ""}
+                className="inline-flex items-center gap-1.5 rounded-sm border border-border dark:border-dark-border px-3 py-1.5 text-[11px] text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary hover:border-accent/30 transition">
+                <span className="text-accent">✦</span> Security audit {profile.audit_year ? `(${profile.audit_year})` : ""}
               </a>
             )}
             {profile.privacy_policy_url && (
               <a href={profile.privacy_policy_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-[#30363d] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-[#484f58] transition">
+                className="inline-flex items-center gap-1.5 rounded-sm border border-border dark:border-dark-border px-3 py-1.5 text-[11px] text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary hover:border-accent/30 transition">
                 Privacy policy
               </a>
             )}
             {profile.transparency_report_url && (
               <a href={profile.transparency_report_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-[#30363d] px-3 py-1.5 text-[11px] text-slate-400 hover:text-slate-200 hover:border-[#484f58] transition">
+                className="inline-flex items-center gap-1.5 rounded-sm border border-border dark:border-dark-border px-3 py-1.5 text-[11px] text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary hover:border-accent/30 transition">
                 Transparency report
               </a>
             )}
           </div>
         )}
 
-        {/* ── Incidents (from profile) ── */}
+        {/* Incidents (from profile) */}
         {incidents.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3">
-              Known incidents <span className="text-slate-600 font-mono normal-case">({incidents.length})</span>
+            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary dark:text-dark-text-secondary mb-3">
+              Known incidents <span className="text-text-secondary/40 dark:text-dark-text-secondary/40 font-mono normal-case">({incidents.length})</span>
             </h2>
-            <div className="rounded border border-[#30363d] divide-y divide-[#21262d]">
+            <div className="rounded-sm border border-border dark:border-dark-border divide-y divide-border dark:divide-dark-border">
               {incidents.map(inc => (
                 <div key={inc.id} className="px-4 py-4">
                   <div className="flex items-start justify-between gap-3 mb-1.5">
                     <div className="flex items-center gap-2.5 flex-wrap">
-                      <span className={`inline-flex items-center rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase ${SEVERITY_STYLE[inc.severity]}`}>
+                      <span className={`inline-flex items-center rounded-sm border px-1.5 py-0.5 text-[10px] font-bold uppercase ${SEVERITY_STYLE[inc.severity]}`}>
                         {inc.severity}
                       </span>
-                      <span className="text-[13px] font-medium text-slate-200">{inc.title}</span>
+                      <span className="text-[13px] font-medium text-text-primary dark:text-dark-text-primary">{inc.title}</span>
                       {inc.resolved && (
-                        <span className="text-[10px] text-emerald-600 font-mono">resolved</span>
+                        <span className="text-[10px] text-accent font-mono">resolved</span>
                       )}
                     </div>
                     {inc.incident_date && (
-                      <span className="text-[10px] text-slate-500 font-mono flex-shrink-0">
+                      <span className="text-[10px] text-text-secondary dark:text-dark-text-secondary font-mono flex-shrink-0">
                         {new Date(inc.incident_date).toLocaleDateString("en-GB", { year: "numeric", month: "short" })}
                       </span>
                     )}
                   </div>
                   {inc.description && (
-                    <p className="text-[12px] text-slate-400 leading-relaxed">{inc.description}</p>
+                    <p className="text-[12px] text-text-secondary dark:text-dark-text-secondary leading-relaxed">{inc.description}</p>
                   )}
                   {inc.resolution_notes && (
-                    <p className="mt-2 text-[11px] text-slate-500 italic">{inc.resolution_notes}</p>
+                    <p className="mt-2 text-[11px] text-text-secondary/70 dark:text-dark-text-secondary/70 italic">{inc.resolution_notes}</p>
                   )}
                   {inc.source_url && (
                     <a href={inc.source_url} target="_blank" rel="noopener noreferrer"
-                      className="mt-1.5 inline-block text-[11px] text-blue-600 hover:text-blue-400 transition">
+                      className="mt-1.5 inline-block text-[11px] text-accent hover:text-accent-hover transition">
                       Source →
                     </a>
                   )}
@@ -632,19 +629,19 @@ export function ServicePage() {
           </div>
         )}
 
-        {/* ── CTA ── */}
+        {/* CTA */}
         {alt && (
-          <div className="rounded border border-[#2d4a6e] bg-[#1e293b]/60 px-5 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="rounded-sm border border-border dark:border-dark-border bg-surface dark:bg-dark-surface px-5 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-sm font-semibold text-white">Learn more about {name}</p>
-              <p className="text-[12px] text-slate-400 mt-0.5">
+              <p className="text-sm font-semibold text-text-primary dark:text-dark-text-primary">Learn more about {name}</p>
+              <p className="text-[12px] text-text-secondary dark:text-dark-text-secondary mt-0.5">
                 View detailed information about this service and our verified affiliate link.
               </p>
             </div>
             <div className="flex-shrink-0">
               <Link
                 to={`/alternative/${alt.id}`}
-                className="inline-flex items-center gap-2 rounded bg-[#1a56db] hover:bg-[#2563eb] px-5 py-2 text-sm font-semibold text-white transition"
+                className="inline-flex items-center gap-2 rounded-sm bg-accent hover:bg-accent-hover px-5 py-2 text-sm font-semibold text-white transition"
               >
                 View Details →
               </Link>

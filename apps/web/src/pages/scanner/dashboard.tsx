@@ -69,9 +69,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const loadDashboard = async () => {
       setLoading(true)
-      const {
-        data: { user: currentUser },
-      } = await supabase.auth.getUser()
+      const { data: { user: currentUser } } = await supabase.auth.getUser()
 
       if (!currentUser) {
         window.location.href = '/auth/signin'
@@ -81,17 +79,8 @@ export default function DashboardPage() {
       setUser(currentUser)
 
       const [connectionsRes, scansRes] = await Promise.all([
-        supabase
-          .from('mailbox_connections')
-          .select('id, provider, connected_at')
-          .eq('user_id', currentUser.id)
-          .is('revoked_at', null),
-        supabase
-          .from('scans')
-          .select('id, scan_status, created_at, completed_at, sample_size')
-          .eq('user_id', currentUser.id)
-          .order('created_at', { ascending: false })
-          .limit(3),
+        supabase.from('mailbox_connections').select('id, provider, connected_at').eq('user_id', currentUser.id).is('revoked_at', null),
+        supabase.from('scans').select('id, scan_status, created_at, completed_at, sample_size').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(3),
       ])
 
       let paymentsData: PaymentRecord[] = []
@@ -100,22 +89,9 @@ export default function DashboardPage() {
 
       if (billingDataEnabled) {
         const [paymentsRes, entitlementRes, metadataRes] = await Promise.all([
-          supabase
-            .from('scanner_payments')
-            .select('status, amount_cents, created_at, completed_at')
-            .eq('user_id', currentUser.id)
-            .order('created_at', { ascending: false })
-            .limit(3),
-          supabase
-            .from('entitlements')
-            .select('access_type, created_at')
-            .eq('user_id', currentUser.id)
-            .maybeSingle(),
-          supabase
-            .from('user_scanner_metadata')
-            .select('scanner_access_type, gmail_verified, gmail_address')
-            .eq('user_id', currentUser.id)
-            .maybeSingle(),
+          supabase.from('scanner_payments').select('status, amount_cents, created_at, completed_at').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(3),
+          supabase.from('entitlements').select('access_type, created_at').eq('user_id', currentUser.id).maybeSingle(),
+          supabase.from('user_scanner_metadata').select('scanner_access_type, gmail_verified, gmail_address').eq('user_id', currentUser.id).maybeSingle(),
         ])
 
         paymentsData = (paymentsRes.data as PaymentRecord[]) || []
@@ -147,34 +123,15 @@ export default function DashboardPage() {
 
   const accessState = useMemo<AccessState>(() => {
     if (entitlement?.access_type === 'paid' || scannerMetadata?.scanner_access_type === 'paid_stripe') {
-      return {
-        label: 'Unlocked via payment',
-        detail: 'Your scanner features are active.',
-        tone: 'ok',
-      }
+      return { label: 'Unlocked via payment', detail: 'Your scanner features are active.', tone: 'ok' }
     }
-
     if (entitlement?.access_type === 'affiliate' || scannerMetadata?.scanner_access_type === 'free_proton') {
-      return {
-        label: 'Unlocked via Proton',
-        detail: 'Free scanner access is active on your account.',
-        tone: 'ok',
-      }
+      return { label: 'Unlocked via Proton', detail: 'Free scanner access is active on your account.', tone: 'ok' }
     }
-
     if (payments.some((p) => p.status === 'pending')) {
-      return {
-        label: 'Payment pending',
-        detail: 'We are still confirming your latest payment.',
-        tone: 'pending',
-      }
+      return { label: 'Payment pending', detail: 'We are still confirming your latest payment.', tone: 'pending' }
     }
-
-    return {
-      label: 'Not unlocked yet',
-      detail: 'You can still run manual checks while unlock is pending.',
-      tone: 'neutral',
-    }
+    return { label: 'Not unlocked yet', detail: 'You can still run manual checks while unlock is pending.', tone: 'neutral' }
   }, [entitlement, scannerMetadata, payments])
 
   const handleStartScan = async () => {
@@ -200,20 +157,14 @@ export default function DashboardPage() {
   const handleDeleteAccount = async () => {
     setActionError(null)
     const confirmation = window.prompt('Type DELETE to permanently remove your account and scanner data.')
-    if (confirmation !== 'DELETE') {
-      return
-    }
+    if (confirmation !== 'DELETE') return
 
     setDeletingAccount(true)
 
-    const { error } = await supabase.functions.invoke('delete-account', {
-      body: { confirmation: 'DELETE' },
-    })
+    const { error } = await supabase.functions.invoke('delete-account', { body: { confirmation: 'DELETE' } })
 
     if (error) {
-      setActionError(
-        'Account deletion is not available yet in this environment. Contact support@digitaleu.me and we will delete your account manually.'
-      )
+      setActionError('Account deletion is not available yet in this environment. Contact support@digitaleu.me and we will delete your account manually.')
       setDeletingAccount(false)
       return
     }
@@ -226,8 +177,8 @@ export default function DashboardPage() {
     return (
       <div className="flex items-center justify-center py-14">
         <div className="text-center space-y-4">
-          <div className="animate-spin h-8 w-8 border-4 border-[#c17a5c] dark:border-[#a86650] border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-[#1a2332]/70 dark:text-[#a89d96] font-mono">Loading dashboard...</p>
+          <div className="animate-spin h-8 w-8 border-4 border-accent border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-text-secondary dark:text-dark-text-secondary font-mono">Loading dashboard...</p>
         </div>
       </div>
     )
@@ -236,129 +187,98 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <section className="space-y-1">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-mono font-bold text-[#1a2332] dark:text-[#f5f1ea]">Scanner dashboard</h1>
-          <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96]">
-            Signed in as {user?.email}
-          </p>
-        </div>
+        <h1 className="text-3xl font-mono font-bold text-text-primary dark:text-dark-text-primary">Scanner dashboard</h1>
+        <p className="text-sm text-text-secondary dark:text-dark-text-secondary">Signed in as {user?.email}</p>
       </section>
 
       {actionError && (
-        <div className="rounded-none border border-red-300 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-900/20 dark:text-red-300">
+        <div className="rounded-sm border border-error/30 bg-error/10 p-4 text-sm text-error">
           {actionError}
         </div>
       )}
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Connected inboxes</h2>
+        <div className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Connected inboxes</h2>
           {connections.length === 0 ? (
             <div className="space-y-3">
-              <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96]">No mailbox connected yet.</p>
-              <a
-                href="/auth/signin"
-                className="inline-flex rounded-none border border-[#1a2332] bg-[#1a2332] px-4 py-2 font-mono text-sm font-semibold text-[#f9f7f2] hover:bg-[#2a241d] transition"
-              >
+              <p className="text-sm text-text-secondary dark:text-dark-text-secondary">No mailbox connected yet.</p>
+              <a href="/auth/signin" className="inline-flex rounded-sm border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition">
                 Connect Gmail or Outlook
               </a>
             </div>
           ) : (
             <div className="space-y-2">
               {connections.map((conn) => (
-                <div key={conn.id} className="flex items-center justify-between rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] p-3">
-                  <p className="font-mono text-sm text-[#1a2332] dark:text-[#f5f1ea]">
+                <div key={conn.id} className="flex items-center justify-between rounded-sm border border-border dark:border-dark-border p-3">
+                  <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">
                     {conn.provider === 'gmail' ? 'Gmail' : 'Outlook'} connected
                   </p>
-                  <span className="text-xs text-[#1a2332]/60 dark:text-[#a89d96]">{formatDate(conn.connected_at)}</span>
+                  <span className="text-xs text-text-secondary dark:text-dark-text-secondary">{formatDate(conn.connected_at)}</span>
                 </div>
               ))}
             </div>
           )}
-
           {scannerMetadata?.gmail_verified && scannerMetadata.gmail_address && (
-            <p className="text-xs text-[#1a2332]/70 dark:text-[#a89d96]">
+            <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
               Verified Gmail: {scannerMetadata.gmail_address}
             </p>
           )}
         </div>
 
-        <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Access status</h2>
-          <div
-            className={`rounded-none border p-3 ${
-              accessState.tone === 'ok'
-                ? 'border-emerald-300 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-900/20'
-                : accessState.tone === 'pending'
-                  ? 'border-amber-300 bg-amber-50 dark:border-amber-900 dark:bg-amber-900/20'
-                  : 'border-[#1a2332]/10 bg-[#f9f7f2] dark:border-[#3a3530] dark:bg-[#1f1b16]'
-            }`}
-          >
-            <p className="font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">{accessState.label}</p>
-            <p className="mt-1 text-sm text-[#1a2332]/70 dark:text-[#a89d96]">{accessState.detail}</p>
+        <div className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Access status</h2>
+          <div className={`rounded-sm border p-3 ${
+            accessState.tone === 'ok'
+              ? 'border-success/30 bg-success/10'
+              : accessState.tone === 'pending'
+                ? 'border-warning/30 bg-warning/10'
+                : 'border-border dark:border-dark-border bg-surface dark:bg-dark-surface'
+          }`}>
+            <p className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">{accessState.label}</p>
+            <p className="mt-1 text-sm text-text-secondary dark:text-dark-text-secondary">{accessState.detail}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <a
-              href={getProtonAffiliateLink('mail')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-none border border-[#1a2332] bg-[#1a2332] px-4 py-2 font-mono text-sm font-semibold text-[#f9f7f2] hover:bg-[#2a241d] transition"
-            >
+            <a href={getProtonAffiliateLink('mail')} target="_blank" rel="noopener noreferrer" className="rounded-sm border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition">
               Unlock options
             </a>
-            <a
-              href="/#manual-check"
-              className="rounded-none border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-2 font-mono text-sm font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
-            >
+            <a href="/#manual-check" className="rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
               Manual report
             </a>
           </div>
         </div>
       </section>
 
-      <section className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-        <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Quick actions</h2>
+      <section className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+        <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Quick actions</h2>
         <div className="flex flex-wrap gap-3">
-          <button
-            onClick={handleStartScan}
-            disabled={scanning}
-            className="rounded-none border border-[#1a2332] bg-[#1a2332] px-4 py-2 font-mono text-sm font-semibold text-[#f9f7f2] hover:bg-[#2a241d] disabled:opacity-50 transition"
-          >
+          <button onClick={handleStartScan} disabled={scanning} className="rounded-sm border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 transition">
             {scanning ? 'Scanning…' : 'Start new scan'}
           </button>
-          <a
-            href="/#manual-check"
-            className="rounded-none border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-2 font-mono text-sm font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
-          >
+          <a href="/#manual-check" className="rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
             Open manual checker
           </a>
-          <a
-            href="/cancel"
-            className="rounded-none border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-2 font-mono text-sm font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
-          >
+          <a href="/cancel" className="rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
             Cancellation guides
           </a>
         </div>
       </section>
 
-      <section className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-        <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Recent scans</h2>
+      <section className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+        <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Recent scans</h2>
         {scans.length === 0 ? (
-          <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96]">No scans yet. Connect your inbox and run your first scan.</p>
+          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">No scans yet. Connect your inbox and run your first scan.</p>
         ) : (
           <div className="space-y-3">
             {scans.map((scan) => (
-              <div key={scan.id} className="flex flex-col gap-3 rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] p-4 md:flex-row md:items-center md:justify-between">
+              <div key={scan.id} className="flex flex-col gap-3 rounded-sm border border-border dark:border-dark-border p-4 md:flex-row md:items-center md:justify-between">
                 <div className="space-y-1">
-                  <p className="font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">
+                  <p className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">
                     {scan.scan_status === 'complete' ? 'Scan complete' : `Status: ${scan.scan_status}`}
                   </p>
-                  <p className="text-xs text-[#1a2332]/60 dark:text-[#a89d96]">Started {formatDate(scan.created_at)}</p>
+                  <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Started {formatDate(scan.created_at)}</p>
                 </div>
-                <a
-                  href={`/results/${scan.id}`}
-                  className="text-sm font-mono font-semibold text-[#c17a5c] dark:text-[#a86650] hover:underline"
-                >
+                <a href={`/results/${scan.id}`} className="text-sm font-mono font-semibold text-accent hover:underline">
                   View results →
                 </a>
               </div>
@@ -368,33 +288,28 @@ export default function DashboardPage() {
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] bg-white dark:bg-[#2a251f] p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-[#1a2332] dark:text-[#f5f1ea]">Security</h2>
-          <div className="rounded-none border border-[#1a2332]/10 dark:border-[#3a3530] p-3">
-            <p className="font-mono text-sm text-[#1a2332] dark:text-[#f5f1ea]">2FA (TOTP)</p>
-            <p className="mt-1 text-xs text-[#1a2332]/70 dark:text-[#a89d96]">
-              {mfaEnabled
-                ? 'Enabled for this account.'
-                : 'Not enabled yet. Add authenticator-based 2FA for stronger sign-in protection.'}
+        <div className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Security</h2>
+          <div className="rounded-sm border border-border dark:border-dark-border p-3">
+            <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">2FA (TOTP)</p>
+            <p className="mt-1 text-xs text-text-secondary dark:text-dark-text-secondary">
+              {mfaEnabled ? 'Enabled for this account.' : 'Not enabled yet. Add authenticator-based 2FA for stronger sign-in protection.'}
             </p>
           </div>
-          <a
-            href="/auth/signin"
-            className="inline-flex rounded-none border border-[#1a2332]/20 dark:border-[#3a3530] px-4 py-2 font-mono text-sm font-semibold text-[#1a2332] dark:text-[#f5f1ea] hover:bg-[#1a2332]/5 dark:hover:bg-[#f5f1ea]/10 transition"
-          >
+          <a href="/auth/signin" className="inline-flex rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
             Open 2FA setup
           </a>
         </div>
 
-        <div className="rounded-none border border-red-300 dark:border-red-900 bg-white dark:bg-[#2a251f] p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-red-700 dark:text-red-400">Delete account</h2>
-          <p className="text-sm text-[#1a2332]/70 dark:text-[#a89d96]">
+        <div className="rounded-sm border border-error/30 bg-canvas dark:bg-dark-canvas p-6 space-y-4">
+          <h2 className="text-lg font-mono font-semibold text-error">Delete account</h2>
+          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
             This removes your dashboard account and scanner history. This action cannot be undone.
           </p>
           <button
             onClick={handleDeleteAccount}
             disabled={deletingAccount}
-            className="rounded-none border border-red-700 bg-red-700 px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-red-800 disabled:opacity-60 transition"
+            className="rounded-sm border border-error bg-error px-4 py-2 font-mono text-sm font-semibold text-white hover:opacity-90 disabled:opacity-60 transition"
           >
             {deletingAccount ? 'Deleting…' : 'Delete my account'}
           </button>
@@ -403,4 +318,3 @@ export default function DashboardPage() {
     </div>
   )
 }
-
