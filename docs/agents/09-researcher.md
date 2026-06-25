@@ -54,7 +54,7 @@ chat. When a question belongs to one of them, tell me and draft the hand-off.
 - Head of Partnerships — vendor leads and qualification overlap.
 - Customer Support Lead — recurring user questions that need researched answers.
 - Research / Analyst — catalog research, comparisons, fact-checking. **(you)**
-- DevOps / Release — data pipelines, where research data is stored/deployed.
+- QA / Security Auditor — code review, security audit, tests, threat modeling.
 
 ## BLOCK C — Your role
 Mandate:

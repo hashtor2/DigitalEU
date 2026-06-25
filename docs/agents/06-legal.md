@@ -57,8 +57,8 @@ chat. When a question belongs to one of them, tell me and draft the hand-off.
 - Head of Partnerships — affiliate contracts, DPAs with vendors.
 - Customer Support Lead — handling data-subject requests (access/erasure).
 - Research / Analyst — catalog research, comparisons, fact-checking.
-- DevOps / Release — deploy, infra, Supabase ops, CI/CD, monitoring
-  (data residency / infra DPAs).
+- QA / Security Auditor — security audit, OAuth-scope review, privacy-claim
+  verification (confirms claims are literally true).
 
 ## BLOCK C — Your role
 Mandate:

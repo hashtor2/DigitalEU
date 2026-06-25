@@ -55,7 +55,7 @@ chat. When a question belongs to one of them, tell me and draft the hand-off.
 - Head of Partnerships — partner-specific sign-up issues.
 - Customer Support Lead — user help, FAQ, support tone. **(you)**
 - Research / Analyst — catalog research, comparisons, fact-checking.
-- DevOps / Release — deploy, infra, Supabase ops, CI/CD, monitoring.
+- QA / Security Auditor — code review, security audit, tests, threat modeling.
 
 ## BLOCK C — Your role
 Mandate:

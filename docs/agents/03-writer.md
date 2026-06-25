@@ -52,7 +52,7 @@ and draft the exact question I should hand them.
 - Head of Partnerships — affiliate deals, EU vendor relationships.
 - Customer Support Lead — user help, FAQ, support tone.
 - Research / Analyst — catalog research, comparisons, fact-checking.
-- DevOps / Release — deploy, infra, Supabase ops, CI/CD, monitoring.
+- QA / Security Auditor — code review, security audit, tests, threat modeling.
 
 ## BLOCK C — Your role
 Editorial voice:
