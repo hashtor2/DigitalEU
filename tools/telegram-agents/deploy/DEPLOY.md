@@ -4,7 +4,7 @@ Alltid-på drift av Telegram-agentene på en EU-VM (Hetzner 🇩🇪). Følger
 sikkerhetsmodellen i `docs/TELEGRAM_AGENTS.md` §6.
 
 **Server:** CX22 (2 vCPU, 4 GB), Ubuntu 24.04, Falkenstein (fsn1). ~€4/mnd.
-**Auth:** ekte `ANTHROPIC_API_KEY` (sk-ant-…) med spend-cap.
+**Auth:** ekte `ANTHROPIC_API_KEY` (sk-ant-…) med spend-cap. *(Historisk — live orchestrator er `MyAiWorkers`; personlig agent er Hermes med Gemini. Se `README.md`.)*
 **Repo:** klones via deploy-nøkkel med write; `main` beskyttes på GitHub.
 
 ## Steg

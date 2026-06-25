@@ -1,13 +1,13 @@
 """
 EU Tech News Daily Agent
-Fetches top EU tech stories, summarizes with Claude, posts to Telegram + saves to Supabase.
+Fetches top EU tech stories, summarizes with Gemini, posts to Telegram + saves to Supabase.
 """
 
 import os
 import sys
 import requests
 import feedparser
-import anthropic
+from google import genai
 from datetime import datetime, timezone, date
 from pathlib import Path
 from dotenv import load_dotenv
@@ -18,7 +18,8 @@ if not os.environ.get("GITHUB_ACTIONS"):
 
 # ── Config ──────────────────────────────────────────────────────────────────
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
-CLAUDE_API_KEY = os.environ.get("CLAUDE_API_KEY")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
 CHAT_ID = os.environ.get("CHAT_ID", "539927333")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
@@ -26,8 +27,8 @@ SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
 # Validate required env vars
 if not TELEGRAM_TOKEN:
     raise ValueError("TELEGRAM_TOKEN env var is not set")
-if not CLAUDE_API_KEY:
-    raise ValueError("CLAUDE_API_KEY env var is not set")
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY (or GOOGLE_API_KEY) env var is not set")
 
 EU_TECH_FEEDS = [
     "https://techcrunch.com/tag/europe/feed/",
@@ -68,10 +69,10 @@ def fetch_stories(max_per_feed=5) -> list[dict]:
     return stories
 
 
-# ── Claude summarization ─────────────────────────────────────────────────────
+# ── Gemini summarization ─────────────────────────────────────────────────────
 
-def summarize_with_claude(stories: list[dict]) -> str:
-    client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
+def summarize_with_gemini(stories: list[dict]) -> str:
+    client = genai.Client(api_key=GEMINI_API_KEY)
     today = datetime.now(timezone.utc).strftime("%A, %d %B %Y")
     stories_text = "\n\n".join(
         f"[{i+1}] {s['title']}\nSource: {s['source']}\nURL: {s['link']}\nSnippet: {s['summary']}"
@@ -101,16 +102,14 @@ One sentence explaining why this matters for EU digital sovereignty or tech buil
 
 End with:
 —
-🤖 Powered by Claude + digitaleu.me
+🤖 Powered by Gemini + digitaleu.me
 """
 
-    response = client.messages.create(
-        model="claude-opus-4-7",
-        max_tokens=1024,
-        thinking={"type": "adaptive"},
-        messages=[{"role": "user", "content": prompt}],
+    response = client.models.generate_content(
+        model=GEMINI_MODEL,
+        contents=prompt,
     )
-    return response.content[-1].text
+    return response.text
 
 
 # ── Supabase save ─────────────────────────────────────────────────────────────
@@ -155,8 +154,8 @@ def main():
         send_telegram("⚠️ EU Tech Daily: No stories fetched today.")
         return
 
-    print("Summarizing with Claude...")
-    digest = summarize_with_claude(stories)
+    print(f"Summarizing with Gemini ({GEMINI_MODEL})...")
+    digest = summarize_with_gemini(stories)
 
     print("Posting to Telegram...")
     send_telegram(digest)

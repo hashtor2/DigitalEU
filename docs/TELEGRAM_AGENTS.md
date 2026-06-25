@@ -1,6 +1,6 @@
 # TELEGRAM_AGENTS.md — Telegram-styrte AI-agenter for digitaleu.me
 
-> **Status:** SPEC / planlagt (ikke bygget). Skrevet 2026-06-25.
+> **Status:** Live. 10-bots orchestrator kjører som [`MyAiWorkers`](https://github.com/hashtor2/MyAiWorkers) på Hetzner (`my-ai-workers.service`, **Gemini** + `GEMINI_API_KEY`). Personlig Telegram-agent er **Hermes** (@Mycli66bot). `tools/telegram-agents/` i dette repoet er deprecated referanse.
 > **Eier:** Tor (solo founder) + Lead Engineer-agenten.
 > **Formål:** Gjøre de eksisterende persona-promptene i `docs/agents/` om til
 > *levende, Telegram-styrte agenter som kan utføre faktisk arbeid* i repoet.

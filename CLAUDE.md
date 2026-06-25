@@ -269,6 +269,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 25 | **Design:** UNIFIED across all apps — ONLY European Digital (emerald #10b981, deep navy dark mode) is active. All previous designs (Nordic Warmth, etc.) are DEPRECATED. Web + Scanner use identical design system from digitaleu.me. | 2026-06-25 |
 | 26 | **Supabase project migration:** Old project `fuiebtpezpoxvkuuhaqy` replaced with `mwsalzjsvuvlmshxzbxg` (new region: Stockholm, Sweden, eu-north-1). All migrations, functions, and data transferred. Update .env.local and all docs. | 2026-06-25 |
 | 27 | **Telegram-agenter:** De 10 persona-promptene i `docs/agents/` gjøres operative som Telegram-styrte agenter med faktisk oppgaveutførelse. Valg: full repo-tilgang, 10 separate bots (én token per agent), Hetzner VM 🇩🇪, Claude Agent SDK, git worktree per agent. Spec: `docs/TELEGRAM_AGENTS.md`. | 2026-06-25 |
+| 28 | **Gemini for agent/automation:** Hermes (@Mycli66bot), daglig nyhetsdigest (`scripts/news-agent.py` + GitHub Actions), og **MyAiWorkers** (10 Telegram-bots på Hetzner) migrert til Gemini (`GEMINI_API_KEY` / `GOOGLE_API_KEY`). Claude Agent SDK fjernet fra MyAiWorkers v0.2. | 2026-06-26 |
 
 ---
 

@@ -1,5 +1,7 @@
 # telegram-agents — Layer 2 orchestrator
 
+> **DEPRECATED (2026-06-26):** Live drift kjører i [`MyAiWorkers`](https://github.com/hashtor2/MyAiWorkers) v0.2+ på Hetzner (`my-ai-workers.service`) med **Gemini**. Personlig Telegram-agent er **Hermes** (@Mycli66bot). Denne mappen er historisk referanse.
+
 Telegram-styrte AI-agenter for digitaleu.me. Hver agent-persona i
 `docs/agents/` blir en egen Telegram-bot som kan utføre faktisk arbeid (lese/
 skrive filer, kjøre kommandoer, committe) i sitt eget git worktree.
