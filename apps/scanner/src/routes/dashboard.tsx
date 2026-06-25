@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '@/lib/db'
-import { getProtonAffiliateLink } from '@/lib/stripe'
+import { getProtonAffiliateLink, redirectToCheckout, SCANNER_PRICE_EUR } from '@/lib/stripe'
 
 interface Scan {
   id: string
@@ -65,6 +65,8 @@ export default function DashboardPage() {
   const [actionError, setActionError] = useState<string | null>(null)
   const [deletingAccount, setDeletingAccount] = useState(false)
   const [inboxSession, setInboxSession] = useState<{ provider: string } | null>(null)
+  const [gmailInput, setGmailInput] = useState('')
+  const [unlocking, setUnlocking] = useState(false)
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -141,6 +143,7 @@ export default function DashboardPage() {
       setPayments(paymentsData)
       setEntitlement(entitlementData)
       setScannerMetadata(scannerMetadataData)
+      setGmailInput(scannerMetadataData?.gmail_address || '')
 
       try {
         const authWithMfa = supabase.auth as any
@@ -159,19 +162,30 @@ export default function DashboardPage() {
   }, [])
 
   const accessState = useMemo<AccessState>(() => {
-    if (entitlement?.access_type === 'paid' || scannerMetadata?.scanner_access_type === 'paid_stripe') {
+    const granted =
+      entitlement?.access_type === 'paid' ||
+      entitlement?.access_type === 'affiliate' ||
+      scannerMetadata?.scanner_access_type === 'paid_stripe' ||
+      scannerMetadata?.scanner_access_type === 'free_proton'
+    const verified = scannerMetadata?.gmail_verified === true
+
+    if (granted && verified) {
+      const viaPayment =
+        entitlement?.access_type === 'paid' ||
+        scannerMetadata?.scanner_access_type === 'paid_stripe'
       return {
-        label: 'Unlocked via payment',
-        detail: 'Your scanner features are active.',
+        label: viaPayment ? 'Unlocked via payment' : 'Unlocked via Proton',
+        detail: 'Scanning is active — connect your inbox and run a scan.',
         tone: 'ok',
       }
     }
 
-    if (entitlement?.access_type === 'affiliate' || scannerMetadata?.scanner_access_type === 'free_proton') {
+    if (granted && !verified) {
       return {
-        label: 'Unlocked via Proton',
-        detail: 'Free scanner access is active on your account.',
-        tone: 'ok',
+        label: 'Payment confirmed — approval pending',
+        detail:
+          'We are approving your Gmail for scanning. You will get an email when it is ready (usually within a day).',
+        tone: 'pending',
       }
     }
 
@@ -185,13 +199,60 @@ export default function DashboardPage() {
 
     return {
       label: 'Not unlocked yet',
-      detail: 'You can still run manual checks while unlock is pending.',
+      detail: 'Unlock the scanner to run an automatic inbox scan.',
       tone: 'neutral',
     }
   }, [entitlement, scannerMetadata, payments])
 
+  // Tilgang til automatisk skanning krever to ting:
+  // 1) En aktiv entitlement (betalt eller affiliate), og
+  // 2) at Gmail-en er manuelt godkjent (Google test-user-grense på
+  //    gmail.metadata-scopet). Begge må være på plass for å skanne.
+  const hasAccessGrant =
+    entitlement?.access_type === 'paid' ||
+    entitlement?.access_type === 'affiliate' ||
+    scannerMetadata?.scanner_access_type === 'paid_stripe' ||
+    scannerMetadata?.scanner_access_type === 'free_proton'
+  const gmailApproved = scannerMetadata?.gmail_verified === true
+  const hasScannerAccess = hasAccessGrant && gmailApproved
+
+  const handleUnlock = async () => {
+    setActionError(null)
+    const value = gmailInput.trim().toLowerCase()
+    if (!value || !value.includes('@')) {
+      setActionError('Enter the Gmail address you want to scan before unlocking.')
+      return
+    }
+    setUnlocking(true)
+    try {
+      // Lagre Gmail først slik at den er knyttet til brukeren uansett utfall.
+      await supabase
+        .from('user_scanner_metadata')
+        .upsert(
+          { user_id: user.id, gmail_address: value, updated_at: new Date().toISOString() },
+          { onConflict: 'user_id' },
+        )
+      await redirectToCheckout({ gmailAddress: value })
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Could not start checkout.')
+      setUnlocking(false)
+    }
+  }
+
   const handleStartScan = async () => {
     setActionError(null)
+
+    // Hard gating: ingen automatisk skanning uten aktiv tilgang + godkjent Gmail.
+    if (!hasScannerAccess) {
+      if (!hasAccessGrant) {
+        setActionError('Unlock the scanner (€' + SCANNER_PRICE_EUR + ') to run an automatic scan.')
+      } else {
+        setActionError(
+          'Your purchase is confirmed. We are approving your Gmail for scanning and will email you when it is ready.',
+        )
+      }
+      return
+    }
 
     // Tokenet for innboksen lever kun i sessionStorage (ephemeral). Hvis det
     // mangler eller er utløpt, sender vi brukeren gjennom OAuth-flyten på nytt.
@@ -346,22 +407,58 @@ export default function DashboardPage() {
             <p className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">{accessState.label}</p>
             <p className="mt-1 text-sm text-text-secondary dark:text-dark-text-secondary">{accessState.detail}</p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href={getProtonAffiliateLink('mail')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition"
-            >
-              Unlock options
-            </a>
-            <a
-              href="/#manual-check"
-              className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
-            >
-              Manual report
-            </a>
-          </div>
+
+          {hasScannerAccess ? (
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/#manual-check"
+                className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
+              >
+                Manual report
+              </a>
+            </div>
+          ) : hasAccessGrant ? (
+            // Betalt/affiliate, men venter på manuell Gmail-godkjenning.
+            <div className="space-y-2">
+              <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
+                Gmail awaiting approval: {scannerMetadata?.gmail_address || gmailInput || '—'}
+              </p>
+            </div>
+          ) : (
+            // Paywall: oppgi Gmail og lås opp for €5 (eller bruk rabattkode i checkout).
+            <div className="space-y-3">
+              <label className="block font-mono text-xs font-semibold uppercase tracking-wide text-text-secondary dark:text-dark-text-secondary">
+                Gmail address to scan
+              </label>
+              <input
+                type="email"
+                value={gmailInput}
+                onChange={(e) => setGmailInput(e.target.value)}
+                placeholder="you@gmail.com"
+                className="w-full rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas px-3 py-2 font-mono text-sm text-text-primary dark:text-dark-text-primary focus:border-accent focus:outline-none"
+              />
+              <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
+                After payment we manually approve this Gmail for scanning and email you when it is ready.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  onClick={handleUnlock}
+                  disabled={unlocking}
+                  className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 transition"
+                >
+                  {unlocking ? 'Starting checkout…' : `Unlock for €${SCANNER_PRICE_EUR}`}
+                </button>
+                <a
+                  href={getProtonAffiliateLink('mail')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
+                >
+                  Free via Proton
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -370,10 +467,16 @@ export default function DashboardPage() {
         <div className="flex flex-wrap gap-3">
           <button
             onClick={handleStartScan}
-            disabled={scanning}
-            className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 transition"
+            disabled={scanning || !hasScannerAccess}
+            className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition"
           >
-            {scanning ? 'Scanning…' : inboxSession ? 'Start new scan' : 'Connect inbox & scan'}
+            {scanning
+              ? 'Scanning…'
+              : !hasScannerAccess
+                ? 'Locked — unlock to scan'
+                : inboxSession
+                  ? 'Start new scan'
+                  : 'Connect inbox & scan'}
           </button>
           <a
             href="/#manual-check"

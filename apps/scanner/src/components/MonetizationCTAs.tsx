@@ -14,7 +14,7 @@ export function MonetizationCTAs({
   layout = 'horizontal',
 }: MonetizationCTAsProps) {
   const handleStripeClick = () => {
-    redirectToCheckout({ sessionId: reportId })
+    redirectToCheckout()
   }
 
   const protonLink = getProtonAffiliateLink('mail')

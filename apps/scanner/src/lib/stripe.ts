@@ -1,46 +1,64 @@
 // Stripe integration for scanner payments
 
-const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY
-const SCANNER_PRODUCT_ID = 'prod_Ul6F5uILTdezFq'
-const SCANNER_PRICE_EUR = 5 // €5
+import { supabase } from '@/lib/db'
+
+const SCANNER_PRICE_EUR = 5 // €5 engangskjøp (ADR #12)
 
 export interface CheckoutOptions {
-  sessionId?: string
-  email?: string
+  /** Gmail-adressen brukeren ønsker å skanne (lagres som metadata for manuell godkjenning) */
+  gmailAddress?: string
   successUrl?: string
   cancelUrl?: string
 }
 
 /**
- * Redirect to Stripe Checkout for scanner purchase
- * Requires VITE_STRIPE_PUBLIC_KEY and VITE_STRIPE_CHECKOUT_SESSION_URL env vars
+ * Start Stripe Checkout for the €5 scanner unlock.
+ * Calls the `create-checkout` Edge Function with the signed-in user's JWT so the
+ * resulting payment can be tied back to the user (entitlement granted by webhook).
  */
 export async function redirectToCheckout(options: CheckoutOptions = {}) {
-  const checkoutUrl = import.meta.env.VITE_STRIPE_CHECKOUT_SESSION_URL || ''
-  
-  if (!checkoutUrl) {
-    console.error(
-      'Stripe checkout URL not configured. Set VITE_STRIPE_CHECKOUT_SESSION_URL in .env'
-    )
-    alert('Payment system is not configured. Please try again later.')
-    return
-  }
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 
   try {
-    const params = new URLSearchParams({
-      productId: SCANNER_PRODUCT_ID,
-      price: SCANNER_PRICE_EUR.toString(),
-      ...(options.email && { email: options.email }),
-      ...(options.sessionId && { metadata_reportId: options.sessionId }),
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (!session) {
+      alert('Please sign in before purchasing scanner access.')
+      window.location.href = '/auth/signin'
+      return
+    }
+
+    const origin = window.location.origin
+    const response = await fetch(`${supabaseUrl}/functions/v1/create-checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({
+        successUrl: options.successUrl || `${origin}/dashboard?checkout=success`,
+        cancelUrl: options.cancelUrl || `${origin}/dashboard?checkout=cancelled`,
+        gmailAddress: options.gmailAddress,
+      }),
     })
 
-    const url = `${checkoutUrl}?${params.toString()}`
-    window.location.href = url
+    const data = await response.json()
+    if (!response.ok || !data.url) {
+      console.error('Checkout creation failed:', data)
+      alert(data.error || 'Failed to start payment. Please try again.')
+      return
+    }
+
+    window.location.href = data.url
   } catch (error) {
     console.error('Error redirecting to checkout:', error)
     alert('Failed to start payment. Please try again.')
   }
 }
+
+export { SCANNER_PRICE_EUR }
 
 /**
  * Proton affiliate links for various product categories
