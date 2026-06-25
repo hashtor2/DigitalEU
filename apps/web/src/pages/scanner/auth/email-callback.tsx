@@ -83,16 +83,32 @@ export default function EmailCallbackPage() {
         sessionStorage.removeItem('oauth_provider')
         sessionStorage.removeItem('oauth_state')
 
-        // If user is signed in to Supabase, save the mailbox connection to DB
-        // so the dashboard can list it and start a scan.
+        // If user is signed in to Supabase, persist the mailbox connection to the DB
+        // so the dashboard can list it and initiate scans.
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
-          await supabase
+          const scopes = provider === 'gmail'
+            ? 'https://www.googleapis.com/auth/gmail.metadata'
+            : 'https://graph.microsoft.com/.default'
+
+          const { error: upsertError } = await supabase
             .from('mailbox_connections')
             .upsert(
-              { user_id: user.id, provider, connected_at: new Date().toISOString(), revoked_at: null },
+              {
+                user_id: user.id,
+                provider,
+                oauth_token_encrypted: accessToken,
+                scopes,
+                connected_at: new Date().toISOString(),
+                revoked_at: null,
+              },
               { onConflict: 'user_id,provider' }
             )
+
+          if (upsertError) {
+            console.error('Failed to save mailbox connection:', upsertError)
+          }
+
           navigate('/scanner/dashboard', { replace: true })
         } else {
           // Not signed in — go to sign-in so they can create an account to run a full scan.
