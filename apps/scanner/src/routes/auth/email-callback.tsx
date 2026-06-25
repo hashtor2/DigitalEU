@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { mapDomainsToAlternativeIds } from '@/lib/serviceMapping'
 
 export default function EmailCallbackPage() {
   const navigate = useNavigate()
@@ -100,10 +101,12 @@ export default function EmailCallbackPage() {
           }),
         })
 
-        let detectedServices = []
+        let detectedServices: string[] = []
         if (scanResponse.ok) {
           const scanData = await scanResponse.json()
-          detectedServices = scanData.detectedServices || []
+          // scan-email returns sender domains; map them to the European
+          // alternative IDs that the home-page grid pre-selects.
+          detectedServices = mapDomainsToAlternativeIds(scanData.senders || [])
           sessionStorage.setItem('detected_services', JSON.stringify(detectedServices))
         } else {
           console.warn('Scan failed, proceeding anyway:', scanResponse.status)
