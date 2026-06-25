@@ -11,9 +11,18 @@ const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY
   ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
   : null;
 
+function PageLoader() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent" />
+    </div>
+  )
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
+    HydrateFallback: PageLoader,
     lazy: async () => ({
       Component: (await import("./components/LandingPage")).LandingPage,
     }),
