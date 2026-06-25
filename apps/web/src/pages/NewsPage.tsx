@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
@@ -29,10 +30,11 @@ interface Article {
   id: string;
   title: string;
   excerpt: string;
-  category: "interview" | "innovation" | "regulation" | "investigation";
+  category: "interview" | "innovation" | "regulation" | "investigation" | "guide";
   author: string;
   date: string;
   readTime: string;
+  href?: string;
 }
 
 const JOURNALISTS: Journalist[] = [
@@ -74,6 +76,16 @@ const JOURNALISTS: Journalist[] = [
 ];
 
 const NEWS_ARTICLES: Article[] = [
+  {
+    id: "best-european-calendar",
+    title: "Best European Calendar Apps in 2026",
+    excerpt: "Google Calendar reads your schedule. We compare three encrypted, GDPR-compliant European alternatives—Proton Calendar, Tuta Calendar, and Mailbox.org—to help you take your time back. Read the full guide.",
+    category: "guide",
+    author: "Lukas Weber",
+    date: "June 25, 2026",
+    readTime: "5 min read",
+    href: "/guides/best-european-calendar",
+  },
   {
     id: "data-industrial-complex",
     title: "The Data Industrial Complex: How America's Tech Giants Built Surveillance Empires at Europe's Expense",
@@ -144,6 +156,7 @@ const CATEGORY_STYLES: Record<string, string> = {
   innovation: "bg-sky-500/10 text-sky-300 border-sky-500/20",
   regulation: "bg-amber-500/10 text-amber-300 border-amber-500/20",
   investigation: "bg-red-500/10 text-red-300 border-red-500/20",
+  guide: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20",
 };
 
 function DailyDigest() {
@@ -378,33 +391,43 @@ export function NewsPage() {
             Latest Columns
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">
-            {NEWS_ARTICLES.map((article) => (
-              <div
-                key={article.id}
-                className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-slate-900/30 p-5 hover:border-white/15 hover:bg-slate-900/50 transition duration-200"
-              >
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${
-                      CATEGORY_STYLES[article.category] || "text-slate-400 border-white/10"
-                    }`}
-                  >
-                    {article.category}
-                  </span>
-                  <span className="text-[10px] text-slate-400 font-medium">{article.readTime}</span>
+            {NEWS_ARTICLES.map((article) => {
+              const cardClass =
+                "flex flex-col gap-3 rounded-2xl border border-white/10 bg-slate-900/30 p-5 hover:border-white/15 hover:bg-slate-900/50 transition duration-200";
+              const inner = (
+                <>
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${
+                        CATEGORY_STYLES[article.category] || "text-slate-400 border-white/10"
+                      }`}
+                    >
+                      {article.category}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-medium">{article.readTime}</span>
+                  </div>
+                  <h3 className="text-base font-bold text-white leading-snug tracking-tight">
+                    {article.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {article.excerpt}
+                  </p>
+                  <div className="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400 font-semibold">
+                    <span>Author: {article.author}</span>
+                    <span>{article.date}</span>
+                  </div>
+                </>
+              );
+              return article.href ? (
+                <Link key={article.id} to={article.href} className={cardClass}>
+                  {inner}
+                </Link>
+              ) : (
+                <div key={article.id} className={cardClass}>
+                  {inner}
                 </div>
-                <h3 className="text-base font-bold text-white leading-snug tracking-tight">
-                  {article.title}
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  {article.excerpt}
-                </p>
-                <div className="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400 font-semibold">
-                  <span>Author: {article.author}</span>
-                  <span>{article.date}</span>
-                </div>
-              </div>
-          ))}
+              );
+            })}
           </div>
         </section>
 
