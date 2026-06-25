@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
+import { LayoutDashboard, Inbox, CreditCard, ShieldCheck, UserCog } from 'lucide-react'
 import { supabase } from '@/lib/db'
 import { getProtonAffiliateLink, redirectToCheckout, SCANNER_PRICE_EUR } from '@/lib/stripe'
 import { mapDomainsToAlternativeIds, extractDetectedServices } from '@/lib/serviceMapping'
+import { TabBar, TabPanel, type TabItem } from '@/components/ui/Tabs'
+import { Card, CardTitle, Panel } from '@/components/ui/Card'
+import { Badge } from '@/components/ui/Badge'
+import { SectionLabel } from '@/components/ui/SectionLabel'
 
 interface Scan {
   id: string
@@ -51,6 +56,25 @@ function formatDate(iso: string) {
   })
 }
 
+const TABS: TabItem[] = [
+  { id: 'overview', label: 'Overview', icon: <LayoutDashboard size={16} aria-hidden /> },
+  { id: 'inboxes', label: 'Inboxes', icon: <Inbox size={16} aria-hidden /> },
+  { id: 'access', label: 'Access & Billing', icon: <CreditCard size={16} aria-hidden /> },
+  { id: 'security', label: 'Security', icon: <ShieldCheck size={16} aria-hidden /> },
+  { id: 'account', label: 'Account', icon: <UserCog size={16} aria-hidden /> },
+]
+
+const TAB_IDS = TABS.map((t) => t.id)
+
+// Mapper hash i URL-en til en gyldig fane. '#settings' (lenket fra web-headeren)
+// peker mot sikkerhet/konto-området, så vi aliaser den til 'security'.
+function resolveTabFromHash(): string {
+  if (typeof window === 'undefined') return 'overview'
+  const hash = window.location.hash.replace('#', '')
+  if (hash === 'settings') return 'security'
+  return TAB_IDS.includes(hash) ? hash : 'overview'
+}
+
 export default function DashboardPage() {
   const billingDataEnabled = import.meta.env.VITE_SCANNER_DASHBOARD_BILLING === 'true'
 
@@ -68,6 +92,22 @@ export default function DashboardPage() {
   const [inboxSession, setInboxSession] = useState<{ provider: string } | null>(null)
   const [gmailInput, setGmailInput] = useState('')
   const [unlocking, setUnlocking] = useState(false)
+  const [activeTab, setActiveTab] = useState<string>(resolveTabFromHash)
+
+  // Hold fanen i synk med URL-hash slik at dyplenker (/dashboard#security) og
+  // nettleserens fram/tilbake fungerer.
+  useEffect(() => {
+    const onHashChange = () => setActiveTab(resolveTabFromHash())
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+
+  const handleTabChange = (id: string) => {
+    setActiveTab(id)
+    if (window.location.hash.replace('#', '') !== id) {
+      window.history.replaceState(null, '', `#${id}`)
+    }
+  }
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -344,30 +384,128 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <section className="space-y-1">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-mono font-bold text-text-primary dark:text-dark-text-primary">Scanner dashboard</h1>
-          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
-            Signed in as {user?.email}
-          </p>
+      {/* Page header */}
+      <section className="space-y-2">
+        <SectionLabel>Scanner</SectionLabel>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div className="space-y-1">
+            <h1 className="text-2xl font-mono font-bold text-text-primary dark:text-dark-text-primary sm:text-3xl">Dashboard</h1>
+            <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
+              Signed in as{' '}
+              <span className="font-mono text-text-primary dark:text-dark-text-primary">{user?.email}</span>
+            </p>
+          </div>
+          <Badge tone={accessState.tone} dot>
+            {accessState.label}
+          </Badge>
         </div>
       </section>
 
       {actionError && (
-        <div className="rounded-none border border-red-300 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-900/20 dark:text-red-300">
+        <div
+          role="alert"
+          className="rounded-md border border-error/40 bg-error/10 p-4 text-sm font-medium text-[#b91c1c] dark:text-error"
+        >
           {actionError}
         </div>
       )}
 
-      <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Connected inboxes</h2>
+      <TabBar tabs={TABS} active={activeTab} onChange={handleTabChange} ariaLabel="Dashboard sections" />
+
+      {/* Overview */}
+      <TabPanel id="overview" active={activeTab === 'overview'}>
+        <div className="space-y-6">
+          <Card className="space-y-4">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <CardTitle>Access status</CardTitle>
+              <Badge tone={accessState.tone} dot>
+                {accessState.label}
+              </Badge>
+            </div>
+            <p className="text-sm text-text-secondary dark:text-dark-text-secondary">{accessState.detail}</p>
+            <div className="flex flex-wrap gap-3 pt-1">
+              <button
+                onClick={handleStartScan}
+                disabled={scanning || !hasScannerAccess}
+                className="rounded-md border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition"
+              >
+                {scanning
+                  ? 'Scanning…'
+                  : !hasScannerAccess
+                    ? 'Locked — unlock to scan'
+                    : inboxSession
+                      ? 'Start new scan'
+                      : 'Connect inbox & scan'}
+              </button>
+              {!hasScannerAccess && (
+                <button
+                  onClick={() => handleTabChange('access')}
+                  className="rounded-md border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border/30 dark:hover:bg-dark-border/30 transition"
+                >
+                  Unlock access →
+                </button>
+              )}
+            </div>
+          </Card>
+
+          <Card className="space-y-4">
+            <CardTitle>Quick actions</CardTitle>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/#manual-check"
+                className="rounded-md border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border/30 dark:hover:bg-dark-border/30 transition"
+              >
+                Open manual checker
+              </a>
+              <a
+                href="/cancel"
+                className="rounded-md border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border/30 dark:hover:bg-dark-border/30 transition"
+              >
+                Cancellation guides
+              </a>
+            </div>
+          </Card>
+
+          <Card className="space-y-4">
+            <CardTitle>Recent scans</CardTitle>
+            {scans.length === 0 ? (
+              <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
+                No scans yet. Connect your inbox and run your first scan.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {scans.map((scan) => (
+                  <Panel key={scan.id} className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div className="space-y-1">
+                      <p className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">
+                        {scan.scan_status === 'complete' ? 'Scan complete' : `Status: ${scan.scan_status}`}
+                      </p>
+                      <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Started {formatDate(scan.created_at)}</p>
+                    </div>
+                    <a
+                      href={`/results/${scan.id}`}
+                      className="text-sm font-mono font-semibold text-accent dark:text-accent hover:underline"
+                    >
+                      View results →
+                    </a>
+                  </Panel>
+                ))}
+              </div>
+            )}
+          </Card>
+        </div>
+      </TabPanel>
+
+      {/* Inboxes */}
+      <TabPanel id="inboxes" active={activeTab === 'inboxes'}>
+        <Card className="space-y-4">
+          <CardTitle>Connected inboxes</CardTitle>
           {connections.length === 0 && !inboxSession ? (
             <div className="space-y-3">
               <p className="text-sm text-text-secondary dark:text-dark-text-secondary">No mailbox connected yet.</p>
               <a
                 href="/auth/signin"
-                className="inline-flex rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition"
+                className="inline-flex rounded-md border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition"
               >
                 Connect Gmail or Outlook
               </a>
@@ -375,40 +513,48 @@ export default function DashboardPage() {
           ) : (
             <div className="space-y-2">
               {inboxSession && (
-                <div className="flex items-center justify-between rounded-none border border-success/30 bg-success/10 dark:border-success/50 dark:bg-success/10 p-3">
+                <div className="flex items-center justify-between rounded-md border border-success/30 bg-success/10 dark:border-success/50 p-3">
                   <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">
                     {inboxSession.provider === 'gmail' ? 'Gmail' : 'Outlook'} session active
                   </p>
-                  <span className="text-xs text-text-secondary dark:text-dark-text-secondary">this tab only</span>
+                  <Badge tone="ok">this tab only</Badge>
                 </div>
               )}
               {connections.map((conn) => (
-                <div key={conn.id} className="flex items-center justify-between rounded-none border border-border dark:border-dark-border p-3">
+                <Panel key={conn.id} className="flex items-center justify-between">
                   <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">
                     {conn.provider === 'gmail' ? 'Gmail' : 'Outlook'} connected
                   </p>
                   <span className="text-xs text-text-secondary dark:text-dark-text-secondary">{formatDate(conn.connected_at)}</span>
-                </div>
+                </Panel>
               ))}
             </div>
           )}
 
           {scannerMetadata?.gmail_verified && scannerMetadata.gmail_address && (
             <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
-              Verified Gmail: {scannerMetadata.gmail_address}
+              Verified Gmail: <span className="font-mono">{scannerMetadata.gmail_address}</span>
             </p>
           )}
-        </div>
+        </Card>
+      </TabPanel>
 
-        <div className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Access status</h2>
+      {/* Access & Billing */}
+      <TabPanel id="access" active={activeTab === 'access'}>
+        <Card className="space-y-4">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <CardTitle>Access &amp; billing</CardTitle>
+            <Badge tone={accessState.tone} dot>
+              {accessState.label}
+            </Badge>
+          </div>
           <div
-            className={`rounded-none border p-3 ${
+            className={`rounded-md border p-3 ${
               accessState.tone === 'ok'
-                ? 'border-success/30 bg-success/10 dark:border-success/50 dark:bg-success/10'
+                ? 'border-success/30 bg-success/10 dark:border-success/50'
                 : accessState.tone === 'pending'
-                  ? 'border-warning/30 bg-warning/10 dark:border-warning/50 dark:bg-warning/10'
-                  : 'border-border dark:border-dark-border bg-muted/5 dark:bg-muted/5'
+                  ? 'border-warning/30 bg-warning/10 dark:border-warning/50'
+                  : 'border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas'
             }`}
           >
             <p className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">{accessState.label}</p>
@@ -419,7 +565,7 @@ export default function DashboardPage() {
             <div className="flex flex-wrap gap-3">
               <a
                 href="/#manual-check"
-                className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
+                className="rounded-md border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border/30 dark:hover:bg-dark-border/30 transition"
               >
                 Manual report
               </a>
@@ -434,15 +580,19 @@ export default function DashboardPage() {
           ) : (
             // Paywall: oppgi Gmail og lås opp for €5 (eller bruk rabattkode i checkout).
             <div className="space-y-3">
-              <label className="block font-mono text-xs font-semibold uppercase tracking-wide text-text-secondary dark:text-dark-text-secondary">
+              <label
+                htmlFor="gmail-to-scan"
+                className="block font-mono text-xs font-semibold uppercase tracking-wide text-text-secondary dark:text-dark-text-secondary"
+              >
                 Gmail address to scan
               </label>
               <input
+                id="gmail-to-scan"
                 type="email"
                 value={gmailInput}
                 onChange={(e) => setGmailInput(e.target.value)}
                 placeholder="you@gmail.com"
-                className="w-full rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas px-3 py-2 font-mono text-sm text-text-primary dark:text-dark-text-primary focus:border-accent focus:outline-none"
+                className="w-full rounded-md border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas px-3 py-2 font-mono text-sm text-text-primary dark:text-dark-text-primary focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
               />
               <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
                 After payment we manually approve this Gmail for scanning and email you when it is ready.
@@ -451,7 +601,7 @@ export default function DashboardPage() {
                 <button
                   onClick={handleUnlock}
                   disabled={unlocking}
-                  className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 transition"
+                  className="rounded-md border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 transition"
                 >
                   {unlocking ? 'Starting checkout…' : `Unlock for €${SCANNER_PRICE_EUR}`}
                 </button>
@@ -459,106 +609,68 @@ export default function DashboardPage() {
                   href={getProtonAffiliateLink('mail')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
+                  className="rounded-md border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border/30 dark:hover:bg-dark-border/30 transition"
                 >
                   Free via Proton
                 </a>
               </div>
             </div>
           )}
-        </div>
-      </section>
+        </Card>
+      </TabPanel>
 
-      <section className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
-        <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Quick actions</h2>
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={handleStartScan}
-            disabled={scanning || !hasScannerAccess}
-            className="rounded-none border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition"
-          >
-            {scanning
-              ? 'Scanning…'
-              : !hasScannerAccess
-                ? 'Locked — unlock to scan'
-                : inboxSession
-                  ? 'Start new scan'
-                  : 'Connect inbox & scan'}
-          </button>
-          <a
-            href="/#manual-check"
-            className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
-          >
-            Open manual checker
-          </a>
-          <a
-            href="/cancel"
-            className="rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
-          >
-            Cancellation guides
-          </a>
-        </div>
-      </section>
-
-      <section className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
-        <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Recent scans</h2>
-        {scans.length === 0 ? (
-          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">No scans yet. Connect your inbox and run your first scan.</p>
-        ) : (
-          <div className="space-y-3">
-            {scans.map((scan) => (
-              <div key={scan.id} className="flex flex-col gap-3 rounded-none border border-border dark:border-dark-border p-4 md:flex-row md:items-center md:justify-between">
-                <div className="space-y-1">
-                  <p className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">
-                    {scan.scan_status === 'complete' ? 'Scan complete' : `Status: ${scan.scan_status}`}
-                  </p>
-                  <p className="text-xs text-text-secondary dark:text-dark-text-secondary">Started {formatDate(scan.created_at)}</p>
-                </div>
-                <a
-                  href={`/results/${scan.id}`}
-                  className="text-sm font-mono font-semibold text-accent dark:text-accent hover:underline"
-                >
-                  View results →
-                </a>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-none border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">Security</h2>
-          <div className="rounded-none border border-border dark:border-dark-border p-3">
-            <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">2FA (TOTP)</p>
+      {/* Security */}
+      <TabPanel id="security" active={activeTab === 'security'}>
+        <Card className="space-y-4">
+          <CardTitle>Security</CardTitle>
+          <Panel>
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-mono text-sm text-text-primary dark:text-dark-text-primary">2FA (TOTP)</p>
+              <Badge tone={mfaEnabled ? 'ok' : 'neutral'}>{mfaEnabled ? 'Enabled' : 'Off'}</Badge>
+            </div>
             <p className="mt-1 text-xs text-text-secondary dark:text-dark-text-secondary">
               {mfaEnabled
                 ? 'Enabled for this account.'
                 : 'Not enabled yet. Add authenticator-based 2FA for stronger sign-in protection.'}
             </p>
-          </div>
+          </Panel>
           <a
             href="/auth/signin"
-            className="inline-flex rounded-none border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-muted/5 dark:hover:bg-muted/5 transition"
+            className="inline-flex rounded-md border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border/30 dark:hover:bg-dark-border/30 transition"
           >
             Open 2FA setup
           </a>
-        </div>
+        </Card>
+      </TabPanel>
 
-        <div className="rounded-none border border-error/30 dark:border-error/50 bg-canvas dark:bg-dark-canvas p-6 space-y-4">
-          <h2 className="text-lg font-mono font-semibold text-error dark:text-error">Delete account</h2>
-          <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
-            This removes your dashboard account and scanner history. This action cannot be undone.
-          </p>
-          <button
-            onClick={handleDeleteAccount}
-            disabled={deletingAccount}
-            className="rounded-none border border-error bg-error px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-red-600 disabled:opacity-60 transition"
-          >
-            {deletingAccount ? 'Deleting…' : 'Delete my account'}
-          </button>
+      {/* Account */}
+      <TabPanel id="account" active={activeTab === 'account'}>
+        <div className="space-y-6">
+          <Card className="space-y-3">
+            <CardTitle>Account</CardTitle>
+            <Panel className="flex flex-col gap-1">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wide text-text-secondary dark:text-dark-text-secondary">
+                Signed in as
+              </span>
+              <span className="font-mono text-sm text-text-primary dark:text-dark-text-primary">{user?.email}</span>
+            </Panel>
+          </Card>
+
+          <Card tone="danger" className="space-y-4">
+            <CardTitle className="text-error dark:text-error">Delete account</CardTitle>
+            <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
+              This removes your dashboard account and scanner history. This action cannot be undone.
+            </p>
+            <button
+              onClick={handleDeleteAccount}
+              disabled={deletingAccount}
+              className="rounded-md border border-error bg-error px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-[#dc2626] disabled:opacity-60 transition"
+            >
+              {deletingAccount ? 'Deleting…' : 'Delete my account'}
+            </button>
+          </Card>
         </div>
-      </section>
+      </TabPanel>
     </div>
   )
 }

@@ -25,6 +25,10 @@ export default {
       'dark-text-secondary': '#cbd5e1',
       'dark-border': '#1e293b',
 
+      // Elevated surfaces (cards/panels) — subtle lift over the canvas
+      surface: '#f9fafb',
+      'dark-surface': '#111c33',
+
       // Secondary Accents
       'secondary-accent': '#0ea5e9',
       'secondary-accent-hover': '#0284c7',
