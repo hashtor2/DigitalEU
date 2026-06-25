@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '@/lib/db'
+import {
+  runInboxScan,
+  saveGuestScanResults,
+  clearEmailSessionTokens,
+  type InboxProvider,
+} from '@/lib/inboxScan'
+import { initializeInboxScan } from '@/lib/scan'
+
+const SESSION_ONLY_TOKEN = 'session_only'
 
 export default function EmailCallbackPage() {
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [status, setStatus] = useState('Completing email authentication...')
 
   useEffect(() => {
     const handleCallback = async () => {
@@ -27,7 +36,7 @@ export default function EmailCallbackPage() {
         }
 
         const codeVerifier = sessionStorage.getItem('oauth_code_verifier')
-        const provider = sessionStorage.getItem('oauth_provider')
+        const provider = sessionStorage.getItem('oauth_provider') as InboxProvider | null
         const storedState = sessionStorage.getItem('oauth_state')
 
         if (!codeVerifier || !provider) {
@@ -46,7 +55,7 @@ export default function EmailCallbackPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${supabaseAnonKey}`,
+            Authorization: `Bearer ${supabaseAnonKey}`,
           },
           body: JSON.stringify({
             code,
@@ -58,10 +67,6 @@ export default function EmailCallbackPage() {
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}))
-          console.error("OAuth token exchange error:", {
-            status: response.status,
-            response: errorData
-          })
           throw new Error(
             errorData.error || `Token exchange failed with status ${response.status}`
           )
@@ -83,42 +88,70 @@ export default function EmailCallbackPage() {
         sessionStorage.removeItem('oauth_provider')
         sessionStorage.removeItem('oauth_state')
 
-        // If user is signed in to Supabase, persist the mailbox connection to the DB
-        // so the dashboard can list it and initiate scans.
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user) {
-          const scopes = provider === 'gmail'
-            ? 'https://www.googleapis.com/auth/gmail.metadata'
-            : 'https://graph.microsoft.com/.default'
+        setStatus('Scanning your inbox (metadata only)...')
 
-          const { error: upsertError } = await supabase
+        const { data: { user } } = await supabase.auth.getUser()
+
+        if (user) {
+          const scopes =
+            provider === 'gmail'
+              ? 'https://www.googleapis.com/auth/gmail.metadata'
+              : 'https://graph.microsoft.com/Mail.ReadBasic'
+
+          const { data: connection, error: upsertError } = await supabase
             .from('mailbox_connections')
             .upsert(
               {
                 user_id: user.id,
                 provider,
-                oauth_token_encrypted: accessToken,
+                oauth_token_encrypted: SESSION_ONLY_TOKEN,
                 scopes,
                 connected_at: new Date().toISOString(),
                 revoked_at: null,
               },
               { onConflict: 'user_id,provider' }
             )
+            .select('id')
+            .single()
 
-          if (upsertError) {
-            console.error('Failed to save mailbox connection:', upsertError)
+          if (upsertError || !connection) {
+            throw new Error('Failed to save mailbox connection')
           }
 
-          navigate('/scanner/dashboard', { replace: true })
-        } else {
-          // Not signed in — go to sign-in so they can create an account to run a full scan.
-          // The access token is in sessionStorage and will survive the navigation.
-          navigate('/scanner/auth/signin', { replace: true })
+          const { scanId, error: scanError } = await initializeInboxScan(
+            connection.id,
+            user.id,
+            accessToken,
+            provider
+          )
+
+          clearEmailSessionTokens()
+
+          if (scanError || !scanId) {
+            throw new Error(scanError || 'Scan failed')
+          }
+
+          navigate(`/scanner/results/${scanId}`, { replace: true })
+          return
         }
+
+        const scanOutcome = await runInboxScan(accessToken, provider, {
+          onProgress: (_percent, step) => setStatus(step),
+        })
+
+        saveGuestScanResults({
+          provider: scanOutcome.provider,
+          scannedCount: scanOutcome.scannedCount,
+          matched: scanOutcome.matched,
+          createdAt: Date.now(),
+        })
+
+        clearEmailSessionTokens()
+        navigate('/scanner/results/guest', { replace: true })
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Unknown error during authentication'
+        const errorMessage =
+          err instanceof Error ? err.message : 'Unknown error during authentication'
         setError(errorMessage)
-        setLoading(false)
       }
     }
 
@@ -144,12 +177,14 @@ export default function EmailCallbackPage() {
         </div>
 
         <div className="rounded-sm border border-accent/10 bg-accent/5 p-4 text-xs text-text-secondary dark:text-dark-text-secondary">
-          <p className="font-mono font-semibold mb-2 text-text-primary dark:text-dark-text-primary">Troubleshooting</p>
+          <p className="font-mono font-semibold mb-2 text-text-primary dark:text-dark-text-primary">
+            Troubleshooting
+          </p>
           <ul className="space-y-2 text-xs">
-            <li>• Ensure you're signing in with the correct email provider (Gmail or Outlook)</li>
-            <li>• Check that pop-ups are enabled in your browser</li>
-            <li>• Try clearing your browser cache and signing in again</li>
-            <li>• If the problem persists, contact support@digitaleu.me</li>
+            <li>Ensure you&apos;re signing in with the correct email provider (Gmail or Outlook)</li>
+            <li>Check that pop-ups are enabled in your browser</li>
+            <li>Try clearing your browser cache and signing in again</li>
+            <li>If the problem persists, contact support@digitaleu.me</li>
           </ul>
         </div>
       </div>
@@ -160,9 +195,7 @@ export default function EmailCallbackPage() {
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center space-y-4">
         <div className="animate-spin h-8 w-8 border-4 border-accent border-t-transparent rounded-full mx-auto"></div>
-        <p className="text-text-secondary dark:text-dark-text-secondary font-mono">
-          {loading ? 'Completing email authentication...' : 'Redirecting...'}
-        </p>
+        <p className="text-text-secondary dark:text-dark-text-secondary font-mono">{status}</p>
       </div>
     </div>
   )

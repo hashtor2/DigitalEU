@@ -166,6 +166,12 @@ const router = createBrowserRouter([
         }),
       },
       {
+        path: "results/guest",
+        lazy: async () => ({
+          Component: (await import("./pages/scanner/results/guest")).default,
+        }),
+      },
+      {
         path: "results/:scanId",
         lazy: async () => ({
           Component: (await import("./pages/scanner/results/$scanId")).default,

@@ -97,7 +97,7 @@ export function constructOutlookAuthUrl(codeChallenge: string, state: string): s
   authUrl.searchParams.append('client_id', import.meta.env.VITE_MICROSOFT_CLIENT_ID || '')
   authUrl.searchParams.append('redirect_uri', `${window.location.origin}/scanner/auth/email-callback`)
   authUrl.searchParams.append('response_type', 'code')
-  authUrl.searchParams.append('scope', 'https://graph.microsoft.com/.default')
+  authUrl.searchParams.append('scope', 'https://graph.microsoft.com/Mail.ReadBasic offline_access')
   authUrl.searchParams.append('code_challenge', codeChallenge)
   authUrl.searchParams.append('code_challenge_method', 'S256')
   authUrl.searchParams.append('prompt', 'consent')

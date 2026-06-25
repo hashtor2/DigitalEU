@@ -1,13 +1,10 @@
 import { supabase } from '@/lib/db'
-
-interface GmailScanResult {
-  scanned_count: number
-  detected_services: Array<{
-    service_id: string
-    sender: string
-    detected_at: string
-  }>
-}
+import {
+  runInboxScan,
+  type InboxProvider,
+  type MatchedScanResult,
+} from '@/lib/inboxScan'
+import { DOMAIN_MAPPINGS, ALTERNATIVES } from '@digitaleu/shared'
 
 interface CancellationStep {
   step: number
@@ -35,19 +32,70 @@ export interface CancellationGuide {
   }
 }
 
-export async function initializeGmailScan(
+export interface EnrichedScanResult {
+  service_id: string
+  detected_count: number
+  confidence: number
+  sample_senders: string[]
+  service: {
+    id: string
+    name: string
+    category: string
+    website_url: string
+    logo_url: string
+  }
+}
+
+function enrichMatchedResults(matched: MatchedScanResult[]): EnrichedScanResult[] {
+  return matched.map((result) => {
+    const mapping = DOMAIN_MAPPINGS.find((m) => m.id === result.serviceId)
+    const alternative = result.suggestedAlternativeId
+      ? ALTERNATIVES.find((a) => a.id === result.suggestedAlternativeId)
+      : undefined
+
+    return {
+      service_id: result.serviceId,
+      detected_count: result.detectedCount,
+      confidence: 0.95,
+      sample_senders: result.sampleSenders,
+      service: {
+        id: result.serviceId,
+        name: result.serviceName,
+        category: result.category,
+        website_url: mapping?.settingsUrl ?? alternative?.url ?? '',
+        logo_url: '',
+      },
+    }
+  })
+}
+
+function groupResultsByCategory(results: EnrichedScanResult[]) {
+  return results.reduce(
+    (acc, result) => {
+      const category = result.service?.category || 'other'
+      if (!acc[category]) acc[category] = []
+      acc[category].push(result)
+      return acc
+    },
+    {} as Record<string, EnrichedScanResult[]>
+  )
+}
+
+export async function initializeInboxScan(
   mailboxConnectionId: string,
-  userId: string
+  userId: string,
+  accessToken: string,
+  provider: InboxProvider,
+  sampleSize = 500
 ): Promise<{ scanId: string; error?: string }> {
   try {
-    // 1. Create scan record with 'processing' status
     const { data: scan, error: scanError } = await supabase
       .from('scans')
       .insert({
         user_id: userId,
         mailbox_connection_id: mailboxConnectionId,
         scan_status: 'processing',
-        sample_size: 500,
+        sample_size: sampleSize,
       })
       .select()
       .single()
@@ -56,69 +104,60 @@ export async function initializeGmailScan(
       return { scanId: '', error: 'Failed to create scan record' }
     }
 
-    // 2. Call Gmail connector Edge Function
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+    try {
+      const { matched } = await runInboxScan(accessToken, provider, {
+        maxResults: sampleSize,
+      })
 
-    const functionUrl = `${supabaseUrl}/functions/v1/gmail-scan`
+      if (matched.length > 0) {
+        const resultsToInsert = matched.map((result) => ({
+          scan_id: scan.id,
+          service_id: result.serviceId,
+          detected_count: result.detectedCount,
+          confidence: 0.95,
+          sample_senders: result.sampleSenders,
+        }))
 
-    const response = await fetch(functionUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${supabaseAnonKey}`,
-      },
-      body: JSON.stringify({
-        mailbox_connection_id: mailboxConnectionId,
-        user_id: userId,
-        sample_size: 500,
-      }),
-    })
+        const { error: insertError } = await supabase
+          .from('scan_results')
+          .insert(resultsToInsert)
 
-    if (!response.ok) {
-      const error = await response.text()
-      console.error('Gmail scan error:', error)
+        if (insertError) {
+          throw new Error(insertError.message)
+        }
+      }
 
-      // Mark scan as failed
       await supabase
         .from('scans')
         .update({
-          scan_status: 'failed',
-          error_message: `Gmail API error: ${response.statusText}`,
+          scan_status: 'complete',
           completed_at: new Date().toISOString(),
         })
         .eq('id', scan.id)
 
-      return { scanId: scan.id, error: 'Failed to scan inbox' }
+      await supabase
+        .from('mailbox_connections')
+        .update({ last_used_at: new Date().toISOString() })
+        .eq('id', mailboxConnectionId)
+
+      return { scanId: scan.id }
+    } catch (scanFailure) {
+      const message =
+        scanFailure instanceof Error ? scanFailure.message : 'Scan failed'
+
+      await supabase
+        .from('scans')
+        .update({
+          scan_status: 'failed',
+          error_message: message,
+          completed_at: new Date().toISOString(),
+        })
+        .eq('id', scan.id)
+
+      return { scanId: scan.id, error: message }
     }
-
-    const result: GmailScanResult = await response.json()
-
-    // 3. Store detected services in scan_results
-    if (result.detected_services && result.detected_services.length > 0) {
-      const resultsToInsert = result.detected_services.map((service) => ({
-        scan_id: scan.id,
-        service_id: service.service_id,
-        detected_count: 1,
-        confidence: 0.95,
-        sample_senders: [service.sender],
-      }))
-
-      await supabase.from('scan_results').insert(resultsToInsert)
-    }
-
-    // 4. Mark scan as complete
-    await supabase
-      .from('scans')
-      .update({
-        scan_status: 'complete',
-        completed_at: new Date().toISOString(),
-      })
-      .eq('id', scan.id)
-
-    return { scanId: scan.id }
   } catch (error) {
-    console.error('Error initializing Gmail scan:', error)
+    console.error('Error initializing inbox scan:', error)
     return {
       scanId: '',
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -128,7 +167,6 @@ export async function initializeGmailScan(
 
 export async function getScanResults(scanId: string, userId: string) {
   try {
-    // Verify scan belongs to user
     const { data: scan, error: scanError } = await supabase
       .from('scans')
       .select('*')
@@ -140,46 +178,43 @@ export async function getScanResults(scanId: string, userId: string) {
       return { results: null, error: 'Scan not found' }
     }
 
-    // Fetch scan results with service details
-    const { data: results, error: resultsError } = await supabase
+    const { data: rawResults, error: resultsError } = await supabase
       .from('scan_results')
-      .select(
-        `
-        *,
-        service:services_catalog!service_id (
-          id,
-          name,
-          category,
-          domain_patterns,
-          website_url,
-          logo_url
-        )
-      `
-      )
+      .select('*')
       .eq('scan_id', scanId)
 
     if (resultsError) {
       return { results: null, error: 'Failed to fetch results' }
     }
 
-    // Group results by category
-    const grouped = (results || []).reduce(
-      (acc, result) => {
-        const category = result.service?.category || 'other'
-        if (!acc[category]) {
-          acc[category] = []
-        }
-        acc[category].push(result)
-        return acc
-      },
-      {} as Record<string, typeof results>
-    )
+    const enriched = (rawResults ?? []).map((result) => {
+      const mapping = DOMAIN_MAPPINGS.find((m) => m.id === result.service_id)
+      const alternative = mapping?.suggestedAlternativeId
+        ? ALTERNATIVES.find((a) => a.id === mapping.suggestedAlternativeId)
+        : undefined
+
+      return {
+        service_id: result.service_id,
+        detected_count: result.detected_count ?? 1,
+        confidence: result.confidence ?? 0.9,
+        sample_senders: result.sample_senders ?? [],
+        service: {
+          id: result.service_id,
+          name: mapping?.serviceName ?? result.service_id,
+          category: mapping?.category ?? 'other',
+          website_url: mapping?.settingsUrl ?? alternative?.url ?? '',
+          logo_url: '',
+        },
+      } satisfies EnrichedScanResult
+    })
+
+    const grouped = groupResultsByCategory(enriched)
 
     return {
       results: {
         scan,
         grouped,
-        total: results?.length || 0,
+        total: enriched.length,
       },
     }
   } catch (error) {
@@ -195,17 +230,7 @@ export async function getCancellationGuides() {
   try {
     const { data: guides, error } = await supabase
       .from('cancellation_guides')
-      .select(
-        `
-        *,
-        service:services_catalog!service_id (
-          id,
-          name,
-          website_url,
-          logo_url
-        )
-      `
-      )
+      .select('*')
       .order('id', { ascending: true })
 
     if (error) {
@@ -226,17 +251,7 @@ export async function getCancellationGuide(id: string) {
   try {
     const { data: guide, error } = await supabase
       .from('cancellation_guides')
-      .select(
-        `
-        *,
-        service:services_catalog!service_id (
-          id,
-          name,
-          website_url,
-          logo_url
-        )
-      `
-      )
+      .select('*')
       .eq('id', id)
       .single()
 
@@ -253,3 +268,5 @@ export async function getCancellationGuide(id: string) {
     }
   }
 }
+
+export { enrichMatchedResults, groupResultsByCategory }

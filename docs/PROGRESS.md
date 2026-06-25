@@ -17,49 +17,21 @@
 
 ---
 
-## Status Snapshot — 2026-06-25 (evening)
-
-### Codebase Cleanup Sprint
-
-- [x] **LOVABLE SCANNER DELETED** — `apps/scanner/` (broken Lovable-built standalone) fully removed from git and disk. Root `package.json` scanner scripts removed.
-- [x] **15+ ORPHANED FILES DELETED** — `ScannerFlow/`, `ConsentModal`, `NotApprovedError`, `ProfileForm`, `EmailVerificationStep`, `PaymentForm`, `ScannerOnboarding`, `ScannerPaymentModal`, `ScannerDashboard`, `InboxScannerOnboarding`, `ServiceGrid`, `ScannerResultsPage`, `useClientSideScanner`, `scanGmail.ts`, `affiliateLinks.ts` — all removed.
-- [x] **DEAD ROUTE REMOVED** — `/qa/analytics` route + `AnalyticsQAPage.tsx` deleted from router and disk.
-- [x] **DESIGN COLORS FIXED** — Nordic Warmth hex values (`#f9f7f2`, `#c17a5c`, `#1a1815`, etc.) replaced with European Digital design tokens in `scanner/__root.tsx`, `TallyFeedbackForm.tsx`, and verification email template.
-- [x] **ENV VARS ALIGNED** — `apps/web/.env.example`: `STRIPE_PUBLISHABLE_KEY` → `VITE_STRIPE_PUBLIC_KEY`; secret key removed; `VITE_STRIPE_CHECKOUT_SESSION_URL` added. `vite-env.d.ts` updated with all typed vars.
-- [x] **STRIPE CONSOLIDATED** — `EmailScannerGate.tsx` dead Netlify endpoint replaced with Supabase Edge Function fallback. `lib/stripe.ts` rewritten as single POST-based checkout function.
-- [x] **AFFILIATES CONSOLIDATED** — `PROTON_AFFILIATES` removed from `lib/stripe.ts`. `MonetizationCTAs` and `scanner/dashboard` now import from canonical `@digitaleu/shared`.
-- [x] **STALE REFS FIXED** — Old Supabase project ID `fuiebtpezpoxvkuuhaqy` replaced with `mwsalzjsvuvlmshxzbxg` in CLAUDE.md, scripts, OAUTH docs. `/catalog` → `/directory` in scanner nav. Lovable SQL comment removed. Validate-oauth script and OAuth test scripts updated to `apps/web` paths.
-- [x] **BUILD VERIFIED** — `npm run build --workspace @digitaleu/web` passes with zero errors after all changes.
-
----
-
 ## Status Snapshot — 2026-06-25
 
-### Completed
-- [x] **DESIGN UNIFIED** — All pages (scanner + web) migrated to European Digital design system (emerald/navy). Nordic Warmth and GitHub-dark/slate themes removed. IBM Plex Mono loaded via @fontsource. ADR #25.
-- [x] **SUPABASE MIGRATED** — New project `mwsalzjsvuvlmshxzbxg` (Stockholm, eu-north-1). Old project `fuiebtpezpoxvkuuhaqy` replaced. All Edge Functions, migrations, secrets transferred. ADR #26.
-- [x] **REACT ROUTER FIX** — `/scanner/*` lazy wildcard route replaced with proper data-router `children` array. `ScannerPage.tsx` deleted. Direct URL navigation to `/scanner/auth/signin`, `/scanner/dashboard`, etc. now works correctly.
-- [x] **21 BROKEN PATHS FIXED** — All scanner-internal links/redirects updated to include `/scanner/` prefix (was pointing to root `/auth/signin`, `/dashboard`, etc.).
-- [x] **OAUTH REDIRECT URIs FIXED** — Both Gmail and Outlook `constructAuthUrl` functions now use `/scanner/auth/email-callback`. Exchange function body also corrected.
-- [x] **VERCEL ENV VARS UPDATED** — `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (JWT format) updated for Production + Development. Old `sb_publishable_...` format caused 401 on Edge Functions.
-- [x] **MICROSOFT AZURE APP REGISTRATION CREATED** — New app `digitaleu-me-scanner`, client ID `7e766ddd-310b-481e-840d-bbcc75acdc1c`. Client secret set. Old placeholder `7780aaaa-...` removed from all files and Vercel.
-- [x] **SUPABASE SECRETS SET** — `MICROSOFT_OAUTH_CLIENT_ID` and `MICROSOFT_OAUTH_CLIENT_SECRET` set on new project. `GOOGLE_OAUTH_CLIENT_ID`/`GOOGLE_OAUTH_CLIENT_SECRET` confirmed present.
-- [x] **MAILBOX CONNECTION SAVED AFTER OAUTH** — `email-callback.tsx` now saves a row to `mailbox_connections` DB after successful OAuth (if user is signed in), then redirects to `/scanner/dashboard`. Previously the token only lived in sessionStorage, leaving the dashboard with "No mailbox connected".
-- [x] **SCANNER INDEX UX** — When Gmail/Outlook is connected, shows a green "Connected" card with "Sign in and start scan" CTA instead of confusing "Reconnect inbox" button.
-- [x] **HYDRATEFALLBACK** — React Router v7 warning suppressed by adding `HydrateFallback: PageLoader` to root `/` route.
+### Completed (email scanner repair)
+- [x] End-to-end inbox scan wired: OAuth → `scan-email` Edge Function → client-side `DOMAIN_MAPPINGS` matching → results UI
+- [x] Guest flow: auto-scan after OAuth → `/scanner/results/guest` (sessionStorage)
+- [x] Authenticated flow: auto-scan after OAuth → persisted `scans` / `scan_results` → `/scanner/results/:scanId`
+- [x] Restored `0009_scanner_schema.sql`; added `0010_scan_results_insert_policy.sql` (RLS insert/update)
+- [x] Removed broken `gmail-scan` call; Outlook scope fixed to `Mail.ReadBasic`
+- [x] OAuth redirect docs updated to `/scanner/auth/email-callback`
 
-### Verified
-- [x] All Edge Functions ACTIVE on new Supabase project: `exchange-email-code`, `scan-email`, `create-checkout`, `stripe-webhook`.
-- [x] Production deployed and aliased to `www.digitaleu.me`.
-- [x] Zero TypeScript errors.
-- [x] Google OAuth redirect URI: `https://www.digitaleu.me/scanner/auth/email-callback` confirmed in Google Cloud Console.
-- [x] Microsoft OAuth redirect URIs confirmed in Azure portal.
-
-### Next priorities
-- [ ] Test full end-to-end: sign up → connect Gmail → dashboard shows inbox → start scan → results page
-- [ ] Verify `scan-email` Edge Function processes Gmail metadata and returns results correctly
-- [ ] Add email+password sign-up flow polish (confirm email step)
-- [ ] Update git push to Codeberg (currently on GitHub only)
+### Remaining to test
+- [ ] Apply migration `0010_scan_results_insert_policy.sql` on Supabase (MCP lacked privileges)
+- [ ] Deploy updated `exchange-email-code` Edge Function (debug logging removed)
+- [ ] Register OAuth redirect URIs in Google/Azure consoles (see `docs/OAUTH_SETUP_GUIDE.md`)
+- [ ] Production Gmail/Outlook OAuth + scan smoke test
 
 ---
 

@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '@/lib/db'
-import { initializeGmailScan } from '@/lib/scan'
+import { initializeInboxScan } from '@/lib/scan'
+import {
+  clearEmailSessionTokens,
+  type InboxProvider,
+} from '@/lib/inboxScan'
 import { AFFILIATE_LINKS } from '@digitaleu/shared'
 
 interface Scan {
@@ -64,6 +68,7 @@ export default function DashboardPage() {
   const [scannerMetadata, setScannerMetadata] = useState<ScannerMetadata | null>(null)
   const [mfaEnabled, setMfaEnabled] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
+  const [scanStatus, setScanStatus] = useState<string | null>(null)
   const [deletingAccount, setDeletingAccount] = useState(false)
 
   useEffect(() => {
@@ -136,15 +141,42 @@ export default function DashboardPage() {
 
   const handleStartScan = async () => {
     setActionError(null)
+    setScanStatus(null)
+
     if (!user || connections.length === 0) {
       setActionError('Connect Gmail or Outlook first, then run your scan.')
       return
     }
 
-    setScanning(true)
     const primaryConnection = connections[0]!
-    const { scanId, error } = await initializeGmailScan(primaryConnection.id, user.id)
+    const provider = primaryConnection.provider as InboxProvider
+
+    if (provider !== 'gmail' && provider !== 'outlook') {
+      setActionError('Unsupported mailbox provider. Please reconnect your inbox.')
+      return
+    }
+
+    const accessToken = sessionStorage.getItem('email_access_token')
+    const sessionProvider = sessionStorage.getItem('email_provider')
+
+    if (!accessToken || sessionProvider !== provider) {
+      setActionError('Your inbox session expired. Reconnect Gmail or Outlook to scan again.')
+      return
+    }
+
+    setScanning(true)
+    setScanStatus('Scanning inbox metadata...')
+
+    const { scanId, error } = await initializeInboxScan(
+      primaryConnection.id,
+      user.id,
+      accessToken,
+      provider
+    )
+
+    clearEmailSessionTokens()
     setScanning(false)
+    setScanStatus(null)
 
     if (error || !scanId) {
       setActionError(error || 'Unable to start scan right now.')
@@ -255,6 +287,9 @@ export default function DashboardPage() {
           <button onClick={handleStartScan} disabled={scanning} className="rounded-sm border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover disabled:opacity-50 transition">
             {scanning ? 'Scanning…' : 'Start new scan'}
           </button>
+          {scanStatus && (
+            <p className="text-xs text-text-secondary dark:text-dark-text-secondary">{scanStatus}</p>
+          )}
           <a href="/#manual-check" className="rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">
             Open manual checker
           </a>

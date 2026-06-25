@@ -2,26 +2,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getScanResults } from '@/lib/scan'
 import { supabase } from '@/lib/db'
-
-interface Service {
-  id: string
-  name: string
-  category: string
-  website_url: string
-  logo_url: string
-}
-
-interface ScanResult {
-  service_id: string
-  detected_count: number
-  confidence: number
-  sample_senders: string[]
-  service: Service
-}
+import { ScanResultsView } from '@/components/scanner/ScanResultsView'
 
 export default function ResultsPage() {
   const { scanId } = useParams<{ scanId: string }>()
-  const [results, setResults] = useState<{ [key: string]: ScanResult[] } | null>(null)
+  const [grouped, setGrouped] = useState<Record<string, import('@/lib/scan').EnrichedScanResult[]> | null>(null)
+  const [scannedCount, setScannedCount] = useState<number | undefined>()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -36,7 +22,10 @@ export default function ResultsPage() {
         return
       }
 
-      const { results: scanResults, error: resultsError } = await getScanResults(scanId, currentUser.id)
+      const { results: scanResults, error: resultsError } = await getScanResults(
+        scanId,
+        currentUser.id
+      )
 
       if (resultsError || !scanResults) {
         setError(resultsError || 'Failed to load results')
@@ -44,7 +33,8 @@ export default function ResultsPage() {
         return
       }
 
-      setResults(scanResults.grouped)
+      setGrouped(scanResults.grouped)
+      setScannedCount(scanResults.scan.sample_size)
       setLoading(false)
     }
 
@@ -76,12 +66,16 @@ export default function ResultsPage() {
     )
   }
 
-  if (!results || Object.keys(results).length === 0) {
+  if (!grouped || Object.keys(grouped).length === 0) {
     return (
       <div className="mx-auto max-w-2xl space-y-4">
         <div className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6 text-center">
-          <h2 className="mb-2 text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">No services detected</h2>
-          <p className="text-text-secondary dark:text-dark-text-secondary mb-4">We didn't find any recognizable services in your inbox.</p>
+          <h2 className="mb-2 text-lg font-mono font-semibold text-text-primary dark:text-dark-text-primary">
+            No services detected
+          </h2>
+          <p className="text-text-secondary dark:text-dark-text-secondary mb-4">
+            We didn&apos;t find any recognizable services in your inbox.
+          </p>
           <a href="/scanner/dashboard" className="inline-block text-sm text-accent hover:underline">
             Back to dashboard
           </a>
@@ -90,102 +84,12 @@ export default function ResultsPage() {
     )
   }
 
-  const categoryLabels: Record<string, string> = {
-    email: '📧 Email Services',
-    streaming: '🎬 Streaming',
-    music: '🎵 Music',
-    storage: '☁️ Cloud Storage',
-    ai: '🤖 AI Tools',
-    productivity: '📝 Productivity',
-    communication: '💬 Communication',
-    development: '👨‍💻 Development',
-    ecommerce: '🛍️ E-commerce',
-    creative: '🎨 Creative',
-    design: '✏️ Design',
-    other: '📦 Other',
-  }
-
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-mono font-bold mb-2 text-text-primary dark:text-dark-text-primary">Your digital footprint</h1>
-        <p className="text-text-secondary dark:text-dark-text-secondary">
-          We found {Object.values(results).flat().length} services you're subscribed to. Here's how you can switch to European alternatives.
-        </p>
-      </div>
-
-      {Object.entries(results).map(([category, services]) => (
-        <section key={category} className="space-y-4">
-          <h2 className="text-2xl font-mono font-semibold text-text-primary dark:text-dark-text-primary">{categoryLabels[category] || category}</h2>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {services.map((result) => (
-              <div key={result.service_id} className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="font-mono font-semibold text-lg text-text-primary dark:text-dark-text-primary">{result.service?.name}</h3>
-                    <p className="text-sm text-text-secondary dark:text-dark-text-secondary mt-1">
-                      Detected from {result.sample_senders?.length || 1} sender{result.sample_senders?.length !== 1 ? 's' : ''}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="inline-block rounded-sm bg-accent/10 px-3 py-1">
-                      <span className="text-sm font-mono font-semibold text-accent">
-                        {Math.round((result.confidence || 0.9) * 100)}%
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <a
-                    href={result.service?.website_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-sm text-text-secondary dark:text-dark-text-secondary hover:text-text-primary dark:hover:text-dark-text-primary truncate"
-                  >
-                    {result.service?.website_url}
-                  </a>
-
-                  <a
-                    href={`/cancel/${result.service_id}`}
-                    className="inline-block rounded-sm bg-accent/10 px-3 py-2 text-sm font-mono font-semibold text-accent hover:bg-accent/20 transition"
-                  >
-                    How to cancel →
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      ))}
-
-      <div className="rounded-sm border border-border dark:border-dark-border bg-surface dark:bg-dark-surface p-6">
-        <h3 className="font-mono font-semibold mb-3 text-text-primary dark:text-dark-text-primary">Next steps</h3>
-        <ol className="space-y-2 text-text-secondary dark:text-dark-text-secondary">
-          <li className="flex gap-3">
-            <span className="font-mono font-bold text-accent">1</span>
-            <span>Review the European alternatives for each service.</span>
-          </li>
-          <li className="flex gap-3">
-            <span className="font-mono font-bold text-accent">2</span>
-            <span>Follow the cancellation guides to migrate your data.</span>
-          </li>
-          <li className="flex gap-3">
-            <span className="font-mono font-bold text-accent">3</span>
-            <span>Update your email subscriptions to your new European service.</span>
-          </li>
-        </ol>
-      </div>
-
-      <div className="flex gap-4 justify-center">
-        <a href="/scanner/dashboard" className="px-6 py-2 rounded-sm border border-border dark:border-dark-border text-text-primary dark:text-dark-text-primary font-mono font-semibold hover:bg-border dark:hover:bg-dark-border transition">
-          Back to dashboard
-        </a>
-        <button className="px-6 py-2 rounded-sm bg-accent font-mono font-semibold text-white hover:bg-accent-hover transition">
-          Export results
-        </button>
-      </div>
-    </div>
+    <ScanResultsView
+      grouped={grouped}
+      scannedCount={scannedCount}
+      backHref="/scanner/dashboard"
+      showExport
+    />
   )
 }

@@ -2,15 +2,23 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ServiceCheckboxGrid } from '@/components/ServiceCheckboxGrid'
 import { useReport } from '@/hooks/useReport'
+import {
+  runInboxScan,
+  saveGuestScanResults,
+  clearEmailSessionTokens,
+  type InboxProvider,
+} from '@/lib/inboxScan'
 
 export default function IndexPage() {
   const navigate = useNavigate()
   const { createReport } = useReport()
   const [selected, setSelected] = useState<Set<string>>(new Set())
-  const [connectedProvider, setConnectedProvider] = useState<string | null>(null)
+  const [connectedProvider, setConnectedProvider] = useState<InboxProvider | null>(null)
+  const [guestScanning, setGuestScanning] = useState(false)
+  const [guestScanError, setGuestScanError] = useState<string | null>(null)
 
   useEffect(() => {
-    const provider = sessionStorage.getItem('email_provider')
+    const provider = sessionStorage.getItem('email_provider') as InboxProvider | null
     const token = sessionStorage.getItem('email_access_token')
     setConnectedProvider(provider && token ? provider : null)
   }, [])
@@ -39,7 +47,37 @@ export default function IndexPage() {
       return
     }
     const reportId = createReport(Array.from(selected))
-    navigate(`/report/${reportId}`)
+    navigate(`/scanner/report/${reportId}`)
+  }
+
+  const handleGuestScan = async () => {
+    const provider = sessionStorage.getItem('email_provider') as InboxProvider | null
+    const token = sessionStorage.getItem('email_access_token')
+
+    if (!provider || !token) {
+      setGuestScanError('Connect Gmail or Outlook first.')
+      return
+    }
+
+    setGuestScanning(true)
+    setGuestScanError(null)
+
+    try {
+      const scanOutcome = await runInboxScan(token, provider)
+      saveGuestScanResults({
+        provider: scanOutcome.provider,
+        scannedCount: scanOutcome.scannedCount,
+        matched: scanOutcome.matched,
+        createdAt: Date.now(),
+      })
+      clearEmailSessionTokens()
+      setConnectedProvider(null)
+      navigate('/scanner/results/guest')
+    } catch (err) {
+      setGuestScanError(err instanceof Error ? err.message : 'Scan failed')
+    } finally {
+      setGuestScanning(false)
+    }
   }
 
   return (
@@ -64,7 +102,7 @@ export default function IndexPage() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-lg">🔒</span>
-              <span>Zero data sent to servers</span>
+              <span>Metadata-only scanning</span>
             </div>
           </div>
         </div>
@@ -78,14 +116,25 @@ export default function IndexPage() {
               </p>
             </div>
             <p className="text-sm text-text-secondary dark:text-dark-text-secondary">
-              Your inbox is ready to scan. Sign in to run a full scan and save your results.
+              Your inbox is ready to scan. Run a quick scan now or sign in to save results.
             </p>
+            {guestScanError && (
+              <p className="text-sm text-error">{guestScanError}</p>
+            )}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                type="button"
+                onClick={handleGuestScan}
+                disabled={guestScanning}
+                className="inline-flex items-center justify-center rounded-sm border border-accent bg-accent px-8 py-3.5 font-mono text-sm font-semibold text-white transition hover:bg-accent-hover disabled:opacity-50"
+              >
+                {guestScanning ? 'Scanning…' : 'Run scan now'}
+              </button>
               <Link
                 to="/scanner/auth/signin"
-                className="inline-flex items-center justify-center rounded-sm border border-accent bg-accent px-8 py-3.5 font-mono text-sm font-semibold text-white transition hover:bg-accent-hover"
+                className="inline-flex items-center justify-center rounded-sm border border-border dark:border-dark-border bg-transparent px-8 py-3.5 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary transition hover:bg-border dark:hover:bg-dark-border"
               >
-                Sign in and start scan
+                Sign in and save results
               </Link>
               <Link
                 to="/scanner/scan"

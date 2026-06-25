@@ -41,7 +41,7 @@ This checklist tracks the OAuth Code+PKCE migration (Implicit Grant → Authoriz
 
 - [ ] **Supabase Edge Function deployment (local):**
   ```bash
-  supabase functions deploy exchange-email-code --project-ref fuiebtpezpoxvkuuhaqy
+  supabase functions deploy exchange-email-code --project-ref mwsalzjsvuvlmshxzbxg
   ```
   Expected: Function deployed to `https://mwsalzjsvuvlmshxzbxg.supabase.co/functions/v1/exchange-email-code`
 
