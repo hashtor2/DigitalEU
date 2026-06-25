@@ -1,23 +1,19 @@
 /**
  * EmailScannerPage.tsx — Landing page for email scanner
  *
- * This page shows the EmailScannerGate (Proton affiliate + Stripe payment options).
- * Once unlocked, it redirects to the dedicated scanner app at localhost:5174
- * for the actual OAuth-based inbox scanning.
+ * Shows the EmailScannerGate (Proton affiliate + Stripe payment).
+ * Once unlocked, navigates to the embedded scanner at /scanner.
  */
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { EmailScannerGate } from "@/components/EmailScannerGate";
 
-const SCANNER_APP_URL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:5174"
-    : "https://scanner.digitaleu.me";
-
 export function EmailScannerPage() {
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const navigate = useNavigate();
 
   // Check if scanner was unlocked via payment/Proton
   useEffect(() => {
@@ -32,8 +28,7 @@ export function EmailScannerPage() {
   };
 
   const handleStartScanning = () => {
-    // Redirect to scanner app for OAuth
-    window.location.href = `${SCANNER_APP_URL}/auth/signin`;
+    navigate("/scanner");
   };
 
   return (

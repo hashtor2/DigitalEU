@@ -1,7 +1,9 @@
 import { useState } from "react";
 
 const PROTON_AFFILIATE_URL = "https://go.getproton.me/SH1mR";
-const STRIPE_CHECKOUT_ENDPOINT = "/.netlify/functions/create-checkout";
+const STRIPE_CHECKOUT_ENDPOINT =
+  import.meta.env.VITE_STRIPE_CHECKOUT_SESSION_URL ||
+  `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-checkout`;
 
 interface EmailScannerGateProps {
   onUnlock: () => void;

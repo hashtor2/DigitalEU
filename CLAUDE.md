@@ -228,7 +228,7 @@ Designarbeid gjøres på dedikert `feat/brand-identity`-branch. **Prosessen:**
 Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 - **Supabase MCP:** hosted HTTP + OAuth, låst til prosjektet via `project_ref`
   i `.mcp.json` (ingen token i repoet — OAuth via `/mcp`). Brukes til
-  migrasjoner og DB-ops. Prosjekt-ref: `fuiebtpezpoxvkuuhaqy` (navn:
+  migrasjoner og DB-ops. Prosjekt-ref: `mwsalzjsvuvlmshxzbxg` (navn:
   «emailchanger», Sverige/Stockholm, eu-north-1).
   Se `supabase/README.md`.
 - **Vercel MCP:** tilgjengelig i sessionen for deploy/infra.

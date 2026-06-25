@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase } from '@/lib/db'
 import { initializeGmailScan } from '@/lib/scan'
-import { getProtonAffiliateLink } from '@/lib/stripe'
+import { AFFILIATE_LINKS } from '@digitaleu/shared'
 
 interface Scan {
   id: string
@@ -239,7 +239,7 @@ export default function DashboardPage() {
             <p className="mt-1 text-sm text-text-secondary dark:text-dark-text-secondary">{accessState.detail}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <a href={getProtonAffiliateLink('mail')} target="_blank" rel="noopener noreferrer" className="rounded-sm border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition">
+            <a href={AFFILIATE_LINKS['proton-mail'].url} target="_blank" rel="noopener noreferrer" className="rounded-sm border border-accent bg-accent px-4 py-2 font-mono text-sm font-semibold text-white hover:bg-accent-hover transition">
               Unlock options
             </a>
             <a href="/#manual-check" className="rounded-sm border border-border dark:border-dark-border px-4 py-2 font-mono text-sm font-semibold text-text-primary dark:text-dark-text-primary hover:bg-border dark:hover:bg-dark-border transition">

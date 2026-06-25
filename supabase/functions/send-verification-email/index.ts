@@ -52,24 +52,24 @@ Link expires in 24 hours.
         text: emailBody,
         html: `
 <html>
-<body style="font-family: 'IBM Plex Mono', monospace; background-color: #1a1815; color: #f9f7f2; padding: 20px;">
-  <div style="max-width: 600px; margin: 0 auto; background-color: #2a2420; padding: 30px; border-radius: 8px;">
-    <h1 style="font-size: 24px; margin-bottom: 20px; color: #c17a5c;">Verify Your Email</h1>
+<body style="font-family: 'IBM Plex Mono', monospace; background-color: #0f172a; color: #f8fafc; padding: 20px;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #1e293b; padding: 30px; border-radius: 8px;">
+    <h1 style="font-size: 24px; margin-bottom: 20px; color: #10b981;">Verify Your Email</h1>
     <p style="margin-bottom: 20px; line-height: 1.6;">
       Hi,<br><br>
       Verify your email to unlock the DigitalEU scanner and see your digital footprint.
     </p>
-    <a href="${verificationUrl}" style="display: inline-block; background-color: #c17a5c; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; margin-bottom: 20px; font-weight: bold;">
+    <a href="${verificationUrl}" style="display: inline-block; background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; margin-bottom: 20px; font-weight: bold;">
       Verify Email
     </a>
     <p style="margin-bottom: 20px; line-height: 1.6;">
       Or copy this link into your browser:<br>
-      <code style="background-color: #1a1815; padding: 8px 12px; border-radius: 4px; display: block; overflow-wrap: break-word; margin-top: 10px;">${verificationUrl}</code>
+      <code style="background-color: #0f172a; padding: 8px 12px; border-radius: 4px; display: block; overflow-wrap: break-word; margin-top: 10px;">${verificationUrl}</code>
     </p>
-    <p style="color: #999; font-size: 12px; margin-top: 30px;">
+    <p style="color: #94a3b8; font-size: 12px; margin-top: 30px;">
       Link expires in 24 hours.
     </p>
-    <p style="color: #999; font-size: 12px;">
+    <p style="color: #94a3b8; font-size: 12px;">
       —DigitalEU Team
     </p>
   </div>

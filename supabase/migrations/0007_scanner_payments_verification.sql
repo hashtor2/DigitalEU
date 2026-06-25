@@ -66,7 +66,7 @@ CREATE INDEX idx_scanner_payments_status ON public.scanner_payments(status);
 CREATE TABLE IF NOT EXISTS public.scanner_scans (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  scan_id TEXT NOT NULL UNIQUE,  -- Lovable scanner result ID
+  scan_id TEXT NOT NULL UNIQUE,  -- Scanner result ID
   email TEXT NOT NULL,
   total_accounts_detected INTEGER NOT NULL DEFAULT 0,
   european_alternatives_available INTEGER NOT NULL DEFAULT 0,

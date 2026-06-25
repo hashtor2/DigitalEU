@@ -55,10 +55,10 @@ async function main() {
   log.section('1. File Structure')
 
   const requiredFiles = [
-    'apps/scanner/src/lib/oauth-utils.ts',
-    'apps/scanner/src/routes/auth/email-callback.tsx',
-    'apps/scanner/src/routes/auth/signin.tsx',
-    'apps/scanner/src/App.tsx',
+    'apps/web/src/lib/oauth-utils.ts',
+    'apps/web/src/pages/scanner/auth/email-callback.tsx',
+    'apps/web/src/pages/scanner/auth/signin.tsx',
+    'apps/web/src/App.tsx',
     'supabase/functions/exchange-email-code/index.ts',
   ]
 
@@ -77,7 +77,7 @@ async function main() {
 
   const checks = [
     {
-      file: 'apps/scanner/src/lib/oauth-utils.ts',
+      file: 'apps/web/src/lib/oauth-utils.ts',
       patterns: [
         { name: 'generateCodeVerifier', pattern: 'generateCodeVerifier' },
         { name: 'generateCodeChallenge', pattern: 'generateCodeChallenge' },
@@ -87,7 +87,7 @@ async function main() {
       ],
     },
     {
-      file: 'apps/scanner/src/routes/auth/email-callback.tsx',
+      file: 'apps/web/src/pages/scanner/auth/email-callback.tsx',
       patterns: [
         { name: 'State validation', pattern: 'oauth_state' },
         { name: 'Code verifier retrieval', pattern: 'oauth_code_verifier' },
@@ -136,7 +136,7 @@ async function main() {
   }
 
   // Check for OAuth route
-  if (fileContains('apps/scanner/src/App.tsx', 'email-callback')) {
+  if (fileContains('apps/web/src/App.tsx', 'email-callback')) {
     log.success('Email callback route registered')
     passed++
   } else {
@@ -147,7 +147,7 @@ async function main() {
   // 4. Environment Setup
   log.section('4. Environment Setup')
 
-  const envFile = path.join(PROJECT_ROOT, 'apps/scanner/.env.local')
+  const envFile = path.join(PROJECT_ROOT, 'apps/web/.env.local')
   if (fs.existsSync(envFile)) {
     const envContent = fs.readFileSync(envFile, 'utf-8')
     const requiredEnvVars = [
@@ -204,8 +204,8 @@ async function main() {
     )
 
     console.log('Next steps:')
-    console.log('  1. npm run dev:scanner')
-    console.log('  2. Navigate to http://localhost:5174/auth/signin')
+    console.log('  1. npm run dev')
+    console.log('  2. Navigate to http://localhost:5173/scanner/auth/signin')
     console.log('  3. Click "🔗 Connect Gmail" or "🔗 Connect Outlook"')
     console.log('  4. Complete OAuth flow and verify redirect')
     console.log('')

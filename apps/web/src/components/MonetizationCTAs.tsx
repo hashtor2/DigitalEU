@@ -1,4 +1,5 @@
-import { redirectToCheckout, getProtonAffiliateLink } from '@/lib/stripe'
+import { redirectToCheckout } from '@/lib/stripe'
+import { AFFILIATE_LINKS } from '@digitaleu/shared'
 
 interface MonetizationCTAsProps {
   title?: string
@@ -17,7 +18,7 @@ export function MonetizationCTAs({
     redirectToCheckout({ sessionId: reportId })
   }
 
-  const protonLink = getProtonAffiliateLink('mail')
+  const protonLink = AFFILIATE_LINKS['proton-mail'].url
 
   return (
     <div className="rounded-sm border border-border dark:border-dark-border bg-canvas dark:bg-dark-canvas p-8 space-y-4">
