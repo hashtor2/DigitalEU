@@ -36,8 +36,8 @@ Architecture & stack (authoritative):
 - Monorepo, npm workspaces: `apps/web` (Vite 6 + React 19 + TS strict + Tailwind
   v4 + shadcn/ui), `apps/extension` (Manifest V3, Chrome + Firefox, Phase 2),
   `packages/shared` (shared types/catalog — single source of truth).
-- Backend/DB/Auth: Supabase, EU region, **data in Switzerland (Zürich,
-  eu-central-2)**. Payment: Stripe (€5 one-time). Analytics: Plausible
+- Backend/DB/Auth: Supabase, EU region, **data in Sweden (Stockholm,
+  eu-north-1)**. Payment: Stripe (€5 one-time). Analytics: Plausible
   (cookieless). Code hosting: Codeberg. Hosting: Vercel (sovereignty under
   review). Testing: Vitest. CI: GitHub Actions.
 - Inbox scanning: **100% client-side** via OAuth (Gmail/Outlook), minimal

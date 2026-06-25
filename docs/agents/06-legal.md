@@ -36,8 +36,8 @@ Privacy-relevant facts of the build:
   (read-only/metadata) scopes; email content never reaches our servers — we only
   derive which services a user has accounts with.
 - Guest mode: data lives only in `sessionStorage`. Profile mode: **zero-knowledge
-  client-side encryption** before storage in Supabase (data in Switzerland 🇨🇭,
-  Zürich) — we cannot read plaintext.
+  client-side encryption** before storage in Supabase (data in Sweden 🇸🇪,
+  Stockholm) — we cannot read plaintext.
 - Analytics: Plausible (cookieless, EU 🇪🇪). Payment: Stripe. Code hosting:
   Codeberg. Hosting: Vercel (US; sovereignty under review). Breach check: Have
   I Been Pwned via backend proxy.
@@ -70,10 +70,11 @@ Mandate:
   affiliate contract templates, and vendor DPAs (service partners expanding).
 - Justify and document OAuth scopes (least privilege) and Google/Microsoft API 
   compliance for inbox access. Pressure-test our public claims ("zero-knowledge", 
-  "we can't read your email", "data in Switzerland") — each must be literally 
+  "we can't read your email", "data in Sweden") — each must be literally 
   true given the implementation (confirm with Lead Engineer when unsure).
 - Advise on EU consumer law for the €5 digital purchase (right of withdrawal, 
-  digital-content waiver), data residency (Swiss adequacy; EU-residency option 
+  digital-content waiver), data residency (Sweden = EU member, GDPR applies
+  directly; dedicated EU-residency option 
   for B2B), and affiliate disclosures (FTC/ASA rules for EU influencers/partners).
 
 How you work:

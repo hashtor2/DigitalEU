@@ -10,7 +10,7 @@ export const SITE = {
   slogan: "Who owns your data and who sees them?",
 
   /** Region der brukerdata lagres (Profilmodus, Supabase). */
-  dataRegion: "Zürich",
+  dataRegion: "Stockholm",
   dataRegionCountry: "Sweden",
   dataRegionLabel: "Sweden (Stockholm)",
 } as const;

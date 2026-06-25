@@ -75,7 +75,7 @@
 
 1. **Security First** — We ask for inbox access. That's sacred. Security is never an afterthought.
 2. **User Owns Data** — Zero-knowledge encryption. We can't read user data even if hacked.
-3. **European Dogfooding** — We use EU tools ourselves (Supabase in Switzerland, Plausible analytics, etc.)
+3. **European Dogfooding** — We use EU tools ourselves (Supabase in Sweden, Plausible analytics, etc.)
 4. **Transparency** — Users know exactly what we do with their data
 5. **Privacy by Default** — Safest option is the default (Guest Mode, no tracking)
 
@@ -104,10 +104,10 @@
 
 | Service | Provider | Region | Status |
 |---------|----------|--------|--------|
-| **Database** | Supabase (PostgreSQL) | 🇨🇭 Zürich, eu-central-2 | ✅ Deployed |
-| **Auth** | Supabase Auth | Switzerland | ✅ Ready |
+| **Database** | Supabase (PostgreSQL) | 🇸🇪 Stockholm, eu-north-1 | ✅ Deployed |
+| **Auth** | Supabase Auth | Sweden | ✅ Ready |
 | **Serverless** | Supabase Edge Functions | Edge nodes | ✅ 6 functions |
-| **File Storage** | Supabase Storage | Switzerland | ✅ Configured |
+| **File Storage** | Supabase Storage | Sweden | ✅ Configured |
 | **Analytics** | Plausible.io | 🇪🇪 Estonia | ✅ Cookieless |
 
 **Key Features:**
@@ -131,7 +131,7 @@
 
 1. **Vite + React:** Fast development, modern ecosystem, React community largest
 2. **Supabase:** Open-source alternative to Firebase, data in EU, transparent pricing
-3. **Switzerland Hosting:** Strictest privacy laws globally, GDPR-compliant data residency
+3. **Sweden data residency:** EU member state — GDPR applies directly, strong data-protection regime, data stays in the EU
 4. **Vercel:** Developer-friendly, auto-scaling, great TypeScript support
 5. **Plausible:** No cookies, privacy-respecting analytics (dogfooding our values)
 
@@ -162,7 +162,7 @@
         └───────────────────────────────────────┘
                         ↓ HTTPS ↓
 ┌─────────────────────────────────────────────────────────────┐
-│          Supabase Backend (Switzerland)                      │
+│          Supabase Backend (Sweden)                      │
 │                                                               │
 │  ┌──────────────────────────────────────┐                   │
 │  │  Edge Functions (Deno)               │                   │
@@ -802,13 +802,13 @@ apps/extension/
 
 ## Development Decisions
 
-### Why Supabase in Switzerland?
+### Why Supabase in Sweden?
 
-**Decision:** Use Supabase with data residency in Switzerland (Zürich, eu-central-2)
+**Decision:** Use Supabase with data residency in Sweden (Stockholm, eu-north-1)
 
 **Reasoning:**
-1. **Privacy PR:** Switzerland has strictest data protection laws globally
-2. **GDPR Compliance:** EU adequacy decision allows free GDPR data flow
+1. **Privacy PR:** Sweden is an EU member with a strong data-protection tradition; data stays inside the EU
+2. **GDPR Compliance:** EU member state — GDPR applies directly, no cross-border-transfer mechanism needed
 3. **Open Source:** Supabase is open-source (can self-host if needed)
 4. **Developer Experience:** Better than pure PostgreSQL + auth from scratch
 5. **Cost:** Generous free tier for MVP, scales with usage
@@ -916,7 +916,7 @@ apps/extension/
 
 **GDPR:**
 - ✅ Data controller: DigitalEU.me (transparent)
-- ✅ Data in EU (Switzerland)
+- ✅ Data in EU (Sweden)
 - ✅ Privacy policy (will be added)
 - ✅ User rights (access, delete via dashboard)
 
