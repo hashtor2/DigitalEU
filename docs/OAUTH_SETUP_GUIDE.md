@@ -7,7 +7,7 @@
 - **Scope**: `gmail.metadata` (read-only metadata, no email bodies)
 - **Flow**: Authorization Code with PKCE (S256)
 - **Token Location**: URL fragment `#access_token=...` (memory-only, never stored)
-- **Redirect Path**: `/auth/email-callback` (handles OAuth callback)
+- **Redirect Path**: `/scanner/auth/email-callback` (OAuth callback in merged web app)
 
 ### Setup Steps
 
@@ -24,17 +24,16 @@ Under **"Authorized redirect URIs"**, ensure these are registered:
 
 **Development (Local Testing):**
 ```
-http://localhost:5174/auth/email-callback
-http://localhost:5187/auth/email-callback
+http://localhost:5173/scanner/auth/email-callback
 ```
 
 **Production:**
 ```
-https://www.digitaleu.me/auth/email-callback
-https://scanner.digitaleu.me/auth/email-callback
+https://www.digitaleu.me/scanner/auth/email-callback
+https://digitaleu.me/scanner/auth/email-callback
 ```
 
-> **NOTE**: The redirect path has changed from `/emailscanner` to `/auth/email-callback` to properly handle OAuth callbacks in the scanner app.
+> **NOTE**: Scanner routes live under `/scanner` in the main web app.
 
 #### 4. Save and Wait
 Click **Save** and wait 5-10 seconds for Google to propagate changes globally.
@@ -74,10 +73,9 @@ VITE_MICROSOFT_TENANT_ID="your-tenant-id-here"
 ### Step 2: Verify App Registration
 - **Client ID**: `7780aaaa-4b85-4209-81f3-c60316af47e4` ✅ (web + scanner use same)
 - **Redirect URIs** (in Azure Portal → App registrations → Redirect URIs):
-  - `http://localhost:5174/auth/email-callback`
-  - `http://localhost:5187/auth/email-callback`
-  - `https://www.digitaleu.me/auth/email-callback`
-  - `https://scanner.digitaleu.me/auth/email-callback`
+  - `http://localhost:5173/scanner/auth/email-callback`
+  - `https://www.digitaleu.me/scanner/auth/email-callback`
+  - `https://digitaleu.me/scanner/auth/email-callback`
 
 ---
 

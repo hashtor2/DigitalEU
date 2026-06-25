@@ -1,0 +1,23 @@
+{
+  "name": "@digitaleu/telegram-agents",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Telegram-controlled AI agents for digitaleu.me (Layer 2). See docs/TELEGRAM_AGENTS.md.",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "verify": "tsx src/verify.ts",
+    "smoke": "tsx src/smoke.ts",
+    "setup:worktrees": "tsx src/setup-worktrees.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.191",
+    "dotenv": "^17.4.2",
+    "grammy": "^1.44.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

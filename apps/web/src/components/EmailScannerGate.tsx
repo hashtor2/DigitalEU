@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { redirectToCheckout } from "@/lib/stripe";
 
 const PROTON_AFFILIATE_URL = "https://go.getproton.me/SH1mR";
-const STRIPE_CHECKOUT_ENDPOINT = "/.netlify/functions/create-checkout";
 
 interface EmailScannerGateProps {
   onUnlock: () => void;
@@ -29,26 +29,11 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
   const handlePaymentClick = async () => {
     setLoading(true);
     try {
-      const response = await fetch(STRIPE_CHECKOUT_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          successUrl: `${window.location.origin}/emailscanner?scanner_unlocked=true`,
-          cancelUrl: `${window.location.origin}/emailscanner`,
-        }),
+      await redirectToCheckout({
+        successUrl: `${window.location.origin}/emailscanner?scanner_unlocked=true`,
+        cancelUrl: `${window.location.origin}/emailscanner`,
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to create checkout session");
-      }
-
-      const { url } = await response.json();
-      if (url) {
-        window.location.href = url;
-      }
-    } catch (error) {
-      console.error("Payment error:", error);
-      alert("Failed to start payment. Please try again.");
+    } finally {
       setLoading(false);
     }
   };

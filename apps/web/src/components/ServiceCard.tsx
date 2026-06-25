@@ -18,8 +18,7 @@ const RISK_ICONS = {
 const CLOUD_ACT_EXPOSURE: Record<string, boolean> = {
   US: true,
   CN: true,
-  CA: false, // Canada is not CLOUD Act
-  // Most EU countries = false
+  CA: false,
 }
 
 interface ServiceCardProps {
@@ -42,12 +41,10 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
 
   const protonAlternative = categoryAlternatives.find(a => a.id.startsWith('proton-'))
 
-  // Prefer Proton whenever it is an applicable alternative, otherwise use the best-scoring EU option.
   const bestAlternative =
     protonAlternative ??
     categoryAlternatives.sort((a, b) => getPrivacyScore(b) - getPrivacyScore(a))[0]
 
-  // Proton affiliate link for email category
   const protonAffiliateLink =
     service.category === 'email'
       ? 'https://go.getproton.me/SH2jh'
@@ -55,7 +52,7 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
 
   return (
     <div
-      className={`rounded-lg border p-5 space-y-3 transition ${RISK_COLORS[riskLevel]} ${onClick ? 'cursor-pointer hover:opacity-80' : ''}`}
+      className={`rounded-sm border p-5 space-y-3 transition ${RISK_COLORS[riskLevel]} ${onClick ? 'cursor-pointer hover:opacity-80' : ''}`}
       onClick={onClick}
     >
       {/* Header */}
@@ -63,28 +60,24 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-2xl leading-none">{RISK_ICONS[riskLevel]}</span>
-            <h4 className="font-mono font-semibold text-[#1a1815] dark:text-[#faf8f5]">
+            <h4 className="font-mono font-semibold text-text-primary dark:text-dark-text-primary">
               {service.name}
             </h4>
             {service.country && (
               <span className="text-lg" title={service.country}>
-                {
-                  COUNTRY_FLAGS[
-                    service.country as keyof typeof COUNTRY_FLAGS
-                  ] || '🌍'
-                }
+                {COUNTRY_FLAGS[service.country as keyof typeof COUNTRY_FLAGS] || '🌍'}
               </span>
             )}
           </div>
-          <p className="text-xs text-[#1a1815]/70 dark:text-[#a89d96]">
+          <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
             {service.description}
           </p>
         </div>
         <div className="text-right flex-shrink-0">
-          <div className="text-3xl font-mono font-bold text-[#1a1815] dark:text-[#faf8f5]">
+          <div className="text-3xl font-mono font-bold text-text-primary dark:text-dark-text-primary">
             {score}
           </div>
-          <p className="text-[10px] font-mono uppercase tracking-wide text-[#1a1815]/60 dark:text-[#a89d96]">
+          <p className="text-[10px] font-mono uppercase tracking-wide text-text-secondary dark:text-dark-text-secondary">
             Privacy Score
           </p>
         </div>
@@ -107,7 +100,7 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
 
       {/* Recommendation */}
       {bestAlternative && (
-        <div className="rounded bg-white/50 dark:bg-black/20 p-3 space-y-2">
+        <div className="rounded-sm bg-canvas/50 dark:bg-dark-canvas/50 border border-border/40 dark:border-dark-border/40 p-3 space-y-2">
           <p className="text-xs font-mono font-semibold">✓ Recommended Alternative</p>
           <p className="text-xs">
             <strong>{bestAlternative.name}</strong> ({bestAlternative.country}) —{' '}
@@ -118,7 +111,7 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
               href={bestAlternative.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs underline hover:no-underline text-[#b8705c] dark:text-[#a8664f] font-mono"
+              className="text-xs underline hover:no-underline text-accent font-mono"
             >
               Learn more →
             </a>
@@ -127,7 +120,7 @@ export function ServiceCard({ service, onClick }: ServiceCardProps) {
                 href={protonAffiliateLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs underline hover:no-underline text-[#b8705c] dark:text-[#a8664f] font-mono"
+                className="text-xs underline hover:no-underline text-accent font-mono"
               >
                 Try Proton →
               </a>

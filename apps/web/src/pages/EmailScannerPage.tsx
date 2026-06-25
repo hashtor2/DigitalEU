@@ -1,23 +1,19 @@
 /**
  * EmailScannerPage.tsx — Landing page for email scanner
  *
- * This page shows the EmailScannerGate (Proton affiliate + Stripe payment options).
- * Once unlocked, it redirects to the dedicated scanner app at localhost:5174
- * for the actual OAuth-based inbox scanning.
+ * Shows the EmailScannerGate (Proton affiliate + Stripe payment).
+ * Once unlocked, navigates to the embedded scanner at /scanner.
  */
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { EmailScannerGate } from "@/components/EmailScannerGate";
 
-const SCANNER_APP_URL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:5174"
-    : "https://scanner.digitaleu.me";
-
 export function EmailScannerPage() {
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const navigate = useNavigate();
 
   // Check if scanner was unlocked via payment/Proton
   useEffect(() => {
@@ -32,8 +28,7 @@ export function EmailScannerPage() {
   };
 
   const handleStartScanning = () => {
-    // Redirect to scanner app for OAuth
-    window.location.href = `${SCANNER_APP_URL}/auth/signin`;
+    navigate("/scanner");
   };
 
   return (
@@ -53,16 +48,16 @@ export function EmailScannerPage() {
 
             <button
               onClick={handleStartScanning}
-              className="inline-block px-8 py-4 bg-accent hover:bg-accent-dark text-white rounded-lg transition text-lg font-medium"
+              className="inline-block px-8 py-4 bg-accent hover:bg-accent-hover text-white rounded-sm transition text-lg font-medium"
             >
               Open Scanner
             </button>
 
-            <div className="bg-canvas-elevated dark:bg-dark-canvas-elevated border border-border-subtle dark:border-dark-border-subtle rounded-lg p-6 text-left space-y-3">
+            <div className="bg-surface dark:bg-dark-surface border border-border dark:border-dark-border rounded-sm p-6 text-left space-y-3">
               <h3 className="font-semibold text-text-primary dark:text-dark-text-primary">
                 🔐 Your privacy is protected
               </h3>
-              <ul className="space-y-2 text-small text-text-secondary dark:text-dark-text-secondary">
+              <ul className="space-y-2 text-sm text-text-secondary dark:text-dark-text-secondary">
                 <li>✓ Metadata-only scanning (no email bodies)</li>
                 <li>✓ Secure OAuth 2.0 with PKCE</li>
                 <li>✓ Results never stored without your consent</li>

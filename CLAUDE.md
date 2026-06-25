@@ -228,7 +228,7 @@ Designarbeid gjøres på dedikert `feat/brand-identity`-branch. **Prosessen:**
 Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 - **Supabase MCP:** hosted HTTP + OAuth, låst til prosjektet via `project_ref`
   i `.mcp.json` (ingen token i repoet — OAuth via `/mcp`). Brukes til
-  migrasjoner og DB-ops. Prosjekt-ref: `fuiebtpezpoxvkuuhaqy` (navn:
+  migrasjoner og DB-ops. Prosjekt-ref: `mwsalzjsvuvlmshxzbxg` (navn:
   «emailchanger», Sverige/Stockholm, eu-north-1).
   Se `supabase/README.md`.
 - **Vercel MCP:** tilgjengelig i sessionen for deploy/infra.
@@ -268,6 +268,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 24 | **Scanner som standalone app:** `scanner.digitaleu.me` — egen SPA, samme stack (React, Supabase, Stripe). Separate deployment, integrert med web via affiliate-kryss. | 2026-06-24 |
 | 25 | **Design:** UNIFIED across all apps — ONLY European Digital (emerald #10b981, deep navy dark mode) is active. All previous designs (Nordic Warmth, etc.) are DEPRECATED. Web + Scanner use identical design system from digitaleu.me. | 2026-06-25 |
 | 26 | **Supabase project migration:** Old project `fuiebtpezpoxvkuuhaqy` replaced with `mwsalzjsvuvlmshxzbxg` (new region: Stockholm, Sweden, eu-north-1). All migrations, functions, and data transferred. Update .env.local and all docs. | 2026-06-25 |
+| 27 | **Telegram-agenter:** De 10 persona-promptene i `docs/agents/` gjøres operative som Telegram-styrte agenter med faktisk oppgaveutførelse. Valg: full repo-tilgang, 10 separate bots (én token per agent), Hetzner VM 🇩🇪, Claude Agent SDK, git worktree per agent. Spec: `docs/TELEGRAM_AGENTS.md`. | 2026-06-25 |
 
 ---
 
@@ -293,6 +294,8 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 ## 13. Pekere
 
 **Core:**
+- `docs/TELEGRAM_AGENTS.md` — spec for Telegram-styrte AI-agenter (10 bots, Agent SDK, Hetzner).
+- `docs/agents/` — persona-prompts for det virtuelle AI-teamet (10 roller); kilde for Telegram-agentene.
 - `docs/BRAND.md` — design system (colors, typography, components, tone).
 - `docs/PROGRESS.md` — eneste levende sprintlogg og statuskilde.
 - `docs/DESIGN_CHECKLIST.md` — design implementation roadmap + commit templates.
