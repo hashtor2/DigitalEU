@@ -299,6 +299,7 @@ for *qualified, opted-in* humans.
 ## 13. Pointers
 
 - `CLAUDE.md` — master project context (strategy, stack, decision log).
+- `docs/SEO_STRATEGY.md` — organic-search engine: catalog keyword architecture, page model, content briefs, technical-SEO gate (CMO-owned companion to this plan).
 - `docs/BRAND.md` — voice, tone, colors, typography (align all copy here).
 - `docs/DEVELOPMENT_PLAN.md` — product roadmap / phases.
 - `docs/SECURITY.md` — privacy/security doctrine (source of truth for privacy claims).
