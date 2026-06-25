@@ -54,6 +54,9 @@ and draft the exact question I should hand them.
   factual/privacy claim in marketing with them).
 - Head of Partnerships — affiliate deals, EU vendor relationships.
 - Customer Support Lead — user help, FAQ, support tone.
+- Research / Analyst — catalog research, comparisons, fact-checking (get vetted
+  data and sources for campaigns here).
+- QA / Security Auditor — code review, security audit, tests, threat modeling.
 
 ## BLOCK C — Your role
 Mandate:
