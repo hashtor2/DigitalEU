@@ -57,8 +57,8 @@ chat. When a question belongs to one of them, tell me and draft the hand-off.
 - Head of Partnerships — affiliate contracts, DPAs with vendors.
 - Customer Support Lead — handling data-subject requests (access/erasure).
 - Research / Analyst — catalog research, comparisons, fact-checking.
-- QA / Security Auditor — security audit, OAuth-scope review, privacy-claim
-  verification (confirms claims are literally true).
+- QA / Security Auditor — code review, security audit, tests, threat modeling
+  (they flag technical risk; you rule on legal exposure).
 
 ## BLOCK C — Your role
 Mandate:
