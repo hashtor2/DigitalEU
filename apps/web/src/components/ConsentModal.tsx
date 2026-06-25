@@ -27,8 +27,8 @@ export function ConsentModal({ isOpen, onAllow, onDecline, isLoading }: ConsentM
 
         {/* Description */}
         <p className="text-sm text-text-secondary dark:text-dark-text-secondary mb-6">
-          We'll check which services you use by reading email senders. Scanning runs 100% in your
-          browser — we never store your email data.
+          We'll check which services you use by reading email <strong>sender domains only</strong> —
+          never message content. Processing is transient on our EU servers, and we store nothing.
         </p>
 
         {/* What We Read */}
@@ -62,9 +62,9 @@ export function ConsentModal({ isOpen, onAllow, onDecline, isLoading }: ConsentM
         <div className="mb-8">
           <h3 className="text-sm font-mono font-semibold mb-3">Where it happens</h3>
           <ul className="space-y-2 text-sm text-text-secondary dark:text-dark-text-secondary">
-            <li>• Scanning runs 100% in your browser</li>
-            <li>• We never store your email data</li>
-            <li>• Results stay on your device</li>
+            <li>• Sender domains processed transiently on our EU servers</li>
+            <li>• We never store your email data or access token</li>
+            <li>• Results stay on your device (session only)</li>
             <li>• Revoke access anytime in Gmail/Outlook settings</li>
           </ul>
         </div>
@@ -89,7 +89,7 @@ export function ConsentModal({ isOpen, onAllow, onDecline, isLoading }: ConsentM
 
         {/* Footer */}
         <p className="text-xs text-text-secondary dark:text-dark-text-secondary text-center mt-6">
-          OAuth scopes: gmail.readonly • Revoke anytime
+          OAuth scope: gmail.metadata (headers only — no message content) • Revoke anytime
         </p>
       </div>
     </div>

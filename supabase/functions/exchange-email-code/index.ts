@@ -52,11 +52,7 @@ async function exchangeGmailCode(
   
   const clientId = Deno.env.get("GOOGLE_OAUTH_CLIENT_ID") || ""
   const clientSecret = Deno.env.get("GOOGLE_OAUTH_CLIENT_SECRET") || ""
-  
-  console.log("DEBUG: Gmail exchange starting")
-  console.log("DEBUG: clientId length:", clientId.length, "first 20:", clientId.substring(0, 20))
-  console.log("DEBUG: clientSecret length:", clientSecret.length)
-  
+
   if (!clientId) {
     throw new Error("GOOGLE_OAUTH_CLIENT_ID not set in Supabase secrets")
   }
@@ -73,21 +69,14 @@ async function exchangeGmailCode(
     redirect_uri: redirectUri,
   })
 
-  console.log("DEBUG: Sending token request to Google with redirectUri:", redirectUri)
-  
   const response = await fetch(googleTokenUrl, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: body.toString(),
   })
 
-  console.log("DEBUG: Google response status:", response.status)
-  
   if (!response.ok) {
     const errorText = await response.text()
-    console.error("DEBUG: Google token exchange failed - status:", response.status)
-    console.error("DEBUG: Response body:", errorText)
-    
     let errorData = {}
     try {
       errorData = JSON.parse(errorText)
@@ -125,7 +114,8 @@ async function exchangeOutlookCode(
     client_id: Deno.env.get("MICROSOFT_OAUTH_CLIENT_ID") || "",
     client_secret: Deno.env.get("MICROSOFT_OAUTH_CLIENT_SECRET") || "",
     redirect_uri: redirectUri,
-    scope: "https://graph.microsoft.com/.default",
+    // Minimalt scope: kun sender-metadata, aldri e-postinnhold (jf. ADR #5).
+    scope: "https://graph.microsoft.com/Mail.ReadBasic",
   })
 
   const response = await fetch(microsoftTokenUrl, {
@@ -164,19 +154,6 @@ serve(async (req) => {
   try {
     // Parse request body
     const { code, codeVerifier, provider, redirectUri } = await req.json()
-    
-    // DEBUG: Log all environment variables to diagnose secret access
-    const googleId = Deno.env.get("GOOGLE_OAUTH_CLIENT_ID") || ""
-    const googleSecret = Deno.env.get("GOOGLE_OAUTH_CLIENT_SECRET") || ""
-    const msId = Deno.env.get("MICROSOFT_OAUTH_CLIENT_ID") || ""
-    const msSecret = Deno.env.get("MICROSOFT_OAUTH_CLIENT_SECRET") || ""
-    
-    console.log("DEBUG: ========== ENVIRONMENT CHECK ==========")
-    console.log("DEBUG: Google ID (first 30):", googleId.substring(0, 30))
-    console.log("DEBUG: Google Secret (first 30):", googleSecret.substring(0, 30))
-    console.log("DEBUG: MS ID (first 30):", msId.substring(0, 30))
-    console.log("DEBUG: MS Secret (first 30):", msSecret.substring(0, 30))
-    console.log("DEBUG: ========== END ENVIRONMENT CHECK ==========")
 
     // Validate required parameters
     if (!code) {
@@ -227,24 +204,10 @@ serve(async (req) => {
       }
     )
   } catch (error) {
+    // Aldri lekk hemmeligheter eller miljøvariabler i respons/logg.
     const message = error instanceof Error ? error.message : "Unknown error during token exchange"
-    
-    const googleId = Deno.env.get("GOOGLE_OAUTH_CLIENT_ID") || ""
-    const googleSecret = Deno.env.get("GOOGLE_OAUTH_CLIENT_SECRET") || ""
-    const msId = Deno.env.get("MICROSOFT_OAUTH_CLIENT_ID") || ""
-    const msSecret = Deno.env.get("MICROSOFT_OAUTH_CLIENT_SECRET") || ""
-    
-    const diagnostics = {
-      error: message,
-      google_client_id_first_30: googleId.substring(0, 30),
-      google_secret_first_30: googleSecret.substring(0, 30),
-      microsoft_client_id_first_30: msId.substring(0, 30),
-      microsoft_secret_first_30: msSecret.substring(0, 30)
-    }
-    
-    console.error("DEBUG: Error diagnostics:", diagnostics)
 
-    return new Response(JSON.stringify(diagnostics), {
+    return new Response(JSON.stringify({ error: message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     })
