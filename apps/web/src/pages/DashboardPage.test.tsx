@@ -27,7 +27,7 @@ describe("DashboardPage (privacy report)", () => {
     expect(
       screen.getByRole("heading", { name: /these are your accounts/i }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/your privacy report/i)).toBeInTheDocument();
+    expect(screen.getByText("Your Privacy Report", { exact: true })).toBeInTheDocument();
   });
 
   it("filters the table to the services selected on the selector page", () => {
