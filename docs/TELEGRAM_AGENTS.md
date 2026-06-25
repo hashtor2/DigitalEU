@@ -86,15 +86,15 @@ Hetzner VM 🇩🇪  (Ubuntu, ~€4/mnd, alltid-på, pm2-styrt)
 | 6 | `06-legal.md` | Juridisk & personvern | ✅ finnes |
 | 7 | `07-partnerships.md` | Partnerskapssjef | ✅ finnes |
 | 8 | `08-support.md` | Kundestøtteleder | ✅ finnes |
-| 9 | `09-researcher.md` | **Research/Analyst** — eier EU-tech-katalogresearch (jf. `GeminiResearchOnEUTechAlternatives.md`); Fase 2-kjerne | ✏️ ny |
-| 10 | `10-devops.md` | **DevOps/Release** — Supabase-migrasjoner, Edge Functions, deploy, overvåking | ✏️ ny |
+| 9 | `09-researcher.md` | **Research/Analyst** — eier EU-tech-katalogresearch (jf. `GeminiResearchOnEUTechAlternatives.md`); Fase 2-kjerne | ✅ finnes (2026-06-25) |
+| 10 | `10-qa-security.md` | **QA/Security Auditor** — kodegjennomgang, sikkerhetsaudit, tester, trusselmodellering | ✅ finnes (2026-06-25) |
 
-> **Åpent valg:** #10 kan byttes til en **QA/Security Auditor** i stedet — passer
-> trolig bedre med security-first-etosen. Avgjøres i Fase 0.
+> **Avgjort (2026-06-25):** #10 ble **QA/Security Auditor**, ikke DevOps —
+> passer best med security-first-etosen og matcher CEO-personaens Block B-teamliste.
 
-Persona-filene må følge eksisterende format: Block A (prosjektkontekst),
-Block B (team-oversikt), Block C (rolle). Når #9 og #10 legges til må Block B
-oppdateres i **alle 10 filene** så teamlista stemmer.
+Persona-filene følger eksisterende format: Block A (prosjektkontekst),
+Block B (team-oversikt), Block C (rolle). Block B er nå oppdatert med #9 og #10 i
+**alle 10 filene** så teamlista stemmer.
 
 ---
 

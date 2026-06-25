@@ -23,10 +23,6 @@ Block A og Block B er like i alle filene. Endrer vi noe sentralt i prosjektet,
 oppdater Block A i alle ti filene (eller be Claude Code gjøre det). Block C er
 unik per rolle.
 
-> **Layer 2 (operativ):** Disse personaene gjøres om til Telegram-styrte agenter
-> med faktisk oppgaveutførelse. Se `docs/TELEGRAM_AGENTS.md` for arkitektur og
-> byggeplan.
-
 ## Teamet
 | # | Fil | Rolle |
 |---|-----|-------|
@@ -38,8 +34,8 @@ unik per rolle.
 | 6 | `06-legal.md` | Juridisk & personvern — GDPR, vilkår, OAuth-scopes |
 | 7 | `07-partnerships.md` | Partnerskapssjef — affiliate-avtaler, EU-leverandører |
 | 8 | `08-support.md` | Kundestøtteleder — brukerhjelp, FAQ, tone |
-| 9 | `09-researcher.md` | Research/Analyst — EU-tech-katalogresearch, sammenligninger, faktasjekk |
-| 10 | `10-devops.md` | DevOps/Release — deploy, Supabase-ops, CI/CD, infra, overvåking |
+| 9 | `09-researcher.md` | Research / Analyst — EU-tech-katalogresearch, sammenligninger, faktasjekk |
+| 10 | `10-qa-security.md` | QA / Security Auditor — kodegjennomgang, sikkerhetsaudit, tester, trusselmodellering |
 
 ## Senere ("Layer 2")
 Når du har gjentakende, autonome arbeidsflyter verdt å automatisere, kan disse
