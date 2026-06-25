@@ -202,6 +202,72 @@ export interface PrivacyRating {
   updatedAt: string;
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Fysiske produkter (EU-laget hardware vi kan videreselge eller tjene affiliate på)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Produktkategori for fysiske produkter. */
+export type ProductCategory =
+  | "crypto-wallet"
+  | "security-key"
+  | "seed-backup"
+  | "privacy-gadget"
+  | "computer"
+  | "networking"
+  | "phone"
+  | "smart-home";
+
+/** Tilgjengelighet for et program: bekreftet, ikke funnet, eller uavklart. */
+export type ProgramAvailability = "yes" | "no" | "unclear";
+
+/**
+ * Reseller-/grossist-/dropship-program. Relevant for vår manuelle
+ * bestillingsmodell (kunde bestiller hos oss → vi videresender til produsent
+ * som sender direkte til kunden).
+ */
+export interface ResellerProgram {
+  available: ProgramAvailability;
+  /** Søknads-/kontakt-URL, eller e-post hvis det er eneste vei inn. */
+  signupUrl?: string;
+  /** Om dropshipping (produsent sender direkte til kunde) er eksplisitt mulig. */
+  dropshipFriendly?: boolean;
+  /** Minste bestilling, margin, vilkår — fritekst der det er kjent. */
+  terms?: string;
+}
+
+/** Affiliate-/henvisningsprogram for et produkt eller en tjeneste. */
+export interface AffiliateProgram {
+  available: ProgramAvailability;
+  signupUrl?: string;
+  /** "in-house", "Impact", "Awin", "CJ", "PartnerStack", "FlexOffers", ... */
+  network?: string;
+  /** Kommisjon/utbetaling slik den er offentlig oppgitt. */
+  commission?: string;
+}
+
+/**
+ * Et fysisk, europeisk produkt vi kan videreselge (resell/dropship) eller tjene
+ * affiliate på. Skilt fra `Alternative` (programvare/tjenester) fordi
+ * monetiseringen og logistikken er fundamentalt annerledes.
+ */
+export interface PhysicalProduct {
+  id: string;
+  name: string;
+  /** ISO 3166-1 alpha-2, f.eks. "CZ", "FR", "SE". */
+  country: string;
+  category: ProductCategory;
+  url: string;
+  description: string;
+  /** Konkrete produkter + ca. pris. */
+  products: string[];
+  /** Ca. prisspenn, f.eks. "€22–€37". */
+  priceRange?: string;
+  reseller: ResellerProgram;
+  affiliate: AffiliateProgram;
+  /** Sikkerhets-/logistikk-merknad (f.eks. tamper-følsomhet på wallets). */
+  notes?: string;
+}
+
 /** Lokal tilstand for utvidelsen (lagres kun i browser storage.local). */
 export interface ExtensionLocalState {
   targetEmail?: string;
