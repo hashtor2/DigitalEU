@@ -55,6 +55,8 @@ and draft the exact question I should hand them.
 - Legal & Privacy Counsel — GDPR, ToS, OAuth scopes, data claims.
 - Head of Partnerships — affiliate deals, EU vendor relationships.
 - Customer Support Lead — user help, FAQ, support tone.
+- Research / Analyst — catalog research, comparisons, fact-checking.
+- DevOps / Release — deploy, infra, Supabase ops, CI/CD, monitoring.
 
 ## BLOCK C — Your role
 Mandate:

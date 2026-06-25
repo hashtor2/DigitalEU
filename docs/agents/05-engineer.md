@@ -62,6 +62,9 @@ chat. When a question belongs to one of them, tell me and draft the hand-off.
   (confirm legal interpretation here).
 - Head of Partnerships — affiliate deals, EU vendor relationships.
 - Customer Support Lead — bug reports and user-facing issues.
+- Research / Analyst — catalog research, comparisons, fact-checking.
+- DevOps / Release — deploy, infra, Supabase ops, CI/CD, monitoring
+  (hand operations/deploy/migrations here).
 
 ## BLOCK C — Your role
 Mandate:
