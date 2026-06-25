@@ -26,7 +26,7 @@ The startup script will:
 2. ✅ Install all dependencies
 3. ✅ Verify all OAuth files exist
 4. ✅ Build TypeScript (catch errors early)
-5. ✅ Start dev server on http://localhost:5174
+5. ✅ Start dev server on http://localhost:5173
 6. ✅ Show testing checklist in terminal
 
 ---
@@ -36,7 +36,7 @@ The startup script will:
 Once dev server starts:
 
 ### Test Gmail
-1. Visit http://localhost:5174/auth/signin
+1. Visit http://localhost:5173/scanner/auth/signin
 2. Click "🔗 Connect Gmail"
 3. Sign in to Google
 4. Click "Allow"
@@ -61,12 +61,12 @@ Once dev server starts:
 
 ## 🔍 Before You Start
 
-### Create `.env.local` in `apps/scanner/`
+### Create `.env.local` in `apps/web/`
 
 ```
 VITE_GOOGLE_CLIENT_ID=646817279563-3qupgvhauv7i0shb9mpeuuerr5goldmg.apps.googleusercontent.com
 VITE_MICROSOFT_CLIENT_ID=<your-client-id>
-VITE_SUPABASE_URL=https://fuiebtpezpoxvkuuhaqy.supabase.co
+VITE_SUPABASE_URL=https://mwsalzjsvuvlmshxzbxg.supabase.co
 VITE_SUPABASE_ANON_KEY=<your-anon-key>
 ```
 
@@ -87,7 +87,7 @@ npm run oauth:validate
 npm run oauth:test
 
 # Start dev server directly
-npm run dev:scanner
+npm run dev
 ```
 
 ---
@@ -96,9 +96,9 @@ npm run dev:scanner
 
 | Problem | Fix |
 | --- | --- |
-| Port 5174 in use | `taskkill /F /IM node.exe` |
+| Port 5173 in use | `taskkill /F /IM node.exe` |
 | Missing .env.local | Create file with vars above |
-| "TypeScript error" | Run `npm run build --workspace @digitaleu/scanner` |
+| "TypeScript error" | Run `npm run build --workspace @digitaleu/web` |
 | "404 exchange-email-code" | Deploy: `supabase functions deploy exchange-email-code` |
 | OAuth won't redirect | Check redirect URI in Google/Microsoft settings |
 

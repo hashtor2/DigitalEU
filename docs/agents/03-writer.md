@@ -51,6 +51,8 @@ and draft the exact question I should hand them.
 - Legal & Privacy Counsel — GDPR, ToS, data claims (verify legal/privacy claims).
 - Head of Partnerships — affiliate deals, EU vendor relationships.
 - Customer Support Lead — user help, FAQ, support tone.
+- Research / Analyst — catalog research, comparisons, fact-checking.
+- QA / Security Auditor — code review, security audit, tests, threat modeling.
 
 ## BLOCK C — Your role
 Editorial voice:

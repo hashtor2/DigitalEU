@@ -2,33 +2,6 @@
  * Supabase Edge Function: exchange-email-code
  *
  * Securely exchanges OAuth authorization code + PKCE code_verifier for access token.
- * This prevents code interception via PKCE validation (RFC 7636).
- *
- * SECURITY MODEL:
- * - Receives authorization code (not token) from client
- * - Client sends code_verifier (secret, never transmitted before)
- * - Google/Microsoft validates that code_verifier matches code_challenge (received during auth)
- * - Edge Function receives access token (never exposed to browser)
- * - Returns token to client (ephemeral, stored in sessionStorage only)
- *
- * Request body:
- * {
- *   "code": "4/0AY0e-gxxxxxx",           // OAuth authorization code
- *   "codeVerifier": "...random...",      // PKCE code_verifier (43–128 chars)
- *   "provider": "gmail" | "outlook",
- *   "redirectUri": "https://scanner.digitaleu.me/auth/email-callback"
- * }
- *
- * Response:
- * {
- *   "accessToken": "ya29.a0AfH6...",     // Short-lived access token
- *   "expiresIn": 3600                    // Token expiry (seconds)
- * }
- *
- * Error response (400/500):
- * {
- *   "error": "error_description"
- * }
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
@@ -39,17 +12,13 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 }
 
-/**
- * Exchange Gmail authorization code + PKCE verifier for access token.
- * Calls Google's token endpoint securely (server-side).
- */
 async function exchangeGmailCode(
   code: string,
   codeVerifier: string,
   redirectUri: string
 ): Promise<{ access_token: string; expires_in: number }> {
   const googleTokenUrl = "https://oauth2.googleapis.com/token"
-  
+
   const clientId = Deno.env.get("GOOGLE_OAUTH_CLIENT_ID") || ""
   const clientSecret = Deno.env.get("GOOGLE_OAUTH_CLIENT_SECRET") || ""
 
@@ -77,13 +46,13 @@ async function exchangeGmailCode(
 
   if (!response.ok) {
     const errorText = await response.text()
-    let errorData = {}
+    let errorData: { error?: string; error_description?: string } = {}
     try {
       errorData = JSON.parse(errorText)
     } catch {
       errorData = { error: "invalid_response", error_description: errorText }
     }
-    
+
     throw new Error(
       `Gmail token exchange failed: ${errorData.error} — ${errorData.error_description || ""}`
     )
@@ -96,10 +65,6 @@ async function exchangeGmailCode(
   }
 }
 
-/**
- * Exchange Outlook authorization code + PKCE verifier for access token.
- * Calls Microsoft's token endpoint securely (server-side).
- */
 async function exchangeOutlookCode(
   code: string,
   codeVerifier: string,
@@ -139,7 +104,6 @@ async function exchangeOutlookCode(
 }
 
 serve(async (req) => {
-  // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
   }
@@ -152,10 +116,8 @@ serve(async (req) => {
   }
 
   try {
-    // Parse request body
     const { code, codeVerifier, provider, redirectUri } = await req.json()
 
-    // Validate required parameters
     if (!code) {
       return new Response(
         JSON.stringify({ error: "Missing required parameter: code" }),
@@ -184,15 +146,11 @@ serve(async (req) => {
       )
     }
 
-    // Exchange code for token
-    let tokenData
-    if (provider === "gmail") {
-      tokenData = await exchangeGmailCode(code, codeVerifier, redirectUri)
-    } else {
-      tokenData = await exchangeOutlookCode(code, codeVerifier, redirectUri)
-    }
+    const tokenData =
+      provider === "gmail"
+        ? await exchangeGmailCode(code, codeVerifier, redirectUri)
+        : await exchangeOutlookCode(code, codeVerifier, redirectUri)
 
-    // Return token to client (ephemeral, not stored server-side)
     return new Response(
       JSON.stringify({
         accessToken: tokenData.access_token,
