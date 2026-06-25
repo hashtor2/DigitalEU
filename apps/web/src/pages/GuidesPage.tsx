@@ -50,6 +50,14 @@ const GUIDES: Guide[] = [
     hasContent: true,
   },
   {
+    id: "best-european-calendar",
+    title: "Best European Calendar Apps in 2026",
+    description: "Compare Proton Calendar, Tuta Calendar, and Mailbox.org. Encrypted, GDPR-compliant alternatives to Google Calendar that keep your schedule private.",
+    category: "calendar",
+    difficulty: "Easy",
+    hasContent: true,
+  },
+  {
     id: "degoogle-checklist",
     title: "The Step-by-Step 'De-Googling' Master Checklist",
     description: "A methodical, stress-free sequence to migrate your calendar, photos, files, and email away from Google Workspace into fully private Swiss-hosted alternatives.",
