@@ -215,13 +215,21 @@ Svar: **ja — innholdet er allerede fildrevet, så Writer kan skrive det i dag.
 - [ ] Vurder refaktor: artikler/guider til data/markdown-filer (lettere for Writer).
 - [ ] Beslutt om/når Vei B (CMS-tabell + scoped publish-funksjon) er verdt det.
 
-### Følge-integrasjoner (egne runder, hver med egen scoped secret)
-- [ ] **Supabase MCP (read-only):** kodeskall i `agent.ts` (gated av env-var), kun
-      for `researcher`/`security`; aldri skrivetilgang til prod-data. Trenger scoped token.
-- [ ] **Marketer → social:** funksjonene finnes (`post-to-twitter`,
-      `summarize-news-for-twitter`, `twitter-daily-post`). Agenten *trigger* en
-      Edge Function (Twitter-secrets server-side), holder aldri creds selv. Trenger endepunkt-auth.
-- [ ] **Kryss-agent-handoff:** CEO drafter oppgave til Writer (orchestrator-feature, Fase 4).
+### Følge-integrasjoner (bygget 2026-06-25)
+- [x] **Kryss-agent-handoff — LIVE.** `/ask <agent> <oppgave>` på enhver bot kjører
+      en annen agent i dens eget worktree/session og svarer i chatten. Eieren er
+      fortsatt i loopen (ingen autonom agent-til-agent-trafikk).
+- [~] **Supabase MCP (read-only) — kodeklart, inert.** `agent.ts` registrerer en
+      `--read-only` Supabase MCP-server kun for `researcher`/`security`, gated på
+      `SUPABASE_ACCESS_TOKEN` (+ valgfri `SUPABASE_PROJECT_REF`, default
+      `mwsalzjsvuvlmshxzbxg`). **Aktiver:** legg tokenet i `digitaleu-bots.env` +
+      restart. ⚠️ Et Supabase PAT er account-scoped; gi det kun til disse to agentene,
+      aldri skrivetilgang — vei det mot §6.2-prinsippet før du slår det på.
+- [~] **Marketer → social — kodeklart, inert.** `bin/social-post.sh` trigger
+      `twitter-daily-post`/`post-to-twitter`; Twitter-nøkkelen blir server-side, agenten
+      sender kun `TWITTER_CRON_TOKEN`. Marketer får verktøyet via en gated guardrail.
+      **Aktiver:** sett `TWITTER_CRON_TOKEN` (samme verdi som i Supabase function-secrets)
+      + `SUPABASE_FUNCTIONS_URL=https://<ref>.supabase.co/functions/v1` i env + restart.
 
 ---
 

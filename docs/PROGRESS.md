@@ -28,10 +28,10 @@
 - [x] OAuth redirect docs updated to `/scanner/auth/email-callback`
 
 ### Remaining to test
-- [ ] Apply migration `0010_scan_results_insert_policy.sql` on Supabase (MCP lacked privileges)
-- [ ] Deploy updated `exchange-email-code` Edge Function (debug logging removed)
+- [ ] **Vercel:** add `VITE_STRIPE_PUBLIC_KEY` — run `.\scripts\sync-vercel-stripe-env.ps1` then `vercel --prod`
 - [ ] Register OAuth redirect URIs in Google/Azure consoles (see `docs/OAUTH_SETUP_GUIDE.md`)
 - [ ] Production Gmail/Outlook OAuth + scan smoke test
+- [x] **Supabase secrets:** OAuth + Stripe + service role verified via `supabase secrets list`
 
 ---
 
