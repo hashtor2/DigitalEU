@@ -1,34 +1,41 @@
-"use strict";
-/**
- * Background Service Worker (Manifest V3)
- *
- * SIKKERHET & PERSONVERN:
- * Bakgrunnsarbeideren lytter etter meldinger fra godkjente origins (digitaleu.me eller localhost under utvikling).
- * Den lagrer KUN den midlertidige måladressen (f.eks. bruker@proton.me) lokalt i nettleserens
- * krypterte lagring (chrome.storage.local). Ingen data sendes eksternt.
- */
+import { z } from 'zod';
+// Zod-skjemaer for Web-Bridge validering
+const SetMigrationTargetSchema = z.object({
+    type: z.literal("SET_MIGRATION_TARGET"),
+    targetEmail: z.string().email(),
+});
+const GetExtensionStatusSchema = z.object({
+    type: z.literal("GET_EXTENSION_STATUS"),
+});
+const AllowedOrigins = ["https://digitaleu.me", "https://www.digitaleu.me", "http://localhost:5173"];
 // Lytter på meldinger fra både web-dashboardet (eksterne meldinger) og content-scripts (interne meldinger)
 chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
     // Sikkerhetssjekk: Verifiser at forespørselen kommer fra vår egen portal
-    const allowedOrigins = ["https://digitaleu.me", "http://localhost:5173"];
-    if (!sender.url || !allowedOrigins.some(origin => sender.url.startsWith(origin))) {
+    if (!sender.url || !AllowedOrigins.some(origin => sender.url.startsWith(origin))) {
         console.warn("[background] Avvist melding fra uautorisert origin:", sender.url);
         sendResponse({ success: false, error: "Unauthorized origin" });
         return;
     }
     if (message.type === "SET_MIGRATION_TARGET") {
-        const { targetEmail } = message;
-        if (targetEmail && targetEmail.includes("@")) {
-            chrome.storage.local.set({ targetEmail }, () => {
-                console.log("[background] Mål-epost lagret i utvidelsen:", targetEmail);
-                sendResponse({ success: true, targetEmail });
-            });
+        const parseResult = SetMigrationTargetSchema.safeParse(message);
+        if (!parseResult.success) {
+            console.warn("[background] Ugyldig payload for SET_MIGRATION_TARGET:", parseResult.error);
+            sendResponse({ success: false, error: "Invalid payload schema" });
+            return;
         }
-        else {
-            sendResponse({ success: false, error: "Invalid email format" });
-        }
+        const { targetEmail } = parseResult.data;
+        chrome.storage.local.set({ targetEmail }, () => {
+            console.log("[background] Mål-epost lagret i utvidelsen:", targetEmail);
+            sendResponse({ success: true, targetEmail });
+        });
+        return true; // Asynkron sendResponse
     }
     if (message.type === "GET_EXTENSION_STATUS") {
+        const parseResult = GetExtensionStatusSchema.safeParse(message);
+        if (!parseResult.success) {
+            sendResponse({ success: false, error: "Invalid payload schema" });
+            return;
+        }
         chrome.storage.local.get(["targetEmail", "switchedCount"], (result) => {
             sendResponse({
                 success: true,
@@ -37,19 +44,26 @@ chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => 
                 switchedCount: result.switchedCount || 0
             });
         });
+        return true;
     }
-    return true; // Holder svar-kanalen åpen for asynkrone kall
+    return true; // Holder svar-kanalen åpen for andre asynkrone kall
 });
-// Intern kommunikasjon (fra content script når en konto markeres som byttet)
+// Intern kommunikasjon
+const AccountSwitchedSuccessSchema = z.object({
+    type: z.literal("ACCOUNT_SWITCHED_SUCCESS"),
+});
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (message.type === "ACCOUNT_SWITCHED_SUCCESS") {
-        chrome.storage.local.get("switchedCount", (result) => {
-            const currentCount = result.switchedCount || 0;
-            chrome.storage.local.set({ switchedCount: currentCount + 1 }, () => {
-                console.log("[background] Incrementert antall byttede kontoer:", currentCount + 1);
-                sendResponse({ success: true });
+        const parseResult = AccountSwitchedSuccessSchema.safeParse(message);
+        if (parseResult.success) {
+            chrome.storage.local.get("switchedCount", (result) => {
+                const currentCount = result.switchedCount || 0;
+                chrome.storage.local.set({ switchedCount: currentCount + 1 }, () => {
+                    console.log("[background] Incrementert antall byttede kontoer:", currentCount + 1);
+                    sendResponse({ success: true });
+                });
             });
-        });
-        return true;
+            return true;
+        }
     }
 });

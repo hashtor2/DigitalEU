@@ -128,7 +128,14 @@ export const DOMAIN_MAPPINGS: DomainMapping[] = [
         "mail.netflix.com"
       ],
       "category": "entertainment",
-      "settingsUrl": "https://www.netflix.com/YourAccount"
+      "settingsUrl": "https://www.netflix.com/YourAccount",
+      "actions": {
+        "changeEmailUrl": "https://www.netflix.com/YourAccount",
+        "deleteAccountUrl": "https://www.netflix.com/cancelplan",
+        "dataExportUrl": "https://www.netflix.com/account/getmyinfo",
+        "difficulty": "medium",
+        "notes": "Sletting krever først kansellering av abonnement, deretter e-postbekreftelse."
+      }
     },
     {
       "id": "spotify",
@@ -139,7 +146,14 @@ export const DOMAIN_MAPPINGS: DomainMapping[] = [
         "mail.spotify.com"
       ],
       "category": "entertainment",
-      "settingsUrl": "https://www.spotify.com/account/profile/"
+      "settingsUrl": "https://www.spotify.com/account/profile/",
+      "actions": {
+        "changeEmailUrl": "https://www.spotify.com/account/profile/",
+        "deleteAccountUrl": "https://www.spotify.com/account/privacy/",
+        "dataExportUrl": "https://www.spotify.com/account/privacy/",
+        "difficulty": "medium",
+        "notes": "Eksport og sletting ligger begge under Privacy-innstillingene."
+      }
     },
     {
       "id": "disneyplus",
@@ -181,7 +195,14 @@ export const DOMAIN_MAPPINGS: DomainMapping[] = [
         "facebookmail.com"
       ],
       "category": "social",
-      "settingsUrl": "https://www.facebook.com/settings?tab=account"
+      "settingsUrl": "https://www.facebook.com/settings?tab=account",
+      "actions": {
+        "changeEmailUrl": "https://www.facebook.com/settings?tab=account",
+        "deleteAccountUrl": "https://www.facebook.com/help/delete_account",
+        "dataExportUrl": "https://www.facebook.com/dyi/",
+        "difficulty": "hard",
+        "notes": "Sletting er forsinket med 30 dager. Datatransfer via \"Download Your Information\"."
+      }
     },
     {
       "id": "instagram",
@@ -213,7 +234,14 @@ export const DOMAIN_MAPPINGS: DomainMapping[] = [
         "postmaster.twitter.com"
       ],
       "category": "social",
-      "settingsUrl": "https://x.com/settings/email"
+      "settingsUrl": "https://x.com/settings/email",
+      "actions": {
+        "changeEmailUrl": "https://x.com/settings/email",
+        "deleteAccountUrl": "https://x.com/settings/deactivate",
+        "dataExportUrl": "https://x.com/settings/download_your_data",
+        "difficulty": "medium",
+        "notes": "Konto deaktiveres først i 30 dager før permanent sletting."
+      }
     },
     {
       "id": "reddit",
@@ -270,7 +298,14 @@ export const DOMAIN_MAPPINGS: DomainMapping[] = [
         "amazon.es"
       ],
       "category": "shopping",
-      "settingsUrl": "https://www.amazon.com/gp/css/homepage.html"
+      "settingsUrl": "https://www.amazon.com/gp/css/homepage.html",
+      "actions": {
+        "changeEmailUrl": "https://www.amazon.com/gp/css/account/email/view.html",
+        "deleteAccountUrl": "https://www.amazon.com/hz/contact-us/request-account-deletion",
+        "dataExportUrl": "https://www.amazon.com/hz/privacy-central/data-requests/preview",
+        "difficulty": "hard",
+        "notes": "Kontoavslutning krever bekreftelses-e-post innen 5 dager."
+      }
     },
     {
       "id": "paypal",

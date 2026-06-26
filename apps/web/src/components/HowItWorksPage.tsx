@@ -1,6 +1,3 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-
 export function HowItWorksPage() {
   const steps = [
     {
@@ -42,10 +39,7 @@ export function HowItWorksPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-canvas text-text-primary dark:bg-dark-canvas dark:text-dark-text-primary flex flex-col">
-      <Header />
-
-      <main className="flex-1 mx-auto w-full max-w-3xl px-4 py-12 sm:px-6">
+    <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6">
         <h1 className="text-h1 font-mono mb-4">How digitaleu.me Works</h1>
         <p className="text-text-secondary dark:text-dark-text-secondary mb-12">
           We believe in transparency. Here's exactly what happens when you use our service — and what we can and cannot see.
@@ -86,9 +80,6 @@ export function HowItWorksPage() {
             Read our full security and privacy policy in the footer. Or check our code on GitHub for complete transparency.
           </p>
         </div>
-      </main>
-
-      <Footer />
     </div>
   );
 }

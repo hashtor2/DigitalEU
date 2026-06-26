@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "name": "DigitalEU Autofill & Migrator",
+  "version": "1.0.0",
+  "description": "Discover your Big Tech accounts and migrate to European alternatives with guided, privacy-first tools.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "*://*.netflix.com/*",
+    "*://*.spotify.com/*",
+    "*://*.facebook.com/*",
+    "*://*.instagram.com/*",
+    "*://*.linkedin.com/*",
+    "*://*.x.com/*",
+    "*://*.twitter.com/*",
+    "*://*.dropbox.com/*",
+    "*://*.lastpass.com/*",
+    "*://*.reddit.com/*",
+    "*://*.discord.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://digitaleu.me/*",
+      "https://www.digitaleu.me/*",
+      "http://localhost:5173/*"
+    ]
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "DigitalEU"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.netflix.com/*",
+        "*://*.spotify.com/*",
+        "*://*.facebook.com/*",
+        "*://*.instagram.com/*",
+        "*://*.linkedin.com/*",
+        "*://*.x.com/*",
+        "*://*.twitter.com/*",
+        "*://*.dropbox.com/*",
+        "*://*.lastpass.com/*",
+        "*://*.reddit.com/*",
+        "*://*.discord.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "extension@digitaleu.me",
+      "strict_min_version": "109.0"
+    }
+  }
+}

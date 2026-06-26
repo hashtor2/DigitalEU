@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 
 export function VerifyEmailPage() {
@@ -87,10 +85,8 @@ export function VerifyEmailPage() {
   }, [searchParams, navigate]);
 
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas flex flex-col">
-      <Header />
-      <main className="flex-1 flex items-center justify-center">
-        <div className="max-w-md w-full mx-auto px-4">
+    <div className="flex-1 flex items-center justify-center">
+      <div className="max-w-md w-full mx-auto px-4">
           {status === "loading" && (
             <div className="text-center">
               <div className="mb-4 inline-block animate-spin rounded-full h-12 w-12 border-2 border-accent border-t-transparent"></div>
@@ -162,9 +158,7 @@ export function VerifyEmailPage() {
               </button>
             </div>
           )}
-        </div>
-      </main>
-      <Footer />
+      </div>
     </div>
   );
 }

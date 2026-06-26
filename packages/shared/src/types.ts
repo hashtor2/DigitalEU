@@ -95,6 +95,23 @@ export interface FillEmailMessage {
 }
 
 
+/**
+ * Direkte lenker til handlingsider for en tjeneste.
+ * Brukes av Account Action Cards (Tool 1) i Migration Toolkit.
+ */
+export interface ServiceActions {
+  /** URL til side for å bytte e-postadresse. Seeder fra settingsUrl hvis ikke satt separat. */
+  changeEmailUrl?: string;
+  /** URL til side for å slette kontoen. */
+  deleteAccountUrl?: string;
+  /** URL til side for å eksportere data (GDPR Art. 20). */
+  dataExportUrl?: string;
+  /** Hvor vanskelig tjenesten gjør det å utføre handlingene. */
+  difficulty?: "easy" | "medium" | "hard";
+  /** Kortmerknad til brukeren, f.eks. "Krever e-postbekreftelse for sletting". */
+  notes?: string;
+}
+
 /** Kobling mellom et avsenderdomene og en B2C-tjeneste, brukt av innboksskanneren og utvidelsen. */
 export interface DomainMapping {
   id: string;
@@ -109,6 +126,8 @@ export interface DomainMapping {
   settingsUrl: string;
   /** Standard foreslått europeisk alternativ-ID, f.eks. "proton-mail". */
   suggestedAlternativeId?: string;
+  /** Direkte handlingslenker for Migration Toolkit Tool 1. */
+  actions?: ServiceActions;
 }
 
 /** Tillatte filtyper for manuell kontoopplasting i V1. */
@@ -153,8 +172,12 @@ export interface PlaybookStep {
   id: string;
   title: string;
   actionType: PlaybookActionType;
-  /** CSS-selector når steget trenger DOM-mål. */
+  /** CSS-selector når steget trenger DOM-mål. (Nå brukt som hint) */
   selector?: string;
+  /** NEW: Text content to match for (e.g. "Cancel Subscription") */
+  textContentHint?: string;
+  /** NEW: ARIA label to match for (e.g. "Email address") */
+  ariaLabelHint?: string;
   /** Fallback-instruks når automatisk handling ikke lykkes. */
   fallbackInstruction?: string;
 }

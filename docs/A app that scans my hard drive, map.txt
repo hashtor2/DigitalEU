@@ -1,0 +1,24 @@
+A app that scans my hard drive, maps out what i have and help me organize my folder structure on my computer. We shall add many more function to come, lets start by creating this. A simple app that scans my computer and tells me what i have stored on my hard drive, what types they are, how big they are etc. make  it easy to see a preview of a phot, video or document
+
+
+
+
+
+
+
+
+Test payment in preview
+
+Sign in, go to /unlock.
+Paid path: click "Pay €5 and scan" → in the embedded form enter:
+Card 4242 4242 4242 4242, any future expiry, any CVC, any postcode.
+Submit → you'll land on /unlock/success → auto-redirect to /scan?mode=real.
+Back on /dashboard, "Your unlock" should show "Paid €5.00" + a working View receipt link.
+Decline path: card 4000 0000 0000 0002 → checkout shows the decline; no unlock granted.
+3DS path: card 4000 0025 0000 3155 → complete the challenge → unlock granted.
+Refund/revoke: in the Lovable Payments dashboard, refund the sandbox payment in full. Within seconds the webhook fires, deletes the unlocks row, and the next visit to /scan?mode=real redirects to /unlock. The dashboard panel reverts to "haven't unlocked yet".
+Free Proton path: from /unlock click "I already have Proton", enter a @proton.me (or protonmail.com / pm.me / protonmail.ch) address, paste the 6-digit code from the email → granted. Re-using the same Proton address on a second account is blocked.
+Webhook health: check server logs via the Cloud panel after a payment for [webhook] lines.
+The orange test-mode banner stays visible the whole time — all charges are sandbox. When you publish and finish Stripe go-live, the live webhook auto-provisions and the same flow handles real money.
+
+

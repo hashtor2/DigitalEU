@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ALTERNATIVES, type Alternative } from "@digitaleu/shared";
-import { Header } from "@/components/Header";
 import { COUNTRY_FLAGS } from "@/lib/flags";
 import {
   fetchServiceProfile,
@@ -261,14 +260,11 @@ export function ServicePage() {
 
   if (!alt && !loading && !profile) {
     return (
-      <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary">
-        <Header />
-        <main className="mx-auto max-w-3xl px-6 py-20 text-center">
-          <p className="text-text-secondary dark:text-dark-text-secondary text-sm">Service not found.</p>
-          <Link to="/directory" className="mt-4 inline-block text-xs text-accent hover:text-accent-hover">
-            ← Back to directory
-          </Link>
-        </main>
+      <div className="mx-auto max-w-3xl px-6 py-20 text-center">
+        <p className="text-text-secondary dark:text-dark-text-secondary text-sm">Service not found.</p>
+        <Link to="/directory" className="mt-4 inline-block text-xs text-accent hover:text-accent-hover">
+          ← Back to directory
+        </Link>
       </div>
     );
   }
@@ -293,16 +289,13 @@ export function ServicePage() {
   const categoryNote = alt ? CATEGORY_CONTEXT[alt.category] : undefined;
 
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary">
+    <div className="mx-auto max-w-3xl px-6 py-12">
       <title>{pageTitle}</title>
       <meta name="description" content={pageDescription} />
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
       <meta property="og:type" content="website" />
       {alt && <link rel="canonical" href={`https://digitaleu.me/services/${alt.id}`} />}
-      <Header />
-
-      <main className="mx-auto max-w-3xl px-6 py-12">
 
         {/* Breadcrumb */}
         <nav className="mb-6 text-[11px] font-mono text-text-secondary dark:text-dark-text-secondary">
@@ -649,7 +642,6 @@ export function ServicePage() {
           </div>
         )}
 
-      </main>
     </div>
   );
 }

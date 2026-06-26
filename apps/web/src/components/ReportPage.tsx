@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
 interface ReportProps {
@@ -15,10 +13,7 @@ export function ReportPage({ selectedServices = [], breachStatus = "safe", breac
   const isExposed = breachStatus === "exposed";
 
   return (
-    <div className="min-h-screen bg-canvas text-text-primary dark:bg-dark-canvas dark:text-dark-text-primary flex flex-col">
-      <Header />
-
-      <main className="flex-1 mx-auto w-full max-w-2xl px-4 py-12 sm:px-6">
+    <div className="mx-auto w-full max-w-2xl px-4 py-12 sm:px-6">
         {/* Report Title */}
         <div className="mb-10">
           <h1 className="text-h1 font-mono mb-2">Your Privacy Report</h1>
@@ -115,9 +110,6 @@ export function ReportPage({ selectedServices = [], breachStatus = "safe", breac
             Upgrade to Premium — €5
           </Button>
         </div>
-      </main>
-
-      <Footer />
     </div>
   );
 }

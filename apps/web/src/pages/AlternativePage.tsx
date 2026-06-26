@@ -1,7 +1,5 @@
 import { useParams, Link } from "react-router-dom";
 import { ALTERNATIVES, getAffiliateUrl, hasVerifiedAffiliate, type ServiceCategory } from "@digitaleu/shared";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { COUNTRY_FLAGS } from "@/lib/flags";
 import { TrustBadges } from "@/components/TrustBadges";
@@ -34,21 +32,17 @@ export function AlternativePage() {
 
   if (!alternative) {
     return (
-      <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
-        <Header />
-        <main className="flex-1 mx-auto max-w-3xl px-4 py-20">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-error mb-2">Alternative not found</h1>
-            <p className="text-text-secondary dark:text-dark-text-secondary mb-6">The alternative you're looking for doesn't exist.</p>
-            <Link
-              to="/directory"
-              className="inline-block px-4 py-2 rounded-sm bg-accent text-white hover:bg-accent-hover transition"
-            >
-              ← Back to Directory
-            </Link>
-          </div>
-        </main>
-        <Footer />
+      <div className="mx-auto max-w-3xl px-4 py-20">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-error mb-2">Alternative not found</h1>
+          <p className="text-text-secondary dark:text-dark-text-secondary mb-6">The alternative you're looking for doesn't exist.</p>
+          <Link
+            to="/directory"
+            className="inline-block px-4 py-2 rounded-sm bg-accent text-white hover:bg-accent-hover transition"
+          >
+            ← Back to Directory
+          </Link>
+        </div>
       </div>
     );
   }
@@ -64,7 +58,7 @@ export function AlternativePage() {
   ).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
       <title>{alternative.name} — European Alternative to {replacesServices.join(", ")} | digitaleu.me</title>
       <meta name="description" content={`Read about ${alternative.name}, a secure European alternative to ${replacesServices.join(" and ")} hosted in ${alternative.dataLocation || alternative.country}.`} />
       <script type="application/ld+json">
@@ -87,10 +81,6 @@ export function AlternativePage() {
           }
         })}
       </script>
-
-      <Header />
-
-      <main className="flex-1 mx-auto max-w-3xl px-4 py-10 sm:px-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-8 text-sm text-text-secondary dark:text-dark-text-secondary">
           <Link to="/directory" className="hover:text-text-primary dark:hover:text-dark-text-primary transition">
@@ -300,9 +290,6 @@ export function AlternativePage() {
             ← Back to all alternatives
           </Link>
         </div>
-      </main>
-
-      <Footer />
     </div>
   );
 }

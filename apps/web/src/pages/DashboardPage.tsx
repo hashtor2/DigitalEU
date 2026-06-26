@@ -1,8 +1,6 @@
 import { useMemo, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SERVICES, ALTERNATIVES, type ServiceInfo, type ThreatLevel } from "@digitaleu/shared";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { NewsletterGate } from "@/components/NewsletterGate";
 import { Button } from "@/components/ui/button";
 import { COUNTRY_FLAGS } from "@/lib/flags";
@@ -248,9 +246,8 @@ export function DashboardPage() {
   }, [downloadFormat, sorted, status]);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-slate-100">
-      <Header />
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 space-y-8">
+    <div className="bg-[#0d1117] text-slate-100">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 space-y-8">
 
         {/* Header row */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -403,8 +400,7 @@ export function DashboardPage() {
         <p className="text-center text-xs text-slate-500">
           Scores based on public breach data, GDPR enforcement actions, and ownership analysis. Updated regularly by the Digital Europe team.
         </p>
-      </main>
-      <Footer />
+      </div>
 
       {/* Newsletter gate modal */}
       <NewsletterGate isOpen={showNewsletterGate} onSuccess={handleNewsletterSuccess} />

@@ -39,7 +39,7 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
   };
 
   return (
-    <main className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col items-center justify-center px-6 py-12">
+    <div className="flex flex-col items-center justify-center px-6 py-12">
       <div className="max-w-2xl w-full space-y-12">
         {/* Heading */}
         <div className="text-center space-y-4">
@@ -155,6 +155,6 @@ export function EmailScannerGate({ onUnlock }: EmailScannerGateProps) {
           payment is a one-time €5 charge.
         </p>
       </div>
-    </main>
+    </div>
   );
 }

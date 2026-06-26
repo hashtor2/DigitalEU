@@ -1,9 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { SERVICES, type ServiceInfo } from "@digitaleu/shared";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { SocialLinks } from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EarlyAccessSignup } from "@/components/EarlyAccessSignup";
@@ -144,11 +141,7 @@ export function SelectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-canvas text-text-primary dark:bg-dark-canvas dark:text-dark-text-primary flex flex-col">
-      <Header />
-      <SocialLinks />
-
-      <main className="flex-1 mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
         {/* Hero section */}
         <div className="mb-12 text-center">
           <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-accent">
@@ -274,9 +267,6 @@ export function SelectorPage() {
             </Button>
           </div>
         </div>
-      </main>
-
-      <Footer />
     </div>
   );
 }

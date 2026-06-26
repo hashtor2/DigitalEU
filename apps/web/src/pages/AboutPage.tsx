@@ -1,15 +1,9 @@
 import { Link } from "react-router-dom";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { TallyFeedbackForm } from "@/components/TallyFeedbackForm";
 
 export function AboutPage() {
   return (
-    <div className="min-h-screen bg-canvas text-text-primary dark:bg-dark-canvas dark:text-dark-text-primary flex flex-col">
-      <Header />
-
-      <main className="flex-1 mx-auto max-w-3xl w-full px-6 py-12 md:py-16">
+    <div className="mx-auto max-w-3xl w-full px-6 py-12 md:py-16">
         <article className="space-y-6">
           <div className="text-center md:text-left space-y-2">
             <span className="inline-flex items-center gap-1.5 rounded-sm border border-accent/30 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent">
@@ -105,11 +99,6 @@ export function AboutPage() {
           </div>
           <NewsletterSignup compact={true} showName={false} />
         </section>
-      </main>
-
-      <TallyFeedbackForm />
-
-      <Footer />
     </div>
   );
 }

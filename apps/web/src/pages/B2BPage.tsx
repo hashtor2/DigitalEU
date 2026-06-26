@@ -2,8 +2,6 @@ import { useState, useMemo } from "react";
 import type { FormEvent } from "react";
 import { ALTERNATIVES, isB2B } from "@digitaleu/shared";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,12 +69,10 @@ export function B2BPage() {
   };
 
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
+    <div>
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 left-1/2 h-96 w-[52rem] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />
       </div>
-
-      <Header />
 
       {/* Hero */}
       <section className="mx-auto max-w-5xl px-4 pt-16 pb-12 sm:px-6 text-center">
@@ -305,8 +301,6 @@ export function B2BPage() {
           <NewsletterSignup compact={true} showName={false} />
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

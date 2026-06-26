@@ -1,9 +1,11 @@
-# CLAUDE.md — Master-kontekst for digitaleu.me
+# CLAUDE.md — Master-kontekst for digitaleu.me (Gemini Edition)
 
 > Denne filen er den autoritative konteksten for prosjektet. Den lastes inn i
-> hver Claude Code-økt og bevarer retning på tvers av terminalvinduer og maskiner.
-> **Hold den oppdatert.** Endrer vi en beslutning, oppdateres beslutningsloggen (§10).
-> Detaljer ligger i `docs/SECURITY.md` og `docs/DEVELOPMENT_PLAN.md`.
+> din Gemini-økt i Cursor og bevarer retning på tvers av terminalvinduer og maskiner.
+> (Filen heter fortsatt CLAUDE.md for bakoverkompatibilitet og konvensjon, men
+> "Gemini har tatt over" driften.)
+> **Hold den oppdatert.** Endrer vi en beslutning, oppdateres beslutningsloggen (§10/§11).
+> Detaljer ligger i `docs/Masterplan.md`, `docs/SECURITY.md` og `docs/DEVELOPMENT_PLAN.md`.
 
 ---
 
@@ -19,8 +21,10 @@ Produktet består av tre deler som spiller sammen:
 3. **Nettleserutvidelse (MV3)** — autofyller ny e-postadresse på eksterne sider
    (Netflix, Spotify, ...) slik at det blir lett å bytte kontoadresse. Fase 2.
 
-**Forretningsmodell:** Gratis hvis brukeren registrerer seg hos en partner via
-vår affiliate-lenke, ELLER €5 som engangskjøp via betalingsleverandør (begge metoder integrert i scanner).
+**Forretningsmodell (Toolkit-First):**
+1. **Innboksskanneren er gratis** — fungerer som en teaser som viser brukeren omfanget av problemet.
+2. **Migreringsverktøykassen koster €5 (engangskjøp)** — tilgang til Action Cards, Progress Tracker og GDPR-generator. Dette er vår primære og garanterte inntekt.
+3. **Affiliate-lenker er en redaksjonell bonus** — inne i det betalte verktøyet gir vi anbefalinger til EU-tjenester. Sekundær inntekt som ikke kompromitterer troverdigheten.
 
 ---
 
@@ -95,14 +99,13 @@ digitaleu.me/
 | CI              | GitHub Actions (build/lint/test)    | ⏳ planlagt  |
 | Hosting         | Vercel (se §6 — åpen vurdering)     | ✅ i bruk    |
 
-### Dataflyt (overordnet)
-- **Innboksskanning:** OAuth (Gmail/Outlook) → ephemeral access token → **Supabase Edge Function `scan-email`** (server-side) → domene-utdrag → klient. Metadata-only, token lagres ikke, safe token exchange.
-  - *Hvorfor server-side?* CORS-frihet på tredjepartssider, sikker token-håndtering, bedre error-recovery, skalering. Brukeren har full kontroll over OAuth-tillatelse (kan tilbakekalle når som helst).
+### Dataflyt (overordnet) - V3 Local Migration Orchestrator (LMO)
+- **Innboksskanning:** 100% klientside. OAuth (Gmail/Outlook) → ephemeral access token lagret lokalt → **Offscreen Document (Chrome)** eller direkte i nettleseren for skanning.
+  - *Hvorfor klientside?* For å unngå Google CASA Tier 2 audit, unngå å være Data Controller for spesielle kategorier (GDPR Art. 9), og for å styrke zero-knowledge-løftet. (ADR #29)
 - **Gjestemodus:** data lever kun i `sessionStorage` på klienten.
 - **Profilmodus:** data **krypteres klientside (zero-knowledge)** før de lagres
   i Supabase. Vi skal aldri kunne lese klartekst.
-- **Utvidelsen** er **lokal-først**: den mottar `ny_epost` fra web-appen og
-  fyller felt lokalt — den sender aldri brukerdata til vår backend.
+- **Utvidelsen** er **lokal-først** (Semantic Playbook Engine): Den har eksplisitte permissions til kun 11 domener, har bundlet playbooks (ikke remote fetch), og fyller felt lokalt ved hjelp av semantisk matching. Den sender aldri brukerdata til vår backend.
 - **Betalinger:** Stripe Elements (klientside form) → Stripe → Edge Function webhook → Supabase payment verification + affiliate tracking.
 - **Datalekkasje-sjekk:** `check-breach` Edge Function kaller Have I Been Pwned API v3 med hemmelig nøkkel (aldri eksponert klienten).
 
@@ -148,9 +151,11 @@ Tabellen sporer hvor vi står, og hvor vi har en bevisst åpen vurdering.
 
 ## 7. Forretningsmodell & produktnotater
 
-- **Pris:** Gratis via partner-affiliate ELLER €5 engangskjøp (Stripe).
-- **Affiliate-balanse:** Ikke bli en ren Proton-side (se §2). Affiliate finansierer
-  utviklingen, men katalogen skal være bred og redaksjonelt ærlig.
+- **Modell: Toolkit-First (ADR #30).** Tre nivåer:
+  1. **Gratis:** Innboksskanning (teaser) — viser omfanget av problemet.
+  2. **€5 engangskjøp (Stripe):** Migration Toolkit — Action Cards per tjeneste, Progress Tracker, GDPR-generator. Primær og garantert inntekt.
+  3. **Redaksjonelle affiliate-anbefalinger:** Inne i det betalte verktøyet. Sekundær inntekt. Aldri et betalingsvilkår, aldri en port.
+- **Affiliate-prinsipp:** Lenker til EU-tjenester er *redaksjonelle* anbefalinger, ikke betaling for plassering. Vi anbefaler det vi faktisk anbefaler.
 - **Nettleserguide:** Nettsiden skal ha en egen guide som **sammenligner
   nettlesere** (sikkerhet, personvern, opphav) og promoterer en trygg, helst
   europeisk nettleser.
@@ -270,6 +275,8 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 | 26 | **Supabase project migration:** Old project `fuiebtpezpoxvkuuhaqy` replaced with `mwsalzjsvuvlmshxzbxg` (new region: Stockholm, Sweden, eu-north-1). All migrations, functions, and data transferred. Update .env.local and all docs. | 2026-06-25 |
 | 27 | **Telegram-agenter:** De 10 persona-promptene i `docs/agents/` gjøres operative som Telegram-styrte agenter med faktisk oppgaveutførelse. Valg: full repo-tilgang, 10 separate bots (én token per agent), Hetzner VM 🇩🇪, Claude Agent SDK, git worktree per agent. Spec: `docs/TELEGRAM_AGENTS.md`. | 2026-06-25 |
 | 28 | **Gemini for agent/automation:** Hermes (@Mycli66bot), daglig nyhetsdigest (`scripts/news-agent.py` + GitHub Actions), og **MyAiWorkers** (10 Telegram-bots på Hetzner) migrert til Gemini (`GEMINI_API_KEY` / `GOOGLE_API_KEY`). Claude Agent SDK fjernet fra MyAiWorkers v0.2. | 2026-06-26 |
+| 29 | **V3 Masterplan - Local Migration Orchestrator:** Pivot tilbake til **100% klientside innboksskanning** for å unngå Google CASA Tier 2 Audit og GDPR "Data Controller"-risiko. Utvidelsen får Semantic Playbook Engine og eksplisitte domener for å overholde Blue Argon/MV3 regler. | 2026-06-26 |
+| 30 | **Toolkit-First forretningsmodell:** Innboksskanner er gratis (teaser). €5 engangskjøp gates Migration Toolkit (Action Cards, Progress Tracker, GDPR-generator). Affiliate-lenker er redaksjonelle anbefalinger inne i betalt tier — aldri et betalings- eller tilgangsvilkår. Affiliate-verifisering av Proton-signup fjernet. | 2026-06-26 |
 
 ---
 
@@ -280,7 +287,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 - **Kodehosting:** migrert til Codeberg 🇩🇪 — ferdig.
 - **Betaling (Stripe vs Mollie):** Stripe live og fungerer. Mollie 🇳🇱 vurderes ved nestegang.
 - **Domeneregistrar (Spaceship):** notert; europeisk registrar ved fornyelse.
-- **Innboksskanning server-side:** Arkitektur valgt for sikkerhet/skalering. Se ADR #22. Brukeren bevarer full kontroll via OAuth-tilbakekall.
+- **Innboksskanning:** Pivotert fra server-side til klientside (V3 Masterplan) for å redusere compliance- og audit-risiko. Edge-functions for scanning skal fases ut.
 
 ### Subsystemer i utvikling (ikke i MVP-scope, men built):
 - **Social/news automation:** Twitter-posting, news-scraping, newsletter (4 Edge Functions + migrations). Fase 2.
@@ -295,6 +302,7 @@ Vi automatiserer mest mulig via MCP-connectors og CLI-er.
 ## 13. Pekere
 
 **Core:**
+- `docs/Masterplan.md` — **V3 Spesifikasjon** og ny primær arkitektur-kilde for pivoteringen til 100% klientside.
 - `docs/TELEGRAM_AGENTS.md` — spec for Telegram-styrte AI-agenter (10 bots, Agent SDK, Hetzner).
 - `docs/agents/` — persona-prompts for det virtuelle AI-teamet (10 roller); kilde for Telegram-agentene.
 - `docs/BRAND.md` — design system (colors, typography, components, tone).

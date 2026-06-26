@@ -85,33 +85,124 @@ export async function callScanEmail(
   provider: InboxProvider,
   maxResults = 500
 ): Promise<ScanEmailResponse> {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
-  const functionUrl = `${supabaseUrl}/functions/v1/scan-email`
+  const senderCounts: Record<string, number> = {}
+  let scannedCount = 0
 
-  const response = await fetch(functionUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${supabaseAnonKey}`,
-    },
-    body: JSON.stringify({
-      accessToken,
-      provider,
-      maxResults,
-    }),
-  })
-
-  if (!response.ok) {
-    const errorBody = await response.json().catch(() => ({}))
-    const message =
-      typeof errorBody.error === 'string'
-        ? errorBody.error
-        : `Scan failed (${response.status})`
-    throw new Error(message)
+  const extractDomain = (email: string) => {
+    const match = email.match(/@([\w.-]+\.[a-zA-Z]{2,})/)
+    return match ? match[1].toLowerCase() : null
   }
 
-  return response.json() as Promise<ScanEmailResponse>
+  if (provider === 'outlook') {
+    let url = `https://graph.microsoft.com/v1.0/me/messages?$select=sender&$top=100`
+    while (url && scannedCount < maxResults) {
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+
+      if (response.status === 429) {
+        const retryAfter = response.headers.get('Retry-After') || '2'
+        await new Promise((resolve) => setTimeout(resolve, parseInt(retryAfter) * 1000))
+        continue
+      }
+
+      if (!response.ok) {
+        throw new Error(`Outlook API error: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      for (const msg of data.value || []) {
+        if (scannedCount >= maxResults) break
+        const email = msg.sender?.emailAddress?.address
+        if (email) {
+          const domain = extractDomain(email)
+          if (domain) {
+            senderCounts[domain] = (senderCounts[domain] || 0) + 1
+          }
+        }
+        scannedCount++
+      }
+      url = data['@odata.nextLink'] || null
+    }
+  } else if (provider === 'gmail') {
+    // 1. Fetch message IDs
+    const listUrl = `https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=${maxResults}`
+    const listRes = await fetch(listUrl, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    
+    if (!listRes.ok) {
+      throw new Error(`Gmail API error: ${listRes.statusText}`)
+    }
+    
+    const listData = await listRes.json()
+    const messages = listData.messages || []
+    
+    // 2. Batch requests in chunks of 100
+    const chunkSize = 100
+    for (let i = 0; i < messages.length; i += chunkSize) {
+      const chunk = messages.slice(i, i + chunkSize)
+      
+      const boundary = 'batch_boundary'
+      let body = ''
+      
+      chunk.forEach((msg: any, index: number) => {
+        body += `--${boundary}\r\n`
+        body += 'Content-Type: application/http\r\n'
+        body += `Content-ID: <item${index}>\r\n\r\n`
+        body += `GET /gmail/v1/users/me/messages/${msg.id}?format=metadata&metadataHeaders=From HTTP/1.1\r\n\r\n`
+      })
+      body += `--${boundary}--\r\n`
+
+      const batchRes = await fetch('https://gmail.googleapis.com/batch/gmail/v1', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': `multipart/mixed; boundary=${boundary}`,
+        },
+        body,
+      })
+
+      if (!batchRes.ok) {
+        throw new Error(`Gmail Batch API error: ${batchRes.statusText}`)
+      }
+
+      const batchText = await batchRes.text()
+      
+      // Extremely simple multipart parser for metadata extraction
+      const parts = batchText.split('--batch_')
+      for (const part of parts) {
+        if (!part.includes('HTTP/1.1 200 OK')) continue
+        
+        // Find the JSON payload
+        const jsonMatch = part.match(/\{[\s\S]*\}/)
+        if (jsonMatch) {
+          try {
+            const msgData = JSON.parse(jsonMatch[0])
+            const headers = msgData.payload?.headers || []
+            const fromHeader = headers.find((h: any) => h.name.toLowerCase() === 'from')
+            if (fromHeader && fromHeader.value) {
+              const domain = extractDomain(fromHeader.value)
+              if (domain) {
+                senderCounts[domain] = (senderCounts[domain] || 0) + 1
+              }
+            }
+            scannedCount++
+          } catch (e) {
+            // Ignore parsing errors for individual messages
+          }
+        }
+      }
+    }
+  }
+
+  return {
+    senders: Object.keys(senderCounts),
+    senderCounts,
+    count: Object.keys(senderCounts).length,
+    scannedCount,
+    provider,
+  }
 }
 
 export async function runInboxScan(

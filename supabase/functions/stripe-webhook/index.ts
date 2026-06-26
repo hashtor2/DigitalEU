@@ -27,7 +27,6 @@ const stripeWebhookHandler = async (req: Request) => {
 
     const stripe = new Stripe(stripeKey);
 
-    // Verify webhook signature
     let event;
     try {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
@@ -39,7 +38,6 @@ const stripeWebhookHandler = async (req: Request) => {
       );
     }
 
-    // Initialize Supabase client
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
     const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
@@ -54,30 +52,28 @@ const stripeWebhookHandler = async (req: Request) => {
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
 
     // -------------------------------------------------------------------------
-    // checkout.session.completed — eneste hendelse som gir tilgang.
-    // Brukes også for €0-sesjoner (100%-rabattkupong → gratis-tilgang).
+    // checkout.session.completed — grants access to the Migration Toolkit.
+    // Toolkit-First model: scanner is free, toolkit is €5 one-time.
+    // No affiliate verification, no gmail_verified, no manual approval needed.
     // -------------------------------------------------------------------------
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
       const userId = session.metadata?.user_id || session.client_reference_id;
-      const gmailAddress = session.metadata?.gmail_address || null;
       const email =
         session.customer_email || session.customer_details?.email || null;
       const amountTotal = session.amount_total ?? 0;
-      // €0-kupongsesjoner har ingen payment_intent; bruk session-id som referanse.
       const paymentRef = (session.payment_intent as string) || session.id;
       const now = new Date().toISOString();
 
       if (!userId) {
         console.error("checkout.session.completed without user_id metadata");
-        // Ack med 200 for å unngå at Stripe prøver på nytt i det uendelige.
         return new Response(JSON.stringify({ received: true, skipped: "no_user_id" }), {
           status: 200,
           headers: { "Content-Type": "application/json" },
         });
       }
 
-      // 1) Gi entitlement (idempotent på user_id).
+      // 1) Grant toolkit entitlement (idempotent on user_id).
       const { error: entError } = await supabase
         .from("entitlements")
         .upsert(
@@ -96,26 +92,7 @@ const stripeWebhookHandler = async (req: Request) => {
         );
       }
 
-      // 2) Sett scanner-metadata. gmail_verified utelates med vilje slik at
-      //    standardverdien (FALSE) gjelder ved innsetting og en allerede
-      //    godkjent verdi bevares ved konflikt — manuell godkjenning kreves.
-      const { error: metaError } = await supabase
-        .from("user_scanner_metadata")
-        .upsert(
-          {
-            user_id: userId,
-            scanner_access_type: "paid_stripe",
-            gmail_address: gmailAddress,
-            access_granted_at: now,
-            updated_at: now,
-          },
-          { onConflict: "user_id" },
-        );
-      if (metaError) {
-        console.error("Failed to upsert scanner metadata:", metaError);
-      }
-
-      // 3) Revisjonslogg for betalingen.
+      // 2) Payment audit log.
       const { error: payError } = await supabase
         .from("scanner_payments")
         .upsert(
@@ -135,41 +112,6 @@ const stripeWebhookHandler = async (req: Request) => {
         console.error("Failed to record payment audit:", payError);
       }
 
-      // 4) Varsle admin om at en Gmail må godkjennes manuelt (Google test-user).
-      const resendApiKey = Deno.env.get("RESEND_API_KEY");
-      const adminEmail = Deno.env.get("ADMIN_NOTIFICATION_EMAIL");
-      if (resendApiKey && adminEmail) {
-        try {
-          const amountLabel = (amountTotal / 100).toFixed(2);
-          await fetch("https://api.resend.com/emails", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${resendApiKey}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              from: "onboarding@resend.dev",
-              to: adminEmail,
-              subject: "New scanner unlock — Gmail approval needed",
-              text:
-                `A user unlocked the scanner and needs manual Gmail approval.\n\n` +
-                `User ID: ${userId}\n` +
-                `Account email: ${email || "unknown"}\n` +
-                `Gmail to approve: ${gmailAddress || "(not provided yet)"}\n` +
-                `Amount: €${amountLabel}\n` +
-                `Stripe session: ${session.id}\n\n` +
-                `Action: add the Gmail as a Google Cloud test user, then set ` +
-                `user_scanner_metadata.gmail_verified = true for this user_id.`,
-            }),
-          });
-        } catch (err) {
-          console.error("Failed to send admin notification:", err);
-        }
-      } else {
-        console.warn(
-          "RESEND_API_KEY or ADMIN_NOTIFICATION_EMAIL not set — admin not notified.",
-        );
-      }
     } else if (event.type === "checkout.session.async_payment_failed") {
       const session = event.data.object;
       const userId = session.metadata?.user_id || session.client_reference_id;
@@ -190,13 +132,9 @@ const stripeWebhookHandler = async (req: Request) => {
       );
     } else if (event.type === "charge.refunded") {
       const charge = event.data.object;
-
       await supabase
         .from("scanner_payments")
-        .update({
-          status: "refunded",
-          refund_id: charge.id,
-        })
+        .update({ status: "refunded", refund_id: charge.id })
         .eq("stripe_payment_intent_id", charge.payment_intent);
     }
 

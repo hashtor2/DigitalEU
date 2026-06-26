@@ -1,12 +1,6 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-
 export function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-canvas text-text-primary dark:bg-dark-canvas dark:text-dark-text-primary flex flex-col">
-      <Header />
-
-      <main className="flex-1 mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
         <h1 className="text-h1 font-mono mb-4">Privacy Policy</h1>
         <p className="text-text-secondary dark:text-dark-text-secondary mb-8">
           Last updated: 2026-06-24
@@ -76,9 +70,6 @@ export function PrivacyPolicyPage() {
             </p>
           </section>
         </div>
-      </main>
-
-      <Footer />
     </div>
   );
 }

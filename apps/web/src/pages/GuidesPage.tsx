@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { NewsArticleCard } from "@/components/NewsArticleCard";
 
@@ -116,12 +114,9 @@ export function GuidesPage() {
     : articles.filter((a) => a.source === selectedSource);
 
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
+    <div className="mx-auto max-w-4xl w-full px-6 py-10">
       <title>Privacy & Migration Guides — European Alternatives | digitaleu.me</title>
       <meta name="description" content="Step-by-step guides for switching from Big Tech to privacy-friendly European alternatives. Email, VPN, cloud storage, browsers, and more." />
-      <Header />
-
-      <main className="flex-1 mx-auto max-w-4xl w-full px-6 py-10">
         <div className="mb-10">
           <h1 className="text-2xl font-bold text-text-primary dark:text-dark-text-primary mb-2">Privacy & Migration Guides</h1>
           <p className="text-sm text-text-secondary dark:text-dark-text-secondary max-w-xl">
@@ -167,7 +162,6 @@ export function GuidesPage() {
             </div>
           ))}
         </div>
-      </main>
 
       {/* Daily EU Tech News Section */}
       <div className="bg-surface dark:bg-dark-surface border-t border-accent/20">
@@ -227,8 +221,6 @@ export function GuidesPage() {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 
 interface DigestStory {
@@ -298,10 +296,7 @@ function Subscribe() {
 
 export function NewsPage() {
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
-      <Header />
-
-      <main className="flex-1 mx-auto max-w-5xl w-full px-6 py-10 space-y-16">
+    <div className="mx-auto max-w-5xl w-full px-6 py-10 space-y-16">
 
         {/* News Jumbotron Hero */}
         <section className="border-b border-border dark:border-dark-border pb-10 text-center md:text-left">
@@ -425,8 +420,6 @@ export function NewsPage() {
           </div>
         </section>
 
-      </main>
-      <Footer />
     </div>
   );
 }

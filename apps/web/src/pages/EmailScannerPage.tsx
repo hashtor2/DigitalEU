@@ -7,8 +7,6 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { EmailScannerGate } from "@/components/EmailScannerGate";
 
 export function EmailScannerPage() {
@@ -32,9 +30,7 @@ export function EmailScannerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
-      <Header />
-      <main className="flex-1 mx-auto max-w-4xl px-6 py-16 w-full">
+    <div className="mx-auto max-w-4xl px-6 py-16 w-full">
         {!isUnlocked ? (
           <EmailScannerGate onUnlock={handleUnlock} />
         ) : (
@@ -66,8 +62,6 @@ export function EmailScannerPage() {
             </div>
           </div>
         )}
-      </main>
-      <Footer />
     </div>
   );
 }

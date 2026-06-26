@@ -1,6 +1,5 @@
 import { useParams, Link } from "react-router-dom";
 import { ALTERNATIVES } from "@digitaleu/shared";
-import { Header } from "@/components/Header";
 import { GUIDE_CONTENT, type GuideService } from "@/data/guide-content";
 
 function getDomain(url: string): string {
@@ -152,30 +151,24 @@ export function GuidePage() {
 
   if (!guide) {
     return (
-      <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
+      <div className="mx-auto max-w-3xl w-full px-6 py-16 text-center">
         <title>Guide not found | digitaleu.me</title>
-        <Header />
-        <main className="flex-1 mx-auto max-w-3xl w-full px-6 py-16 text-center">
-          <p className="text-text-secondary dark:text-dark-text-secondary text-sm mb-4">Guide not found.</p>
-          <Link to="/guides" className="text-accent text-sm hover:underline">
-            ← Back to guides
-          </Link>
-        </main>
+        <p className="text-text-secondary dark:text-dark-text-secondary text-sm mb-4">Guide not found.</p>
+        <Link to="/guides" className="text-accent text-sm hover:underline">
+          ← Back to guides
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-canvas dark:bg-dark-canvas text-text-primary dark:text-dark-text-primary flex flex-col">
+    <div className="mx-auto max-w-3xl w-full px-6 py-10">
       <title>{guide.metaTitle}</title>
       <meta name="description" content={guide.metaDescription} />
       <meta property="og:title" content={guide.metaTitle} />
       <meta property="og:description" content={guide.metaDescription} />
       <meta property="og:type" content="article" />
       <link rel="canonical" href={`https://digitaleu.me/guides/${guide.id}`} />
-      <Header />
-
-      <main className="flex-1 mx-auto max-w-3xl w-full px-6 py-10">
         {/* Breadcrumb */}
         <nav className="mb-8 text-[11px] font-mono text-text-secondary dark:text-dark-text-secondary">
           <Link to="/" className="hover:text-text-primary dark:hover:text-dark-text-primary transition">home</Link>
@@ -268,7 +261,6 @@ export function GuidePage() {
             Browse all European alternatives →
           </Link>
         </div>
-      </main>
     </div>
   );
 }
