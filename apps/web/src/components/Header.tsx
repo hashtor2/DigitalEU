@@ -75,7 +75,7 @@ export function Header() {
                     {item.label}
                   </button>
                   {/* Submenu dropdown */}
-                  <div className="invisible group-hover:visible absolute left-0 top-full mt-1 flex flex-col gap-1 bg-border/50 dark:bg-dark-border/50 border border-secondary-accent/40 dark:border-secondary-accent/40 rounded-sm shadow-lg z-50 py-2 min-w-[200px] transition-all duration-150">
+                  <div className="opacity-0 invisible group-hover:visible group-hover:opacity-100 absolute left-0 top-full mt-1 flex flex-col gap-1 bg-border/50 dark:bg-dark-border/50 border border-secondary-accent/40 dark:border-secondary-accent/40 rounded-sm shadow-lg z-50 py-2 min-w-[200px] transition-all duration-150">
                     {item.children?.map((child: any) => (
                       <Link
                         key={child.label}

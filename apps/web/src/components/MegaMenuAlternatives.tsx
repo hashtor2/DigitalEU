@@ -83,7 +83,7 @@ export function MegaMenuAlternatives({
 
   // Desktop: Grid dropdown on hover
   return (
-    <div className="hidden md:block absolute left-0 top-full pt-0 group">
+    <div className="hidden md:block absolute left-0 top-full pt-0">
       {/* Invisible bridge to keep dropdown open on hover */}
       <div className="absolute inset-x-0 -top-1 h-1" />
 
