@@ -19,7 +19,7 @@ If you want to contribute to this project, please contact: torisor@pm.me
 **For individuals (`/b2c`):**
 - ✅ **Scan your inbox** to discover which Big Tech services you depend on (LIVE)
   - Gmail & Outlook OAuth 2.0 support
-  - Backend scans emails server-side, frontend matches 100% client-side
+  - Scan runs 100% in your browser — your data never leaves your device
   - Demo mode available for testing without account
 - ✅ **See alternatives matched** to your detected services (LIVE)
 - ⏳ **Personal dashboard** to track migration progress (coming soon)
@@ -40,7 +40,7 @@ If you want to contribute to this project, please contact: torisor@pm.me
 | Web app | Vite + React 19 + TypeScript | Fast, type-safe SPA |
 | Styling | Tailwind CSS v4 + shadcn/ui | Utility-first, no runtime |
 | Backend / DB | Supabase (🇨🇭 Zürich, eu-central-2) | EU data residency, zero-knowledge ready |
-| Email Scanning | Supabase Edge Functions | Server-side OAuth, client-side matching |
+| Email Scanning | 100% Client-Side (In-Browser) | Zero-knowledge — your inbox token never touches our servers |
 | Auth | Supabase Auth (planned) | Zero-knowledge encryption for profiles |
 | Hosting | Vercel (under review → 🇫🇷 Clever Cloud / 🇩🇪 Hetzner) | Speed now, sovereignty later |
 | Analytics | Plausible 🇪🇪 | Cookieless, EU-based |
@@ -88,22 +88,16 @@ Scanner development uses:
 
 ## Scanner Security & Privacy
 
-The email scanner is built on privacy-by-design principles:
+The email scanner is engineered to be **zero-knowledge**. We cannot see your data, by design.
 
-- **100% Client-Side Matching** — Backend returns only sender domains; all matching against alternatives happens in your browser
-- **Minimal OAuth Scopes** — Gmail: `gmail.metadata` only (no email bodies), Outlook: `Mail.ReadBasic` (metadata only)
-- **No Token Storage** — Access tokens are extracted from URL hash, used once, then discarded
-- **Zero-Knowledge Profile Mode** — Results encrypted client-side (AES-256-GCM + PBKDF2) before reaching our servers
-- **Guest Mode** — All results stored in `sessionStorage`, cleared when you close the tab
+- **100% Client-Side Scan** — The entire process, from connecting to your inbox to analyzing your services, runs locally in your browser.
+- **Your Token Stays With You** — Your private inbox access token (OAuth) is handled exclusively by your browser and is **never sent to, or stored on, our servers.** We are technically unable to access it.
+- **Minimal OAuth Scopes** — We request read-only metadata access (`gmail.metadata` or `Mail.ReadBasic`). We cannot read the content of your emails.
+- **No Server-Side Code** — The scanner has no backend component that processes your data. It is a pure client-side application.
+- **Ephemeral by Default** — All results are stored in your browser's `sessionStorage` and are cleared when you close the tab.
 
 See [docs/OAUTH_SETUP_GUIDE.md](docs/OAUTH_SETUP_GUIDE.md) for technical details.
 
----
-
-1. **Privacy by design.** Inbox scanning runs 100% client-side. We never see your emails.
-2. **You own your data.** Guest mode: everything in `sessionStorage`, gone when you close the tab. Profile mode: client-side encrypted before it reaches our servers.
-3. **We eat our own cooking.** We use European tools ourselves. This repo is on Codeberg. Our database is in Switzerland.
-4. **No dark patterns.** We recommend what fits you, not what pays us most.
 
 ---
 

@@ -6,7 +6,7 @@ Privacy-first email scanner that detects your US digital services and recommends
 
 - **Frontend:** TanStack Start (React 19, file-based routing, server functions)
 - **Styling:** Tailwind CSS v4 + Nordic Warmth design tokens
-- **Backend:** Supabase (auth, Postgres with RLS, Edge Functions)
+- **Backend:** Supabase (auth, user profiles)
 - **Database:** Profiles, mailbox connections, scans, scan results, cancellation guides
 - **Privacy:** Metadata-only Gmail scanning, zero-knowledge encryption, 30-day auto-delete
 
@@ -54,9 +54,6 @@ Server runs on http://localhost:5174
 ## Database schema
 
 - **profiles** — user profile (email, created_at)
-- **mailbox_connections** — OAuth tokens for Gmail/Outlook (encrypted)
-- **scans** — scan sessions (user, status, created_at, deleted_at)
-- **scan_results** — detected services per scan
 - **beta_allowlist** — closed-beta email allowlist
 - **cancellation_guides** — SEO-optimized guides (/cancel/:id routes)
 
@@ -72,10 +69,9 @@ All tables have RLS scoped to `auth.uid()` or public (for guides).
 
 ### 2. Gmail scanner
 
-- OAuth metadata scope only (no message bodies)
-- Samples last 500 senders from inbox
-- Matches against curated services catalog
-- Scans persist but auto-delete after 30 days (via `pg_cron`)
+- **100% Client-Side:** Connects to Gmail via Google's OAuth SDK directly from the browser.
+- **In-Memory Analysis:** Samples senders from the inbox and performs all analysis on the client.
+- **No Data Persisted:** Scan results are not stored on our servers. Data is ephemeral and stored only in the browser's session storage.
 
 ### 3. Results dashboard
 
@@ -92,11 +88,13 @@ All tables have RLS scoped to `auth.uid()` or public (for guides).
 
 ## Privacy
 
-- **Read-only metadata** — sender, subject, date only
-- **Zero-knowledge klientside encryption** — tokens encrypted before storage
-- **GDPR-compliant** — EU-hosted (Supabase Switzerland)
-- **30-day auto-purge** — scans deleted automatically
-- **User control** — disconnect anytime; all data wiped immediately
+The scanner is engineered to be **zero-knowledge**. We cannot see your data, by design.
+
+- **100% Client-Side Scan** — The entire process runs locally in your browser. Your data never touches our servers.
+- **Token Never Leaves Your Device** — Your private inbox access token (OAuth) is handled exclusively by your browser and is never sent to our servers.
+- **Minimal OAuth Scopes** — We request read-only metadata access only. We cannot read email content.
+- **No Data Storage** — Scan results are ephemeral and cleared when you close your browser tab. We do not store any scan data.
+- **GDPR-compliant** — User accounts (if created) are stored with Supabase in Switzerland.
 
 ## Development
 
@@ -152,7 +150,7 @@ Environment variables are set in Vercel dashboard (never commit `.env`).
 - [ ] No secrets in code or `.env` — use env vars only
 - [ ] OAuth scopes are minimal (metadata only)
 - [ ] RLS policies block unauthorized queries
-- [ ] Tokens encrypted before database storage
+- [ ] Tokens are never transmitted to or stored on our servers
 - [ ] Tokens never logged or exposed in errors
 - [ ] Dependencies audited (`npm audit`)
 - [ ] CORS/CSRF headers configured

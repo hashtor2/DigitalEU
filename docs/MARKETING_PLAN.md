@@ -84,8 +84,7 @@ autofill your new address everywhere) while being radically honest about how we 
 and how we protect your data.
 
 **Three proof pillars** (every channel reinforces these):
-1. **Privacy is the product.** Inbox scanning is 100% client-side — your email never leaves
-   your device. Profile data is zero-knowledge encrypted. Data lives in Switzerland 🇨🇭.
+1. **Privacy is the product.** The inbox scan runs **100% in your browser.** Your private access token for your inbox **never leaves your device** and is never stored on our servers. You connect directly to your email provider, and the analysis happens locally. We see none of it. All other data lives, encrypted, in Switzerland 🇨🇭.
 2. **European-first, and we mean it.** We use EU providers ourselves (dogfooding), not just
    recommend them.
 3. **Radically honest business model.** Free if you sign up with a partner via our affiliate
@@ -108,8 +107,7 @@ Privacy audiences will surface these in seconds. We get there first — that's t
 editorially honest, and there's always a €5 no-affiliate path. (Reinforces pillar 3.)
 
 **Objection B — "Why would I give YOU OAuth access to my inbox?"**
-→ *Response:* You don't give it to us — the scan runs entirely in your browser, read-only,
-minimal scopes, and the results never touch our servers. Here's how it works / here's the code.
+→ *Response:* You're right to ask. The answer is simple: **we never get your inbox access token.** The entire scan runs locally in *your browser*. Your private token is sent directly from your device to Google/Microsoft and is never seen by or stored on our servers. We've engineered it so we are technically unable to see your data. This is our core security promise.
 (Reinforces pillar 1. This is our single hardest objection — answer it proactively, every time.)
 
 ---
