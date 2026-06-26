@@ -1,8 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ALTERNATIVES, type ServiceCategory } from "@digitaleu/shared";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { COUNTRY_FLAGS } from "@/lib/flags";
 import { TrustBadges } from "@/components/TrustBadges";
@@ -77,11 +75,11 @@ export function DirectoryPage() {
   }, [search, selectedCategories]);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-slate-100 flex flex-col">
+    <div className="bg-[#0d1117] text-slate-100">
       <title>European Privacy Catalogue — {ALTERNATIVES.length}+ Alternatives to Big Tech | digitaleu.me</title>
       <meta name="description" content="Browse vetted European alternatives to Gmail, Google Drive, Dropbox, Slack, and more. All services keep data within EU/EEA/Swiss jurisdiction." />
       <link rel="canonical" href="https://digitaleu.me/directory" />
-      <Header />
+      
 
       <div className="flex-1 mx-auto max-w-7xl w-full px-6 py-10 flex gap-8">
 
@@ -268,8 +266,6 @@ export function DirectoryPage() {
           <NewsletterSignup compact={true} showName={false} />
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }
